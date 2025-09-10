@@ -1,0 +1,47 @@
+name: TFA Structure Validator
+
+on:
+  push:
+    branches: [ main, develop, "copilot/**" ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate-tfa-structure:
+    runs-on: ubuntu-latest
+    name: Validate TFA V2 Architecture
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+          
+      - name: Make validator executable
+        run: chmod +x scripts/validate_tfa.py
+        
+      - name: Run TFA structure validation
+        run: python scripts/validate_tfa.py
+        
+      - name: Verify LLC mapping integrity
+        run: |
+          if [ ! -f "8-RESOURCES/llc-map.yaml" ]; then
+            echo "❌ Missing LLC mapping file: 8-RESOURCES/llc-map.yaml"
+            exit 1
+          fi
+          echo "✅ LLC mapping file present"
+          
+      - name: Check forbidden flat LLC paths
+        run: |
+          set -e
+          bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|CB|QB|UE|FE|FWD|QS)(/|$)' || true)
+          if [ -n "$bad" ]; then
+            echo "❌ Found disallowed flat LLC paths:"
+            echo "$bad"
+            echo "Use TFA/<GROUP>/<LLC>/ structure instead"
+            exit 1
+          fi
+          echo "✅ No flat LLC paths detected"
