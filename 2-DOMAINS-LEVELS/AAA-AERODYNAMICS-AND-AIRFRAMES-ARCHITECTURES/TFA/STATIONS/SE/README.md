@@ -1,4 +1,4 @@
-# SE · STATION ENVELOP (AAA)
+# SE · STATION ENVELOPE (AAA)
 
 Purpose: Define geometric, environmental, and operational envelopes for stations (e.g., wing stations, fuselage frames, mount points).
 
