@@ -9,11 +9,11 @@ def test_traceability_id_format():
     """Test that traceability IDs follow the required format."""
     # Example traceability IDs
     valid_ids = [
-        "DT:AIR:AAA-STRUCTURES-AERO:20241210:001",
-        "DT:SPACE:OOO-OS-NAVIGATION:20241210:002", 
-        "DT:GROUND:IIF-INFRASTRUCTURE:20241210:003",
-        "DT:DEFENSE:DDD-SAFETY-CYBER:20241210:004",
-        "DT:CROSS:LCC-CONTROLS-COMMS:20241210:005"
+        "DT:AIR:AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES:20241210:001",
+        "DT:SPACE:OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES:20241210:002", 
+        "DT:GROUND:IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES:20241210:003",
+        "DT:DEFENSE:DDD-DIGITAL-AND-DATA-DEFENSE:20241210:004",
+        "DT:CROSS:LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS:20241210:005"
     ]
     
     # Pattern: DT:{segment}:{llc}:{date}:{seq}
@@ -26,10 +26,10 @@ def test_traceability_id_format():
 def test_invalid_traceability_ids():
     """Test that invalid traceability IDs are rejected."""
     invalid_ids = [
-        "DT:INVALID:AAA-STRUCTURES-AERO:20241210:001",  # Invalid segment
+        "DT:INVALID:AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES:20241210:001",  # Invalid segment
         "DT:AIR:invalid-llc:20241210:001",  # Invalid LLC format
-        "DT:AIR:AAA-STRUCTURES-AERO:20241210:1",  # Invalid sequence format
-        "INVALID:AIR:AAA-STRUCTURES-AERO:20241210:001",  # Invalid prefix
+        "DT:AIR:AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES:20241210:1",  # Invalid sequence format
+        "INVALID:AIR:AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES:20241210:001",  # Invalid prefix
     ]
     
     pattern = r'^DT:(AIR|SPACE|GROUND|DEFENSE|CROSS):[A-Z]{3}-[A-Z-]+:\d{8}:\d{3}$'

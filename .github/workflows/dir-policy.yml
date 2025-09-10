@@ -8,7 +8,7 @@ jobs:
       - name: Fail on flat LLC paths
         run: |
           set -e
-          bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS)(/|$)' || true)
+          bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS|CB|QB|UE|FWD)(/|$)' || true)
           if [ -n "$bad" ]; then
             echo "::error::Found disallowed flat LLC paths:"
             echo "$bad"

@@ -1,24 +1,30 @@
 # Amedeo Pelliccia · Professional Portfolio
 
-> **Assembling General Intelligence (AGI) for Aerospace Knowledge Competencies**  
-> *A comprehensive framework for next-generation aerospace engineering and AI integration*
+> **Classical–Quantum Extensible Aerospace**  
+> Strict TFA hierarchy across 15 domains with quantum layers (CB/QB/UE/FE/FWD/QS), OPTIMO Digital Thread, template packs, and CI validation.
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
-![Version](https://img.shields.io/badge/Version-v1.0-green.svg)
-![TFA-Compliant](https://img.shields.io/badge/Architecture-TFA--Only-orange.svg)
-<!-- Optional: replace ORG/REPO to enable CI badge
-[![TFA Structure Validator](https://github.com/ORG/REPO/actions/workflows/tfa_structure_validator.yml/badge.svg)](https://github.com/ORG/REPO/actions/workflows/tfa_structure_validator.yml)
--->
+![Architecture](https://img.shields.io/badge/TFA-V2-critical.svg)
+![Quantum](https://img.shields.io/badge/Layers-CB|QB|UE|FE|FWD|QS-8A2BE2.svg)
+![Status](https://img.shields.io/badge/CI-validators--green.svg)
 
 ---
 
 ## 🚀 About This Portfolio
 
-This repository represents a cutting-edge approach to aerospace engineering through the lens of **General Artificial Intelligence (AGI)**. It combines traditional aerospace methodologies with modern AI/ML techniques, blockchain technology, and advanced systems engineering practices.
+This repository is the canonical map of Amedeo Pelliccia's aerospace portfolio under a **Top Final Algorithm (TFA)** architecture.  
+It integrates **15 engineering domains** with a **quantum–classical bridge** and provides **ready-to-use templates**, **validators**, and **CI** to prevent drift.
+
+**Highlights**
+- **FE = Federation Element** (authoritative)  
+- **Quantum bridge**: CB (Classical Bit) → QB (Qubit)  
+- **Dual elements**: UE (Unit Element, classical) + FE (Federation, distributed)  
+- **Wave dynamics**: FWD layer for predictive/retrodictive modeling  
+- Enforced by CI: structure, terminology, and quantum layers.
 
 **Author**: Amedeo Pelliccia  
 **Started**: November 25, 2024  
-**Last Updated**: September 10, 2025
+**Last Updated**: September 10, 2025 (TFA V2)
 
 ### 🎯 Mission Statement
 
@@ -37,6 +43,27 @@ This portfolio follows the **TFA (Top Final Algorithm)** methodology—a strict 
 - Each domain uses `TFA/` as the canonical container.  
 - **NO FLAT LLC FOLDERS** under `2-DOMAINS-LEVELS/<DOMAIN>/`.  
 - All work targets `TFA/<GROUP>/<LLC>/`.
+
+---
+
+## 🔮 Quantum-Classical Bridge (TFA V2)
+
+The architecture implements a **quantum-classical extensible bridge** with these layers:
+
+| Code | Canonical Meaning | Layer | Purpose |
+|------|------------------|-------|---------|
+| **SI** | SYSTEM INTEGRATION | SYSTEMS | Cross-domain integration |
+| **DI** | DOMAIN INTERFACE | SYSTEMS | Domain boundary management |
+| **SE** | STATION ENVELOPE | STATIONS | Physical/logical boundaries |
+| **CV/CE/CC/CI/CP** | COMPONENT [VENDOR/EQUIPMENT/CELL/ITEM/PART] | COMPONENTS | Hierarchical components |
+| **CB** | CLASSICAL BIT | BITS | Classical computation layer |
+| **QB** | QUBIT | QUBITS | Quantum computation layer |
+| **UE** | UNIT ELEMENT | ELEMENTS | Classical fundamental units |
+| **FE** | FEDERATION ELEMENT | ELEMENTS | Distributed orchestration |
+| **FWD** | Future/Waves Dynamics | WAVES | Predictive/retrodictive modeling |
+| **QS** | QUANTUM STATE | STATES | State management |
+
+**Quantum Bridge Flow**: CB (Classical Bit) → QB (Qubit) → UE/FE (Elements) → FWD (Wave Dynamics) → QS (States)
 
 ---
 
@@ -65,22 +92,21 @@ Comprehensive Computer-Aided X (CAx) methodology covering:
 
 | Code | Precise Domain Name (verbatim) | TFA Structure |
 |---|---|---|
-| **AAA** | AERODYNAMICS AND AIRFRAMES ARCHITECTURES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **AAP** | AIRPORT ADAPTABLE PLATFORMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **CCC** | COCKPIT CABIN AND CARGO | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **CQH** | CRYOGENICS, QUANTUM AND H2 | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **EDI** | ELECTRONICS DIGITAL INSTRUMENTS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **DDD** | DIGITAL  AND DATA DEFENSE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **EEE** | ECOLOGICAL EFFICIENT ELECTRIFICATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **EER** | ENVIRONMENTAL EMISSIONS AND REMEDIATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **IIF** | INDUSTRIAL INFRASTRUCTURE FACILITIES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **IIS** | INTEGRATED INTELLIGENCE SOFTWARE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **LCC** | LINKAGES CONTROL AND COMMUNICATIONS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **LIB** | LOGISTICS INVENTORY AND BLOCKCHAIN | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **MMM** | MECHANICAL AND MATERIAL  MODULES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **OOO** | OS, ONTOLOGIES AND OFFICE INTERFACES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-| **PPP** | PROPULSION & FUEL SYSTEMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
-
+| **AAA** | AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **AAP** | AIRPORT-ADAPTABLE-PLATFORMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **CCC** | COCKPIT-CABIN-AND-CARGO | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **CQH** | CRYOGENICS-QUANTUM-AND-H2 | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **DDD** | DIGITAL-AND-DATA-DEFENSE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **EDI** | ELECTRONICS-DIGITAL-INSTRUMENTS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **EEE** | ECOLOGICAL-EFFICIENT-ELECTRIFICATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **EER** | ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **IIF** | INDUSTRIAL-INFRASTRUCTURE-FACILITIES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **IIS** | INTEGRATED-INTELLIGENCE-SOFTWARE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **LCC** | LINKAGES-CONTROL-AND-COMMUNICATIONS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **LIB** | LOGISTICS-INVENTORY-AND-BLOCKCHAIN | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **MMM** | MECHANICAL-AND-MATERIAL-MODULES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **OOO** | OS-ONTOLOGIES-AND-OFFICE-INTERFACES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
+| **PPP** | PROPULSION-AND-FUEL-SYSTEMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
 
 ### 🚀 [3-PROJECTS-USE-CASES](./3-PROJECTS-USE-CASES/)
 Real-world applications and use case implementations.
@@ -165,20 +191,26 @@ DOMAIN/
 
 ```
 
-### LLC Codes — Canonical Meanings (verbatim)
+### LLC Codes — Canonical Meanings (TFA V2)
 
 | Code | Meaning |
 |---|---|
 | **SI** | SYSTEM INTEGRATION |
 | **DI** | DOMAIN INTERFACE |
-| **SE** | STATION ENVELOP |
+| **SE** | STATION ENVELOPE |
 | **CV** | COMPONENT VENDOR |
 | **CE** | COMPONENT EQUIPMENT |
 | **CC** | CONFIGURATION CELL |
 | **CI** | CONFIGURATION ITEM |
 | **CP** | COMPONENT PART |
+| **CB** | CLASSICAL BIT |
+| **QB** | QUBIT |
+| **UE** | UNIT ELEMENT |
 | **FE** | FEDERATION ELEMENT |
+| **FWD** | Future/Foresight/Fluctuant/Functional Waves Dynamics |
 | **QS** | QUANTUM STATE |
+
+**Terminology guard:** Deprecated terms (`Fine~Element` and `Station~Envelop`) are rejected by CI.
 
 ---
 
@@ -234,15 +266,35 @@ graph TD
 
 ---
 
+## 💻 Local Usage
+
+```bash
+# Create any missing folders (idempotent)
+make scaffold
+
+# Validate full TFA structure + quantum layers
+make check
+```
+
+## 🔍 CI Validation
+
+- **TFA Structure Validator:** checks domain trees, layers, META, and code buckets
+- **Quantum Layers Check:** rejects bad terminology and enforces CB/QB/UE/FE/FWD/QS presence
+
+See `.github/workflows/`.
+
+---
+
 ## 📈 Roadmap Snapshot
 
 | Phase | Key Milestone                   | ETA         |
 | ----- | ------------------------------- | ----------- |
 | v1.0  | TFA Core Bootstrapped           | ✅ Sept 2025 |
-| v1.2  | UTCS Smart Contracts Alpha      | Q4 2025     |
-| v2.0  | CAI/IIS AGI Modules Integration | Mid 2026    |
-| v2.5  | OPTIMO-DT ↔ Digital Twin Sync   | Early 2027  |
-| v3.0  | Quantum Extension (QS Full)     | 2028        |
+| v2.0  | TFA V2 Quantum-Classical Bridge | ✅ Sept 2025 |
+| v2.2  | UTCS Smart Contracts Alpha      | Q4 2025     |
+| v2.5  | CAI/IIS AGI Modules Integration | Mid 2026    |
+| v3.0  | OPTIMO-DT ↔ Digital Twin Sync   | Early 2027  |
+| v4.0  | Quantum Extension (QS Full)     | 2028        |
 
 ---
 
@@ -250,10 +302,11 @@ graph TD
 
 * ✅ **Strict TFA Architecture** — deterministic structure & traceability
 * ✅ **15 Domains** — coverage from **AAA** to **PPP**
+* ✅ **Quantum-Classical Bridge** — CB/QB/UE/FE/FWD/QS layers
 * ✅ **AI Integration** — built-in orchestration & validation (CAI/IIS)
 * ✅ **Blockchain Ready** — UTCS token system & contracts
 * ✅ **Standards** — S1000D, MBSE-aligned artifacts
-* ✅ **CI Enforcement** — prevents flat LLC paths
+* ✅ **CI Enforcement** — prevents flat LLC paths & validates quantum layers
 
 ---
 

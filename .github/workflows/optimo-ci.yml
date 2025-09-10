@@ -9,7 +9,7 @@ jobs:
       - name: Enforce TFA directory policy
         run: |
           set -e
-          bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS)(/|$)' || true)
+          bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS|CB|QB|UE|FWD)(/|$)' || true)
           test -z "$bad" || { echo "::error::Flat LLC paths:\n$bad"; exit 1; }
 
       - name: Validate config
