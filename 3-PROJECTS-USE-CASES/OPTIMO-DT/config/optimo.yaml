@@ -1,0 +1,17 @@
+version: "10.0"
+policies:
+  tfa_enforced: true
+  dir_policy_regex: '^2-DOMAINS-LEVELS/[^/]+/TFA/(SYSTEMS|COMPONENTS|ELEMENTS|STATES)/'
+compliance:
+  standards: [DO-178C, S1000D, ISO9001, ISO27001]
+  evidence_bucket: s3://optimo-evidence/
+segments: [AIR, SPACE, GROUND, DEFENSE, CROSS]
+traceability:
+  id_format: "DT:{segment}:{llc}:{date}:{seq}"
+  graph_backend: "neo4j"
+mlops:
+  registry: "mlflow"
+  drift_threshold: 0.05
+digital_twin:
+  timeseries_store: "influxdb"
+  message_bus: "mqtt"
