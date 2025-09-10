@@ -1,0 +1,34 @@
+# FE Specification Template
+metadata:
+  template_version: "1.0"
+  llc_code: "FE"
+  llc_name: "FEDERATION ELEMENT"
+  tfa_layer: "ELEMENTS"
+  domain: "[DOMAIN-CODE]"
+  created: "[DATE]"
+  author: "[AUTHOR]"
+
+specification:
+  id: "[FE-ID]"
+  description: "[DESCRIPTION]"
+  version: "[VERSION]"
+  
+  # FEDERATION ELEMENT specific configuration
+  configuration:
+    # Add FE-specific parameters here
+    placeholder_param: "[VALUE]"
+    
+  # Standard TFA V2 metadata
+  tfa_metadata:
+    layer: "ELEMENTS"
+    llc: "FE"
+    quantum_enabled: false
+    classical_bridge: false
+    federation_capable: true
+
+# Validation rules
+validation:
+  required_fields: ["id", "description", "version"]
+  format_rules:
+    id: "^[A-Z]{3}-FE-[0-9]{3}$"
+    version: "^[0-9]+\.[0-9]+\.[0-9]+$"

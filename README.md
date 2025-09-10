@@ -142,22 +142,43 @@ OPTIMO-DT/
 ### TFA Hierarchy (per domain)
 
 ```
-
 DOMAIN/
 └── TFA/
-├── SYSTEMS/
-│   ├── SI/  (SYSTEM INTEGRATION)
-│   └── DI/  (DOMAIN INTERFACE)
-├── STATIONS/
-│   └── SE/  (STATION ENVELOP)
-├── COMPONENTS/
-│   ├── CV/  (COMPONENT VENDOR)
-│   ├── CE/  (COMPONENT EQUIPMENT)
-│   ├── CC/  (CONFIGURATION CELL)
-│   ├── CI/  (CONFIGURATION ITEM)
-│   └── CP/  (COMPONENT PART)
-├── ELEMENTS/
-│   └── FE/  (FEDERATION ELEMENT)
+    ├── SYSTEMS/
+    │   ├── SI/  (SYSTEM INTEGRATION)
+    │   └── DI/  (DOMAIN INTERFACE)
+    ├── STATIONS/
+    │   └── SE/  (STATION ENVELOPE)
+    ├── COMPONENTS/
+    │   ├── CV/  (COMPONENT VENDOR)
+    │   ├── CE/  (COMPONENT EQUIPMENT)
+    │   ├── CC/  (CONFIGURATION CELL)
+    │   ├── CI/  (CONFIGURATION ITEM)
+    │   └── CP/  (COMPONENT PART)
+    ├── BITS/
+    │   └── CB/  (CLASSICAL BIT)
+    ├── QUBITS/
+    │   └── QB/  (QUBIT)
+    ├── ELEMENTS/
+    │   ├── UE/  (UNIT ELEMENT)
+    │   └── FE/  (FEDERATION ELEMENT)
+    ├── WAVES/
+    │   └── FWD/ (Future/Foresight/Fluctuant/Functional Waves Dynamics)
+    ├── STATES/
+    │   └── QS/  (QUANTUM STATE)
+    └── META/
+        └── README.md
+```
+
+### Quantum-Classical Bridge Architecture
+
+The TFA V2 implementation includes a complete quantum-classical bridge:
+
+- **Classical Layer**: CB (Classical Bit) for traditional computation
+- **Quantum Layer**: QB (Qubit) for quantum processing and entanglement  
+- **Element Bridge**: UE (Unit Element) ↔ FE (Federation Element)
+- **Wave Dynamics**: FWD for predictive/retrodictive analysis
+- **State Management**: QS for quantum state definitions and measurements
 ├── STATES/
 │   └── QS/  (QUANTUM STATE)
 └── META/
@@ -171,14 +192,53 @@ DOMAIN/
 |---|---|
 | **SI** | SYSTEM INTEGRATION |
 | **DI** | DOMAIN INTERFACE |
-| **SE** | STATION ENVELOP |
+| **SE** | STATION ENVELOPE |
 | **CV** | COMPONENT VENDOR |
 | **CE** | COMPONENT EQUIPMENT |
 | **CC** | CONFIGURATION CELL |
 | **CI** | CONFIGURATION ITEM |
 | **CP** | COMPONENT PART |
+| **CB** | CLASSICAL BIT |
+| **QB** | QUBIT |
+| **UE** | UNIT ELEMENT |
 | **FE** | FEDERATION ELEMENT |
+| **FWD** | Future/Foresight/Fluctuant/Functional Waves Dynamics |
 | **QS** | QUANTUM STATE |
+
+---
+
+## 🎯 Template System
+
+The TFA V2 architecture includes a comprehensive template system in `8-RESOURCES/TEMPLATES/`:
+
+### Template Categories
+
+- **TFA Layer Templates**: Standard templates for each LLC code (SI, DI, SE, CV, CE, CC, CI, CP, CB, QB, UE, FE, FWD, QS)
+- **CAx Lifecycle Templates**: Process templates for all 12 CAx phases (CAB through CAV)
+- **Domain-Specific Templates**: Specialized templates for unique domain requirements
+
+### Key Features
+
+- **Quantum-Classical Aware**: Templates include quantum/classical bridge configurations
+- **Validation Ready**: All templates validate successfully with TFA structure requirements
+- **Standardized Placeholders**: Consistent placeholder system across all templates
+- **CI/CD Integration**: Templates integrate with automated validation workflows
+
+### Usage
+
+```bash
+# Use templates from the system
+cp -r 8-RESOURCES/TEMPLATES/TFA-LAYER-TEMPLATES/ELEMENTS-TEMPLATES/FE-FEDERATION-ELEMENT/* \\
+      2-DOMAINS-LEVELS/[DOMAIN]/TFA/ELEMENTS/FE/
+
+# Create missing structures automatically  
+make scaffold
+
+# Validate implementation
+make check
+```
+
+See `8-RESOURCES/TEMPLATES/USAGE-GUIDE.md` for complete documentation.
 
 ---
 

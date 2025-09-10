@@ -1,8 +1,16 @@
-# FE · FINE ELEMENT (AAA)
+# FE · FEDERATION ELEMENT (AAA)
 
-Purpose: Finite element model artifacts and metadata (meshes, materials, BCs).
+**Layer:** ELEMENTS
+**LLC Code:** FE
+**Canonical Meaning:** FEDERATION ELEMENT
+
+This directory contains artifacts and implementations for the FEDERATION ELEMENT within the AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES domain.
+
+Purpose: Cross-domain orchestration and distributed element federation for aerodynamics and airframe architectures.
 
 **Artifacts:**
-- `mesh.meta.*` — Mesh provenance, scale, quality
-- `materials.*` — Material cards and sources
-- Link to SE stations and CI baselines
+- `federation-manifest.*` — Cross-domain federation configurations
+- `orchestration-rules.*` — Element coordination protocols
+- `distributed-state.*` — Shared state management
+- `se-station-links.*` — References to SE stations
+- `ci-baseline-links.*` — References to CI baselines

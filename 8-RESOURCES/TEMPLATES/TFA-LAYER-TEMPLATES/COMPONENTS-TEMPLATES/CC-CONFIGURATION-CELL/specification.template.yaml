@@ -1,0 +1,34 @@
+# CC Specification Template
+metadata:
+  template_version: "1.0"
+  llc_code: "CC"
+  llc_name: "CONFIGURATION CELL"
+  tfa_layer: "COMPONENTS"
+  domain: "[DOMAIN-CODE]"
+  created: "[DATE]"
+  author: "[AUTHOR]"
+
+specification:
+  id: "[CC-ID]"
+  description: "[DESCRIPTION]"
+  version: "[VERSION]"
+  
+  # CONFIGURATION CELL specific configuration
+  configuration:
+    # Add CC-specific parameters here
+    placeholder_param: "[VALUE]"
+    
+  # Standard TFA V2 metadata
+  tfa_metadata:
+    layer: "COMPONENTS"
+    llc: "CC"
+    quantum_enabled: false
+    classical_bridge: false
+    federation_capable: false
+
+# Validation rules
+validation:
+  required_fields: ["id", "description", "version"]
+  format_rules:
+    id: "^[A-Z]{3}-CC-[0-9]{3}$"
+    version: "^[0-9]+\.[0-9]+\.[0-9]+$"

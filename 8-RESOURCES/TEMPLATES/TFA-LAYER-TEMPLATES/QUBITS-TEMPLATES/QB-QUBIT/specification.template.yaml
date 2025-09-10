@@ -1,0 +1,34 @@
+# QB Specification Template
+metadata:
+  template_version: "1.0"
+  llc_code: "QB"
+  llc_name: "QUBIT"
+  tfa_layer: "QUBITS"
+  domain: "[DOMAIN-CODE]"
+  created: "[DATE]"
+  author: "[AUTHOR]"
+
+specification:
+  id: "[QB-ID]"
+  description: "[DESCRIPTION]"
+  version: "[VERSION]"
+  
+  # QUBIT specific configuration
+  configuration:
+    # Add QB-specific parameters here
+    placeholder_param: "[VALUE]"
+    
+  # Standard TFA V2 metadata
+  tfa_metadata:
+    layer: "QUBITS"
+    llc: "QB"
+    quantum_enabled: true
+    classical_bridge: false
+    federation_capable: false
+
+# Validation rules
+validation:
+  required_fields: ["id", "description", "version"]
+  format_rules:
+    id: "^[A-Z]{3}-QB-[0-9]{3}$"
+    version: "^[0-9]+\.[0-9]+\.[0-9]+$"

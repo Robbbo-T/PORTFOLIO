@@ -1,0 +1,55 @@
+# qubit-specification.template.yaml
+metadata:
+  template_version: "1.0"
+  llc_code: "QB"
+  llc_name: "QUBIT"
+  tfa_layer: "QUBITS"
+  domain: "[DOMAIN-CODE]"
+  created: "[DATE]"
+  author: "[AUTHOR]"
+
+qubit_specification:
+  qubit_id: "[QUBIT-ID]"
+  type: "[PHYSICAL/LOGICAL/VIRTUAL]"
+  
+  quantum_properties:
+    coherence_time_us: "[VALUE]"
+    gate_fidelity: "[0.0-1.0]"
+    readout_fidelity: "[0.0-1.0]"
+    operating_temperature: "[MILLIKELVIN]"
+  
+  meta_elements:
+    - element_id: "[META-001]"
+      element_type: "[TYPE]"
+      quantum_state: "[STATE]"
+  
+  entanglement_map:
+    - partner_qubit: "[QUBIT-ID]"
+      entanglement_type: "[BELL/GHZ/CUSTOM]"
+      fidelity: "[0.0-1.0]"
+      
+  operations:
+    supported_gates: ["X", "Y", "Z", "H", "CNOT", "T"]
+    custom_operations: []
+    gate_times:
+      single_qubit_ns: "[VALUE]"
+      two_qubit_ns: "[VALUE]"
+
+# Classical bit interface (CB bridge)
+classical_interface:
+  readout_method: "[DISPERSIVE/FLUORESCENCE]"
+  measurement_time_us: "[VALUE]"
+  classical_register: "[REGISTER-ID]"
+
+# Error correction
+error_correction:
+  enabled: "[true/false]"
+  code_type: "[SURFACE/REPETITION/CUSTOM]"
+  logical_error_rate: "[VALUE]"
+
+# Validation rules
+validation:
+  required_fields: ["qubit_id", "type", "coherence_time_us"]
+  format_rules:
+    qubit_id: "^[A-Z]{3}-QB-[0-9]{3}$"
+    fidelity: "^0\\.[0-9]+|1\\.0$"
