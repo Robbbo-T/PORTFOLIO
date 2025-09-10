@@ -107,8 +107,20 @@ def find_issues():
 
     # 3) Forbidden terminology scan (repo-wide, light pass)
     text_exts = {".md", ".yaml", ".yml", ".json", ".py", ".qasm", ".xml", ".xsd", ".proto", ".r", ".jl"}
+    excluded_files = {
+        "scripts/validate_tfa.py",  # This validator itself
+        "scripts/scaffold_tfa.py",  # Scaffolding script
+        "8-RESOURCES/llc-map.yaml", # LLC mapping defines forbidden terms
+        ".github/workflows/quantum-layers-check.yml", # Workflow file
+    }
+    
     for path in REPO.rglob("*"):
         if path.is_file() and path.suffix in text_exts:
+            # Skip validation scripts and configuration files that define forbidden terms
+            relative_path = str(path.relative_to(REPO))
+            if relative_path in excluded_files:
+                continue
+                
             try:
                 text = path.read_text(encoding="utf-8", errors="ignore")
             except Exception:

@@ -77,18 +77,18 @@ jobs:
         run: |
           echo "🔍 Scanning for forbidden terminology..."
           
-          # Check for "Fine Element" instead of "Federation Element"
+          # Check for "FE incorrect" instead of "Federation Element"
           fine_element_files=$(grep -r "Fine Element" --include="*.md" --include="*.yaml" --include="*.yml" --include="*.json" . || true)
           if [ -n "$fine_element_files" ]; then
-            echo "❌ Found 'Fine Element' - must be 'Federation Element':"
+            echo "❌ Found 'FE incorrect term' - must be 'Federation Element':"
             echo "$fine_element_files"
             exit 1
           fi
           
-          # Check for "Station Envelop" instead of "Station Envelope"  
+          # Check for "SE typo" instead of "Station Envelope"  
           envelop_files=$(grep -r "Station Envelop[^e]" --include="*.md" --include="*.yaml" --include="*.yml" --include="*.json" . || true)
           if [ -n "$envelop_files" ]; then
-            echo "❌ Found 'Station Envelop' - must be 'Station Envelope':"
+            echo "❌ Found 'SE typo' - must be 'Station Envelope':"
             echo "$envelop_files" 
             exit 1
           fi

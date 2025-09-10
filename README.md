@@ -171,13 +171,17 @@ DOMAIN/
 |---|---|
 | **SI** | SYSTEM INTEGRATION |
 | **DI** | DOMAIN INTERFACE |
-| **SE** | STATION ENVELOP |
+| **SE** | STATION ENVELOPE |
 | **CV** | COMPONENT VENDOR |
 | **CE** | COMPONENT EQUIPMENT |
 | **CC** | CONFIGURATION CELL |
 | **CI** | CONFIGURATION ITEM |
 | **CP** | COMPONENT PART |
+| **CB** | CLASSICAL BIT |
+| **QB** | QUBIT |
+| **UE** | UNIT ELEMENT |
 | **FE** | FEDERATION ELEMENT |
+| **FWD** | Future/Foresight/Fluctuant/Functional Waves Dynamics |
 | **QS** | QUANTUM STATE |
 
 ---
