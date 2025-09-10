@@ -1,16 +1,16 @@
-# PORTFOLIO
-Threading Final Assembly
 # Amedeo Pelliccia · Portfolio
+
+Strict **TFA-only** domains. Snapshot: 2025-09-10T12:02:06.022990Z
 
 ## ASSEMBLING GENERAL INTELLIGENCE (AGI) — For Aerospace Knowledge Competencies
 **Author**: Amedeo Pelliccia  
 **Starting Date**: 25/11/2024  
 **TFA Snapshot**: 2025-09-10T12:02:06.022990Z
 
-### Policy
+### Policy - STRICT TFA-ONLY
 - Each domain uses **`TFA/`** as the canonical container.
-- Subgroups: **SYSTEMS/** (SI, SE, DI), **COMPONENTS/** (CE, CC, CI, CP), **ELEMENTS/** (FE), **STATES/** (QS), **META/** (README).
-- Legacy flat tree `<DOMAIN>/<LLC>/` remains for back-compat. New work must target `TFA/<GROUP>/<LLC>/`.
+- Subgroups: **SYSTEMS/** (SI, SE, DI), **COMPONENTS/** (CE, CC, CI, CP, CV), **ELEMENTS/** (FE), **STATES/** (QS), **META/** (README).
+- **NO FLAT LLC FOLDERS** under `2-DOMAINS-LEVELS/<DOMAIN>/` - ALL work must target `TFA/<GROUP>/<LLC>/`.
 
 
 # Rebuild portfolio from scratch with STRICT TFA-ONLY policy (no flat LLC folders), then package a ZIP and tree listings.
