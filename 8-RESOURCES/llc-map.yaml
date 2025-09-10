@@ -3,88 +3,85 @@
 # Used by validators, templates, and documentation generation
 
 version: "2.0"
-updated: "2025-09-10T23:22:00Z"
+updated: "2025-09-11T00:00:00Z"
 
 llc_codes:
   # SYSTEMS Layer
   SI: "SYSTEM INTEGRATION"
   DI: "DOMAIN INTERFACE"
-  
-  # STATIONS Layer  
+
+  # STATIONS Layer
   SE: "STATION ENVELOPE"
-  
+
   # COMPONENTS Layer
   CV: "COMPONENT VENDOR"
   CE: "COMPONENT EQUIPMENT"
   CC: "CONFIGURATION CELL"
   CI: "CONFIGURATION ITEM"
   CP: "COMPONENT PART"
-  
+
   # BITS Layer (Classical)
   CB: "CLASSICAL BIT"
-  
+
   # QUBITS Layer (Quantum)
   QB: "QUBIT"
-  
+
   # ELEMENTS Layer (Dual System)
-  UE: "UNIT ELEMENT"                    # Classical fundamental
-  FE: "FEDERATION ELEMENT"              # NOT Fine Element
-  
+  UE: "UNIT ELEMENT"            # Classical fundamental
+  FE: "FEDERATION ELEMENT"      # NOT Fine Element
+
   # WAVES Layer (Dynamics)
   FWD: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
-  
+
   # STATES Layer (Quantum)
   QS: "QUANTUM STATE"
 
-# TFA Layer Structure (per domain)
 tfa_layers:
   SYSTEMS:
     description: "System-level integration and interfaces"
     llc_codes: ["SI", "DI"]
-    
+
   STATIONS:
     description: "Station envelope definitions and boundaries"
     llc_codes: ["SE"]
-    
+
   COMPONENTS:
     description: "Component configurations and parts management"
     llc_codes: ["CV", "CE", "CC", "CI", "CP"]
-    
+
   BITS:
     description: "Classical bit processing and logic"
     llc_codes: ["CB"]
-    
+
   QUBITS:
     description: "Quantum bit processing and entanglement"
     llc_codes: ["QB"]
-    
+
   ELEMENTS:
     description: "Fundamental and federation element management"
     llc_codes: ["UE", "FE"]
-    
+
   WAVES:
     description: "Wave dynamics for predictive/retrodictive analysis"
     llc_codes: ["FWD"]
-    
+
   STATES:
     description: "Quantum state definitions and measurements"
     llc_codes: ["QS"]
-    
+
   META:
     description: "Domain metadata and documentation"
     files: ["README.md"]
 
-# Forbidden terminology (will cause validation failure)
 forbidden_terms:
   - pattern: "\\bFine\\s+Element\\b"
     replacement: "Federation Element"
     reason: "FE must be Federation Element, not Fine Element"
-    
-  - pattern: "\\bStation\\s+Envelop\\b" 
+
+  - pattern: "\\bStation\\s+Envelop\\b"
     replacement: "Station Envelope"
     reason: "SE must be Station Envelope, not Envelop"
 
-# Expected 15 aerospace domains (exact names)
 domains:
   - "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES"
   - "AAP-AIRPORT-ADAPTABLE-PLATFORMS"

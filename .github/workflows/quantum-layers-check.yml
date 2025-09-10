@@ -4,52 +4,62 @@ on:
   push:
     branches: [ main, develop, "copilot/**" ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
-  quantum-classical-bridge:
+  layers:
+    name: Guard terminology & domain layers
     runs-on: ubuntu-latest
-    name: Verify Quantum-Classical Bridge Architecture
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - name: Check quantum layers presence
+      - uses: actions/checkout@v4
+
+      - name: Guard LLC terminology & layers
+        shell: bash
         run: |
-          echo "🔍 Checking quantum-classical bridge layers..."
-          
-          missing_layers=()
-          
-          # Check for quantum layers in at least one domain
-          if [ -d "2-DOMAINS-LEVELS" ]; then
-            for domain in 2-DOMAINS-LEVELS/*/; do
-              domain_name=$(basename "$domain")
-              if [[ "$domain_name" != "_*" ]]; then
-                echo "Checking $domain_name..."
-                
-                # Check required quantum layers
-                for layer in "BITS/CB" "QUBITS/QB" "ELEMENTS/UE" "ELEMENTS/FE" "WAVES/FWD" "STATES/QS"; do
-                  if [ ! -d "$domain/TFA/$layer" ]; then
-                    missing_layers+=("$domain_name:TFA/$layer")
-                  fi
-                done
-              fi
-            done
-          fi
-          
-          if [ ${#missing_layers[@]} -gt 0 ]; then
-            echo "❌ Missing quantum-classical bridge components:"
-            printf '%s\n' "${missing_layers[@]}"
+          set -euo pipefail
+
+          echo "🔍 Scanning for forbidden terminology…"
+          # Reject 'Fine Element' and 'Station Envelop'
+          if grep -RInE "\bFine[[:space:]]+Element\b|\bStation[[:space:]]+Envelop\b" \
+              --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
+              --include='*.py' --include='*.qasm' --include='*.xml' --include='*.xsd' \
+              --include='*.proto' --include='*.r' --include='*.jl' . ; then
+            echo "::error::Forbidden terminology found (use 'Federation Element' and 'Station Envelope')."
             exit 1
           fi
-          
-          echo "✅ Quantum-classical bridge architecture verified"
-          
-      - name: Verify code implementation buckets
+          echo "✅ Terminology OK"
+
+          echo "🔍 Checking quantum-classical bridge layers across domains…"
+          MISSING=0
+          if [ -d "2-DOMAINS-LEVELS" ]; then
+            for D in 2-DOMAINS-LEVELS/*; do
+              [ -d "$D/TFA" ] || continue
+              for pair in BITS/CB QUBITS/QB ELEMENTS/UE ELEMENTS/FE WAVES/FWD STATES/QS; do
+                if [ ! -e "$D/TFA/$pair" ]; then
+                  echo "::error file=$D::Missing $pair"
+                  MISSING=1
+                fi
+              done
+            done
+          fi
+          [ $MISSING -eq 0 ] || exit 1
+          echo "✅ Domain layers OK"
+
+  impl_buckets:
+    name: Verify code implementation buckets
+    runs-on: ubuntu-latest
+    needs: layers
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Python implementation buckets
+        shell: bash
         run: |
-          echo "🔍 Checking Python implementation buckets..."
-          
+          set -euo pipefail
+
+          echo "🔍 Verifying Python buckets exist…"
+          missing=0
           buckets=(
             "5-ARTIFACTS-IMPLEMENTATION/CODE/python/classical-bits"
             "5-ARTIFACTS-IMPLEMENTATION/CODE/python/quantum-qubits"
@@ -57,40 +67,11 @@ jobs:
             "5-ARTIFACTS-IMPLEMENTATION/CODE/python/federation-elements"
             "5-ARTIFACTS-IMPLEMENTATION/CODE/python/wave-dynamics"
           )
-          
-          missing_buckets=()
-          for bucket in "${buckets[@]}"; do
-            if [ ! -d "$bucket" ]; then
-              missing_buckets+=("$bucket")
+          for b in "${buckets[@]}"; do
+            if [ ! -d "$b" ]; then
+              echo "::error::Missing implementation bucket: $b"
+              missing=1
             fi
           done
-          
-          if [ ${#missing_buckets[@]} -gt 0 ]; then
-            echo "❌ Missing implementation buckets:"
-            printf '%s\n' "${missing_buckets[@]}"
-            exit 1
-          fi
-          
-          echo "✅ All implementation buckets present"
-          
-      - name: Scan for forbidden terminology  
-        run: |
-          echo "🔍 Scanning for forbidden terminology..."
-          
-          # Check for "FE incorrect" instead of "Federation Element"
-          fine_element_files=$(grep -r "Fine Element" --include="*.md" --include="*.yaml" --include="*.yml" --include="*.json" . || true)
-          if [ -n "$fine_element_files" ]; then
-            echo "❌ Found 'FE incorrect term' - must be 'Federation Element':"
-            echo "$fine_element_files"
-            exit 1
-          fi
-          
-          # Check for "SE typo" instead of "Station Envelope"  
-          envelop_files=$(grep -r "Station Envelop[^e]" --include="*.md" --include="*.yaml" --include="*.yml" --include="*.json" . || true)
-          if [ -n "$envelop_files" ]; then
-            echo "❌ Found 'SE typo' - must be 'Station Envelope':"
-            echo "$envelop_files" 
-            exit 1
-          fi
-          
-          echo "✅ No forbidden terminology detected"
+          [ $missing -eq 0 ] || exit 1
+          echo "✅ Implementation buckets OK"
