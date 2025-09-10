@@ -144,7 +144,7 @@ def main():
         print("❌ TFA validation failed:\n")
         for i, msg in enumerate(issues, 1):
             print(f"{i:02d}. {msg}")
-        print(f"\nTip: run `make scaffold` to create any missing folders.")
+        print("\nTip: run `make scaffold` to create any missing folders.")
         sys.exit(1)
     else:
         print("✅ TFA V2 structure validation passed!")
