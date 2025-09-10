@@ -150,7 +150,7 @@ def main():
         print("✅ TFA V2 structure validation passed!")
         print(f"✓ All {len(EXPECTED_DOMAINS)} domains present with complete TFA hierarchy")
         print("✓ Quantum-classical bridge verified (CB/QB/UE/FE/FWD/QS)")
-        print(f"✓ No forbidden terminology found")
+        print("✓ No forbidden terminology found")
 
 if __name__ == "__main__":
     main()
