@@ -1,0 +1,7 @@
+# CE · COMPONENT EQUIPMENT (IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES)
+
+**Layer:** COMPONENTS
+**LLC Code:** CE
+**Canonical Meaning:** COMPONENT EQUIPMENT
+
+This directory contains artifacts and implementations for the COMPONENT EQUIPMENT within the IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES domain.

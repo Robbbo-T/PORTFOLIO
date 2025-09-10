@@ -2,19 +2,53 @@ name: TFA Structure Validator
 
 on:
   push:
+    branches: [ main, develop, "copilot/**" ]
   pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
 
 jobs:
   validate:
+    name: Validate TFA V2 Architecture
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
+
       - name: Install deps
         run: |
           python -m pip install --upgrade pip
           pip install pyyaml
-      - name: Run validator
+
+      - name: Run TFA structure validation
         run: python scripts/validate_tfa.py
+
+      - name: Verify LLC mapping integrity
+        run: |
+          if [ ! -f "8-RESOURCES/llc-map.yaml" ]; then
+            echo "::error::Missing LLC mapping file: 8-RESOURCES/llc-map.yaml"
+            exit 1
+          fi
+          echo "✅ LLC mapping file present"
+
+      - name: Check forbidden flat LLC paths
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Disallow LLC directories directly under a domain (must live under TFA/<GROUP>/<LLC>/)
+          bad=$(find 2-DOMAINS-LEVELS -maxdepth 3 -type d \( \
+                -name SI  -o -name SE  -o -name DI  -o -name CE  -o -name CC  -o -name CI  -o -name CP  -o -name CV  -o \
+                -name CB  -o -name QB  -o -name UE  -o -name FE  -o -name FWD -o -name QS \
+              \) -not -path "*/TFA/*" -print || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Found disallowed flat LLC paths (expected TFA/<GROUP>/<LLC>/):"
+            echo "$bad"
+            exit 1
+          fi
+          echo "✅ No flat LLC paths detected"

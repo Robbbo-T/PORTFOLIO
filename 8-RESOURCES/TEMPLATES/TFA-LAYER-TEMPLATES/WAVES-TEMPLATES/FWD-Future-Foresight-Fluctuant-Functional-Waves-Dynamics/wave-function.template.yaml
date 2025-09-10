@@ -1,0 +1,68 @@
+# wave-function.template.yaml
+metadata:
+  template_version: "1.0"
+  llc_code: "FWD"
+  llc_name: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
+  tfa_layer: "WAVES"
+  domain: "[DOMAIN-CODE]"
+  created: "[DATE]"
+  author: "[AUTHOR]"
+
+wave_specification:
+  wave_id: "[WAVE-ID]"
+  wave_type: "[FUTURE/FORESIGHT/FLUCTUANT/FUNCTIONAL]"
+  
+  dynamics_model:
+    equation_type: "[SCHRODINGER/HAMILTON/CUSTOM]"
+    dimensionality: "[1D/2D/3D/ND]"
+    boundary_conditions: "[PERIODIC/REFLECTIVE/ABSORBING]"
+  
+  prediction_engine:
+    algorithm: "[ML/QUANTUM/HYBRID]"
+    time_horizon: "[SECONDS/MINUTES/HOURS]"
+    accuracy_target: "[PERCENTAGE]"
+  
+  fluctuation_analysis:
+    noise_model: "[WHITE/PINK/COLORED]"
+    variance_threshold: "[VALUE]"
+    correlation_length: "[UNITS]"
+  
+  foresight_scenarios:
+    - scenario_id: "[SCENARIO-001]"
+      probability: "[0.0-1.0]"
+      impact_level: "[LOW/MEDIUM/HIGH/CRITICAL]"
+      mitigation_strategy: "[STRATEGY]"
+
+# Quantum wave properties
+quantum_properties:
+  wave_packet:
+    center_frequency: "[HZ]"
+    bandwidth: "[HZ]"
+    amplitude: "[NORMALIZED]"
+  
+  superposition_states:
+    - state_id: "[STATE-001]"
+      coefficient: "[COMPLEX]"
+      phase: "[RADIANS]"
+
+# Classical coupling
+classical_coupling:
+  measurement_observable: "[POSITION/MOMENTUM/ENERGY]"
+  coupling_strength: "[VALUE]"
+  decoherence_rate: "[PER_SECOND]"
+
+# Predictive capabilities
+forecasting:
+  methods: ["REGRESSION", "NEURAL_NETWORK", "QUANTUM_SIMULATION"]
+  confidence_intervals: "[PERCENTAGE]"
+  validation_metrics:
+    mae: "[MEAN_ABSOLUTE_ERROR]"
+    rmse: "[ROOT_MEAN_SQUARE_ERROR]"
+    r_squared: "[R_SQUARED_VALUE]"
+
+# Validation rules
+validation:
+  required_fields: ["wave_id", "wave_type", "dynamics_model"]
+  format_rules:
+    wave_id: "^[A-Z]{3}-FWD-[0-9]{3}$"
+    probability: "^0\\.[0-9]+|1\\.0$"

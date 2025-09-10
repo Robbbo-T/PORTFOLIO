@@ -2,38 +2,76 @@ name: Quantum Layers Check
 
 on:
   push:
+    branches: [ main, develop, "copilot/**" ]
   pull_request:
+    branches: [ main, develop ]
   workflow_dispatch:
 
 jobs:
   layers:
+    name: Guard terminology & domain layers
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Guard LLC terminology & layers
+        shell: bash
         run: |
-          # Reject forbidden terminology
-          if grep -RInE "\bFine[[:space:]]+Element\b|\bStation[[:space:]]+Envelop\b" --include='*.{md,yaml,yml,json,py,qasm,xml,xsd,proto,r,jl}' . ; then
+          set -euo pipefail
+
+          echo "🔍 Scanning for forbidden terminology…"
+          # Reject 'Fine Element' and 'Station Envelop'
+          if grep -RInE "\bFine[[:space:]]+Element\b|\bStation[[:space:]]+Envelop\b" \
+              --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
+              --include='*.py' --include='*.qasm' --include='*.xml' --include='*.xsd' \
+              --include='*.proto' --include='*.r' --include='*.jl' . ; then
             echo "::error::Forbidden terminology found (use 'Federation Element' and 'Station Envelope')."
             exit 1
           fi
+          echo "✅ Terminology OK"
 
-          # Enforce CB/QB/UE/FE/FWD/QS across domains
+          echo "🔍 Checking quantum-classical bridge layers across domains…"
           MISSING=0
-          for D in 2-DOMAINS-LEVELS/*; do
-            [ -d "$D/TFA" ] || continue
-            for pair in \
-              "BITS/CB" \
-              "QUBITS/QB" \
-              "ELEMENTS/UE" \
-              "ELEMENTS/FE" \
-              "WAVES/FWD" \
-              "STATES/QS"
-            do
-              if [ ! -e "$D/TFA/$pair" ]; then
-                echo "::error file=$D::Missing $pair"
-                MISSING=1
-              fi
+          if [ -d "2-DOMAINS-LEVELS" ]; then
+            for D in 2-DOMAINS-LEVELS/*; do
+              [ -d "$D/TFA" ] || continue
+              for pair in BITS/CB QUBITS/QB ELEMENTS/UE ELEMENTS/FE WAVES/FWD STATES/QS; do
+                if [ ! -e "$D/TFA/$pair" ]; then
+                  echo "::error file=$D::Missing $pair"
+                  MISSING=1
+                fi
+              done
             done
-          done
+          fi
           [ $MISSING -eq 0 ] || exit 1
+          echo "✅ Domain layers OK"
+
+  impl_buckets:
+    name: Verify code implementation buckets
+    runs-on: ubuntu-latest
+    needs: layers
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check Python implementation buckets
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          echo "🔍 Verifying Python buckets exist…"
+          missing=0
+          buckets=(
+            "5-ARTIFACTS-IMPLEMENTATION/CODE/python/classical-bits"
+            "5-ARTIFACTS-IMPLEMENTATION/CODE/python/quantum-qubits"
+            "5-ARTIFACTS-IMPLEMENTATION/CODE/python/unit-elements"
+            "5-ARTIFACTS-IMPLEMENTATION/CODE/python/federation-elements"
+            "5-ARTIFACTS-IMPLEMENTATION/CODE/python/wave-dynamics"
+          )
+          for b in "${buckets[@]}"; do
+            if [ ! -d "$b" ]; then
+              echo "::error::Missing implementation bucket: $b"
+              missing=1
+            fi
+          done
+          [ $missing -eq 0 ] || exit 1
+          echo "✅ Implementation buckets OK"

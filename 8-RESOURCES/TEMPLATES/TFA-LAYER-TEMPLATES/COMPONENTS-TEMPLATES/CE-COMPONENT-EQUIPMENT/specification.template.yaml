@@ -1,0 +1,34 @@
+# CE Specification Template
+metadata:
+  template_version: "1.0"
+  llc_code: "CE"
+  llc_name: "COMPONENT EQUIPMENT"
+  tfa_layer: "COMPONENTS"
+  domain: "[DOMAIN-CODE]"
+  created: "[DATE]"
+  author: "[AUTHOR]"
+
+specification:
+  id: "[CE-ID]"
+  description: "[DESCRIPTION]"
+  version: "[VERSION]"
+  
+  # COMPONENT EQUIPMENT specific configuration
+  configuration:
+    # Add CE-specific parameters here
+    placeholder_param: "[VALUE]"
+    
+  # Standard TFA V2 metadata
+  tfa_metadata:
+    layer: "COMPONENTS"
+    llc: "CE"
+    quantum_enabled: false
+    classical_bridge: false
+    federation_capable: false
+
+# Validation rules
+validation:
+  required_fields: ["id", "description", "version"]
+  format_rules:
+    id: "^[A-Z]{3}-CE-[0-9]{3}$"
+    version: "^[0-9]+\.[0-9]+\.[0-9]+$"
