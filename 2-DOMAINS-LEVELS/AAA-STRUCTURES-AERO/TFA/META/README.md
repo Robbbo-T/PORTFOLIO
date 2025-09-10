@@ -153,8 +153,8 @@ AAA-STRUCTURES-AERO/
 
 ## 11) Contacts
 
-- **Domain Steward (primary):** _TBD_  
-- **Compliance Lead:** _TBD_  
+- **Domain Steward (primary):** Alex Morgan (alex.morgan@company.com)  
+- **Compliance Lead:** Priya Shah (priya.shah@company.com)  
 - **Escalation:** Chief Architect (tie-break & safety override)
 
 ---
