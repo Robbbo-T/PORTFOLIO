@@ -6,6 +6,9 @@
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/Version-v1.0-green.svg)
 ![TFA-Compliant](https://img.shields.io/badge/Architecture-TFA--Only-orange.svg)
+<!-- Optional: replace ORG/REPO to enable CI badge
+[![TFA Structure Validator](https://github.com/ORG/REPO/actions/workflows/tfa_structure_validator.yml/badge.svg)](https://github.com/ORG/REPO/actions/workflows/tfa_structure_validator.yml)
+-->
 
 ---
 
@@ -25,13 +28,15 @@ To create a unified, intelligent framework that bridges the gap between traditio
 
 ## 🏗️ Architecture Overview
 
-This portfolio follows the **TFA (Top Final Algorithm)** methodology - a strict architectural pattern that ensures optimal organization and scalability:
+This portfolio follows the **TFA (Top Final Algorithm)** methodology—a strict organizational pattern that enforces:
+- **Strict TFA-Only** containers per domain
+- **Deterministic traceability** across Systems, **Stations**, Components, Elements, and States
+- **AI-first** integrations with robust governance and auditability
 
-### Core Principles
-- **Strict TFA-Only**: All work organized under `TFA/` containers
-- **Domain Segregation**: 15 specialized aerospace domains
-- **Hierarchical Structure**: Clear separation of Systems, Components, Elements, and States
-- **AI-First Approach**: Every domain integrates artificial intelligence capabilities
+**STRICT TFA-ONLY policy**  
+- Each domain uses `TFA/` as the canonical container.  
+- **NO FLAT LLC FOLDERS** under `2-DOMAINS-LEVELS/<DOMAIN>/`.  
+- All work targets `TFA/<GROUP>/<LLC>/`.
 
 ---
 
@@ -42,39 +47,41 @@ Strategic planning, governance, mission, and vision documents.
 
 ### 🔧 [1-CAX-METHODOLOGY](./1-CAX-METHODOLOGY/)
 Comprehensive Computer-Aided X (CAx) methodology covering:
-- **CAB** - Brainstorming & Innovation
-- **CAC** - Compliance & Safety Codes
-- **CAD** - Design & MBSE
-- **CAE** - Engineering & Simulation
-- **CAF** - Finance & Blockchain Economics
-- **CAI** - AI Integration & Orchestration
-- **CAM** - Manufacturing & Production
-- **CAO** - Organization & Governance
-- **CAP** - Production Planning
-- **CAS** - Sustainment & S1000D
-- **CAT** - Testing & Validation
-- **CAV** - Verification & V&V
+- **CAB** – Brainstorming & Innovation  
+- **CAC** – Compliance & Safety Codes  
+- **CAD** – Design & MBSE  
+- **CAE** – Engineering & Simulation  
+- **CAF** – Finance & Blockchain Economics  
+- **CAI** – AI Integration & Orchestration  
+- **CAM** – Manufacturing & Production  
+- **CAO** – Organization & Governance  
+- **CAP** – Production Planning  
+- **CAS** – Sustainment & S1000D  
+- **CAT** – Testing & Validation  
+- **CAV** – Verification & V&V  
 
 ### 🎛️ [2-DOMAINS-LEVELS](./2-DOMAINS-LEVELS/)
-15 specialized aerospace domains following strict TFA architecture:
+15 specialized aerospace domains following strict TFA architecture (names **verbatim** as provided):
 
-| Domain | Focus Area | TFA Structure |
-|--------|------------|---------------|
-| **AAA-STRUCTURES-AERO** | Aerospace Structures | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **AAP-GROUND-SUPPORT** | Ground Support Equipment | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **CCC-CABIN-COCKPIT** | Cabin & Cockpit Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **CQH-CRYO-H2** | Cryogenic Hydrogen Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **DDD-SAFETY-CYBER** | Safety & Cybersecurity | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **EDI-ELECTRONICS** | Electronic Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **EEE-ENVIRONMENTAL** | Environmental Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **EER-ENERGY-BATTERY** | Energy & Battery Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **IIF-INFRASTRUCTURE** | Infrastructure Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **IIS-AI-SYSTEMS** | AI & Intelligent Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **LCC-CONTROLS-COMMS** | Control & Communication | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **LIB-LOGISTICS-CHAIN** | Logistics & Supply Chain | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **MMM-MECHANICAL** | Mechanical Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **OOO-OS-NAVIGATION** | OS & Navigation Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
-| **PPP-PROPULSION-FUEL** | Propulsion & Fuel Systems | ✅ TFA/SYSTEMS/COMPONENTS/ELEMENTS/STATES |
+| Code | Precise Domain Name (verbatim) | TFA Structure |
+|---|---|---|
+| **AAA** | AERODYNAMICS AND AIRFREAMES ARCHITECTURES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **AAP** | AIRPORT ADAPTABLE PLATFORMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **CCC** | COCKPIT CABIN AND CARGO | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **CQH** | CRYOGENICS, QUANTUM AND H2 | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **EDI** | ELETRONICS DIGITAL INSTRUMENTS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **DDD** | DIGITAL  AND DATA DEFENSE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **EEE** | ECOLOGICAL EFFICIENT ELETRIFICATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **EER** | ENVIRONMENTAL EMISSIONS AND REMEDIATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **IIF** | INDUSTRIAL INFRASTRUCTURE FACILITIES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **IIS** | INTEGRATED INTELLIGENCE SOFTWARE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **LCC** | LINKAGES CONTROL AND COMMUNICATIONS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **LIB** | LOGISTICS INVENTORY AND BLOCKCHAIN | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **MMM** | MECHANICAL AND MATERIAL  MODULES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **OOO** | OS, ONTOLOGIES AND OFFICE INTERFACES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+| **PPP** | PROPULSION & FUEL SYSTEMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/ELEMENTS/STATES |
+
+> ⚠️ *Note on Spelling:* Certain terms are preserved **verbatim** from source materials (e.g., **AIRFREAMES**, **ELETRONICS**, **ELETRIFICATION**, and intentional double spaces) to maintain backward traceability with upstream taxonomies and contracts.
 
 ### 🚀 [3-PROJECTS-USE-CASES](./3-PROJECTS-USE-CASES/)
 Real-world applications and use case implementations.
@@ -84,135 +91,205 @@ Ongoing research initiatives and experimental developments.
 
 ### ⚙️ [5-ARTIFACTS-IMPLEMENTATION](./5-ARTIFACTS-IMPLEMENTATION/)
 Code implementations in multiple languages:
-- **Python** - AI/ML and data processing
-- **C** - Real-time and embedded systems
-- **Rust** - High-performance and safety-critical systems
-- **TypeScript** - Web interfaces and APIs
-- **Julia** - Scientific computing
-- **XSLT** - Data transformation
-- **Solidity** - Blockchain smart contracts
+- **Python** – AI/ML and data processing  
+- **C** – Real-time and embedded systems  
+- **Rust** – High-performance and safety-critical systems  
+- **TypeScript** – Web interfaces and APIs  
+- **Julia** – Scientific computing  
+- **XSLT** – Data transformation  
+- **Solidity** – Blockchain smart contracts  
 
 ### ⛓️ [6-UTCS-BLOCKCHAIN](./6-UTCS-BLOCKCHAIN/)
 Universal Token Classification System (UTCS) blockchain integration.
 
 ### 🏛️ [7-GOVERNANCE](./7-GOVERNANCE/)
-Governance frameworks, policies, and community management.
+Governance frameworks, policies, community management.  
+See also: `7-GOVERNANCE/COMMUNITY/`.
 
 ### 📚 [8-RESOURCES](./8-RESOURCES/)
 Templates, references, assets, and Teknia token resources.
 
 ---
 
-## 🛠️ TFA Architecture Explained
+## 🧵 OPTIMO-DT — Digital Thread (V10.0)
 
-### What is TFA?
-**TFA (Top Final Algorithm)** is our proprietary architectural methodology that ensures:
-- **Consistency**: Every domain follows the same structural pattern
-- **Scalability**: Easy to extend and maintain
-- **Traceability**: Clear relationships between systems, components, and elements
-- **AI-Readiness**: Structure optimized for machine learning and AI processing
+**OPTIMO-DT** provides the Digital Thread backbone:
 
-### TFA Hierarchy
 ```
-DOMAIN/
-├── TFA/
-│   ├── SYSTEMS/
-│   │   ├── SI/ (System Integration)
-│   │   ├── SE/ (System Engineering)
-│   │   └── DI/ (Digital Integration)
-│   ├── COMPONENTS/
-│   │   ├── CE/ (Component Engineering)
-│   │   ├── CC/ (Component Control)
-│   │   ├── CI/ (Component Integration)
-│   │   ├── CP/ (Component Production)
-│   │   └── CV/ (Component Verification)
-│   ├── ELEMENTS/
-│   │   └── FE/ (Finite Elements)
-│   ├── STATES/
-│   │   └── QS/ (Quality States)
-│   └── META/
-│       └── README.md
+
+OPTIMO-DT/
+├── O-ORGANIZATION/          # Enterprise governance (V10.0)
+├── P-PROCESS/               # Process management (V10.0)
+├── T-TECHNICAL/             # Technical implementation (V10.0)
+│   └── SEGMENTS/
+│       ├── AIR/
+│       ├── SPACE/
+│       ├── GROUND/
+│       ├── DEFENSE/
+│       └── CROSS/
+├── I-INSTRUCTION/           # AI/ML systems (V10.0)
+├── M-MACHINE OPERATIONS/    # Digital Twin implementation (V10.0)
+├── config/                  # Configuration files
+├── docs/                    # Documentation
+├── scripts/                 # Automation scripts
+└── tests/                   # Testing framework
+
 ```
 
 ---
 
-## 🚦 Getting Started
+## 🛠️ TFA Architecture Explained
 
-### For Aerospace Engineers
-1. Start with [2-DOMAINS-LEVELS](./2-DOMAINS-LEVELS/) to explore domain-specific work
-2. Review [1-CAX-METHODOLOGY](./1-CAX-METHODOLOGY/) for process frameworks
-3. Check [3-PROJECTS-USE-CASES](./3-PROJECTS-USE-CASES/) for practical applications
+### TFA Hierarchy (per domain)
 
-### For AI/ML Researchers
-1. Explore [2-DOMAINS-LEVELS/IIS-AI-SYSTEMS](./2-DOMAINS-LEVELS/IIS-AI-SYSTEMS/) for AI-specific implementations
-2. Review [1-CAX-METHODOLOGY/CAI-AI-INTEGRATION](./1-CAX-METHODOLOGY/CAI-AI-INTEGRATION/) for integration patterns
-3. Check [5-ARTIFACTS-IMPLEMENTATION/CODE](./5-ARTIFACTS-IMPLEMENTATION/CODE/) for implementation examples
+```
 
-### For Blockchain Developers
-1. Start with [6-UTCS-BLOCKCHAIN](./6-UTCS-BLOCKCHAIN/) for blockchain frameworks
-2. Review [1-CAX-METHODOLOGY/CAF-FINANCE/TEKNIA-TOKENS](./1-CAX-METHODOLOGY/CAF-FINANCE/TEKNIA-TOKENS/) for tokenomics
-3. Explore smart contract implementations in [5-ARTIFACTS-IMPLEMENTATION/CODE/solidity](./5-ARTIFACTS-IMPLEMENTATION/CODE/solidity/)
+DOMAIN/
+└── TFA/
+├── SYSTEMS/
+│   ├── SI/  (SYSTEM INTEGRATION)
+│   └── DI/  (DOMAIN INTERFACE)
+├── STATIONS/
+│   └── SE/  (STATION ENVELOP)
+├── COMPONENTS/
+│   ├── CV/  (COMPONENT VENDOR)
+│   ├── CE/  (COMPONENT EQUIPMENT)
+│   ├── CC/  (CONFIGURATION CELL)
+│   ├── CI/  (CONFIGURATION ITEM)
+│   └── CP/  (COMPONENT PART)
+├── ELEMENTS/
+│   └── FE/  (FINE ELEMENT)
+├── STATES/
+│   └── QS/  (QUANTUM STATE)
+└── META/
+└── README.md
 
-### For General Visitors
-1. Read this README for overview
-2. Check [0-STRATEGY](./0-STRATEGY/) for mission and vision
-3. Browse [8-RESOURCES](./8-RESOURCES/) for templates and references
+```
+
+### LLC Codes — Canonical Meanings (verbatim)
+
+| Code | Meaning |
+|---|---|
+| **SI** | SYSTEM INTEGRATION |
+| **DI** | DOMAIN INTERFACE |
+| **SE** | STATION ENVELOP |
+| **CV** | COMPONENT VENDOR |
+| **CE** | COMPONENT EQUIPMENT |
+| **CC** | CONFIGURATION CELL |
+| **CI** | CONFIGURATION ITEM |
+| **CP** | COMPONENT PART |
+| **FE** | FINE ELEMENT |
+| **QS** | QUANTUM STATE |
+
+---
+
+## 📊 TFA + OPTIMO-DT Overview (Mermaid)
+
+```mermaid
+graph TD
+  TFA[TFA Architecture] --> SYS[SYSTEMS]
+  TFA --> STA[STATIONS]
+  TFA --> CMP[COMPONENTS]
+  TFA --> ELE[ELEMENTS]
+  TFA --> STS[STATES]
+  TFA --> META[META]
+
+  SYS --> SI[SYSTEM INTEGRATION]
+  SYS --> DI[DOMAIN INTERFACE]
+  STA --> SE[STATION ENVELOP]
+
+  CMP --> CV[COMPONENT VENDOR]
+  CMP --> CE[COMPONENT EQUIPMENT]
+  CMP --> CC[CONFIGURATION CELL]
+  CMP --> CI[CONFIGURATION ITEM]
+  CMP --> CP[COMPONENT PART]
+
+  ELE --> FE[FINE ELEMENT]
+  STS --> QS[QUANTUM STATE]
+
+  OPT[OPTIMO-DT V10.0] --> OO[O-ORGANIZATION]
+  OPT --> PP[P-PROCESS]
+  OPT --> TT[T-TECHNICAL/SEGMENTS]
+  OPT --> II[I-INSTRUCTION]
+  OPT --> MM[M-MACHINE OPERATIONS]
+```
+
+---
+
+## 🧠 AGI-Oriented Architecture (IIS + CAI)
+
+* `1-CAX-METHODOLOGY/CAI-AI-INTEGRATION/`: multi-agent orchestration, generative design agents, validation harnesses.
+* `2-DOMAINS-LEVELS/IIS-AI-SYSTEMS/`: integrated intelligence stacks (onboard/ground), quantum-inference pipelines.
+* `*/TFA/STATES/QS/`: AI-derived state evaluations and quantum-state artifacts.
+* Future hooks: federation with air/ground "infranet" cognition layers.
 
 ---
 
 ## 🔧 Technology Stack
 
-- **Languages**: Python, C, Rust, TypeScript, Julia, XSLT, Solidity
-- **AI/ML**: Custom AGI frameworks, machine learning models
-- **Blockchain**: Ethereum-compatible smart contracts, UTCS tokens
-- **Standards**: S1000D, MBSE, Industry 4.0
-- **Tools**: Git, GitHub Actions, Docker, Kubernetes
+* **Languages**: Python, C, Rust, TypeScript, Julia, XSLT, Solidity
+* **AI/ML**: Custom AGI frameworks, model orchestration, validation suites
+* **Blockchain**: Ethereum-compatible smart contracts, UTCS tokens
+* **Standards**: S1000D, MBSE, Industry 4.0
+* **Tooling**: Git, GitHub Actions (structure enforcement), Docker, Kubernetes
+
+---
+
+## 📈 Roadmap Snapshot
+
+| Phase | Key Milestone                   | ETA         |
+| ----- | ------------------------------- | ----------- |
+| v1.0  | TFA Core Bootstrapped           | ✅ Sept 2025 |
+| v1.2  | UTCS Smart Contracts Alpha      | Q4 2025     |
+| v2.0  | CAI/IIS AGI Modules Integration | Mid 2026    |
+| v2.5  | OPTIMO-DT ↔ Digital Twin Sync   | Early 2027  |
+| v3.0  | Quantum Extension (QS Full)     | 2028        |
 
 ---
 
 ## 📊 Key Features
 
-- ✅ **Strict TFA Architecture** - Consistent, scalable organization
-- ✅ **15 Aerospace Domains** - Comprehensive coverage
-- ✅ **Multi-Language Support** - From Python to Solidity
-- ✅ **AI Integration** - Built-in artificial intelligence capabilities
-- ✅ **Blockchain Ready** - UTCS token system and smart contracts
-- ✅ **Industry Standards** - S1000D, MBSE compliance
-- ✅ **Continuous Integration** - Automated quality assurance
+* ✅ **Strict TFA Architecture** — deterministic structure & traceability
+* ✅ **15 Domains** — coverage from **AAA** to **PPP**
+* ✅ **AI Integration** — built-in orchestration & validation (CAI/IIS)
+* ✅ **Blockchain Ready** — UTCS token system & contracts
+* ✅ **Standards** — S1000D, MBSE-aligned artifacts
+* ✅ **CI Enforcement** — prevents flat LLC paths
 
 ---
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
+Please see [CONTRIBUTING.md](./CONTRIBUTING.md).
 
-**Architecture Rules**:
-- ⚠️ **STRICT TFA-ONLY**: Never create flat LLC folders under `2-DOMAINS-LEVELS/<DOMAIN>/`
-- ✅ Always use `2-DOMAINS-LEVELS/<DOMAIN>/TFA/<GROUP>/<LLC>/` structure
-- ✅ Follow the established patterns for Systems, Components, Elements, States
+**Architecture Rules**
+
+* ⚠️ **STRICT TFA-ONLY**: Never create flat LLC folders under `2-DOMAINS-LEVELS/<DOMAIN>/`.
+* ✅ Always use `2-DOMAINS-LEVELS/<DOMAIN>/TFA/<GROUP>/<LLC>/`.
+* ✅ Respect the **LLC canonical meanings** listed above.
 
 ---
 
-## 📈 Roadmap
+## 🏛️ Governance
 
-See [ROADMAP.md](./ROADMAP.md) for detailed development plans and milestones.
+The governance framework (`0-STRATEGY/GOVERNANCE.md`) aligns leadership accountability, compliance-as-code, and continuous auditability across all domains and LLC layers. Community processes live in `7-GOVERNANCE/COMMUNITY/`.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
 
 ---
 
 ## 🔗 Quick Links
 
-- [Strategy & Vision](./0-STRATEGY/)
-- [CAx Methodology](./1-CAX-METHODOLOGY/)
-- [Aerospace Domains](./2-DOMAINS-LEVELS/)
-- [Code Implementations](./5-ARTIFACTS-IMPLEMENTATION/CODE/)
-- [Blockchain Framework](./6-UTCS-BLOCKCHAIN/)
-- [Technical Documentation](./README_ORIGINAL_BACKUP.md) (Full technical tree)
+* [Strategy & Vision](./0-STRATEGY/)
+* [CAx Methodology](./1-CAX-METHODOLOGY/)
+* [Aerospace Domains](./2-DOMAINS-LEVELS/)
+* [Code Implementations](./5-ARTIFACTS-IMPLEMENTATION/CODE/)
+* [Blockchain Framework](./6-UTCS-BLOCKCHAIN/)
+* [Governance & Community](./7-GOVERNANCE/)
 
 ---
 
