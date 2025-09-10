@@ -6,6 +6,8 @@
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Version](https://img.shields.io/badge/Version-v1.0-green.svg)
 ![TFA-Compliant](https://img.shields.io/badge/Architecture-TFA--Only-orange.svg)
+![CI](https://github.com/Robbbo-T/PORTFOLIO/actions/workflows/optimo-ci.yml/badge.svg)
+![Directory Policy](https://github.com/Robbbo-T/PORTFOLIO/actions/workflows/dir-policy.yml/badge.svg)
 
 ---
 
@@ -32,6 +34,66 @@ This portfolio follows the **TFA (Top Final Algorithm)** methodology - a strict 
 - **Domain Segregation**: 15 specialized aerospace domains
 - **Hierarchical Structure**: Clear separation of Systems, Components, Elements, and States
 - **AI-First Approach**: Every domain integrates artificial intelligence capabilities
+
+### 📊 Portfolio Structure Visualization
+
+<details>
+<summary>📁 Click to expand: Portfolio Structure Tree</summary>
+
+```mermaid
+graph TD
+  A[0-STRATEGY] --> A1("📋 MISSION.md")
+  A --> A2("🎯 VISION.md")
+  A --> A3("🛣️ ROADMAP.md")
+
+  B[1-CAX-METHODOLOGY] --> B1(CAB-BRAINSTORMING)
+  B --> B2(CAC-COMPLIANCE-SAFETY-CODE)
+  B --> B3(CAD-DESIGN)
+  B --> B4(CAE-ENGINEERING)
+  B --> B5(CAF-FINANCE)
+  B --> B6(CAI-AI-INTEGRATION)
+  B --> B7(CAM-MANUFACTURING)
+  B --> B8(CAO-ORGANIZATION)
+  B --> B9(CAP-PRODUCTION)
+  B --> B10(CAS-SUSTAINMENT)
+  B --> B11(CAT-TESTING)
+  B --> B12(CAV-VERIFICATION)
+
+  C[2-DOMAINS-LEVELS] --> C1(AAA-STRUCTURES-AERO)
+  C --> C2(CCC-CABIN-COCKPIT)
+  C --> C3(PPP-PROPULSION-FUEL)
+  C --> C4(IIS-AI-SYSTEMS)
+  C --> C5("... 11 more domains")
+  
+  C1 --> C1TFA("TFA/")
+  C1TFA --> C1SYS("SYSTEMS/")
+  C1TFA --> C1COMP("COMPONENTS/")
+  C1TFA --> C1ELEM("ELEMENTS/")
+  C1TFA --> C1STATE("STATES/")
+  
+  C1SYS --> C1SI("SI/")
+  C1SYS --> C1SE("SE/")
+  C1SYS --> C1DI("DI/")
+  
+  C1COMP --> C1CE("CE/")
+  C1COMP --> C1CC("CC/")
+  C1COMP --> C1CI("CI/")
+  C1COMP --> C1CP("CP/")
+  C1COMP --> C1CV("CV/")
+
+  D[5-ARTIFACTS-IMPLEMENTATION] --> D1("🐍 Python")
+  D --> D2("🦀 Rust")
+  D --> D3("💎 Solidity")
+  D --> D4("📜 TypeScript")
+  D --> D5("🔬 Julia")
+  D --> D6("⚙️ C")
+
+  E[6-UTCS-BLOCKCHAIN] --> E1("⛓️ Token Framework")
+  F[7-GOVERNANCE] --> F1("🏛️ Community Policies")
+  G[8-RESOURCES] --> G1("📚 Templates & Assets")
+```
+
+</details>
 
 ---
 
@@ -136,6 +198,20 @@ DOMAIN/
 
 ---
 
+## 🧠 AGI Design Philosophy
+
+Our AGI approach integrates cutting-edge artificial intelligence with aerospace engineering excellence:
+
+- **Autonomous Design Agents** - AMPELLLM and HADA frameworks for intelligent design automation
+- **Self-Adaptive Verification Workflows** - Dynamic validation systems that evolve with project complexity
+- **Quantum-Extensible Reasoning** - QML (Quantum Machine Learning) and hybrid inference capabilities
+- **Simulation-Aware Cognitive Modeling** - QIE (Quantum Intelligence Engine) and TWIN-BRAIN digital twins
+- **Emergent Knowledge Graphs** - Built for traceability, feedback loops, and continuous learning
+
+This philosophy ensures that every aerospace system is not just engineered, but intelligently evolved through AI-human collaboration.
+
+---
+
 ## 🚦 Getting Started
 
 ### For Aerospace Engineers
@@ -160,6 +236,21 @@ DOMAIN/
 
 ---
 
+## 🛣️ Roadmap Snapshot (2024–2027)
+
+| Milestone | Description | Status | ETA |
+|-----------|-------------|--------|-----|
+| `v1.0` | Full TFA structure bootstrapped | ✅ Complete | Sept 2024 |
+| `v1.1` | AI integration across all domains | 🔄 In Progress | Q1 2025 |
+| `v1.2` | Blockchain/UTCS token registry | 📋 Planned | Q2 2025 |
+| `v2.0` | Full AGI integration (CAI/IIS) | 📋 Planned | 2026 |
+| `v2.5` | S1000D compliance framework | 📋 Planned | Q3 2026 |
+| `v3.0` | Quantum-AI hybrid simulation pipelines | 🔮 Research | 2027 |
+
+*See [ROADMAP.md](./ROADMAP.md) for detailed development plans and technical specifications.*
+
+---
+
 ## 🔧 Technology Stack
 
 - **Languages**: Python, C, Rust, TypeScript, Julia, XSLT, Solidity
@@ -179,6 +270,21 @@ DOMAIN/
 - ✅ **Blockchain Ready** - UTCS token system and smart contracts
 - ✅ **Industry Standards** - S1000D, MBSE compliance
 - ✅ **Continuous Integration** - Automated quality assurance
+
+---
+
+## ⚛️ Quantum-Extensible Readiness
+
+This portfolio is quantum-ready for next-generation aerospace applications:
+
+- 🧠 **Quantum AI Agents** - QIE (Quantum Intelligence Engine) and AQUA Kernel integration
+- 📡 **QNS Navigation Interfaces** - Quantum Navigation Systems for advanced positioning
+- 🧬 **Quantum Digital Twin Encoding** - ψ/φ state representations for complex system modeling
+- 🔗 **UTCS-Q Token Bindings** - Quantum-enhanced blockchain token classification
+- 🔍 **Quantum Simulation API Hooks** - Compatible with Qiskit, PennyLane, IonQ platforms
+- 🌊 **Hybrid Quantum-Classical Workflows** - Seamless integration of quantum algorithms with classical aerospace engineering
+
+All quantum elements are tagged for QCSAA (Quantum Computational Safety Assurance Architecture) compliance under the AQUA.V ecosystem framework.
 
 ---
 
