@@ -105,7 +105,7 @@ def scaffold_domains():
         if domain_path.exists():
             updated_domains += 1
     
-    print(f"✅ Scaffolding complete:")
+    print("✅ Scaffolding complete:")
     print(f"   Created domains: {created_domains}")
     print(f"   Updated domains: {updated_domains}")
     print(f"   Total domains: {len(expected_domains)}")
