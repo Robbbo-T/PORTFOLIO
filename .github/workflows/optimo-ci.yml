@@ -5,11 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Enforce TFA directory policy
         run: |
           set -e
           bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS)(/|$)' || true)
           test -z "$bad" || { echo "::error::Flat LLC paths:\n$bad"; exit 1; }
+
       - name: Validate config
         run: |
           python - <<'PY'
@@ -20,7 +22,20 @@ jobs:
           assert data["policies"]["tfa_enforced"] is True
           print("config ok")
           PY
+
       - name: Lint scripts
         run: bash -lc 'shopt -s globstar; shellcheck scripts/**/*.sh || true'
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Choose the Python version needed
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest
+          pip install -r requirements.txt # If you have a requirements file
+
       - name: Run tests
         run: pytest -q
