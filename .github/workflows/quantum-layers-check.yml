@@ -1,0 +1,39 @@
+name: Quantum Layers Check
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  layers:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Guard LLC terminology & layers
+        run: |
+          # Reject forbidden terminology
+          if grep -RInE "\bFine[[:space:]]+Element\b|\bStation[[:space:]]+Envelop\b" --include='*.{md,yaml,yml,json,py,qasm,xml,xsd,proto,r,jl}' . ; then
+            echo "::error::Forbidden terminology found (use 'Federation Element' and 'Station Envelope')."
+            exit 1
+          fi
+
+          # Enforce CB/QB/UE/FE/FWD/QS across domains
+          MISSING=0
+          for D in 2-DOMAINS-LEVELS/*; do
+            [ -d "$D/TFA" ] || continue
+            for pair in \
+              "BITS/CB" \
+              "QUBITS/QB" \
+              "ELEMENTS/UE" \
+              "ELEMENTS/FE" \
+              "WAVES/FWD" \
+              "STATES/QS"
+            do
+              if [ ! -e "$D/TFA/$pair" ]; then
+                echo "::error file=$D::Missing $pair"
+                MISSING=1
+              fi
+            done
+          done
+          [ $MISSING -eq 0 ] || exit 1
