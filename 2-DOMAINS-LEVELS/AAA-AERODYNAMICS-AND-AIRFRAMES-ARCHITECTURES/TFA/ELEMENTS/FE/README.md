@@ -12,4 +12,5 @@ Purpose: Cross-domain orchestration and distributed element federation for aerod
 - `federation-manifest.*` — Cross-domain federation configurations
 - `orchestration-rules.*` — Element coordination protocols
 - `distributed-state.*` — Shared state management
-- Link to SE stations and CI baselines
+- `se-station-links.*` — References to SE stations
+- `ci-baseline-links.*` — References to CI baselines
