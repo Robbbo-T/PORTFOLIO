@@ -1,0 +1,22 @@
+version: 1
+roles:
+  member:
+    description: Contributes via issues/PRs; adheres to CoC and TFA structure.
+  maintainer:
+    description: Owns component paths; merges after approvals; ensures CI/compliance.
+  steward:
+    description: Cross-domain governance; roadmap, escalations, policy votes.
+  moderator:
+    description: CoC enforcement; incident handling; privacy-first processes.
+  chief_architect:
+    description: Technical north star; tie-break decisions; safety overrides.
+  compliance_lead:
+    description: Standards, audits, and regulatory alignment; incident sign-off.
+
+raci:
+  triage_issue:        { R: maintainer, A: steward, C: member, I: moderator }
+  merge_pr:            { R: maintainer, A: steward, C: member, I: compliance_lead }
+  publish_release:     { R: maintainer, A: chief_architect, C: steward, I: moderator }
+  coc_enforcement:     { R: moderator, A: compliance_lead, C: steward, I: chief_architect }
+  roadmap_update:      { R: steward, A: chief_architect, C: maintainer, I: community }
+  policy_change:       { R: steward, A: chief_architect, C: compliance_lead, I: community }
