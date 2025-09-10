@@ -11,14 +11,15 @@ jobs:
           bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS)(/|$)' || true)
           test -z "$bad" || { echo "::error::Flat LLC paths:\n$bad"; exit 1; }
       - name: Validate config
-        run: python - <<'PY'
-import yaml, sys, pathlib
-p = pathlib.Path("3-PROJECTS-USE-CASES/OPTIMO-DT/config/optimo.yaml")
-data = yaml.safe_load(p.read_text())
-assert data["version"] == "10.0"
-assert data["policies"]["tfa_enforced"] is True
-print("config ok")
-PY
+        run: |
+          python - <<'PY'
+          import yaml, sys, pathlib
+          p = pathlib.Path("3-PROJECTS-USE-CASES/OPTIMO-DT/config/optimo.yaml")
+          data = yaml.safe_load(p.read_text())
+          assert data["version"] == "10.0"
+          assert data["policies"]["tfa_enforced"] is True
+          print("config ok")
+          PY
       - name: Lint scripts
         run: bash -lc 'shopt -s globstar; shellcheck scripts/**/*.sh || true'
       - name: Run tests
