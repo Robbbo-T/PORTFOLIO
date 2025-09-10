@@ -1,0 +1,14 @@
+state_id: QS-AAA-OPT-001
+representation: statevector  # statevector | density_matrix
+hilbert_dim: 16
+amplitudes: # truncated example (complex pairs)
+  - [0.3535, 0.0000]
+  - [0.3535, 0.0000]
+  - [0.3535, 0.0000]
+  - [0.3535, 0.0000]
+measurement_map:
+  objective: "Minimize wing mass under aeroelastic constraints"
+  classical_projection: "expected_value → stiffness_scaling, load_uncertainty"
+provenance:
+  backend: "q-simulator-v2"
+  seed: 12345

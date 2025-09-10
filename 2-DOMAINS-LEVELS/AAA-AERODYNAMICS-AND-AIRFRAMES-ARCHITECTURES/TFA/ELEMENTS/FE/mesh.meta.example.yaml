@@ -1,0 +1,11 @@
+mesh_id: FE-AAA-W42-001
+source: "CFD-surface → mid-surface → tetra mesh"
+element_type: C3D10
+counts:
+  nodes: 245000
+  elements: 980000
+quality:
+  min_jacobian: 0.42
+  max_aspect_ratio: 14.0
+linked_station: WING-STN-042
+linked_ci: CI-AAA-WING-ASM-01

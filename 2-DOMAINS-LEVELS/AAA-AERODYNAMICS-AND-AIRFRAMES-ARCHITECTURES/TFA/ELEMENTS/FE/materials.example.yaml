@@ -1,0 +1,10 @@
+- material_id: MAT-TI64
+  type: isotropic
+  E_GPa: 114
+  nu: 0.34
+  density_kg_m3: 4430
+- material_id: MAT-AL7050T7451
+  type: isotropic
+  E_GPa: 71.7
+  nu: 0.33
+  density_kg_m3: 2830
