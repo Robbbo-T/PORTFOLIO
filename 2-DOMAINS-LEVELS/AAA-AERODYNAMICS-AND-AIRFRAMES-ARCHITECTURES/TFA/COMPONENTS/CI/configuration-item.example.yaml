@@ -2,7 +2,7 @@ ci_id: CI-AAA-WING-ASM-01
 description: Wing assembly baseline A1
 cells: [CC-AAA-WING-PARAM-01]
 equipment: [CE-AAA-ALN-ACT-01]
-parts: [CP-AAA-SPAR-001, CP-AAA-RIB-042..048]
+parts: [CP-AAA-SPAR-001, CP-AAA-RIB-042, CP-AAA-RIB-043, CP-AAA-RIB-044, CP-AAA-RIB-045, CP-AAA-RIB-046, CP-AAA-RIB-047, CP-AAA-RIB-048]
 baselined: true
 version: A1.0
 change_control:
