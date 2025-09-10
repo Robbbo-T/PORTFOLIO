@@ -1,0 +1,1 @@
+# safety-automation.md

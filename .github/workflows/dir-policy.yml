@@ -1,0 +1,16 @@
+name: dir-policy
+on: [pull_request]
+jobs:
+  enforce:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Fail on flat LLC paths
+        run: |
+          set -e
+          bad=$(git ls-files --others --cached --exclude-standard | grep -E '^2-DOMAINS-LEVELS/[^/]+/(SI|SE|DI|CE|CC|CI|CP|CV|FE|QS)(/|$)' || true)
+          if [ -n "$bad" ]; then
+            echo "::error::Found disallowed flat LLC paths:"
+            echo "$bad"
+            exit 1
+          fi
