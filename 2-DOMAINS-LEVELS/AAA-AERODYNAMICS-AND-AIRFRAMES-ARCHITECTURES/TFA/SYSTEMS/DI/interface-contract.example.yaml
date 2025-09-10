@@ -7,7 +7,7 @@ signals:
     unit: deg
     rate_hz: 100
     range: [-30, 30]
-    safety: DO-178C DAL-B reference
+    safety: DO-178C DAL-B
   - name: elevator_deflection_cmd
     unit: deg
     rate_hz: 100
