@@ -8,7 +8,7 @@ This domain covers aerodynamic analysis, airframe structures, and their integrat
 - **Canonical LLC meanings (verbatim):**
   - SI: SYSTEM INTEGRATION
   - DI: DOMAIN INTERFACE
-  - SE: STATION ENVELOP
+  - SE: STATION ENVELOPE
   - CV: COMPONENT VENDOR
   - CE: COMPONENT EQUIPMENT
   - CC: CONFIGURATION CELL
