@@ -1,0 +1,21 @@
+id: AAA-DI-LCC-CTRL-001
+domain_from: AAA  # AERODYNAMICS AND AIRFRAMES ARCHITECTURES
+domain_to: LCC    # LINKAGES CONTROL AND COMMUNICATIONS
+version: 1.0.0
+signals:
+  - name: aileron_deflection_cmd
+    unit: deg
+    rate_hz: 100
+    range: [-30, 30]
+    safety: DO-178C DAL-B
+  - name: elevator_deflection_cmd
+    unit: deg
+    rate_hz: 100
+    range: [-25, 25]
+loads_exchange:
+  format: "node_id, Fx, Fy, Fz, Mx, My, Mz"
+  unit_system: SI
+  rate: quasi-static | dynamic (specify)
+compliance:
+  - mbse_id: MBSE-AAA-LCC-IF-01
+  - standard_refs: [S1000D, ARP4754A, DO-160G]

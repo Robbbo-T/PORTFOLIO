@@ -1,0 +1,7 @@
+cell_id: CC-AAA-WING-PARAM-01
+params:
+  sweep_angle_deg: 26.0
+  dihedral_deg: 5.0
+  airfoil_root: "NACA-64A-212"
+  airfoil_tip: "NACA-64A-210"
+version: 0.1.0

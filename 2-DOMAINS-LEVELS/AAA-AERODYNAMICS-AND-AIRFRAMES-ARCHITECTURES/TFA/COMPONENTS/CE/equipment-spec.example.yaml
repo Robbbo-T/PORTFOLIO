@@ -1,0 +1,16 @@
+equipment_id: CE-AAA-ALN-ACT-01
+name: Aileron Linear Actuator
+vendor: V-0002
+mechanical:
+  stroke_mm: 80
+  max_force_kN: 12
+  mass_kg: 3.1
+electrical:
+  bus: 28VDC
+  peak_current_A: 18
+environmental:
+  DO-160G: ["TempCatB2", "VibeCatS"]
+software_interface:
+  control_topic: /lcc/actuators/aileron
+  rate_hz: 100
+  protocol: CAN-FD

@@ -1,0 +1,25 @@
+station_id: WING-STN-042
+frame_of_reference: AIRCRAFT_BODY
+coordinates:
+  x_m: 12.4
+  y_m: 3.2
+  z_m: -0.4
+envelopes:
+  geometry:
+    min_clearance_mm: 12
+    keepout_zones: ["ACTUATION-BAY-01"]
+  loads:
+    limit_cases:
+      - case: Gust_Design
+        Fx_N: 12000
+        Fy_N: 8000
+        Fz_N: -25000
+        Mx_Nm: 1400
+        My_Nm: 900
+        Mz_Nm: 600
+  thermal:
+    Tmin_C: -55
+    Tmax_C: 95
+traceability:
+  fe_elements: [FE-AAA-W42-001:FE-AAA-W42-150]
+  configuration_items: [CI-AAA-WING-ASM-01]
