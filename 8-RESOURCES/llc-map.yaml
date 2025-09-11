@@ -28,7 +28,10 @@ llc_codes:
 
   # ELEMENTS Layer (Dual System)
   UE: "UNIT ELEMENT"            # Classical fundamental
-  FE: "FEDERATION ELEMENT"      # NOT Fine Element
+  FE: "FEDERATION ENTANGLEMENT" # was "FEDERATION ELEMENT" — renamed to match quantum semantics
+  FE_aliases:
+    - "Federation Element"
+    - "Federation Entanglement"
 
   # WAVES Layer (Dynamics)
   FWD: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
@@ -75,8 +78,8 @@ tfa_layers:
 
 forbidden_terms:
   - pattern: "\\bFine\\s+Element\\b"
-    replacement: "Federation Element"
-    reason: "FE must be Federation Element, not Fine Element"
+    replacement: "Federation Entanglement"
+    reason: "FE must be Federation Entanglement, not Fine Element"
 
   - pattern: "\\bStation\\s+Envelop\\b"
     replacement: "Station Envelope"

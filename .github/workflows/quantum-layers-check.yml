@@ -25,8 +25,15 @@ jobs:
               --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
               --include='*.py' --include='*.qasm' --include='*.xml' --include='*.xsd' \
               --include='*.proto' --include='*.r' --include='*.jl' . ; then
-            echo "::error::Forbidden terminology found (use 'Federation Element' and 'Station Envelope')."
+            echo "::error::Forbidden terminology found (use 'Federation Entanglement' and 'Station Envelope')."
             exit 1
+          fi
+          # Soft check for deprecated 'Federation Element'
+          if grep -RInE "\bFederation[[:space:]]+Element\b" \
+              --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
+              --include='*.py' --include='*.qasm' --include='*.xml' --include='*.xsd' \
+              --include='*.proto' --include='*.r' --include='*.jl' . ; then
+            echo "::warning::Found deprecated phrase 'Federation Element'. Please migrate to 'Federation Entanglement'."
           fi
           echo "✅ Terminology OK"
 

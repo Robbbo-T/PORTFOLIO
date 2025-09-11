@@ -1,10 +1,10 @@
-# FE · FEDERATION ELEMENT (AAA)
+# FE · FEDERATION ENTANGLEMENT (AAA)
 
 **Layer:** ELEMENTS
 **LLC Code:** FE
-**Canonical Meaning:** FEDERATION ELEMENT
+**Canonical Meaning:** FEDERATION ENTANGLEMENT
 
-This directory contains artifacts and implementations for the FEDERATION ELEMENT within the AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES domain.
+This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES domain.
 
 Purpose: Cross-domain orchestration and distributed element federation for aerodynamics and airframe architectures.
 
