@@ -1,0 +1,119 @@
+name: Links & Content Quality
+on:
+  push:
+    branches: [ main, develop, "copilot/**" ]
+  pull_request:
+    branches: [ main, develop ]
+  schedule: 
+    - cron: "0 3 * * *"  # Daily at 3 AM UTC
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with: 
+          python-version: '3.12'
+
+      - name: Install tools
+        run: |
+          pip install requests pyyaml
+          # Install lychee for link checking
+          curl -sSL https://github.com/lycheeverse/lychee/releases/latest/download/lychee-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+          chmod +x lychee
+          sudo mv lychee /usr/local/bin/
+
+      - name: Create necessary directories
+        run: |
+          mkdir -p .lychee .qa_cache docs/badges
+
+      - name: Link check (Lychee)
+        run: |
+          lychee \
+            --format json \
+            --no-progress \
+            --output .lychee/out.json \
+            --include '**/*.md' '**/*.html' \
+            --root-dir . \
+            --accept 200,204,429 \
+            --timeout 10 \
+            --retry-wait-time 2 \
+            --max-retries 3 \
+            .
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Summarize links + build badge
+        run: |
+          python tools/links_summary.py .lychee/out.json
+
+      - name: Content quality - classify working links
+        env:
+          USE_LLM: "true"                                   # set "false" to skip LLM
+          LLM_PROVIDER: "openai"                            # openai | azure | anthropic
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}     # or provider-specific secret
+          OPENAI_MODEL: "gpt-4o-mini"                       # any you prefer
+        run: |
+          python tools/llm_link_quality.py \
+            --lychee .lychee/out.json \
+            --roots "2-DOMAINS-LEVELS/**/TFA/**" \
+            --cache .qa_cache/quality.json \
+            --out .qa_cache/quality_report.json
+
+      - name: Build content badges + tables
+        run: |
+          python tools/quality_summary.py .qa_cache/quality_report.json
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-and-quality-${{ github.run_id }}
+          path: |
+            .lychee/out.json
+            .qa_cache/quality_report.json
+            LINKS_STATUS.md
+            CONTENT_QUALITY.md
+            docs/badges/*.svg
+
+      - name: PR comment (summary)
+        if: ${{ github.event_name == 'pull_request' }}
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Check if quality report exists
+            if (!fs.existsSync('.qa_cache/quality_report.json')) {
+              console.log('Quality report not found, skipping PR comment');
+              return;
+            }
+            
+            const quality = JSON.parse(fs.readFileSync('.qa_cache/quality_report.json','utf8'));
+            const linksBadge = '![links](docs/badges/links.svg)';
+            const contentBadge = '![content](docs/badges/content.svg)';
+            let counts = quality.counts;
+            
+            let body = `### 📊 Docs & Links Audit\n${linksBadge} ${contentBadge}\n\n` +
+                       `**Content Classification Results:**\n` +
+                       `- ✅ **Contentful Documentation**: ${counts.contentful_doc} files\n` +
+                       `- 🔧 **Contentful Code**: ${counts.contentful_code} files\n` +
+                       `- 🧩 **Template Structured**: ${counts.template_structured} files\n` +
+                       `- ⛔ **Placeholder**: ${counts.placeholder} files\n\n`;
+            
+            if (counts.placeholder > 0) {
+              body += `⚠️ **Action Required**: ${counts.placeholder} placeholder files detected that need content.\n\n`;
+            }
+            
+            body += `📋 See detailed reports:\n` +
+                    `- [Links Status](../../LINKS_STATUS.md)\n` +
+                    `- [Content Quality](../../CONTENT_QUALITY.md)`;
+            
+            github.rest.issues.createComment({ 
+              issue_number: context.issue.number, 
+              owner: context.repo.owner, 
+              repo: context.repo.repo, 
+              body 
+            });

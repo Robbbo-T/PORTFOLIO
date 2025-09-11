@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210" height="20">
+<mask id="a"><rect width="210" height="20" rx="3" fill="#fff"/></mask>
+<g mask="url(#a)"><rect width="120" height="20" fill="#555"/>
+<rect x="120" width="90" height="20" fill="#4c1"/></g>
+<g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana" font-size="11">
+<text x="60" y="14">content</text><text x="165" y="14">doc:0 code:1 tmpl:1 ph:0</text></g></svg>
