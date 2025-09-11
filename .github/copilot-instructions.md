@@ -1,8 +1,6 @@
 # Copilot & Agents — Working Rules
 
 
-Enhanced Copilot Integration Structure
-
 ```bash
 .github/
 ├── copilot-instructions.md              # Main instructions file
@@ -21,7 +19,7 @@ Enhanced Copilot Integration Structure
 
 Key Additions to Copilot Instructions
 
-Based on your existing instructions, we should add these TeknIA-specific guidelines:
+Based on existing instructions, we should add these TeknIA-specific guidelines:
 
 ```markdown
 ## TeknIA Token Development Guidelines
