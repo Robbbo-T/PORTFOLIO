@@ -55,7 +55,7 @@ def main():
     # Create summary table
     rows = [
         "# Links Status",
-        f"![links](docs/badges/links.svg)",
+        "![links](docs/badges/links.svg)",
         "",
         f"**Total Links Checked**: {total_count}",
         f"**Working Links**: {ok_count}",
