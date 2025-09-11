@@ -5,7 +5,7 @@ TFA Portfolio Structure Validator (V2)
 - Verifies 15 domains exist under 2-DOMAINS-LEVELS/
 - Verifies required TFA layers & LLC leafs per domain
 - Guards quantum-classical bridge (CB/QB/UE/FE/FWD/QS)
-- Ensures only approved terms ('Federation Element', 'Station Envelope') are used
+- Ensures only approved terms ('Federation Entanglement', 'Station Envelope') are used
 """
 from pathlib import Path
 import sys
@@ -84,7 +84,7 @@ REQUIRED_TREE = {
 }
 
 FORBIDDEN_PHRASES = [
-    r"\bFine\s+Element\b",    # must be Federation Element
+    r"\bFine\s+Element\b",    # must be Federation Entanglement
     r"\bStation\s+Envelop\b", # must be Envelope (not Envelop)
 ]
 

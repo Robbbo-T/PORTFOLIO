@@ -20,12 +20,12 @@ jobs:
           set -euo pipefail
 
           echo "🔍 Scanning for forbidden terminology…"
-          # Enforce approved terminology: 'Federation Element' and 'Station Envelope'
+          # Enforce approved terminology: 'Federation Entanglement' and 'Station Envelope'
           if grep -RInE "\bFine[[:space:]]+Element\b|\bStation[[:space:]]+Envelop\b" \
               --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
               --include='*.py' --include='*.qasm' --include='*.xml' --include='*.xsd' \
               --include='*.proto' --include='*.r' --include='*.jl' . ; then
-            echo "::error::Forbidden terminology found (use 'Federation Element' and 'Station Envelope')."
+            echo "::error::Forbidden terminology found (use 'Federation Entanglement' and 'Station Envelope')."
             exit 1
           fi
           echo "✅ Terminology OK"

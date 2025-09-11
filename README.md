@@ -16,7 +16,7 @@ This repository is the canonical map of Amedeo Pelliccia's aerospace portfolio u
 It integrates **15 engineering domains** with a **quantum–classical bridge** and provides **ready-to-use templates**, **validators**, and **CI** to prevent drift.
 
 **Highlights**
-- **FE = Federation Element** (authoritative)  
+- **FE = Federation Entanglement** (authoritative)  
 - **Quantum bridge**: CB (Classical Bit) → QB (Qubit)  
 - **Dual elements**: UE (Unit Element, classical) + FE (Federation, distributed)  
 - **Wave dynamics**: FWD layer for predictive/retrodictive modeling  
@@ -202,7 +202,7 @@ The TFA V2 implementation includes a complete quantum-classical bridge:
 
 - **Classical Layer**: CB (Classical Bit) for traditional computation
 - **Quantum Layer**: QB (Qubit) for quantum processing and entanglement  
-- **Element Bridge**: UE (Unit Element) ↔ FE (Federation Element)
+- **Element Bridge**: UE (Unit Element) ↔ FE (Federation Entanglement)
 - **Wave Dynamics**: FWD for predictive/retrodictive analysis
 - **State Management**: QS for quantum state definitions and measurements
 

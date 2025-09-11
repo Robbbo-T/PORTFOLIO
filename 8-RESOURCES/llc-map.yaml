@@ -28,7 +28,7 @@ llc_codes:
 
   # ELEMENTS Layer (Dual System)
   UE: "UNIT ELEMENT"            # Classical fundamental
-  FE: "FEDERATION ELEMENT"      # Use Federation Element
+  FE: "FEDERATION ENTANGLEMENT"      # Use Federation Entanglement
 
   # WAVES Layer (Dynamics)
   FWD: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
@@ -58,7 +58,7 @@ tfa_layers:
     llc_codes: ["QB"]
 
   ELEMENTS:
-    description: "Fundamental and federation element management"
+    description: "Fundamental and federation entanglement management"
     llc_codes: ["UE", "FE"]
 
   WAVES:
@@ -75,8 +75,8 @@ tfa_layers:
 
 forbidden_terms:
   - pattern: "\\bFine\\s+Element\\b"
-    replacement: "Federation Element"
-    reason: "FE must be Federation Element (approved terminology)"
+    replacement: "Federation Entanglement"
+    reason: "FE must be Federation Entanglement (approved terminology)"
 
   - pattern: "\\bStation\\s+Envelop\\b"
     replacement: "Station Envelope"
