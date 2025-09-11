@@ -75,17 +75,32 @@ def main():
     signed = acct.sign_transaction(construct_txn)
     tx_hash = w3.eth.send_raw_transaction(signed.rawTransaction)
     print("Deploy tx sent:", tx_hash.hex())
-    receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=600)
-    print("Contract deployed at:", receipt.contractAddress)
-    out = {
-        "address": receipt.contractAddress,
-        "txHash": tx_hash.hex(),
-        "deployer": acct.address,
-        "chainId": chain_id
-    }
-    fname = DEPLOYMENTS_DIR / f"teknia-{chain_id}.json"
-    fname.write_text(json.dumps(out, indent=2), encoding="utf-8")
-    print("Saved deployment info to", fname)
+    import time
+    from web3.exceptions import TransactionNotFound, TimeExhausted
+
+    max_retries = 3
+    for attempt in range(1, max_retries + 1):
+        try:
+            receipt = w3.eth.wait_for_transaction_receipt(tx_hash, timeout=600)
+            print("Contract deployed at:", receipt.contractAddress)
+            out = {
+                "address": receipt.contractAddress,
+                "txHash": tx_hash.hex(),
+                "deployer": acct.address,
+                "chainId": chain_id
+            }
+            fname = DEPLOYMENTS_DIR / f"teknia-{chain_id}.json"
+            fname.write_text(json.dumps(out, indent=2), encoding="utf-8")
+            print("Saved deployment info to", fname)
+            break
+        except (TransactionNotFound, TimeExhausted) as e:
+            print(f"Error waiting for transaction receipt (attempt {attempt}/{max_retries}): {e}")
+            if attempt < max_retries:
+                print("Retrying in 10 seconds...")
+                time.sleep(10)
+            else:
+                print("Failed to deploy contract after multiple attempts. Please check the transaction status manually.")
+                raise
 
 if __name__ == "__main__":
     main()
