@@ -50,7 +50,7 @@ class PayoutRequest:
     transaction_hash: Optional[str] = None
     utcs_anchor_hash: Optional[str] = None
 
-@dataclass
+@dataclass(frozen=True)
 class GovernanceProposal:
     """Structure for governance proposals"""
     proposal_id: str
