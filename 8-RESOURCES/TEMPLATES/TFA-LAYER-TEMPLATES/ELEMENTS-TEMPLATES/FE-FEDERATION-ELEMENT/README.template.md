@@ -1,13 +1,13 @@
-# FE · FEDERATION ELEMENT Template
+# FE · FEDERATION ENTANGLEMENT Template
 
 **Template Type:** TFA Layer Template  
 **LLC Code:** FE  
-**Canonical Meaning:** FEDERATION ELEMENT  
+**Canonical Meaning:** FEDERATION ENTANGLEMENT  
 **TFA Layer:** ELEMENTS
 
 ## Purpose
 
-This template provides the standard structure and content for FEDERATION ELEMENT (FE) 
+This template provides the standard structure and content for FEDERATION ENTANGLEMENT (FE) 
 implementations across all domains in the TFA V2 architecture.
 
 ## Template Files

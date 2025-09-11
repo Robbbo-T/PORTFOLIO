@@ -1,82 +1,177 @@
 # TFA V2 LLC Canonical Meanings
-# Single source of truth for all LLC (Lowest Level Container) codes
-# Used by validators, templates, and documentation generation
-
 version: "2.0"
 updated: "2025-09-11T00:00:00Z"
+author: "Amedeo Pelliccia"
+status: "Active"
 
-llc_codes:
+llc_definitions:
+
   # SYSTEMS Layer
-  SI: "SYSTEM INTEGRATION"
-  DI: "DOMAIN INTERFACE"
+  SI:
+    code: "SI"
+    name: "SYSTEM INTEGRATION"
+    description: "Complete system integration level with all interfaces connected and validated"
+    validation_rules:
+      - must_have_all_interfaces_connected: true
+      - integration_testing_complete: true
+      - system_validation_passed: true
+
+  DI:
+    code: "DI"
+    name: "DOMAIN INTERFACE"
+    description: "Boundary interfaces between different domains or systems"
+    validation_rules:
+      - interface_specification_complete: true
+      - protocol_validation_passed: true
+      - cross_domain_compatibility: true
 
   # STATIONS Layer
-  SE: "STATION ENVELOPE"
+  SE:
+    code: "SE"
+    name: "STATION ENVELOPE"
+    description: "Physical or logical station boundaries and operational envelopes"
+    validation_rules:
+      - operational_limits_defined: true
+      - environmental_conditions_specified: true
+      - safety_boundaries_established: true
 
   # COMPONENTS Layer
-  CV: "COMPONENT VENDOR"
-  CE: "COMPONENT EQUIPMENT"
-  CC: "CONFIGURATION CELL"
-  CI: "CONFIGURATION ITEM"
-  CP: "COMPONENT PART"
+  CV:
+    code: "CV"
+    name: "COMPONENT VENDOR"
+    description: "Vendor-supplied components with certification and provenance"
+    validation_rules:
+      - vendor_certification_provided: true
+      - supply_chain_traceability: true
+      - quality_documentation_complete: true
+
+  CE:
+    code: "CE"
+    name: "COMPONENT EQUIPMENT"
+    description: "Fully equipped and operational component level"
+    validation_rules:
+      - all_subcomponents_integrated: true
+      - functional_testing_complete: true
+      - operational_readiness: true
+
+  CC:
+    code: "CC"
+    name: "CONFIGURATION CELL"
+    description: "Smallest configurable unit within a component. Represents a grouped set of parts/configuration that can be versioned and deployed as a single cell."
+    validation_rules:
+      - cell_definition_present: true
+      - variant_management_records_exist: true
+      - configuration_matrix_assigned: true
+      - change_control_tracked: true
+
+  CI:
+    code: "CI"
+    name: "CONFIGURATION ITEM"
+    description: "Identified item under configuration control (hardware/software/data) with baseline and traceability"
+    validation_rules:
+      - baseline_documented: true
+      - change_control_process_applied: true
+      - traceability_to_bom_or_spec: true
+
+  CP:
+    code: "CP"
+    name: "COMPONENT PART"
+    description: "Atomic part used to build components; tied to manufacturing, drawings and stress/quality data"
+    validation_rules:
+      - part_specification_available: true
+      - material_and_process_notes_present: true
+      - 3d_model_or_drawing_in_repository: true
 
   # BITS Layer (Classical)
-  CB: "CLASSICAL BIT"
+  CB:
+    code: "CB"
+    name: "CLASSICAL BIT"
+    description: "Classical computation/data artifact — deterministic state, logic definitions and interfaces"
+    validation_rules:
+      - bit_definition_documented: true
+      - logic_gates_specified_if_applicable: true
+      - test_harness_available: true
+    notes:
+      - "CBs are expected to interoperate with QB via defined bridge patterns (CB→QB)."
 
   # QUBITS Layer (Quantum)
-  QB: "QUBIT"
+  QB:
+    code: "QB"
+    name: "QUBIT"
+    description: "Quantum bit container describing physical/logical qubits, meta elements, coherence and fidelity metrics"
+    validation_rules:
+      - qubit_specification_present: true
+      - coherence_and_fidelity_metrics_recorded: true
+      - entanglement_map_documented: true
+    notes:
+      - "QB entries should reference decoherence models and supported gate sets."
 
-  # ELEMENTS Layer (Dual System)
-  UE: "UNIT ELEMENT"            # Classical fundamental
-  FE: "FEDERATION ENTANGLEMENT"      # Use Federation Entanglement
+  # ELEMENTS Layer (Dual system: classical + federation/entanglement)
+  UE:
+    code: "UE"
+    name: "UNIT ELEMENT"
+    description: "Classical fundamental unit — the atomic building block for classical element modeling and aggregation"
+    validation_rules:
+      - unit_definition_present: true
+      - atomic_properties_listed: true
+      - fundamental_metrics_provided: true
 
-  # WAVES Layer (Dynamics)
-  FWD: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
+  FE:
+    code: "FE"
+    name: "FEDERATION ENTANGLEMENT"
+    description: >
+      Cross-domain, distributed orchestration artifact. FE represents a federated entanglement of member units
+      (classical and quantum) that coordinate via consensus rules, mapping transforms and orchestration policies.
+      This name emphasizes quantum-aware semantics (entanglement) while preserving federated governance properties.
+    validation_rules:
+      - federation_manifest_present: true
+      - member_elements_listed_with_roles: true
+      - orchestration_rules_defined: true
+      - consensus_protocol_specified: true
+    aliases:
+      - "Federation Element"        # deprecated alias (use FEDERATION ENTANGLEMENT)
+    notes:
+      - "FE is the primary cross-domain orchestration primitive. Maintain FE manifests under TFA/ELEMENTS/FE/."
 
-  # STATES Layer (Quantum)
-  QS: "QUANTUM STATE"
+  # WAVES Layer (Predictive / Foresight)
+  FWD:
+    code: "FWD"
+    name: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
+    description: "Wave-dynamics layer for predictive and retrodictive models, scenarios and foresight analyses"
+    validation_rules:
+      - wave_function_model_attached: true
+      - prediction_engine_configured: true
+      - scenario_definitions_included: true
+    notes:
+      - "FWD artifacts should include provenance and parameter seeds used for runs."
 
-tfa_layers:
-  SYSTEMS:
-    description: "System-level integration and interfaces"
-    llc_codes: ["SI", "DI"]
+  # STATES Layer (Quantum state artifacts)
+  QS:
+    code: "QS"
+    name: "QUANTUM STATE"
+    description: "Measured or synthesized quantum state artifacts, coherence records, and measurement protocols"
+    validation_rules:
+      - state_vector_or_density_matrix_specified: true
+      - measurement_protocols_documented: true
+      - coherence_metrics_provided: true
 
-  STATIONS:
-    description: "Station envelope definitions and boundaries"
-    llc_codes: ["SE"]
+# Usage guidance (machine + human)
+usage:
+  - place_single_source_of_truth:
+      path: "8-RESOURCES/llc-map.yaml"
+      note: "Keep this file as the canonical mapping for validators and templates."
+  - validator_requirements:
+      - "Validators must reference this canonical file for enforcement."
+      - "CI validators should reject forbidden legacy labels and optionally warn for deprecated aliases."
+  - migration_note:
+      - "FE canonical name was updated to 'FEDERATION ENTANGLEMENT' to emphasize quantum semantics."
+      - "For backwards compatibility, 'Federation Element' is accepted as a deprecated alias until deprecation window ends."
+      - "Run `make check` and CI validators after updating labels."
 
-  COMPONENTS:
-    description: "Component configurations and parts management"
-    llc_codes: ["CV", "CE", "CC", "CI", "CP"]
-
-  BITS:
-    description: "Classical bit processing and logic"
-    llc_codes: ["CB"]
-
-  QUBITS:
-    description: "Quantum bit processing and entanglement"
-    llc_codes: ["QB"]
-
-  ELEMENTS:
-    description: "Fundamental and federation entanglement management"
-    llc_codes: ["UE", "FE"]
-
-  WAVES:
-    description: "Wave dynamics for predictive/retrodictive analysis"
-    llc_codes: ["FWD"]
-
-  STATES:
-    description: "Quantum state definitions and measurements"
-    llc_codes: ["QS"]
-
-  META:
-    description: "Domain metadata and documentation"
-    files: ["README.md"]
-
-forbidden_terms:
-  - pattern: "\\bFine\\s+Element\\b"
-    replacement: "Federation Entanglement"
-    reason: "FE must be Federation Entanglement (approved terminology)"
+# Governance contact
+contacts:
+  owner: "Amedeo Pelliccia"
+  governance_doc: "0-STRATEGY/GOVERNANCE.md">>>>>>> main
 
   - pattern: "\\bStation\\s+Envelop\\b"
     replacement: "Station Envelope"

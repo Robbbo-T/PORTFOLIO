@@ -37,4 +37,4 @@ This META page captures domain-level decisions, authorship, and references for A
 
 ## Change log
 - Created: [YYYY-MM-DD] by [author]
-- Last updated: [YYYY-MM-DD] - brief note
+- Last updated: [YYYY-MM-DD] — brief note
