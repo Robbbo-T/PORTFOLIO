@@ -1,6 +1,6 @@
 # Amedeo Pelliccia · Professional Portfolio
 
-> **Classical–Quantum Extensible Aerospace**  
+> **Classical Quantum-Extensible Aerospace**  
 > Strict TFA hierarchy across 15 domains with quantum layers (CB/QB/UE/FE/FWD/QS), OPTIMO Digital Thread, template packs, and CI validation.
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
