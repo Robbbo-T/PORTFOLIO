@@ -70,7 +70,7 @@ def main():
     
     Path("CONTENT_QUALITY.md").write_text("\n".join(rows)+"\n", encoding="utf-8")
     
-    print(f"✅ Content quality summary generated")
+    print("✅ Content quality summary generated")
     print(f"   - Contentful docs: {c['contentful_doc']}")
     print(f"   - Contentful code: {c['contentful_code']}")
     print(f"   - Template structured: {c['template_structured']}")
