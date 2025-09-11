@@ -1,10 +1,7 @@
-# AAA · Aerodynamics and Airframes Architectures — Hyperlinked Hierarchical Index
+# AAA · Aerodynamics and Airframes Architectures — Hyperlinked Hierarchical Index (Corrected)
 
-**TFA scope:** complete quantum–classical architecture
-**Constraint:** **STRICT TFA-ONLY** (no flat LLC folders in this domain)
 **Base path:** `2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/`
-
----
+**Scope:** complete quantum–classical architecture (no flat LLC folders)
 
 ## TFA
 
@@ -56,13 +53,16 @@
 
 * **WAVES**
 
-  * **FWD · Future / Foresight / Fluctuant / Functional Waves Dynamics**
+  * **FWD · Future/Foresight/Fluctuant/Functional Waves Dynamics**
     [FWD](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/WAVES/FWD/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/WAVES/FWD/README.md)
 
 * **STATES**
 
   * **QS · Quantum State** — state descriptors for advanced computation
     [QS](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/STATES/QS/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/STATES/QS/README.md)
+
+---
+
 
 ---
 
