@@ -20,7 +20,7 @@ jobs:
           set -euo pipefail
 
           echo "🔍 Scanning for forbidden terminology…"
-          # Reject 'Fine Element' and 'Station Envelop'
+          # Enforce approved terminology: 'Federation Entanglement' and 'Station Envelope'
           if grep -RInE "\bFine[[:space:]]+Element\b|\bStation[[:space:]]+Envelop\b" \
               --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
               --include='*.py' --include='*.qasm' --include='*.xml' --include='*.xsd' \
