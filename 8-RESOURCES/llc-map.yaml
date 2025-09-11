@@ -28,7 +28,7 @@ llc_codes:
 
   # ELEMENTS Layer (Dual System)
   UE: "UNIT ELEMENT"            # Classical fundamental
-  FE: "FEDERATION ELEMENT"      # NOT Fine Element
+  FE: "FEDERATION ELEMENT"      # Use Federation Element
 
   # WAVES Layer (Dynamics)
   FWD: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
@@ -76,7 +76,7 @@ tfa_layers:
 forbidden_terms:
   - pattern: "\\bFine\\s+Element\\b"
     replacement: "Federation Element"
-    reason: "FE must be Federation Element, not Fine Element"
+    reason: "FE must be Federation Element (approved terminology)"
 
   - pattern: "\\bStation\\s+Envelop\\b"
     replacement: "Station Envelope"
