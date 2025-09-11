@@ -54,3 +54,7 @@ cache/
 out/
 deployments/
 package-lock.json
+
+# Link & Quality Checking
+.lychee/
+.qa_cache/

@@ -1,0 +1,173 @@
+# Domain-aware content quality rubrics for TFA structure
+# This file defines what "contentful" means per TFA layer
+
+CB:  # Control Bits
+  must_include:
+    - "Technical Specifications"
+    - "Interfaces" 
+    - "Usage"
+  hints:
+    - "word_size"
+    - "endianness"
+    - "error_correction"
+    - "protocol"
+  min_words: 400
+
+QB:  # Quantum Bits  
+  must_include:
+    - "Quantum Interfaces"
+    - "Lateral Protocol"
+    - "Entanglement"
+  hints:
+    - "superposition"
+    - "decoherence"
+    - "quantum_state"
+    - "measurement"
+  min_words: 500
+
+SE:  # Station Elements
+  must_include:
+    - "Station Architecture"
+    - "Operational Procedures"
+    - "Safety Requirements"
+  hints:
+    - "operations"
+    - "workflow"
+    - "procedures"
+    - "safety"
+  min_words: 600
+
+SI:  # System Integration
+  must_include:
+    - "Integration Requirements"
+    - "System Interfaces"
+    - "Performance Metrics"
+  hints:
+    - "integration"
+    - "interfaces"
+    - "performance"
+    - "requirements"
+  min_words: 800
+
+DI:  # Data Integration
+  must_include:
+    - "Data Models"
+    - "API Specifications"
+    - "Data Flow"
+  hints:
+    - "data_model"
+    - "api"
+    - "schema"
+    - "flow"
+  min_words: 400
+
+# Component level specifications
+CV:  # Component Validation
+  must_include:
+    - "Validation Procedures"
+    - "Test Specifications"
+    - "Acceptance Criteria"
+  hints:
+    - "validation" 
+    - "testing"
+    - "criteria"
+    - "verification"
+  min_words: 500
+
+CE:  # Component Engineering
+  must_include:
+    - "Engineering Specifications"
+    - "Design Requirements"
+    - "Implementation Details"
+  hints:
+    - "engineering"
+    - "design"
+    - "implementation"
+    - "specifications"
+  min_words: 600
+
+CC:  # Component Control
+  must_include:
+    - "Control Algorithms"
+    - "Control Interfaces"
+    - "Response Characteristics"
+  hints:
+    - "control"
+    - "algorithm"
+    - "response"
+    - "feedback"
+  min_words: 500
+
+CI:  # Component Integration
+  must_include:
+    - "Integration Points"
+    - "Component Interfaces"
+    - "Dependencies"
+  hints:
+    - "integration"
+    - "interface"
+    - "dependency"
+    - "coupling"
+  min_words: 400
+
+CP:  # Component Performance
+  must_include:
+    - "Performance Metrics"
+    - "Benchmarks"
+    - "Optimization"
+  hints:
+    - "performance"
+    - "benchmark"
+    - "optimization"
+    - "metrics"
+  min_words: 400
+
+# Element specifications  
+UE:  # User Elements
+  must_include:
+    - "User Interface Specifications"
+    - "User Experience Design"
+    - "Accessibility Requirements"
+  hints:
+    - "user_interface"
+    - "experience"
+    - "accessibility"
+    - "usability"
+  min_words: 500
+
+FE:  # Functional Elements
+  must_include:
+    - "Functional Requirements"
+    - "Business Logic"
+    - "Process Flows"
+  hints:
+    - "functional"
+    - "business_logic"
+    - "process"
+    - "workflow"
+  min_words: 600
+
+# Wave and State specifications
+FWD:  # Forward Wave Dynamics
+  must_include:
+    - "Wave Propagation Models"
+    - "Dynamic Behavior"
+    - "Simulation Parameters"
+  hints:
+    - "wave"
+    - "propagation"
+    - "dynamic"
+    - "simulation"
+  min_words: 700
+
+QS:  # Quantum States
+  must_include:
+    - "State Definitions"
+    - "Quantum Mechanics"
+    - "State Transitions"
+  hints:
+    - "quantum_state"
+    - "transition"
+    - "mechanics"
+    - "superposition"
+  min_words: 600
