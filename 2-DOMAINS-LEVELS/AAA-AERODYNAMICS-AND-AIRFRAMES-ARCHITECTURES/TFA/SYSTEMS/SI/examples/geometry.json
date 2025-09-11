@@ -1,0 +1,35 @@
+{
+  "name": "BWB-Q100-wing",
+  "units": "SI",
+  "reference": {
+    "S": 845.0,
+    "c_ref": 7.2,
+    "b": 65.0
+  },
+  "surfaces": [
+    {
+      "id": "center-section",
+      "airfoil": "NASA-SC(2)-0714",
+      "span": 12.5,
+      "taper": 1.0,
+      "sweep_deg": 0.0,
+      "dihedral_deg": 0.0
+    },
+    {
+      "id": "inner-wing",
+      "airfoil": "NASA-SC(2)-0612",
+      "span": 18.0,
+      "taper": 0.7,
+      "sweep_deg": 35.0,
+      "dihedral_deg": 3.0
+    },
+    {
+      "id": "outer-wing",
+      "airfoil": "NASA-SC(2)-0410",
+      "span": 8.25,
+      "taper": 0.35,
+      "sweep_deg": 28.0,
+      "dihedral_deg": 5.0
+    }
+  ]
+}

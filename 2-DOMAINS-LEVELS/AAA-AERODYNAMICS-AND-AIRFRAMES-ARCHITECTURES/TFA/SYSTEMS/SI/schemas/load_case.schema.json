@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Load Case",
+  "type":"object",
+  "required":["id","Mach","AoA_rad","altitude_m","mass_kg"],
+  "properties":{
+    "id":{"type":"string"},
+    "Mach":{"type":"number"},
+    "AoA_rad":{"type":"number"},
+    "altitude_m":{"type":"number"},
+    "mass_kg":{"type":"number"}
+  },
+  "additionalProperties":false
+}

@@ -1,0 +1,63 @@
+metadata:
+  template_version: "1.0"
+  domain: "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES"
+  llc_code: "SI"
+  owners: ["@AmedeoPelliccia"]
+  units: "SI (m, kg, s, K, Pa, N, rad)"
+
+interfaces:
+  - id: IF-AAA-GEOM
+    source: "CAD-DESIGN-MBSE"
+    target: "AAA/SI"
+    protocol: "file+spec"
+    format: "geometry.step|glTF|parametric.yaml"
+    validator: "schemas/aerodynamic_surface.schema.json"
+
+  - id: IF-AAA-MESH
+    source: "AAA/SI"
+    target: "CAE-ENGINEERING-SIMULATION"
+    protocol: "http"
+    format: "application/json"
+    endpoint: "/si/v1/mesh"
+
+  - id: IF-AAA-CFD
+    source: "CAE-ENGINEERING-SIMULATION"
+    target: "AAA/SI"
+    protocol: "http"
+    format: "application/json"
+    endpoint: "/si/v1/results/cfd"
+
+  - id: IF-AAA-FEA
+    source: "CAE-ENGINEERING-SIMULATION"
+    target: "AAA/SI"
+    protocol: "http"
+    format: "application/json"
+    endpoint: "/si/v1/results/loads"
+
+dependencies:
+  - id: DEP-MESH
+    service: "Mesher"
+    criticality: "HIGH"
+  - id: DEP-CFD
+    service: "CFD Solver (RANS/LES)"
+    criticality: "HIGH"
+  - id: DEP-FEA
+    service: "FEA Solver (linear/nonlinear)"
+    criticality: "HIGH"
+  - id: DEP-MATDB
+    service: "Materials DB"
+    criticality: "MEDIUM"
+
+integration_tests:
+  - id: T-001
+    name: "Baseline wing (M=0.78, AoA=2°, h=11km)"
+    coverage_target: "interfaces+schemas"
+  - id: T-002
+    name: "High-lift config (takeoff, flaps/slats)"
+  - id: T-003
+    name: "Flutter margin envelope sample"
+
+performance_requirements:
+  pipeline_latency_min: 30
+  pipeline_latency_max: 240
+  availability_percent: 99.0

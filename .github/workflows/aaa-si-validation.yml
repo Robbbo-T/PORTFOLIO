@@ -1,0 +1,66 @@
+name: AAA SI Validation
+
+on:
+  push:
+    paths:
+      - '2-DOMAINS-LEVELS/AAA-*/TFA/SYSTEMS/SI/**'
+  pull_request:
+    paths:
+      - '2-DOMAINS-LEVELS/AAA-*/TFA/SYSTEMS/SI/**'
+
+jobs:
+  validate-si:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/SYSTEMS/SI
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Install dependencies
+        run: |
+          pip install jsonschema pyyaml
+      
+      - name: Validate schemas
+        run: python test-harness.py
+      
+      - name: Check interface matrix coverage
+        run: |
+          python -c "
+          import csv
+          with open('interface-matrix.csv') as f:
+              reader = csv.DictReader(f)
+              interfaces = list(reader)
+              required = [i for i in interfaces if i['status'] == 'required']
+              print(f'Coverage: {len(required)}/{len(interfaces)} interfaces')
+              assert len(required)/len(interfaces) >= 0.95, 'Coverage below 95%'
+          "
+      
+      - name: Validate integration plan
+        run: |
+          python -c "
+          import yaml
+          with open('integration-plan.yaml') as f:
+              plan = yaml.safe_load(f)
+              assert plan['metadata']['units'] == 'SI (m, kg, s, K, Pa, N, rad)'
+              assert len(plan['interfaces']) >= 4
+              assert len(plan['integration_tests']) >= 3
+          "
+      
+      - name: Generate canonical hash
+        id: hash
+        run: |
+          HASH=$(python test-harness.py | grep canonical_hash | cut -d' ' -f2)
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
+      
+      - name: Emit AQUA event
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          echo "artifact.created: AAA/SI with hash ${{ steps.hash.outputs.hash }}"
+          # Actual AQUA emission would go here

@@ -1,0 +1,5 @@
+interface_id,source,target,artifact,format,validator,status
+IF-AAA-GEOM,CAD-DESIGN-MBSE,AAA/SI,geometry,STEP|glTF|parametric.yaml,schemas/aerodynamic_surface.schema.json,required
+IF-AAA-MESH,AAA/SI,CAE-ENGINEERING-SIMULATION,mesh,JSON,null,required
+IF-AAA-CFD,CAE-ENGINEERING-SIMULATION,AAA/SI,cfd_results,JSON,schemas/performance_summary.schema.json,required
+IF-AAA-FEA,CAE-ENGINEERING-SIMULATION,AAA/SI,structural_loads,JSON,schemas/load_case.schema.json,required

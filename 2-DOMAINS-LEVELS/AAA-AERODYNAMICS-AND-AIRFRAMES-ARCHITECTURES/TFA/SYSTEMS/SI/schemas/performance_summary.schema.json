@@ -1,0 +1,16 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Performance Summary",
+  "type":"object",
+  "required":["artifact_id","CL","CD","Mach","AoA_rad"],
+  "properties":{
+    "artifact_id":{"type":"string"},
+    "CL":{"type":"number"},
+    "CD":{"type":"number"},
+    "CM":{"type":"number"},
+    "Mach":{"type":"number"},
+    "AoA_rad":{"type":"number"},
+    "Re":{"type":"number"},
+    "margins":{"type":"object"}
+  }
+}

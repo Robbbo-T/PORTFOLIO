@@ -1,12 +1,23 @@
-# SI · SYSTEM INTEGRATION (AAA)
+# AAA · SYSTEMS · SI (System Integration)
 
-Purpose: Define integration of aerodynamic subsystems with airframe structures and propulsion interfaces (e.g., aero–structure–prop coupling, control surfaces, high-lift systems).
+**Scope**: Integrate aerodynamic & airframe subsystems into a coherent system: geometry → mesh → CFD/FEA → loads → performance → certification artifacts.
 
-**Artifacts:**
-- `integration-spec.*` — Interface maps, integration plans, test matrices
-- Traceability to: DI (cross-domain), SE (station constraints), FE (element models)
+**LLC**: SI (Lifecycle Level Context: System Integration)  
+**Upstream**: CAD/MBSE (CAD-DESIGN-MBSE), COMPONENTS/CE|CI, DI (Domain Interfaces)  
+**Downstream**: STATIONS/SE (envelope checks), ELEMENTS/FE (federation runs), STATES/QS (superposition-derived models)
 
-**Checklist:**
-- Interface completeness (signals, loads, thermal, EMI/EMC)
-- Validation plan (ground ↔ flight parity)
-- Failure propagation analysis (FMEA/FMECA references)
+## Responsibilities
+- Canonicalize inputs (units: SI m-kg-s-K; angles rad; pressure Pa).
+- Orchestrate pipelines (mesh, CFD, loads, margins).
+- Validate against `schemas/` and `integration-plan.yaml`.
+- Emit `performance_summary` for FE orchestration and UTCS anchoring.
+
+## Interfaces
+- **Internal API**: `openapi.yaml` (validate, run, summarize).
+- **Data contracts**: JSON Schemas under `schemas/`.
+- **Events**: `artifact.*`, `utcs.anchor.requested` via AQUA.
+
+## Acceptance
+- All interfaces listed in `integration-plan.yaml` present & green.
+- Test harness passes baseline cases (subsonic/transonic).
+- Interface matrix coverage ≥ 95%; CI green.
