@@ -1,7 +1,7 @@
 # Amedeo Pelliccia · Professional Portfolio
 
-> **Classical Quantum-Extensible Aerospace**  
-> Strict TFA hierarchy across 15 domains with quantum layers (CB/QB/UE/FE/FWD/QS), OPTIMO Digital Thread, template packs, and CI validation.
+> **Classical–Quantum Extensible Aerospace**
+> Strict **TFA** hierarchy across **15 domains**, quantum bridge layers (**CB/QB/UE/FE/FWD/QS**), **OPTIMO-DT** digital thread, template packs, and **CI** validation.
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Architecture](https://img.shields.io/badge/TFA-V2-critical.svg)
@@ -10,392 +10,364 @@
 
 ---
 
-## 🚀 About This Portfolio
+## Table of Contents
 
-This repository is the canonical map of Amedeo Pelliccia's aerospace portfolio under a **Top Final Algorithm (TFA)** architecture.  
-It integrates **15 engineering domains** with a **quantum–classical bridge** and provides **ready-to-use templates**, **validators**, and **CI** to prevent drift.
+1. [What This Is](#-what-this-is)
+2. [Architecture at a Glance](#-architecture-at-a-glance)
+   2.1 [TFA Layers](#tfa-layers) · 2.2 [Quantum–Classical Bridge](#quantumclassical-bridge) · 2.3 [MAP/MAL](#mapmal-master-application-program--main-application-layer)
+3. [Domains (15) & Structure](#-domains-15--structure)
+4. [AQUA-OS Applications](#-aqua-os-applications)
+5. [Program-Scale Use Cases](#-program-scale-use-cases)
+6. [Why This Is a Host Platform for New Programs](#-why-this-is-a-host-platform-for-new-programs)
+7. [Repo Structure](#-repo-structure)
+8. [Getting Started](#-getting-started)
+9. [CI/CD & Quality Gates](#-cicd--quality-gates)
+10. [Roadmap](#-roadmap)
+11. [Contributing & Governance](#-contributing--governance)
+12. [License & Quick Links](#-license--quick-links)
+
+---
+
+## 🚀 What This Is
+
+This repository is the canonical map of **Amedeo Pelliccia’s** aerospace portfolio under a **Top Final Algorithm (TFA)** architecture. It unifies **15 engineering domains** with a **quantum–classical bridge**, delivering **ready-to-use templates**, **validators**, **services**, and **CI** to prevent drift.
 
 **Highlights**
-- **FE = Federation Entanglement** (authoritative)  
-- **Quantum bridge**: CB (Classical Bit) → QB (Qubit)  
-- **Dual elements**: UE (Unit Element, classical) + FE (Federation, distributed)  
-- **Wave dynamics**: FWD layer for predictive/retrodictive modeling  
-- Enforced by CI: structure, terminology, and quantum layers.
 
-**Author**: Amedeo Pelliccia  
-**Started**: November 25, 2024  
-**Last Updated**: September 10, 2025 (TFA V2)
+* **FE = Federation Entanglement** (authoritative coordination)
+* **Quantum bridge**: **CB** (Classical Bit) → **QB** (Qubit)
+* **Dual elements**: **UE** (Unit Element, classical) + **FE** (Federation, distributed)
+* **Wave dynamics**: **FWD** for predictive/retrodictive modeling
+* **CI-enforced** structure, terminology, and quantum layers
 
-### 🎯 Mission Statement
-
-To create a unified, intelligent framework that bridges the gap between traditional aerospace engineering and next-generation AI systems, enabling more efficient, safer, and innovative aerospace solutions.
+**Author**: Amedeo Pelliccia · **Started**: Nov 25, 2024 · **Last Updated**: Sept 10, 2025 (TFA V2)
 
 ---
 
-## 🏗️ Architecture Overview
+## 🏗️ Architecture at a Glance
 
-This portfolio follows the **TFA (Top Final Algorithm)** methodology—a strict organizational pattern that enforces:
-- **Strict TFA-Only** containers per domain
-- **Deterministic traceability** across Systems, **Stations**, Components, Elements, and States
-- **AI-first** integrations with robust governance and auditability
+### TFA Layers
 
-**STRICT TFA-ONLY policy**  
-- Each domain uses `TFA/` as the canonical container.  
-- **NO FLAT LLC FOLDERS** under `2-DOMAINS-LEVELS/<DOMAIN>/`.  
-- All work targets `TFA/<GROUP>/<LLC>/`.
+Each domain is organized under `TFA/` with deterministic traceability:
 
----
+| Code                       | Meaning                                   | Group      | Purpose                    |
+| -------------------------- | ----------------------------------------- | ---------- | -------------------------- |
+| **SI**                     | System Integration                        | SYSTEMS    | Cross-domain orchestration |
+| **DI**                     | Domain Interface                          | SYSTEMS    | Boundary management & APIs |
+| **SE**                     | Station Envelope                          | STATIONS   | Physical/logical envelopes |
+| **CV / CE / CC / CI / CP** | Component Vendor/Equipment/Cell/Item/Part | COMPONENTS | Hierarchical components    |
+| **CB**                     | Classical Bit                             | BITS       | Deterministic computation  |
+| **QB**                     | Qubit                                     | QUBITS     | Quantum computation        |
+| **UE**                     | Unit Element                              | ELEMENTS   | Classical fundamentals     |
+| **FE**                     | Federation Entanglement                   | ELEMENTS   | Distributed orchestration  |
+| **FWD**                    | Future/Waves Dynamics                     | WAVES      | Predictive/retrodictive    |
+| **QS**                     | Quantum State                             | STATES     | State/provenance           |
 
-## 🔮 Quantum-Classical Bridge (TFA V2)
+**STRICT TFA-ONLY policy**
+All work lives under `2-DOMAINS-LEVELS/<DOMAIN>/TFA/<GROUP>/<LLC>/`.
+**No flat LLC folders**.
 
-The architecture implements a **quantum-classical extensible bridge** with these layers:
+### Quantum–Classical Bridge
 
-| Code | Canonical Meaning | Layer | Purpose |
-|------|------------------|-------|---------|
-| **SI** | SYSTEM INTEGRATION | SYSTEMS | Cross-domain integration |
-| **DI** | DOMAIN INTERFACE | SYSTEMS | Domain boundary management |
-| **SE** | STATION ENVELOPE | STATIONS | Physical/logical boundaries |
-| **CV/CE/CC/CI/CP** | COMPONENT [VENDOR/EQUIPMENT/CELL/ITEM/PART] | COMPONENTS | Hierarchical components |
-| **CB** | CLASSICAL BIT | BITS | Classical computation layer |
-| **QB** | QUBIT | QUBITS | Quantum computation layer |
-| **UE** | UNIT ELEMENT | ELEMENTS | Classical fundamental units |
-| **FE** | FEDERATION ENTANGLEMENT | ELEMENTS | Distributed orchestration |
-| **FWD** | Future/Waves Dynamics | WAVES | Predictive/retrodictive modeling |
-| **QS** | QUANTUM STATE | STATES | State management |
+Flow: **CB → QB → UE/FE → FWD → QS**, enabling hybrid compute, federation, predictive waves, and audit-grade state.
 
-**Quantum Bridge Flow**: CB (Classical Bit) → QB (Qubit) → UE/FE (Elements) → FWD (Wave Dynamics) → QS (States)
+### MAP/MAL (Master Application Program / Main Application Layer)
 
----
-
-## 📂 Portfolio Structure
-
-### 🎯 [0-STRATEGY](./0-STRATEGY/)
-Strategic planning, governance, mission, and vision documents.
-
-### 🔧 [1-CAX-METHODOLOGY](./1-CAX-METHODOLOGY/)
-Comprehensive Computer-Aided X (CAx) methodology covering:
-- **CAB** – Brainstorming & Innovation  
-- **CAC** – Compliance & Safety Codes  
-- **CAD** – Design & MBSE  
-- **CAE** – Engineering & Simulation  
-- **CAF** – Finance & Blockchain Economics  
-- **CAI** – AI Integration & Orchestration  
-- **CAM** – Manufacturing & Production  
-- **CAO** – Organization & Governance  
-- **CAP** – Production Planning  
-- **CAS** – Sustainment & S1000D  
-- **CAT** – Testing & Validation  
-- **CAV** – Verification & V&V  
-
-### 🎛️ [2-DOMAINS-LEVELS](./2-DOMAINS-LEVELS/)
-15 specialized aerospace domains following strict TFA architecture (names **verbatim** as provided):
-
-| Code | Precise Domain Name (verbatim) | TFA Structure |
-|---|---|---|
-| **AAA** | AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **AAP** | AIRPORT-ADAPTABLE-PLATFORMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **CCC** | COCKPIT-CABIN-AND-CARGO | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **CQH** | CRYOGENICS-QUANTUM-AND-H2 | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **DDD** | DIGITAL-AND-DATA-DEFENSE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **EDI** | ELECTRONICS-DIGITAL-INSTRUMENTS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **EEE** | ECOLOGICAL-EFFICIENT-ELECTRIFICATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **EER** | ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **IIF** | INDUSTRIAL-INFRASTRUCTURE-FACILITIES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **IIS** | INTEGRATED-INTELLIGENCE-SOFTWARE | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **LCC** | LINKAGES-CONTROL-AND-COMMUNICATIONS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **LIB** | LOGISTICS-INVENTORY-AND-BLOCKCHAIN | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **MMM** | MECHANICAL-AND-MATERIAL-MODULES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **OOO** | OS-ONTOLOGIES-AND-OFFICE-INTERFACES | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-| **PPP** | PROPULSION-AND-FUEL-SYSTEMS | ✅ TFA/SYSTEMS/STATIONS/COMPONENTS/BITS/QUBITS/ELEMENTS/WAVES/STATES |
-
-### 🚀 [3-PROJECTS-USE-CASES](./3-PROJECTS-USE-CASES/)
-Real-world applications and use case implementations.
-
-### 🔬 [4-RESEARCH-DEVELOPMENT](./4-RESEARCH-DEVELOPMENT/)
-Ongoing research initiatives and experimental developments.
-
-### ⚙️ [5-ARTIFACTS-IMPLEMENTATION](./5-ARTIFACTS-IMPLEMENTATION/)
-Code implementations in multiple languages:
-- **Python** – AI/ML and data processing  
-- **C** – Real-time and embedded systems  
-- **Rust** – High-performance and safety-critical systems  
-- **TypeScript** – Web interfaces and APIs  
-- **Julia** – Scientific computing  
-- **XSLT** – Data transformation  
-- **Solidity** – Blockchain smart contracts  
-
-### ⛓️ [6-UTCS-BLOCKCHAIN](./6-UTCS-BLOCKCHAIN/)
-Universal Token Classification System (UTCS) blockchain integration.
-
-### 🏛️ [7-GOVERNANCE](./7-GOVERNANCE/)
-Governance frameworks, policies, community management.  
-See also: `7-GOVERNANCE/COMMUNITY/`.
-
-### 📚 [8-RESOURCES](./8-RESOURCES/)
-Templates, references, assets, and Teknia token resources.
+* **MAP** (one per domain): the domain’s **master program** exposing stable SI/DI interfaces (e.g., **MAP-AAA** for aerodynamics, **MAP-PPP** for propulsion).
+* **MAL** (one per bridge layer): a **horizontal service** per layer (e.g., **MAL-CB** for classical solvers, **MAL-QB** for quantum strategies, **MAL-FWD** for nowcasts, **MAL-QS** for state/provenance, **MAL-FE** for federation).
+  Together, **MAPs** consume **MALs** to compose full programs across AIR/SPACE/GROUND/**DEFENSE**/**CROSS**.
 
 ---
 
-## 🧵 OPTIMO-DT — Digital Thread (V10.0)
+## 🎛️ Domains (15) & Structure
 
-**OPTIMO-DT** provides the Digital Thread backbone:
+Browse all domains under [`2-DOMAINS-LEVELS/`](./2-DOMAINS-LEVELS/):
 
+| Code                                                                                                                       | Precise Domain Name (verbatim) |
+| -------------------------------------------------------------------------------------------------------------------------- | ------------------------------ |
+| **AAA** – [AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES](./2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/) |                                |
+| **AAP** – [AIRPORT-ADAPTABLE-PLATFORMS](./2-DOMAINS-LEVELS/AAP-AIRPORT-ADAPTABLE-PLATFORMS/TFA/)                           |                                |
+| **CCC** – [COCKPIT-CABIN-AND-CARGO](./2-DOMAINS-LEVELS/CCC-COCKPIT-CABIN-AND-CARGO/TFA/)                                   |                                |
+| **CQH** – [CRYOGENICS-QUANTUM-AND-H2](./2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/)                               |                                |
+| **DDD** – [DIGITAL-AND-DATA-DEFENSE](./2-DOMAINS-LEVELS/DDD-DIGITAL-AND-DATA-DEFENSE/TFA/)                                 |                                |
+| **EDI** – [ELECTRONICS-DIGITAL-INSTRUMENTS](./2-DOMAINS-LEVELS/EDI-ELECTRONICS-DIGITAL-INSTRUMENTS/TFA/)                   |                                |
+| **EEE** – [ECOLOGICAL-EFFICIENT-ELECTRIFICATION](./2-DOMAINS-LEVELS/EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION/TFA/)         |                                |
+| **EER** – [ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION](./2-DOMAINS-LEVELS/EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION/TFA/)   |                                |
+| **IIF** – [INDUSTRIAL-INFRASTRUCTURE-FACILITIES](./2-DOMAINS-LEVELS/IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES/TFA/)         |                                |
+| **IIS** – [INTEGRATED-INTELLIGENCE-SOFTWARE](./2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-SOFTWARE/TFA/)                 |                                |
+| **LCC** – [LINKAGES-CONTROL-AND-COMMUNICATIONS](./2-DOMAINS-LEVELS/LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS/TFA/)           |                                |
+| **LIB** – [LOGISTICS-INVENTORY-AND-BLOCKCHAIN](./2-DOMAINS-LEVELS/LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN/TFA/)             |                                |
+| **MMM** – [MECHANICAL-AND-MATERIAL-MODULES](./2-DOMAINS-LEVELS/MMM-MECHANICAL-AND-MATERIAL-MODULES/TFA/)                   |                                |
+| **OOO** – [OS-ONTOLOGIES-AND-OFFICE-INTERFACES](./2-DOMAINS-LEVELS/OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/TFA/)           |                                |
+| **PPP** – [PROPULSION-AND-FUEL-SYSTEMS](./2-DOMAINS-LEVELS/PPP-PROPULSION-AND-FUEL-SYSTEMS/TFA/)                           |                                |
+
+---
+
+## 🌐 AQUA-OS Applications
+
+* **Predictive Route Optimizer (PRO)** — *Implemented*
+  Optimize aero-aware routes in a **10-minute loop** with **30s cadence**, **hybrid QB/CB**, and **federated** coordination.
+  → [`services/aqua-os-pro/`](./services/aqua-os-pro/) · [schema](./services/aqua-os-pro/schemas/route_optimization.json) · [orchestrator](./services/aqua-os-pro/core/aqua_pro_orchestrator.py) · [validator](./services/aqua-os-pro/validation/aqua_pro_validator.py)
+
+* **WaveTiles Nowcast (FWD)** — *Planned*
+  Environmental nowcasts and wave dynamics for short-horizon operations. *(FWD/MAL integration)*
+
+* **Entangled Fleet Scheduler (FE)** — *Planned*
+  Multi-asset, multi-org coordination & deconfliction via federation primitives. *(FE/MAL)*
+
+* **State Ledger & Provenance (QS)** — *Planned*
+  Immutable states, exportable evidence, optional anchoring via **UTCS**. *(QS/MAL)*
+
+> All apps follow the same service skeleton: `core/`, `schemas/`, `validation/`, with CI hooks.
+
+---
+
+## 🚀 Program-Scale Use Cases
+
+### A) **AMPEL360 BWB-Q100** — Advanced Blended Wing Body (AIR)
+
+**MAPs**: AAA, PPP, EDI, LCC, EEE, EER, DDD, IIS
+**Flow**: CAD/CAE → **OPTIMO-DT** digital twins → **AQUA-OS PRO** cycles → certification packages (S1000D) → ops monitoring (QS/FE)
+
+```yaml
+program: AMPEL360-BWB-Q100
+segments: [AIR]
+maps: [AAA, PPP, EDI, LCC, EEE, EER, DDD, IIS]
+mals: [CB, QB, FWD, QS, FE, UE]
+policies:
+  ci_required: [tfa_structure_validator, quantum-layers-check]
+  export_standards: [S1000D, MBSE]
+apps:
+  - services/aqua-os-pro
 ```
 
-OPTIMO-DT/
-├── O-ORGANIZATION/          # Enterprise governance (V10.0)
-├── P-PROCESS/               # Process management (V10.0)
-├── T-TECHNICAL/             # Technical implementation (V10.0)
-│   └── SEGMENTS/
-│       ├── AIR/
-│       ├── SPACE/
-│       ├── GROUND/
-│       ├── DEFENSE/
-│       └── CROSS/
-├── I-INSTRUCTION/           # AI/ML systems (V10.0)
-├── M-MACHINE OPERATIONS/    # Digital Twin implementation (V10.0)
-├── config/                  # Configuration files
-├── docs/                    # Documentation
-├── scripts/                 # Automation scripts
-└── tests/                   # Testing framework
+### B) **GAIA Quantum SAT** — Space Constellation with Quantum Links (SPACE)
 
+**MAPs**: LCC, CQH, EDI, LIB, IIS
+**Flow**: Mission design → network planning (FE/FWD) → in-orbit experiments (QB) → state capture (QS) → UTCS anchoring
+
+```yaml
+program: GAIA-QUANTUM-SAT
+segments: [SPACE]
+maps: [LCC, CQH, EDI, LIB, IIS]
+mals: [QB, CB, FE, FWD, QS, UE]
+policies:
+  ci_required: [tfa_structure_validator, quantum-layers-check]
+apps:
+  - services/aqua-os-pro
+```
+
+### C) **Diagnostics & MRO Robbbo-t** — Robotic Maintenance (GROUND)
+
+**MAPs**: MMM, EDI, IIS, LIB (+ CAS/CAV from CAx)
+**Flow**: Detection → triage → robotic execution → QS logging → regulatory reporting
+
+```yaml
+program: ROBBBO-T-MRO
+segments: [GROUND]
+maps: [MMM, EDI, IIS, LIB]
+mals: [CB, FE, QS, FWD]
+apps:
+  - services/aqua-os-pro
+```
+
+### D) **ARES-X UAS SWARM** — Defense Segment (DEFENSE)
+
+**MAPs**: DDD, LCC, EDI, MMM, IIS, LIB
+**MALs**: FE, QS, FWD, QB, CB, UE
+**Apps** *(planned)*: Spectrum/EW Orchestrator (SEWO), SwarmOps FE, Mission Assurance QS
+
+```yaml
+program: ARES-X-UAS-SWARM
+segments: [DEFENSE]
+maps: [DDD, LCC, EDI, MMM, IIS, LIB]
+mals: [FE, QS, FWD, QB, CB, UE]
+policies:
+  ci_required: [tfa_structure_validator, quantum-layers-check, defense-segment-check]
+apps:
+  - services/aqua-os-pro
+  # - services/aqua-os-sewo (planned)
+  # - services/aqua-os-swarmops (planned)
+```
+
+### E) **H2-CORRIDOR-X** — Cross-Sector Hydrogen Corridor (CROSS)
+
+**MAPs**: IIF, OOO, LIB, EEE, EER, IIS, LCC
+**MALs**: FE, QS, FWD, CB/QB, UE
+**Apps** *(planned)*: Resilience Stressor Engine (RSE), Cross-Sector Impact Graph (CSIG), Supply & Provenance
+
+```yaml
+program: H2-CORRIDOR-X
+segments: [CROSS]
+maps: [IIF, OOO, LIB, EEE, EER, IIS, LCC]
+mals: [FE, QS, FWD, CB, QB, UE]
+policies:
+  ci_required: [tfa_structure_validator, quantum-layers-check, cross-segment-check]
+apps:
+  - services/aqua-os-pro
+  # - services/aqua-os-rse (planned)
+  # - services/aqua-os-csig (planned)
 ```
 
 ---
 
-## 🛠️ TFA Architecture Explained
+## 🧠 Why This Is a Host Platform for New Programs
 
-### TFA Hierarchy (per domain)
+**One platform, many programs.** This repo is designed to **host entire aerospace programs** end-to-end:
 
-```
-DOMAIN/
-└── TFA/
-    ├── SYSTEMS/
-    │   ├── SI/  (SYSTEM INTEGRATION)
-    │   └── DI/  (DOMAIN INTERFACE)
-    ├── STATIONS/
-    │   └── SE/  (STATION ENVELOPE)
-    ├── COMPONENTS/
-    │   ├── CV/  (COMPONENT VENDOR)
-    │   ├── CE/  (COMPONENT EQUIPMENT)
-    │   ├── CC/  (CONFIGURATION CELL)
-    │   ├── CI/  (CONFIGURATION ITEM)
-    │   └── CP/  (COMPONENT PART)
-    ├── BITS/
-    │   └── CB/  (CLASSICAL BIT)
-    ├── QUBITS/
-    │   └── QB/  (QUBIT)
-    ├── ELEMENTS/
-    │   ├── UE/  (UNIT ELEMENT)
-    │   └── FE/  (FEDERATION ENTANGLEMENT)
-    ├── WAVES/
-    │   └── FWD/ (Future/Foresight/Fluctuant/Functional Waves Dynamics)
-    ├── STATES/
-    │   └── QS/  (QUANTUM STATE)
-    └── META/
-        └── README.md
-```
+* **Deterministic structure** (TFA): uniform trees across 15 domains with explicit LLC meanings.
+* **Hybrid compute built-in**: CB/QB for deterministic + quantum optimization; FE for multi-asset/coalition coordination; FWD for nowcasts; QS for audit-grade states.
+* **Digital thread** (**OPTIMO-DT**): organizational/process/technical **coherence** from concept to sustainment across **AIR/SPACE/GROUND/DEFENSE/CROSS**.
+* **Compliance-as-code**: S1000D/MBSE scaffolds; CI enforces structure, terms, and quantum layers.
+* **Immutable provenance**: optional **UTCS** anchoring for states, BOMs, missions, and supply chain.
+* **MAP/MAL pattern**: MAPs (per domain) + MALs (per bridge) compose programs rapidly; improvements in MALs benefit **all** MAPs.
+* **Scales to multi-tenant ecosystems**: cross-program interoperability through **FE/QS/FWD** and shared schema contracts.
 
-### Quantum-Classical Bridge Architecture
-
-The TFA V2 implementation includes a complete quantum-classical bridge:
-
-- **Classical Layer**: CB (Classical Bit) for traditional computation
-- **Quantum Layer**: QB (Qubit) for quantum processing and entanglement  
-- **Element Bridge**: UE (Unit Element) ↔ FE (Federation Entanglement)
-- **Wave Dynamics**: FWD for predictive/retrodictive analysis
-- **State Management**: QS for quantum state definitions and measurements
-
-
-### LLC Codes — Canonical Meanings (TFA V2)
-
-| Code | Meaning |
-|---|---|
-| **SI** | SYSTEM INTEGRATION |
-| **DI** | DOMAIN INTERFACE |
-| **SE** | STATION ENVELOPE |
-| **CV** | COMPONENT VENDOR |
-| **CE** | COMPONENT EQUIPMENT |
-| **CC** | CONFIGURATION CELL |
-| **CI** | CONFIGURATION ITEM |
-| **CP** | COMPONENT PART |
-| **CB** | CLASSICAL BIT |
-| **QB** | QUBIT |
-| **UE** | UNIT ELEMENT |
-| **FE** | FEDERATION ENTANGLEMENT |
-| **FWD** | Future/Foresight/Fluctuant/Functional Waves Dynamics |
-| **QS** | QUANTUM STATE |
-
-**Terminology guard:** Deprecated terms (`Fine~Element` and `Station~Envelop`) are rejected by CI.
+Result: a **coherent, intelligent, multidimensional, multisectoral, interconnected** ecosystem for **design → develop → certify → operate → sustain** complex assets.
 
 ---
 
-## 🎯 Template System
+## 📂 Repo Structure
 
-The TFA V2 architecture includes a comprehensive template system in `8-RESOURCES/TEMPLATES/`:
+* [`0-STRATEGY/`](./0-STRATEGY/) — Strategy, governance, mission & vision
+* [`1-CAX-METHODOLOGY/`](./1-CAX-METHODOLOGY/) — CAx lifecycle (CAB…CAV)
+* [`2-DOMAINS-LEVELS/`](./2-DOMAINS-LEVELS/) — **15 domains** with strict `TFA/` trees
+* [`3-PROJECTS-USE-CASES/`](./3-PROJECTS-USE-CASES/) — Programs, demos, scenarios
+* [`4-RESEARCH-DEVELOPMENT/`](./4-RESEARCH-DEVELOPMENT/) — R\&D
+* [`5-ARTIFACTS-IMPLEMENTATION/`](./5-ARTIFACTS-IMPLEMENTATION/) — Code buckets by language
+* [`6-UTCS-BLOCKCHAIN/`](./6-UTCS-BLOCKCHAIN/) — UTCS integration
+* [`7-GOVERNANCE/`](./7-GOVERNANCE/) — Governance & community
+* [`8-RESOURCES/`](./8-RESOURCES/) — Templates, references, assets
+* **AQUA-OS**: [`services/aqua-os-pro/`](./services/aqua-os-pro/) *(implemented)*
 
-### Template Categories
+---
 
-- **TFA Layer Templates**: Standard templates for each LLC code (SI, DI, SE, CV, CE, CC, CI, CP, CB, QB, UE, FE, FWD, QS)
-- **CAx Lifecycle Templates**: Process templates for all 12 CAx phases (CAB through CAV)
-- **Domain-Specific Templates**: Specialized templates for unique domain requirements
-
-### Key Features
-
-- **Quantum-Classical Aware**: Templates include quantum/classical bridge configurations
-- **Validation Ready**: All templates validate successfully with TFA structure requirements
-- **Standardized Placeholders**: Consistent placeholder system across all templates
-- **CI/CD Integration**: Templates integrate with automated validation workflows
-
-### Usage
+## 💻 Getting Started
 
 ```bash
-# Use templates from the system
-cp -r 8-RESOURCES/TEMPLATES/TFA-LAYER-TEMPLATES/ELEMENTS-TEMPLATES/FE-FEDERATION-ELEMENT/* \\
-      2-DOMAINS-LEVELS/[DOMAIN]/TFA/ELEMENTS/FE/
-
-# Create missing structures automatically  
+# 1) Create any missing TFA trees (idempotent) + bridge buckets
 make scaffold
 
-# Validate implementation
+# 2) Validate full TFA structure + quantum layers + terminology
 make check
 ```
 
-See `8-RESOURCES/TEMPLATES/USAGE-GUIDE.md` for complete documentation.
-
----
-
-## 📊 TFA + OPTIMO-DT Overview (Mermaid)
-
-```mermaid
-graph TD
-  TFA[TFA Architecture] --> SYS[SYSTEMS]
-  TFA --> STA[STATIONS]
-  TFA --> CMP[COMPONENTS]
-  TFA --> ELE[ELEMENTS]
-  TFA --> STS[STATES]
-  TFA --> META[META]
-
-  SYS --> SI[SYSTEM INTEGRATION]
-  SYS --> DI[DOMAIN INTERFACE]
-  STA --> SE[STATION ENVELOP]
-
-  CMP --> CV[COMPONENT VENDOR]
-  CMP --> CE[COMPONENT EQUIPMENT]
-  CMP --> CC[CONFIGURATION CELL]
-  CMP --> CI[CONFIGURATION ITEM]
-  CMP --> CP[COMPONENT PART]
-
-  ELE --> FE[FEDERATION ENTANGLEMENT]
-  STS --> QS[QUANTUM STATE]
-
-  OPT[OPTIMO-DT V10.0] --> OO[O-ORGANIZATION]
-  OPT --> PP[P-PROCESS]
-  OPT --> TT[T-TECHNICAL/SEGMENTS]
-  OPT --> II[I-INSTRUCTION]
-  OPT --> MM[M-MACHINE OPERATIONS]
-```
-
----
-
-## 🧠 AGI-Oriented Architecture (IIS + CAI)
-
-* `1-CAX-METHODOLOGY/CAI-AI-INTEGRATION/`: multi-agent orchestration, generative design agents, validation harnesses.
-* `2-DOMAINS-LEVELS/IIS-AI-SYSTEMS/`: integrated intelligence stacks (onboard/ground), quantum-inference pipelines.
-* `*/TFA/STATES/QS/`: AI-derived state evaluations and quantum-state artifacts.
-* Future hooks: federation with air/ground "infranet" cognition layers.
-
----
-
-## 🔧 Technology Stack
-
-* **Languages**: Python, C, Rust, TypeScript, Julia, XSLT, Solidity
-* **AI/ML**: Custom AGI frameworks, model orchestration, validation suites
-* **Blockchain**: Ethereum-compatible smart contracts, UTCS tokens
-* **Standards**: S1000D, MBSE, Industry 4.0
-* **Tooling**: Git, GitHub Actions (structure enforcement), Docker, Kubernetes
-
----
-
-## 💻 Local Usage
+**Run the PRO orchestrator (demo):**
 
 ```bash
-# Create any missing folders (idempotent)
-make scaffold
-
-# Validate full TFA structure + quantum layers
-make check
+python3 services/aqua-os-pro/core/aqua_pro_orchestrator.py
 ```
 
-## 🔍 CI Validation
+**Validate system coverage:**
 
-- **TFA Structure Validator:** checks domain trees, layers, META, and code buckets
-- **Quantum Layers Check:** rejects bad terminology and enforces CB/QB/UE/FE/FWD/QS presence
-
-See `.github/workflows/`.
+```bash
+python3 services/aqua-os-pro/validation/aqua_pro_validator.py
+```
 
 ---
 
-## 📈 Roadmap Snapshot
+## 🔍 CI/CD & Quality Gates
 
-| Phase | Key Milestone                   | ETA         |
+* **TFA Structure Validator** — enforces domain trees, layers, META, code buckets
+* **Quantum Layers Check** — enforces **CB/QB/UE/FE/FWD/QS** presence and terminology
+* **Link & Quality** — broken links, linting, formatting
+* **UTCS Anchor** — optional provenance anchoring pipelines
+
+Workflows live in [`.github/workflows/`](./.github/workflows/).
+*(DEFENSE/CROSS segment checks can be added similarly.)*
+
+---
+
+## 📈 Roadmap
+
+| Phase | Milestone                       | ETA         |
 | ----- | ------------------------------- | ----------- |
 | v1.0  | TFA Core Bootstrapped           | ✅ Sept 2025 |
-| v2.0  | TFA V2 Quantum-Classical Bridge | ✅ Sept 2025 |
-| v2.2  | UTCS Smart Contracts Alpha      | Q4 2025     |
+| v2.0  | TFA V2 Quantum–Classical Bridge | ✅ Sept 2025 |
+| v2.2  | UTCS Smart Contracts (Alpha)    | Q4 2025     |
 | v2.5  | CAI/IIS AGI Modules Integration | Mid 2026    |
 | v3.0  | OPTIMO-DT ↔ Digital Twin Sync   | Early 2027  |
 | v4.0  | Quantum Extension (QS Full)     | 2028        |
 
 ---
 
-## 📊 Key Features
+## 🤝 Contributing & Governance
 
-* ✅ **Strict TFA Architecture** — deterministic structure & traceability
-* ✅ **15 Domains** — coverage from **AAA** to **PPP**
-* ✅ **Quantum-Classical Bridge** — CB/QB/UE/FE/FWD/QS layers
-* ✅ **AI Integration** — built-in orchestration & validation (CAI/IIS)
-* ✅ **Blockchain Ready** — UTCS token system & contracts
-* ✅ **Standards** — S1000D, MBSE-aligned artifacts
-* ✅ **CI Enforcement** — prevents flat LLC paths & validates quantum layers
+* Start with [`CONTRIBUTING.md`](./CONTRIBUTING.md).
+* **STRICT TFA-ONLY**: never create flat LLC folders under `2-DOMAINS-LEVELS/<DOMAIN>/`.
+* Always use: `2-DOMAINS-LEVELS/<DOMAIN>/TFA/<GROUP>/<LLC>/`.
+* Respect canonical LLC meanings.
+* Governance: see [`0-STRATEGY/`](./0-STRATEGY/) and community in [`7-GOVERNANCE/COMMUNITY/`](./7-GOVERNANCE/COMMUNITY/).
 
 ---
 
-## 🤝 Contributing
+## 📄 License & Quick Links
 
-Please see [CONTRIBUTING.md](./CONTRIBUTING.md).
+Licensed under **MIT** — see [`LICENSE`](./LICENSE).
 
-**Architecture Rules**
-
-* ⚠️ **STRICT TFA-ONLY**: Never create flat LLC folders under `2-DOMAINS-LEVELS/<DOMAIN>/`.
-* ✅ Always use `2-DOMAINS-LEVELS/<DOMAIN>/TFA/<GROUP>/<LLC>/`.
-* ✅ Respect the **LLC canonical meanings** listed above.
-
----
-
-## 🏛️ Governance
-
-The governance framework (`0-STRATEGY/GOVERNANCE.md`) aligns leadership accountability, compliance-as-code, and continuous auditability across all domains and LLC layers. Community processes live in `7-GOVERNANCE/COMMUNITY/`.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
-
----
-
-## 🔗 Quick Links
+**Quick Links**
 
 * [Strategy & Vision](./0-STRATEGY/)
 * [CAx Methodology](./1-CAX-METHODOLOGY/)
 * [Aerospace Domains](./2-DOMAINS-LEVELS/)
-* [Code Implementations](./5-ARTIFACTS-IMPLEMENTATION/CODE/)
-* [Blockchain Framework](./6-UTCS-BLOCKCHAIN/)
+* [AQUA-OS PRO App](./services/aqua-os-pro/)
+* [Blockchain (UTCS)](./6-UTCS-BLOCKCHAIN/)
 * [Governance & Community](./7-GOVERNANCE/)
 
 ---
 
-*Built with ❤️ for the future of aerospace engineering and artificial intelligence*
+### Appendix — Mermaid Overview
+
+```mermaid
+flowchart LR
+  subgraph MAPs Domains
+    AAA[MAP-AAA]:::d
+    PPP[MAP-PPP]:::d
+    EDI[MAP-EDI]:::d
+    LCC[MAP-LCC]:::d
+    IIS[MAP-IIS]:::d
+    LIB[MAP-LIB]:::d
+    %% + others ...
+  end
+
+  subgraph MALs Bridge Services
+    CB[MAL-CB]
+    QB[MAL-QB]
+    FWD[MAL-FWD]
+    FE[MAL-FE]
+    QS[MAL-QS]
+    UE[MAL-UE]
+  end
+
+  AAA & PPP & EDI & LCC & IIS & LIB --> CB & QB & FWD & FE & QS & UE
+
+  subgraph Backbone
+    OPT[OPTIMO-DT]
+    UTCS[UTCS Ledger]
+    CI[CI/CD Validators]
+  end
+
+  MALs --- OPT
+  MALs --- UTCS
+  OPT --- CI
+
+classDef d fill:#eef,stroke:#99f,stroke-width:1px;
+```
+
+- **MAPs** (dominios) que exponen APIs estables
+- **MALs** (servicios bridge) que proporcionan servicios horizontales
+- **Backbone** (OPTIMO-DT, UTCS, CI/CD) que mantiene coherencia
+
+## 💡 Valor Único como Plataforma Host
+
+Esta plataforma se posiciona como un **ecosistema inteligente multidimensional y multisectorial** que permite:
+
+1. **Estructura determinística** con árboles TFA uniformes
+2. **Computación híbrida integrada** (CB/QB/FE/FWD/QS)
+3. **Hilo digital nativo** con OPTIMO-DT
+4. **Cumplimiento como código** (S1000D/MBSE)
+5. **Proveniencia inmutable** con UTCS
+6. **Escalabilidad multi-tenant** a través de federación
+---
 
 
