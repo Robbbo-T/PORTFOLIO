@@ -33,7 +33,7 @@ import os
 
 load_dotenv()
 
-@dataclass
+@dataclass(frozen=True)
 class PayoutRequest:
     """Structure for a TeknIA token payout request"""
     innovation_id: str
