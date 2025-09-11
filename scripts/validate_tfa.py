@@ -64,7 +64,7 @@ def load_llc_map():
         "CB": "CLASSICAL BIT",
         "QB": "QUBIT",
         "UE": "UNIT ELEMENT",
-        "FE": "FEDERATION ELEMENT",
+        "FE": "FEDERATION ENTANGLEMENT",
         "FWD": "Future/Foresight/Fluctuant/Functional Waves Dynamics",
         "QS": "QUANTUM STATE",
     }
@@ -83,13 +83,18 @@ REQUIRED_TREE = {
     "META": ["README.md"],  # file
 }
 
+DEPRECATED_TERMS = [
+    (r"\bFederation\s+Element\b", "Federation Entanglement"),
+]
+
 FORBIDDEN_PHRASES = [
-    r"\bFine\s+Element\b",    # must be Federation Element
+    r"\bFine\s+Element\b",    # must be Federation Entanglement
     r"\bStation\s+Envelop\b", # must be Envelope (not Envelop)
 ]
 
 def find_issues():
     issues = []
+    warnings = []
 
     # 1) Domains present
     if not DOMAINS_DIR.exists():
@@ -141,6 +146,9 @@ def find_issues():
                 text = path.read_text(encoding="utf-8", errors="ignore")
             except Exception:
                 continue
+            for pat, replacement in DEPRECATED_TERMS:
+                if re.search(pat, text):
+                    warnings.append(f"Deprecated term in {rel} → pattern '{pat}' (prefer '{replacement}')")
             for pat in FORBIDDEN_PHRASES:
                 if re.search(pat, text):
                     issues.append(f"Forbidden term in {rel} → pattern '{pat}'")
@@ -152,10 +160,12 @@ def find_issues():
             if not (bridge / leaf).exists():
                 issues.append(f"Missing code bucket: 5-ARTIFACTS-IMPLEMENTATION/CODE/python/{leaf}/")
 
-    return issues
+    return issues, warnings
 
 def main():
-    issues = find_issues()
+    issues, warnings = find_issues()
+    for msg in warnings:
+        print(f"⚠️ {msg}")
     if issues:
         print("❌ TFA validation failed:\n")
         for i, msg in enumerate(issues, 1):

@@ -93,7 +93,7 @@ def scaffold_domains():
             content += "- **COMPONENTS/**: CV, CE, CC, CI, CP\n"
             content += "- **BITS/**: CB (Classical Bit)\n"
             content += "- **QUBITS/**: QB (Qubit)\n"
-            content += "- **ELEMENTS/**: UE (Unit Element), FE (Federation Element)\n"
+            content += "- **ELEMENTS/**: UE (Unit Element), FE (Federation Entanglement)\n"
             content += "- **WAVES/**: FWD (Waves Dynamics)\n"
             content += "- **STATES/**: QS (Quantum State)\n"
             

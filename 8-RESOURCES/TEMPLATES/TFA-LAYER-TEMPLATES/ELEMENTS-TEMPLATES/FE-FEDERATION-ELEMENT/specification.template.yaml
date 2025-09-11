@@ -2,7 +2,7 @@
 metadata:
   template_version: "1.0"
   llc_code: "FE"
-  llc_name: "FEDERATION ELEMENT"
+  llc_name: "FEDERATION ENTANGLEMENT"
   tfa_layer: "ELEMENTS"
   domain: "[DOMAIN-CODE]"
   created: "[DATE]"
@@ -13,7 +13,7 @@ specification:
   description: "[DESCRIPTION]"
   version: "[VERSION]"
   
-  # FEDERATION ELEMENT specific configuration
+  # FEDERATION ENTANGLEMENT specific configuration
   configuration:
     # Add FE-specific parameters here
     placeholder_param: "[VALUE]"

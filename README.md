@@ -16,7 +16,7 @@ This repository is the canonical map of Amedeo Pelliccia's aerospace portfolio u
 It integrates **15 engineering domains** with a **quantum–classical bridge** and provides **ready-to-use templates**, **validators**, and **CI** to prevent drift.
 
 **Highlights**
-- **FE = Federation Element** (authoritative)  
+- **FE = Federation Entanglement** (authoritative)  
 - **Quantum bridge**: CB (Classical Bit) → QB (Qubit)  
 - **Dual elements**: UE (Unit Element, classical) + FE (Federation, distributed)  
 - **Wave dynamics**: FWD layer for predictive/retrodictive modeling  
@@ -59,7 +59,7 @@ The architecture implements a **quantum-classical extensible bridge** with these
 | **CB** | CLASSICAL BIT | BITS | Classical computation layer |
 | **QB** | QUBIT | QUBITS | Quantum computation layer |
 | **UE** | UNIT ELEMENT | ELEMENTS | Classical fundamental units |
-| **FE** | FEDERATION ELEMENT | ELEMENTS | Distributed orchestration |
+| **FE** | FEDERATION ENTANGLEMENT | ELEMENTS | Distributed orchestration |
 | **FWD** | Future/Waves Dynamics | WAVES | Predictive/retrodictive modeling |
 | **QS** | QUANTUM STATE | STATES | State management |
 
@@ -187,7 +187,7 @@ DOMAIN/
     │   └── QB/  (QUBIT)
     ├── ELEMENTS/
     │   ├── UE/  (UNIT ELEMENT)
-    │   └── FE/  (FEDERATION ELEMENT)
+    │   └── FE/  (FEDERATION ENTANGLEMENT)
     ├── WAVES/
     │   └── FWD/ (Future/Foresight/Fluctuant/Functional Waves Dynamics)
     ├── STATES/
@@ -202,7 +202,7 @@ The TFA V2 implementation includes a complete quantum-classical bridge:
 
 - **Classical Layer**: CB (Classical Bit) for traditional computation
 - **Quantum Layer**: QB (Qubit) for quantum processing and entanglement  
-- **Element Bridge**: UE (Unit Element) ↔ FE (Federation Element)
+- **Element Bridge**: UE (Unit Element) ↔ FE (Federation Entanglement)
 - **Wave Dynamics**: FWD for predictive/retrodictive analysis
 - **State Management**: QS for quantum state definitions and measurements
 
@@ -222,7 +222,7 @@ The TFA V2 implementation includes a complete quantum-classical bridge:
 | **CB** | CLASSICAL BIT |
 | **QB** | QUBIT |
 | **UE** | UNIT ELEMENT |
-| **FE** | FEDERATION ELEMENT |
+| **FE** | FEDERATION ENTANGLEMENT |
 | **FWD** | Future/Foresight/Fluctuant/Functional Waves Dynamics |
 | **QS** | QUANTUM STATE |
 
@@ -286,7 +286,7 @@ graph TD
   CMP --> CI[CONFIGURATION ITEM]
   CMP --> CP[COMPONENT PART]
 
-  ELE --> FE[FEDERATION ELEMENT]
+  ELE --> FE[FEDERATION ENTANGLEMENT]
   STS --> QS[QUANTUM STATE]
 
   OPT[OPTIMO-DT V10.0] --> OO[O-ORGANIZATION]
