@@ -25,4 +25,4 @@ Scope: airport adaptability, ground operations interface, scalable platform inte
 - QS: N/A (placeholder for future sensors-based quantum inference)
 
 ## Local Decisions / Links / Change log
-- As above
+- 2024-06-10: Initial draft created with domain scope, interfaces, compliance, and quantum layers map. Author: [Your Name or Team]
