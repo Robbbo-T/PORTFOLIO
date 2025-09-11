@@ -1,0 +1,77 @@
+openapi: 3.0.3
+info:
+  title: AAA System Integration API
+  version: "1.0.0"
+servers:
+  - url: https://robbbo-t.space/api
+paths:
+  /si/v1/validate:
+    post:
+      summary: Validate inputs against schemas and plan
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                geometry: { type: object }
+                mesh: { type: object }
+                load_cases: { type: array, items: { type: object } }
+      responses:
+        "200":
+          description: Result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  valid: { type: boolean }
+                  errors: { type: array, items: { type: string } }
+                  canonical_hash: { type: string }
+  /si/v1/run:
+    post:
+      summary: Run integration pipeline (mesh→CFD→loads→perf)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                plan_id: { type: string }
+                params: { type: object }
+      responses:
+        "202": { description: Accepted }
+  /si/v1/summary/{artifact_id}:
+    get:
+      summary: Get performance summary artifact
+      parameters:
+        - name: artifact_id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PerformanceSummary'
+components:
+  schemas:
+    PerformanceSummary:
+      type: object
+      properties:
+        artifact_id: { type: string }
+        CL: { type: number }   # lift coefficient
+        CD: { type: number }   # drag coefficient
+        CM: { type: number }   # moment coefficient
+        AoA_rad: { type: number }
+        Mach: { type: number }
+        Re: { type: number }
+        margins:
+          type: object
+          properties:
+            buffet_margin: { type: number }
+            flutter_margin: { type: number }

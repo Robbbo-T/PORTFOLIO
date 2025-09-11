@@ -1,0 +1,8 @@
+{
+  "services": [
+    {"name": "Mesher", "type": "service", "runtime": "HPC", "endpoint": "http://mesher:9000"},
+    {"name": "CFD", "type": "service", "runtime": "HPC", "endpoint": "http://cfd:9100"},
+    {"name": "FEA", "type": "service", "runtime": "HPC", "endpoint": "http://fea:9200"},
+    {"name": "MaterialsDB", "type": "db", "endpoint": "postgres://materials:5432/materials"}
+  ]
+}

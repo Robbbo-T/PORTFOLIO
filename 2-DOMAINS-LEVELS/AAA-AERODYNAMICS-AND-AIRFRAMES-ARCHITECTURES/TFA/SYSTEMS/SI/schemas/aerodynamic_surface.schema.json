@@ -1,0 +1,20 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Aerodynamic Surface",
+  "type":"object",
+  "required":["name","units","reference","surfaces"],
+  "properties":{
+    "name":{"type":"string"},
+    "units":{"const":"SI"},
+    "reference":{"type":"object","properties":{"S":{"type":"number"},"c_ref":{"type":"number"},"b":{"type":"number"}},"required":["S","c_ref","b"]},
+    "surfaces":{"type":"array","items":{"type":"object","properties":{
+      "id":{"type":"string"},
+      "airfoil":{"type":"string"},
+      "span":{"type":"number"},
+      "taper":{"type":"number"},
+      "sweep_deg":{"type":"number"},
+      "dihedral_deg":{"type":"number"}
+    },"required":["id","airfoil","span"]}}
+  },
+  "additionalProperties":false
+}
