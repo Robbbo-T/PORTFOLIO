@@ -47,3 +47,10 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+# Node/Hardhat
+node_modules/
+artifacts/
+cache/
+out/
+deployments/
+package-lock.json
