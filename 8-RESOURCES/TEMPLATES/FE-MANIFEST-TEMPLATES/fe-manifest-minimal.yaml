@@ -1,0 +1,55 @@
+# Minimal Federation Entanglement Template
+
+# Basic federation information
+type: "FE"
+name: "{FEDERATION_NAME}"
+version: "1.0.0"
+description: "{FEDERATION_DESCRIPTION}"
+
+# Federation members (minimum 2 required)
+members:
+  - domain: "{COORDINATOR_DOMAIN}"
+    role: "coordinator"
+    weight: 2
+    capabilities:
+      - "{COORDINATOR_CAPABILITY_1}"
+      - "{COORDINATOR_CAPABILITY_2}"
+    endpoints:
+      - url: "{COORDINATOR_API_URL}"
+        type: "api"
+        authentication:
+          type: "signature"
+          required: true
+
+  - domain: "{PARTICIPANT_DOMAIN}"
+    role: "participant"
+    weight: 1
+    capabilities:
+      - "{PARTICIPANT_CAPABILITY_1}"
+      - "{PARTICIPANT_CAPABILITY_2}"
+    endpoints:
+      - url: "{PARTICIPANT_API_URL}"
+        type: "api"
+        authentication:
+          type: "signature"
+          required: true
+
+# Orchestration rules
+orchestration_rules:
+  consensus_protocol: "proof-of-authority"
+  quorum_threshold: 0.67
+  timeout_seconds: 300
+
+# Metadata
+metadata:
+  created_by: "{CREATOR}"
+  purpose: "{PURPOSE}"
+  status: "draft"
+  tags:
+    - "{TAG_1}"
+    - "{TAG_2}"
+
+# EIP-712 nonce (increment for each version)
+nonce: 1
+
+# Note: canonical_hash and signature fields will be added by AQUA validation process
