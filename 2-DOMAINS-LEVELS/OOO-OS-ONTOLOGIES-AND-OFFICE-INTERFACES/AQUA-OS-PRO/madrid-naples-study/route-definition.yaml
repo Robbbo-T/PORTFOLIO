@@ -1,0 +1,151 @@
+# Madrid-Naples Route Definition
+# LEMD (Madrid) → LIRN (Naples) Study Case
+
+route:
+  id: "LEMD-LIRN-001"
+  name: "Madrid Naples Study Case"
+  description: "Predictive route optimization study case for AQUA OS PRO"
+  
+  departure:
+    icao: "LEMD"
+    name: "Madrid-Barajas Airport"
+    coordinates:
+      latitude: 40.4936
+      longitude: -3.5668
+    elevation_ft: 1998
+    
+  destination:
+    icao: "LIRN"  
+    name: "Naples International Airport"
+    coordinates:
+      latitude: 40.8860
+      longitude: 14.2908
+    elevation_ft: 294
+
+  great_circle:
+    distance_nm: 814
+    initial_bearing: 94.2  # degrees true
+    estimated_time_no_wind: "1:46:00"  # HH:MM:SS
+
+aircraft:
+  model: "AMPEL360 BWB-Q100"
+  msn: "0001"
+  callsign: "BOB"
+  
+  performance:
+    cruise_mach: 0.78
+    cruise_altitude_range:
+      min_fl: 350
+      max_fl: 390
+    max_bank_angle: 25.0  # degrees
+    
+  capabilities:
+    rvsm: true
+    rnp: 0.3
+    required_navigation_performance: "RNP-1"
+    
+flight_parameters:
+  cruise_fl: 370  # default cruise flight level
+  cruise_speed: 460  # knots TAS at cruise alt
+  fuel_capacity: 45000  # lbs
+  max_range: 3500  # nm
+  
+route_corridors:
+  north_corridor:
+    name: "Northern Mediterranean"
+    waypoints:
+      - "LEMD"
+      - "BCN"  # Barcelona FIR
+      - "LFMN"  # Nice area
+      - "LIRN"
+    characteristics:
+      - "Usually smoother when convective cells south of Gulf of Lion"
+      - "Longer route but often better weather"
+    
+  mid_med_corridor:
+    name: "Central Mediterranean" 
+    waypoints:
+      - "LEMD"
+      - "PMI"   # Palma de Mallorca
+      - "LIRN"
+    characteristics:
+      - "Shorter distance"
+      - "More exposed to maritime convection"
+      - "Direct over Balearic Islands"
+
+constraints:
+  operational:
+    max_bank_angle: 25.0  # degrees
+    mach_hold_tolerance: 0.02
+    altitude_change_rate: 2000  # ft/min max
+    
+  airspace:
+    respect_fir_boundaries: true
+    avoid_restricted_areas: true
+    maintain_rvsm_separation: true
+    
+  weather:
+    max_turbulence_edr: 0.25  # moderate turbulence threshold
+    avoid_convective_cells: true
+    icing_probability_threshold: 0.3
+    
+  fuel:
+    reserve_fuel_lbs: 8000
+    alternate_fuel_lbs: 3000
+    contingency_factor: 0.05  # 5% contingency fuel
+
+optimization:
+  horizon_minutes: 10
+  update_interval_seconds: 30
+  convergence_tolerance: 1e-6
+  max_iterations: 100
+  
+  cost_weights:
+    fuel: 1.0
+    time: 0.8  
+    turbulence_edr: 2.0
+    convective_avoidance: 5.0
+    icing_probability: 3.0
+    
+  bounds:
+    lateral_deviation_nm: 50  # max deviation from great circle
+    altitude_deviation_ft: 4000  # from cruise FL
+    speed_deviation_kts: 20  # from cruise speed
+
+weather_integration:
+  update_frequency: "5_minutes"
+  forecast_horizon: "20_minutes" 
+  
+  sources:
+    primary: "ECMWF_OPEN_DATA"
+    high_res: "RAP_HRRR"  # North America only
+    turbulence: "IATA_TURBULENCE_AWARE"
+    ai_nowcast: "GRAPHCAST_BIAS_CORRECTION"
+    
+  grid_resolution:
+    horizontal_km: 25
+    vertical_ft: 2000
+    temporal_minutes: 15
+
+quantum_classical_bridge:
+  cb_classical_solver: "CasADi_NMPC"
+  qb_quantum_option: "QAOA_VQE_ENSEMBLE" 
+  ue_elements: ["wind_field", "edr_field", "convective_mask", "icing_probability"]
+  fe_federation: "multi_aircraft_risk_sharing"
+  fwd_prediction: "nowcast_shim_20min"
+  qs_states: ["proposed", "loaded", "executing", "archived"]
+
+validation:
+  success_criteria:
+    time_accuracy: "±2%"
+    weather_avoidance: "≥50% EDR reduction"
+    fuel_efficiency: "within 3% of optimal"
+    real_time_performance: "≤300ms per cycle"
+    
+  test_scenarios:
+    - "clear_weather_baseline"
+    - "moderate_turbulence_encounter" 
+    - "convective_line_avoidance"
+    - "headwind_optimization"
+    - "tailwind_exploitation"
+    - "icing_conditions_avoidance"
