@@ -1,4 +1,4 @@
-# TFA V2 Portfolio Management Makefile
+<# TFA V2 Portfolio Management Makefile
 # Scaffolding, validation, and maintenance commands
 
 .PHONY: help scaffold check validate domains quantum-bridge clean
@@ -19,7 +19,7 @@ help:
 # Create complete TFA scaffolding (idempotent) + quantum bridge buckets
 scaffold: quantum-bridge
 	@echo "🏗️ Scaffolding TFA V2 structure..."
-	@python3 - <<'PY'
+	@python - <<'PY'
 from pathlib import Path
 root = Path('.').resolve()
 domains = [
@@ -69,7 +69,7 @@ PY
 # Validate TFA structure
 validate:
 	@echo "🔍 Running TFA structure validation..."
-	@python3 scripts/validate_tfa.py
+	@python scripts/validate_tfa.py
 
 # Aggregate checks
 check: validate

@@ -1,0 +1,108 @@
+# AAA Domain Configuration for CB Template
+DOMAIN_CODE: "AAA"
+DOMAIN_NAME: "AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES"
+DOMAIN_FULL_NAME: "Aerodynamics and Airframes Architectures"
+DOMAIN_BINARY_PURPOSE: "HPC CFD/FEA kernels, discrete I/O for aeroelastic sensing/actuation, and flight-loads monitoring flags"
+
+# CB Purposes
+CB_PURPOSE_1: "Bit-parallel masks for **mesh nodes, boundary conditions, and partition flags** in CFD/FEA"
+CB_PURPOSE_2: "**Rounding/exception flags** coordination for fixed/floating-point pipelines"
+CB_PURPOSE_3: "**Glitch-filtered latching** of discrete sensors/actuators in aero/flight-control benches"
+CB_PURPOSE_4: "**FDIR fault words** for aeroelastic/loads monitoring and test automation"
+
+# Implementation Directories
+IMPL_DIR_1: "hpc-bitset"
+IMPL_DESC_1: "SIMD/TBB-accelerated bitset kernels (C++)"
+IMPL_DIR_2: "fpga-rtl"
+IMPL_DESC_2: "Discrete latch + debouncing (SystemVerilog)"
+IMPL_DIR_3: "rtos-hal"
+IMPL_DESC_3: "GPIO/IRQ HAL for benches (C/RTOS)"
+
+# Component Specifications
+COMPONENT_1_NAME: "BitSet64 Kernel"
+COMPONENT_1_PURPOSE: "High‑throughput masking over millions of mesh nodes/edges"
+COMPONENT_1_PATH: "hpc-bitset/bitset64.cpp"
+COMPONENT_1_KEY: "Throughput_Gb_s"
+COMPONENT_1_VALUE: "≥ 256"
+
+COMPONENT_2_NAME: "DiscreteLatch"
+COMPONENT_2_PURPOSE: "Glitch‑filtered latch for sensor discretes (spoilers, flaps rig, AoA vane bench I/O)"
+COMPONENT_2_PATH: "fpga-rtl/discrete_latch.sv"
+COMPONENT_2_KEY: "Debounce_ns"
+COMPONENT_2_VALUE: "≥ 100"
+
+COMPONENT_3_NAME: "SECDED‑ECC"
+COMPONENT_3_PURPOSE: "Single‑error‑correct/dual‑error‑detect on scratch buffers used by HPC kernels"
+COMPONENT_3_PATH: "hpc-bitset/secded.hpp"
+COMPONENT_3_KEY: "Code"
+COMPONENT_3_VALUE: "Hamming(72,64) SECDED"
+
+# Interfaces
+CC_INTERFACE_DESC: "Exposes `BITFIELD_IF` structures for mesh/solver params and I/O maps"
+CI_INTERFACE_DESC: "Memory‑mapped register schema for benches; schema artifacts in `documentation/interface-specs.md`"
+UPWARD_PROTOCOL: "`TFA-BIT-V1` ABI + Cap'n Proto schema for host↔bench messages"
+
+QB_INTERFACE_DESC: "QCE shim packs/unpacks bitstrings to quantum measurement registers for hybrid (VQE/QAOA) aero‑loads prototypes"
+LATERAL_PROTOCOL: "`QCE-PROTO v0.3` (shared memory ring + optional RDMA channel)"
+
+SI_INTERFACE_DESC: "Maps bit I/O to **ARINC 429/664 simulation buses** in HIL benches"
+DI_INTERFACE_DESC: "Stable ABI for solver kernels (CFD/FEA) and aeroelastic pipelines"
+
+# Technical Specifications
+WORD_SIZE: 64
+ENDIANNESS: "little"
+ERROR_CORRECTION: "\"SECDED (Hamming 72,64) on buffers; TMR on FPGA latches\""
+CLOCK_FREQ: 3200
+SETUP_TIME: 1.2
+HOLD_TIME: 0.6
+MTBF: 500000
+BER: "1.0e-15"
+REDUNDANCY: "\"TMR critical paths; hot‑spare worker threads\""
+
+# Usage Example Variables
+MODULE_PATH: "hpc_bitset.bitset64"
+CLASS_NAME: "BitSet64"
+DOMAIN_SPECIFIC: "AAA solver"
+VAR_NAME: "mesh_mask"
+BIT_NAME: "bc_inlet_nodes"
+CONDITION: "True"
+LOGIC_DESC: "Apply mask to action flag"
+CONDITION_1: "solver.ready"
+CONDITION_2: "mesh_mask.any()"
+ACTION: "action_flag = BitSet64(name=\"advance_timestep\")"
+
+# FSM Variables
+FSM_CLASS: "FSM"
+STATE_1: "INIT"
+BITS_1: "0001"
+STATE_2: "RUN"
+BITS_2: "0010"
+STATE_3: "PAUSE"
+BITS_3: "0100"
+TRANSITION_CONDITION: "solver_ready && io_ok"
+
+# Dependencies
+UE_DEPENDENCY: "GPIO primitives and timing units"
+FE_DEPENDENCY: "artifact governance and build graph"
+EXT_DEP_1: "Boost::dynamic_bitset"
+EXT_DEP_1_PURPOSE: "high‑level bitsets"
+EXT_DEP_2: "oneTBB"
+EXT_DEP_2_PURPOSE: "parallel primitives"
+EXT_DEP_3: "RTEMS/FreeRTOS"
+EXT_DEP_3_PURPOSE: "bench HAL"
+
+# Standards and Compliance
+STANDARD_1: "DO‑178C"
+STANDARD_1_DESC: "Software considerations in airborne systems"
+STANDARD_2: "DO‑254"
+STANDARD_2_DESC: "Design assurance for airborne electronic hardware"
+
+CERT_LEVEL_1: "DAL B"
+CERT_1_SCOPE: "control‑path‑adjacent benches"
+CERT_LEVEL_2: "DAL C"
+CERT_2_SCOPE: "monitoring/analysis utilities"
+
+# Maintenance
+REVIEW_CYCLE: "Quarterly"
+LAST_UPDATED: "2025‑09‑11"
+VERSION: "v1.0.0"

@@ -1,0 +1,108 @@
+# IIS Domain Configuration for CB Template  
+DOMAIN_CODE: "IIS"
+DOMAIN_NAME: "INTEGRATED-INTELLIGENCE-SOFTWARE"
+DOMAIN_FULL_NAME: "Intelligent Systems Onboard AI"
+DOMAIN_BINARY_PURPOSE: "safety gating for ML outputs, decision fences, watchdogs, and telemetry flags"
+
+# CB Purposes
+CB_PURPOSE_1: "**Hard safety gates**: allow/deny ML‑suggested actions under boolean invariants"
+CB_PURPOSE_2: "**Bitmask protocols** for feature availability and model health"
+CB_PURPOSE_3: "**Watchdog/fence bits** around inference windows and timing budgets"
+CB_PURPOSE_4: "**Telemetry flags** for explainability and post‑flight audits"
+
+# Implementation Directories
+IMPL_DIR_1: "rt-safety-gates"
+IMPL_DESC_1: "Safety gating around ML outputs (C/C++)"
+IMPL_DIR_2: "ml-runtime-bits"
+IMPL_DESC_2: "Bitmask protocols for inference runtime (C++/Rust)"
+IMPL_DIR_3: "diag-fdir"
+IMPL_DESC_3: "Diagnostics & FDIR flag aggregation (C)"
+
+# Component Specifications
+COMPONENT_1_NAME: "SafetyGateCtrl"
+COMPONENT_1_PURPOSE: "Enforces boolean invariants before any ML‑driven actuator command propagates"
+COMPONENT_1_PATH: "rt-safety-gates/safety_gate_ctrl.cpp"
+COMPONENT_1_KEY: "FenceLatency_us"
+COMPONENT_1_VALUE: "≤ 50"
+
+COMPONENT_2_NAME: "DecisionFence"
+COMPONENT_2_PURPOSE: "Bitmask fence around model outputs; escalates to fallback when invariants fail"
+COMPONENT_2_PATH: "ml-runtime-bits/decision_fence.rs"
+COMPONENT_2_KEY: "FailSafeMode"
+COMPONENT_2_VALUE: "deterministic fallback engaged"
+
+COMPONENT_3_NAME: "HealthFlags"
+COMPONENT_3_PURPOSE: "Aggregates model/IO health into a compact fault/status word for AP/FCC"
+COMPONENT_3_PATH: "diag-fdir/health_flags.c"
+COMPONENT_3_KEY: "Coverage"
+COMPONENT_3_VALUE: "≥ 99% of declared hazards"
+
+# Interfaces
+CC_INTERFACE_DESC: "`BITFIELD_IF` for AP/FCC configuration items and ML runtime knobs"
+CI_INTERFACE_DESC: "ABI + schema for model registry and allowed action sets"
+UPWARD_PROTOCOL: "`TFA-BIT-V1` ABI + gRPC for supervisory interfaces"
+
+QB_INTERFACE_DESC: "Optional QCE hooks for quantum‑assisted monitors (e.g., V&V samplers) using classical bit taps"
+LATERAL_PROTOCOL: "`QCE-PROTO v0.3` (observer‑only in flight)"
+
+SI_INTERFACE_DESC: "Bridges bits to AP/FCC shared memory and AFDX topics"
+DI_INTERFACE_DESC: "Deterministic RT fences around inference runtime"
+
+# Technical Specifications
+WORD_SIZE: 64
+ENDIANNESS: "little"
+ERROR_CORRECTION: "\"ECC RAM + software parity on shared memory; lockstep on critical cores\""
+CLOCK_FREQ: 1000
+SETUP_TIME: 1.0
+HOLD_TIME: 0.5
+MTBF: 400000
+BER: "1.0e-16"
+REDUNDANCY: "\"Lockstep CPU + TMR on FPGA fences\""
+
+# Usage Example Variables
+MODULE_PATH: "rt_safety_gates.safety_gate_ctrl"
+CLASS_NAME: "SafetyGate"
+DOMAIN_SPECIFIC: "IIS ML"
+VAR_NAME: "gate"
+BIT_NAME: "ml_cmd_gate"
+CONDITION: "False"
+LOGIC_DESC: "Enable gate when invariants proven"
+CONDITION_1: "ap.mode in (\"LNAV\", \"VNAV\")"
+CONDITION_2: "sensors.healthy()"
+ACTION: "gate.set(True)"
+
+# FSM Variables
+FSM_CLASS: "FSM"
+STATE_1: "START"
+BITS_1: "0001"
+STATE_2: "CHECKS"
+BITS_2: "0010"
+STATE_3: "ALLOW"
+BITS_3: "0100"
+TRANSITION_CONDITION: "ml_healthy && invariants_ok && timing_budget_ok"
+
+# Dependencies
+UE_DEPENDENCY: "timing/deadline primitives"
+FE_DEPENDENCY: "audit trail federation"
+EXT_DEP_1: "gRPC/Cap'n Proto"
+EXT_DEP_1_PURPOSE: "schemas"
+EXT_DEP_2: "RTOS (Integrity/RTEMS)"
+EXT_DEP_2_PURPOSE: "deterministic execution"
+EXT_DEP_3: "oneTBB/COZ runtime tools"
+EXT_DEP_3_PURPOSE: "(as applicable) for profiling"
+
+# Standards and Compliance
+STANDARD_1: "DO‑178C (SW), DO‑254 (if FPGA fences)"
+STANDARD_1_DESC: "ARP4754A/ARP4761 (system/safety), ED‑215/DO‑387 (AI safety guidance when adopted)"
+STANDARD_2: "ARP4754A/ARP4761"
+STANDARD_2_DESC: "Development & safety assessment processes"
+
+CERT_LEVEL_1: "DAL A"
+CERT_1_SCOPE: "safety gates directly influencing actuator commands"
+CERT_LEVEL_2: "DAL B"
+CERT_2_SCOPE: "monitoring/telemetry only"
+
+# Maintenance
+REVIEW_CYCLE: "Quarterly"
+LAST_UPDATED: "2025‑09‑11"
+VERSION: "v1.0.0"
