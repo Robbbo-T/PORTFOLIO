@@ -1,0 +1,443 @@
+name: UTCS Anchor
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '2-DOMAINS-LEVELS/**/TFA/**/*'
+      - '3-PROJECTS-USE-CASES/OPTIMO-DT/**/*'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - '2-DOMAINS-LEVELS/**/TFA/**/*'
+      - '3-PROJECTS-USE-CASES/OPTIMO-DT/**/*'
+  workflow_dispatch:
+    inputs:
+      force_anchor:
+        description: 'Force anchor even if no changes detected'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  AQUA_WEBHOOK_URL: "https://robbbo-t.space/webhook"
+  UTCS_NETWORK: "testnet"
+
+jobs:
+  detect-changes:
+    name: Detect TFA changes
+    runs-on: ubuntu-latest
+    outputs:
+      manifests: ${{ steps.scan.outputs.manifests }}
+      has_changes: ${{ steps.scan.outputs.has_changes }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2  # Need at least 2 commits for diff
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml
+
+      - name: Scan for TFA manifest changes
+        id: scan
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "🔍 Scanning for TFA manifest changes..."
+          
+          # Create output file
+          manifests_file=$(mktemp)
+          echo "[]" > "$manifests_file"
+          
+          has_changes=false
+          
+          # Function to process manifest file
+          process_manifest() {
+            local file="$1"
+            local domain_path="$2"
+            
+            # Extract domain name from path
+            domain=$(basename "$domain_path")
+            
+            # Extract LLC path relative to domain
+            llc_path=$(echo "$file" | sed "s|$domain_path/||" | sed 's|/[^/]*$||')
+            
+            # Skip if not in TFA hierarchy
+            if [[ ! "$llc_path" =~ ^TFA/ ]]; then
+              return
+            fi
+            
+            echo "📄 Found TFA manifest: $file"
+            echo "   Domain: $domain"
+            echo "   LLC Path: $llc_path"
+            
+            # Add to manifests JSON
+            python3 << EOF
+import json
+import sys
+
+# Read current manifests
+with open('$manifests_file', 'r') as f:
+    manifests = json.load(f)
+
+# Add new manifest
+manifests.append({
+    'file': '$file',
+    'domain': '$domain',
+    'llc_path': '$llc_path',
+    'relative_path': '$file'
+})
+
+# Write back
+with open('$manifests_file', 'w') as f:
+    json.dump(manifests, f, indent=2)
+EOF
+            has_changes=true
+          }
+          
+          # Check for forced anchoring
+          if [[ "${{ github.event.inputs.force_anchor }}" == "true" ]]; then
+            echo "🔄 Force anchor enabled - scanning all TFA manifests"
+            
+            # Find all TFA manifests
+            find 2-DOMAINS-LEVELS -name "*.yaml" -o -name "*.yml" -o -name "*.json" | while read -r file; do
+              # Find the domain directory
+              domain_path=$(echo "$file" | grep -o '2-DOMAINS-LEVELS/[^/]*' || true)
+              if [[ -n "$domain_path" && -d "$domain_path" ]]; then
+                process_manifest "$file" "$domain_path"
+              fi
+            done
+            
+          else
+            echo "📊 Checking for changes since last commit..."
+            
+            # Get changed files
+            if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+              # For PRs, compare against base branch
+              base_sha="${{ github.event.pull_request.base.sha }}"
+              head_sha="${{ github.event.pull_request.head.sha }}"
+              changed_files=$(git diff --name-only "$base_sha..$head_sha" || true)
+            else
+              # For pushes, compare with previous commit
+              changed_files=$(git diff --name-only HEAD^ HEAD || true)
+            fi
+            
+            echo "Changed files:"
+            echo "$changed_files"
+            
+            # Process changed TFA files
+            echo "$changed_files" | while IFS= read -r file; do
+              [[ -z "$file" ]] && continue
+              
+              # Skip if file doesn't exist (deleted)
+              [[ ! -f "$file" ]] && continue
+              
+              # Check if it's a TFA manifest
+              if [[ "$file" =~ ^2-DOMAINS-LEVELS/[^/]+/TFA/ ]] && [[ "$file" =~ \.(yaml|yml|json)$ ]]; then
+                # Find the domain directory
+                domain_path=$(echo "$file" | grep -o '2-DOMAINS-LEVELS/[^/]*')
+                if [[ -n "$domain_path" && -d "$domain_path" ]]; then
+                  process_manifest "$file" "$domain_path"
+                fi
+              fi
+            done
+          fi
+          
+          # Read final manifests
+          manifests_json=$(cat "$manifests_file")
+          manifest_count=$(echo "$manifests_json" | python3 -c "import json, sys; print(len(json.load(sys.stdin)))")
+          
+          echo "📊 Found $manifest_count TFA manifests to process"
+          
+          # Output for next job
+          echo "manifests=$manifests_json" >> "$GITHUB_OUTPUT"
+          echo "has_changes=$has_changes" >> "$GITHUB_OUTPUT"
+          
+          # Clean up
+          rm -f "$manifests_file"
+
+  validate-and-anchor:
+    name: Validate and anchor TFA manifests
+    runs-on: ubuntu-latest
+    needs: detect-changes
+    if: needs.detect-changes.outputs.has_changes == 'true'
+    strategy:
+      matrix:
+        manifest: ${{ fromJson(needs.detect-changes.outputs.manifests) }}
+      fail-fast: false
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml requests
+
+      - name: Validate manifest with AQUA
+        id: validate
+        env:
+          MANIFEST_FILE: ${{ matrix.manifest.file }}
+          DOMAIN: ${{ matrix.manifest.domain }}
+          LLC_PATH: ${{ matrix.manifest.llc_path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "🔍 Validating manifest: $MANIFEST_FILE"
+          echo "   Domain: $DOMAIN"
+          echo "   LLC Path: $LLC_PATH"
+          
+          # Read manifest file
+          if [[ "$MANIFEST_FILE" =~ \.(yaml|yml)$ ]]; then
+            manifest_json=$(python3 -c "
+import yaml, json, sys
+with open('$MANIFEST_FILE', 'r') as f:
+    data = yaml.safe_load(f)
+print(json.dumps(data))
+")
+          else
+            manifest_json=$(cat "$MANIFEST_FILE")
+          fi
+          
+          # Prepare validation request
+          validation_request=$(python3 << 'EOF'
+import json
+import os
+
+manifest = json.loads(os.environ['manifest_json'])
+domain = os.environ['DOMAIN']
+llc_path = os.environ['LLC_PATH']
+
+request = {
+    "manifest": manifest,
+    "domain": domain,
+    "llc_path": llc_path
+}
+
+print(json.dumps(request))
+EOF
+)
+          
+          echo "📤 Sending validation request to AQUA..."
+          
+          # Send validation request to AQUA
+          response=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -d "$validation_request" \
+            "$AQUA_WEBHOOK_URL/api/v1/manifests/validate" || echo -e "\n000")
+          
+          # Extract response body and status code
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          echo "📥 AQUA Response (HTTP $http_code):"
+          echo "$response_body" | python3 -m json.tool || echo "$response_body"
+          
+          if [[ "$http_code" != "200" ]]; then
+            echo "❌ Validation failed with HTTP $http_code"
+            exit 1
+          fi
+          
+          # Parse validation response
+          validation_result=$(echo "$response_body")
+          is_valid=$(echo "$validation_result" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(data.get('valid', False))
+")
+          
+          if [[ "$is_valid" != "True" ]]; then
+            echo "❌ Manifest validation failed"
+            echo "$validation_result" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+errors = data.get('errors', [])
+for error in errors:
+    print(f\"Error: {error}\")
+"
+            exit 1
+          fi
+          
+          # Extract canonical hash
+          canonical_hash=$(echo "$validation_result" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(data.get('canonical_hash', ''))
+")
+          
+          echo "✅ Validation successful!"
+          echo "📝 Canonical hash: $canonical_hash"
+          
+          # Output for anchoring step
+          echo "canonical_hash=$canonical_hash" >> "$GITHUB_OUTPUT"
+          echo "validation_response=$validation_result" >> "$GITHUB_OUTPUT"
+
+      - name: Anchor to UTCS testnet
+        id: anchor
+        if: steps.validate.outputs.canonical_hash != ''
+        env:
+          CANONICAL_HASH: ${{ steps.validate.outputs.canonical_hash }}
+          DOMAIN: ${{ matrix.manifest.domain }}
+          LLC_PATH: ${{ matrix.manifest.llc_path }}
+          GITHUB_CI_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "⛓️ Anchoring to UTCS testnet..."
+          echo "   Hash: $CANONICAL_HASH"
+          echo "   Domain: $DOMAIN"
+          echo "   LLC Path: $LLC_PATH"
+          
+          # Prepare anchor request
+          anchor_request=$(python3 << 'EOF'
+import json
+import os
+
+request = {
+    "canonical_hash": os.environ['CANONICAL_HASH'],
+    "submission_id": os.environ['CANONICAL_HASH'][:16],  # Use first 16 chars as submission ID
+    "metadata": {
+        "domain": os.environ['DOMAIN'],
+        "llc_path": os.environ['LLC_PATH'],
+        "pr_number": os.environ.get('pr_number', 0),
+        "commit_sha": os.environ.get('GITHUB_SHA', ''),
+        "workflow_run_id": os.environ.get('GITHUB_RUN_ID', ''),
+        "repository": os.environ.get('GITHUB_REPOSITORY', ''),
+        "ref": os.environ.get('GITHUB_REF', ''),
+        "actor": os.environ.get('GITHUB_ACTOR', '')
+    }
+}
+
+print(json.dumps(request))
+EOF
+)
+          
+          echo "📤 Sending anchor request to AQUA..."
+          
+          # Send anchor request
+          response=$(curl -s -w "\n%{http_code}" \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: Bearer $GITHUB_CI_TOKEN" \
+            -d "$anchor_request" \
+            "$AQUA_WEBHOOK_URL/utcs/anchor" || echo -e "\n000")
+          
+          # Extract response body and status code
+          http_code=$(echo "$response" | tail -n1)
+          response_body=$(echo "$response" | sed '$d')
+          
+          echo "📥 AQUA Anchor Response (HTTP $http_code):"
+          echo "$response_body" | python3 -m json.tool || echo "$response_body"
+          
+          if [[ "$http_code" != "200" ]]; then
+            echo "❌ Anchoring failed with HTTP $http_code"
+            # Don't fail the job for anchoring failures in testnet
+            echo "⚠️ Continuing despite anchoring failure (testnet)"
+          else
+            echo "✅ Successfully anchored to UTCS testnet!"
+            
+            # Extract anchor details
+            anchor_result=$(echo "$response_body")
+            anchor_tx_hash=$(echo "$anchor_result" | python3 -c "
+import json, sys
+data = json.load(sys.stdin)
+print(data.get('anchor_tx_hash', ''))
+")
+            
+            echo "🔗 Anchor transaction: $anchor_tx_hash"
+            
+            # Output anchor details
+            echo "anchor_tx_hash=$anchor_tx_hash" >> "$GITHUB_OUTPUT"
+            echo "anchor_response=$anchor_result" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update OPTIMO-DT thread
+        if: steps.anchor.outputs.anchor_tx_hash != ''
+        env:
+          CANONICAL_HASH: ${{ steps.validate.outputs.canonical_hash }}
+          ANCHOR_TX_HASH: ${{ steps.anchor.outputs.anchor_tx_hash }}
+          DOMAIN: ${{ matrix.manifest.domain }}
+          LLC_PATH: ${{ matrix.manifest.llc_path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "🔄 Updating OPTIMO-DT digital thread..."
+          
+          # Create thread update entry
+          thread_update=$(python3 << 'EOF'
+import json
+import os
+from datetime import datetime
+
+update = {
+    "event_type": "utcs_anchor",
+    "timestamp": datetime.utcnow().isoformat() + "Z",
+    "canonical_hash": os.environ['CANONICAL_HASH'],
+    "anchor_tx_hash": os.environ['ANCHOR_TX_HASH'],
+    "domain": os.environ['DOMAIN'],
+    "llc_path": os.environ['LLC_PATH'],
+    "workflow_run_id": os.environ.get('GITHUB_RUN_ID', ''),
+    "commit_sha": os.environ.get('GITHUB_SHA', ''),
+    "repository": os.environ.get('GITHUB_REPOSITORY', '')
+}
+
+print(json.dumps(update, indent=2))
+EOF
+)
+          
+          echo "📝 Thread update:"
+          echo "$thread_update"
+          
+          # Save to OPTIMO-DT artifacts (placeholder for now)
+          mkdir -p /tmp/optimo-dt-updates
+          echo "$thread_update" > "/tmp/optimo-dt-updates/anchor-${CANONICAL_HASH:0:16}.json"
+          
+          echo "✅ OPTIMO-DT thread updated"
+
+  summary:
+    name: Anchoring summary
+    runs-on: ubuntu-latest
+    needs: [detect-changes, validate-and-anchor]
+    if: always() && needs.detect-changes.outputs.has_changes == 'true'
+    steps:
+      - name: Generate summary
+        shell: bash
+        run: |
+          echo "# 🔗 UTCS Anchoring Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          
+          if [[ "${{ needs.validate-and-anchor.result }}" == "success" ]]; then
+            echo "✅ **Status**: All manifests successfully validated and anchored" >> $GITHUB_STEP_SUMMARY
+          elif [[ "${{ needs.validate-and-anchor.result }}" == "failure" ]]; then
+            echo "❌ **Status**: Some manifests failed validation or anchoring" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "⚠️ **Status**: Anchoring completed with warnings" >> $GITHUB_STEP_SUMMARY
+          fi
+          
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Processed Manifests**: ${{ needs.detect-changes.outputs.manifests }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Network**: ${{ env.UTCS_NETWORK }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Workflow Run**: [${{ github.run_id }}](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})" >> $GITHUB_STEP_SUMMARY
+          
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "**Pull Request**: [${{ github.event.pull_request.number }}](${{ github.event.pull_request.html_url }})" >> $GITHUB_STEP_SUMMARY
+          fi
