@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="180" height="20">
 <mask id="a"><rect width="180" height="20" rx="3" fill="#fff"/></mask>
 <g mask="url(#a)"><rect width="80" height="20" fill="#555"/>
-<rect x="80" width="100" height="20" fill="#4c1"/></g>
+<rect x="80" width="100" height="20" fill="#df3e3e"/></g>
 <g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana" font-size="11">
-<text x="40" y="14">links</text><text x="130" y="14">5 links OK</text></g></svg>
+<text x="40" y="14">links</text><text x="130" y="14">1 broken</text></g></svg>
