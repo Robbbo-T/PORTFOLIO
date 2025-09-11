@@ -136,8 +136,12 @@ class AquaOSProEngine:
                 }
             }
         
-        with open(config_path, 'r') as f:
-            return yaml.safe_load(f)
+        try:
+            with open(config_path, 'r') as f:
+                return yaml.safe_load(f)
+        except (FileNotFoundError, PermissionError, OSError) as e:
+            logger.error(f"Failed to open config file '{config_path}': {e}")
+            raise
     
     def _initialize_bridge_components(self):
         """Initialize quantum-classical bridge components"""
