@@ -1,22 +1,87 @@
-# AAA · AERODYNAMICS AND AIRFRAMES ARCHITECTURES
+# AAA · Aerodynamics and Airframes Architectures — Hyperlinked Hierarchical Index
 
-**TFA Scope:** Complete quantum-classical architecture  
-**STRICT TFA-ONLY:** No flat LLC folders under this domain.
+**TFA scope:** complete quantum–classical architecture
+**Constraint:** **STRICT TFA-ONLY** (no flat LLC folders in this domain)
+**Base path:** `2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/`
 
-This domain covers aerodynamic analysis, airframe structures, and their integrated architecture—spanning system integration, domain interfaces, station envelopes, component configuration, quantum-classical elements, and state descriptors for advanced computation.
+---
 
-- **Canonical LLC meanings (verbatim):**
-  - SI: SYSTEM INTEGRATION
-  - DI: DOMAIN INTERFACE
-  - SE: STATION ENVELOPE
-  - CV: COMPONENT VENDOR
-  - CE: COMPONENT EQUIPMENT
-  - CC: CONFIGURATION CELL
-  - CI: CONFIGURATION ITEM
-  - CP: COMPONENT PART
-  - CB: CLASSICAL BIT
-  - QB: QUBIT
-  - UE: UNIT ELEMENT
-  - FE: FEDERATION ENTANGLEMENT
-  - FWD: Future/Foresight/Fluctuant/Functional Waves Dynamics
-  - QS: QUANTUM STATE
+## TFA
+
+* **META**
+
+  * [META](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/META/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/META/README.md)
+
+* **SYSTEMS**
+
+  * **SI · System Integration** — end-to-end integration of AAA subsystems
+    [SI](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/SYSTEMS/SI/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/SYSTEMS/SI/README.md)
+  * **DI · Domain Interface** — stable external interfaces for AAA
+    [DI](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/SYSTEMS/DI/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/SYSTEMS/DI/README.md)
+
+* **STATIONS**
+
+  * **SE · Station Envelope** — benches, rigs, HIL/SIL envelopes
+    [SE](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/STATIONS/SE/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/STATIONS/SE/README.md)
+
+* **COMPONENTS**
+
+  * **CV · Component Vendor** — supplier data, vendor baselines
+    [CV](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CV/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CV/README.md)
+  * **CE · Component Equipment** — LRUs/assemblies definitions
+    [CE](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CE/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CE/README.md)
+  * **CC · Configuration Cell** — parameter cells, tuning sets
+    [CC](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CC/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CC/README.md)
+  * **CI · Configuration Item** — controlled items, baselines
+    [CI](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CI/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CI/README.md)
+  * **CP · Component Part** — parts lists, IPC links
+    [CP](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CP/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/COMPONENTS/CP/README.md)
+
+* **BITS**
+
+  * **CB · Classical Bit** — binary substrate for CFD/FEA + benches
+    [CB](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/BITS/CB/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/BITS/CB/README.md)
+
+* **QUBITS**
+
+  * **QB · Qubit** — quantum interfaces, hybrid pipelines
+    [QB](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/QUBITS/QB/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/QUBITS/QB/README.md)
+
+* **ELEMENTS**
+
+  * **UE · Unit Element** — minimal classical elements/primitives
+    [UE](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/ELEMENTS/UE/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/ELEMENTS/UE/README.md)
+  * **FE · Federation Entanglement** — governance, cross-domain federation
+    [FE](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/ELEMENTS/FE/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/ELEMENTS/FE/README.md)
+
+* **WAVES**
+
+  * **FWD · Future / Foresight / Fluctuant / Functional Waves Dynamics**
+    [FWD](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/WAVES/FWD/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/WAVES/FWD/README.md)
+
+* **STATES**
+
+  * **QS · Quantum State** — state descriptors for advanced computation
+    [QS](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/STATES/QS/) · [README.md](2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/STATES/QS/README.md)
+
+---
+
+## Canonical LLC meanings (verbatim)
+
+* **SI:** System Integration
+* **DI:** Domain Interface
+* **SE:** Station Envelope
+* **CV:** Component Vendor
+* **CE:** Component Equipment
+* **CC:** Configuration Cell
+* **CI:** Configuration Item
+* **CP:** Component Part
+* **CB:** Classical Bit
+* **QB:** Qubit
+* **UE:** Unit Element
+* **FE:** Federation Entanglement
+* **FWD:** Future/Foresight/Fluctuant/Functional Waves Dynamics
+* **QS:** Quantum State
+
+---
+
