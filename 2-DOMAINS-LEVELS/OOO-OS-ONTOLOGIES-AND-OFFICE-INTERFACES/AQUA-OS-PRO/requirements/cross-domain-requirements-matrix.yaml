@@ -116,7 +116,7 @@ domain_requirements:
       layer: SE
       llc: [DES]
       cax: [CAD]
-      statement: "Define station envelopes for terminal area integration (SID/STAR overlays)."
+      statement: "Define Station Envelope for terminal area integration (SID/STAR overlays)."
       acceptance: "Terminal procedures integrated."
 
     AAP-DI-0202:
