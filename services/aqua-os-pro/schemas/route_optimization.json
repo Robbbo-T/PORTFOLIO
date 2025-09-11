@@ -1,0 +1,239 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://aqua-os.pro/schemas/route_optimization.json",
+  "title": "AQUA OS PRO Route Optimization Schema",
+  "description": "Schema for 10-minute route optimization loop data structures",
+  "type": "object",
+  "properties": {
+    "route_request": {
+      "type": "object",
+      "properties": {
+        "utcs_id": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}/[A-Z]{2,3}/REQ-\\d{4}$",
+          "description": "Universal Token Classification System ID"
+        },
+        "domain": {
+          "type": "string",
+          "enum": ["AAA", "AAP", "CCC", "CQH", "DDD", "EDI", "EEE", "EER", "IIF", "IIS", "LCC", "LIB", "MMM", "OOO", "PPP"]
+        },
+        "layer": {
+          "type": "string", 
+          "enum": ["SI", "DI", "SE", "CB", "QB", "FWD", "QS", "FE"]
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "route_params": {
+          "type": "object",
+          "properties": {
+            "origin": {
+              "$ref": "#/definitions/waypoint"
+            },
+            "destination": {
+              "$ref": "#/definitions/waypoint"
+            },
+            "cruise_altitude": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 60000
+            },
+            "cruise_speed": {
+              "type": "number",
+              "minimum": 0
+            },
+            "fuel_capacity": {
+              "type": "number",
+              "minimum": 0
+            },
+            "optimization_weights": {
+              "type": "object",
+              "properties": {
+                "fuel": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "time": {
+                  "type": "number", 
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "emissions": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": ["fuel", "time", "emissions"]
+            }
+          },
+          "required": ["origin", "destination", "cruise_altitude", "optimization_weights"]
+        },
+        "quantum_config": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean"
+            },
+            "strategy": {
+              "type": "string",
+              "enum": ["qaoa", "vqe", "off"]
+            },
+            "shots": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10000
+            },
+            "backend": {
+              "type": "string"
+            }
+          },
+          "required": ["enabled"]
+        }
+      },
+      "required": ["utcs_id", "domain", "layer", "timestamp", "route_params"]
+    },
+    "route_response": {
+      "type": "object",
+      "properties": {
+        "utcs_id": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["success", "error", "partial", "fallback"]
+        },
+        "processing_time_ms": {
+          "type": "number",
+          "minimum": 0
+        },
+        "sla_compliance": {
+          "type": "boolean"
+        },
+        "optimized_route": {
+          "type": "object",
+          "properties": {
+            "waypoints": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/waypoint"
+              }
+            },
+            "total_distance": {
+              "type": "number"
+            },
+            "estimated_fuel": {
+              "type": "number"
+            },
+            "estimated_time": {
+              "type": "number"
+            },
+            "estimated_emissions": {
+              "type": "number"
+            },
+            "confidence_score": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": ["waypoints", "total_distance", "estimated_fuel", "estimated_time"]
+        },
+        "quantum_metrics": {
+          "type": "object",
+          "properties": {
+            "used_quantum": {
+              "type": "boolean"
+            },
+            "quantum_advantage": {
+              "type": "number"
+            },
+            "fallback_reason": {
+              "type": "string"
+            },
+            "backend_used": {
+              "type": "string"
+            }
+          }
+        },
+        "provenance": {
+          "type": "object",
+          "properties": {
+            "qs_hash": {
+              "type": "string"
+            },
+            "det_anchor": {
+              "type": "string"
+            },
+            "processing_node": {
+              "type": "string"
+            }
+          },
+          "required": ["qs_hash"]
+        }
+      },
+      "required": ["utcs_id", "status", "processing_time_ms", "sla_compliance"]
+    }
+  },
+  "definitions": {
+    "waypoint": {
+      "type": "object",
+      "properties": {
+        "latitude": {
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
+        },
+        "longitude": {
+          "type": "number", 
+          "minimum": -180,
+          "maximum": 180
+        },
+        "altitude": {
+          "type": "number",
+          "minimum": -1000,
+          "maximum": 100000
+        },
+        "identifier": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["airport", "waypoint", "fix", "vor", "ndb", "intersection"]
+        }
+      },
+      "required": ["latitude", "longitude"]
+    },
+    "performance_envelope": {
+      "type": "object",
+      "properties": {
+        "altitude_limits": {
+          "type": "object",
+          "properties": {
+            "min": {"type": "number"},
+            "max": {"type": "number"}
+          },
+          "required": ["min", "max"]
+        },
+        "mach_limits": {
+          "type": "object",
+          "properties": {
+            "min": {"type": "number"},
+            "max": {"type": "number"}
+          },
+          "required": ["min", "max"]
+        },
+        "bank_limits": {
+          "type": "object",
+          "properties": {
+            "max": {"type": "number"}
+          },
+          "required": ["max"]
+        }
+      },
+      "required": ["altitude_limits", "mach_limits", "bank_limits"]
+    }
+  }
+}
