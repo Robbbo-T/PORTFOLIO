@@ -25,4 +25,3 @@ Scope: airport adaptability, ground operations interface, scalable platform inte
 - QS: N/A (placeholder for future sensors-based quantum inference)
 
 ## Local Decisions / Links / Change log
-- As above

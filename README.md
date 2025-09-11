@@ -1,6 +1,6 @@
 # Amedeo Pelliccia · Professional Portfolio
 
-> **Classical–Quantum Extensible Aerospace**  
+> **Classical Quantum-Extensible Aerospace**  
 > Strict TFA hierarchy across 15 domains with quantum layers (CB/QB/UE/FE/FWD/QS), OPTIMO Digital Thread, template packs, and CI validation.
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
@@ -205,12 +205,7 @@ The TFA V2 implementation includes a complete quantum-classical bridge:
 - **Element Bridge**: UE (Unit Element) ↔ FE (Federation Element)
 - **Wave Dynamics**: FWD for predictive/retrodictive analysis
 - **State Management**: QS for quantum state definitions and measurements
-├── STATES/
-│   └── QS/  (QUANTUM STATE)
-└── META/
-└── README.md
 
-```
 
 ### LLC Codes — Canonical Meanings (TFA V2)
 

@@ -36,5 +36,4 @@ This META page captures domain-level decisions, authorship, and references for A
 - Example artifacts: `3-PROJECTS-USE-CASES/BWB-Q100-AIRCRAFT/`
 
 ## Change log
-- Created: [YYYY-MM-DD] by [author]
-- Last updated: [YYYY-MM-DD] — brief note
+- Created: [2025 SEPT 11 by [Amedeo Pelliccia]
