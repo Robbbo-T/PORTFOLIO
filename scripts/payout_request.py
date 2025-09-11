@@ -486,7 +486,7 @@ def main():
         
         elif args.command == 'batch':
             result = manager.batch_process(args.file)
-            print(f"📊 Batch Processing Results:")
+            print("📊 Batch Processing Results:")
             print(f"   Processed: {result['processed']}")
             print(f"   Successful: {result['successful']}")
             print(f"   Failed: {result['failed']}")
