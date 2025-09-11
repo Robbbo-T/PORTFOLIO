@@ -1,0 +1,108 @@
+# CQH Domain Configuration for CB Template
+DOMAIN_CODE: "CQH"
+DOMAIN_NAME: "CRYOGENICS-QUANTUM-INTERFACES-HYDROGEN-CELLS"
+DOMAIN_FULL_NAME: "Cryogenics, Quantum Interfaces & Hydrogen Cells"
+DOMAIN_BINARY_PURPOSE: "safety interlocks, cryo‑plant state words, quantum‑classical handshakes, and hydrogen cell BMS fault/status"
+
+# CB Purposes
+CB_PURPOSE_1: "**Interlock matrices** (valves, pumps, heaters) with provable safe sequences"
+CB_PURPOSE_2: "**Cryostat stage statuses** (T, P, valve position) aggregated into state words"
+CB_PURPOSE_3: "**Q‑bridge control registers** for qubit reset/measure/ready handshakes"
+CB_PURPOSE_4: "**Hydrogen BMS fault words** and inhibit lines"
+
+# Implementation Directories
+IMPL_DIR_1: "cryo-pfc"
+IMPL_DESC_1: "Plant/fault control matrices (VHDL/C)"
+IMPL_DIR_2: "qbridge-control"
+IMPL_DESC_2: "Quantum interface control regs (C++/C)"
+IMPL_DIR_3: "bms-safety"
+IMPL_DESC_3: "H2 cell BMS fault words (C)"
+
+# Component Specifications
+COMPONENT_1_NAME: "InterlockMatrix"
+COMPONENT_1_PURPOSE: "Ensures ordered, safe actuation across cryo plant elements"
+COMPONENT_1_PATH: "cryo-pfc/interlock_matrix.vhd"
+COMPONENT_1_KEY: "SafeOrderingProof"
+COMPONENT_1_VALUE: "Model‑checked (property set P1..P7)"
+
+COMPONENT_2_NAME: "QBridgeCR"
+COMPONENT_2_PURPOSE: "Classical control register block for qubit reset/measure/ready lines"
+COMPONENT_2_PATH: "qbridge-control/qbridge_cr.hpp"
+COMPONENT_2_KEY: "Latency_us"
+COMPONENT_2_VALUE: "≤ 25"
+
+COMPONENT_3_NAME: "BMSFaultWord"
+COMPONENT_3_PURPOSE: "Aggregated H2‑cell faults + inhibits"
+COMPONENT_3_PATH: "bms-safety/fault_word.c"
+COMPONENT_3_KEY: "HazardCoverage"
+COMPONENT_3_VALUE: "≥ 99%"
+
+# Interfaces
+CC_INTERFACE_DESC: "`BITFIELD_IF` tables for plant items and quantum channels"
+CI_INTERFACE_DESC: "Register schemas exported in `documentation/interface-specs.md`"
+UPWARD_PROTOCOL: "`TFA-BIT-V1` ABI + C headers"
+
+QB_INTERFACE_DESC: "Control bits synchronize qubit reset/measure/ready with QIR adapters"
+LATERAL_PROTOCOL: "`QCE-PROTO v0.3` (shared memory or SPI‑lite for embedded prototypes)"
+
+SI_INTERFACE_DESC: "Maps to **AFDX/ARINC 429** (flight), **CAN‑FD** (lab rigs) buses"
+DI_INTERFACE_DESC: "Hooks for cryo PLCs and BMS controllers"
+
+# Technical Specifications
+WORD_SIZE: 32
+ENDIANNESS: "little"
+ERROR_CORRECTION: "\"CRC‑16 on frames; duplication + voter on safety lines\""
+CLOCK_FREQ: 50
+SETUP_TIME: 3.2
+HOLD_TIME: 1.6
+MTBF: 200000
+BER: "1.0e-12"
+REDUNDANCY: "\"DWC with majority voter; cold‑spare controllers\""
+
+# Usage Example Variables
+MODULE_PATH: "qbridge_control.qbridge_cr"
+CLASS_NAME: "ControlReg"
+DOMAIN_SPECIFIC: "CQH cryo"
+VAR_NAME: "cr"
+BIT_NAME: "qb_handshake"
+CONDITION: "True"
+LOGIC_DESC: "Request quantum measurement"
+CONDITION_1: "cryo.ready"
+CONDITION_2: "qubit.iface_idle()"
+ACTION: "cr.request_measure()"
+
+# FSM Variables
+FSM_CLASS: "FSM"
+STATE_1: "IDLE"
+BITS_1: "0001"
+STATE_2: "COOLDOWN"
+BITS_2: "0010"
+STATE_3: "READY"
+BITS_3: "0100"
+TRANSITION_CONDITION: "T<4K && P in range && leaks==0"
+
+# Dependencies
+UE_DEPENDENCY: "valve/pump IO primitives and timebases"
+FE_DEPENDENCY: "cross‑lab federation and auditability"
+EXT_DEP_1: "FreeRTOS/Zephyr"
+EXT_DEP_1_PURPOSE: "embedded control"
+EXT_DEP_2: "QIR adapter library"
+EXT_DEP_2_PURPOSE: "quantum runtime bridging"
+EXT_DEP_3: "CANopen/AFDX stacks"
+EXT_DEP_3_PURPOSE: "as applicable"
+
+# Standards and Compliance
+STANDARD_1: "DO‑178C / DO‑254"
+STANDARD_1_DESC: "depending on target (SW/HW)"
+STANDARD_2: "IEC 61508"
+STANDARD_2_DESC: "functional safety for plant interlocks"
+
+CERT_LEVEL_1: "DAL A"
+CERT_1_SCOPE: "interlocks preventing hazardous energy release"
+CERT_LEVEL_2: "DAL B"
+CERT_2_SCOPE: "status/monitoring paths"
+
+# Maintenance
+REVIEW_CYCLE: "Quarterly"
+LAST_UPDATED: "2025‑09‑11"
+VERSION: "v1.0.0"
