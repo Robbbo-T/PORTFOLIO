@@ -481,7 +481,7 @@ def main():
                 proposal_id=args.proposal_id,
                 dry_run=args.dry_run
             )
-            print(f"📊 Execution Plan:")
+            print("📊 Execution Plan:")
             print(json.dumps(result, indent=2))
         
         elif args.command == 'batch':
