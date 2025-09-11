@@ -1,0 +1,250 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://robbbo-t.space/schemas/tfa/federation_entanglement.json",
+  "title": "Federation Entanglement (FE) Manifest Schema",
+  "description": "Schema for TFA V2 Federation Entanglement manifests",
+  "version": "2.0.0",
+  "type": "object",
+  "required": ["type", "name", "version", "members", "orchestration_rules"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "FE",
+      "description": "Manifest type identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable name for the federation"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "description": "Semantic version of the manifest"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Optional description of the federation purpose"
+    },
+    "members": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 50,
+      "description": "List of federation members",
+      "items": {
+        "$ref": "#/definitions/FederationMember"
+      }
+    },
+    "orchestration_rules": {
+      "$ref": "#/definitions/OrchestrationRules",
+      "description": "Rules governing federation coordination"
+    },
+    "interfaces": {
+      "type": "array",
+      "description": "External interfaces exposed by the federation",
+      "items": {
+        "$ref": "#/definitions/Interface"
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "description": "Dependencies on other TFA artifacts",
+      "items": {
+        "$ref": "#/definitions/Dependency"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata for the federation",
+      "properties": {
+        "created_by": {"type": "string"},
+        "purpose": {"type": "string"},
+        "status": {
+          "type": "string",
+          "enum": ["draft", "active", "deprecated", "retired"]
+        },
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    },
+    "nonce": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Nonce for EIP-712 signing"
+    }
+  },
+  "definitions": {
+    "FederationMember": {
+      "type": "object",
+      "required": ["domain", "role"],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}-[A-Z-]+$",
+          "description": "Domain identifier (e.g., AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES)"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["coordinator", "participant", "observer", "validator"],
+          "description": "Role of the member in the federation"
+        },
+        "weight": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 1,
+          "description": "Voting weight of the member"
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Capabilities provided by this member"
+        },
+        "endpoints": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Endpoint"
+          },
+          "description": "Network endpoints for this member"
+        }
+      }
+    },
+    "OrchestrationRules": {
+      "type": "object",
+      "required": ["consensus_protocol", "quorum_threshold"],
+      "properties": {
+        "consensus_protocol": {
+          "type": "string",
+          "enum": ["proof-of-authority", "proof-of-stake", "byzantine-fault-tolerant", "simple-majority"],
+          "description": "Consensus mechanism for decision making"
+        },
+        "quorum_threshold": {
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 1.0,
+          "description": "Minimum fraction of members required for consensus"
+        },
+        "timeout_seconds": {
+          "type": "integer",
+          "minimum": 10,
+          "maximum": 86400,
+          "default": 300,
+          "description": "Timeout for consensus operations in seconds"
+        },
+        "retry_policy": {
+          "type": "object",
+          "properties": {
+            "max_retries": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10,
+              "default": 3
+            },
+            "backoff_multiplier": {
+              "type": "number",
+              "minimum": 1.0,
+              "maximum": 5.0,
+              "default": 2.0
+            }
+          }
+        },
+        "failure_handling": {
+          "type": "string",
+          "enum": ["abort", "continue", "degraded"],
+          "default": "abort",
+          "description": "How to handle member failures"
+        }
+      }
+    },
+    "Interface": {
+      "type": "object",
+      "required": ["name", "type", "protocol"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Interface name"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["api", "event", "stream", "rpc"],
+          "description": "Interface type"
+        },
+        "protocol": {
+          "type": "string",
+          "enum": ["http", "grpc", "websocket", "tcp", "udp"],
+          "description": "Communication protocol"
+        },
+        "version": {
+          "type": "string",
+          "description": "Interface version"
+        },
+        "specification": {
+          "type": "string",
+          "description": "Reference to interface specification"
+        }
+      }
+    },
+    "Dependency": {
+      "type": "object",
+      "required": ["name", "type"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Dependency name"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["FE", "UE", "QS", "CB", "QB", "FWD", "SE", "SI", "DI", "CV", "CE", "CC", "CI", "CP"],
+          "description": "Dependency type (LLC code)"
+        },
+        "version": {
+          "type": "string",
+          "description": "Required version or version range"
+        },
+        "domain": {
+          "type": "string",
+          "description": "Domain where dependency is located"
+        },
+        "optional": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether dependency is optional"
+        }
+      }
+    },
+    "Endpoint": {
+      "type": "object",
+      "required": ["url", "type"],
+      "properties": {
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Endpoint URL"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["api", "webhook", "stream", "health"],
+          "description": "Endpoint type"
+        },
+        "authentication": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "enum": ["none", "bearer", "basic", "certificate", "signature"]
+            },
+            "required": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

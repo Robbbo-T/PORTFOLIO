@@ -1,0 +1,636 @@
+name: Tokenomics Simulation
+
+on:
+  schedule:
+    - cron: '0 0 * * 0'  # Weekly on Sunday at midnight UTC
+  workflow_dispatch:
+    inputs:
+      simulation_type:
+        description: 'Type of simulation to run'
+        required: true
+        type: choice
+        options:
+          - 'full'
+          - 'innovation_valuation'
+          - 'token_distribution'
+          - 'monte_carlo'
+        default: 'full'
+      market_scenario:
+        description: 'Market scenario for simulation'
+        required: false
+        type: choice
+        options:
+          - 'optimistic'
+          - 'base'
+          - 'pessimistic'
+        default: 'base'
+
+env:
+  SIMULATION_OUTPUT_DIR: "docs/metrics/tokenomics"
+  TEKNIA_CONTRACT_ADDRESS: "0x1234567890abcdef1234567890abcdef12345678"  # Placeholder
+
+jobs:
+  prepare-simulation:
+    name: Prepare simulation environment
+    runs-on: ubuntu-latest
+    outputs:
+      simulation_id: ${{ steps.setup.outputs.simulation_id }}
+      timestamp: ${{ steps.setup.outputs.timestamp }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib seaborn scipy web3 pyyaml
+
+      - name: Setup simulation
+        id: setup
+        shell: bash
+        run: |
+          simulation_id="sim_$(date +%Y%m%d_%H%M%S)_$RANDOM"
+          timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+          
+          echo "simulation_id=$simulation_id" >> "$GITHUB_OUTPUT"
+          echo "timestamp=$timestamp" >> "$GITHUB_OUTPUT"
+          
+          echo "🔬 Simulation ID: $simulation_id"
+          echo "⏰ Timestamp: $timestamp"
+
+      - name: Create simulation directory
+        run: |
+          mkdir -p "$SIMULATION_OUTPUT_DIR"
+          mkdir -p "/tmp/simulation-data"
+
+  innovation-valuation-simulation:
+    name: Innovation valuation simulation
+    runs-on: ubuntu-latest
+    needs: prepare-simulation
+    if: github.event.inputs.simulation_type == 'full' || github.event.inputs.simulation_type == 'innovation_valuation' || github.event.inputs.simulation_type == ''
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib seaborn scipy pyyaml
+
+      - name: Run innovation valuation simulation
+        env:
+          SIMULATION_ID: ${{ needs.prepare-simulation.outputs.simulation_id }}
+          MARKET_SCENARIO: ${{ github.event.inputs.market_scenario || 'base' }}
+        shell: python
+        run: |
+          import numpy as np
+          import pandas as pd
+          import matplotlib.pyplot as plt
+          import seaborn as sns
+          import json
+          import yaml
+          from datetime import datetime, timedelta
+          import os
+          
+          # Set up simulation parameters
+          simulation_id = os.environ['SIMULATION_ID']
+          market_scenario = os.environ['MARKET_SCENARIO']
+          
+          print(f"🔬 Running innovation valuation simulation: {simulation_id}")
+          print(f"📊 Market scenario: {market_scenario}")
+          
+          # Define market scenario parameters
+          scenarios = {
+              'optimistic': {'growth_rate': 0.15, 'adoption_factor': 1.5, 'risk_discount': 0.8},
+              'base': {'growth_rate': 0.10, 'adoption_factor': 1.0, 'risk_discount': 1.0},
+              'pessimistic': {'growth_rate': 0.05, 'adoption_factor': 0.7, 'risk_discount': 1.3}
+          }
+          
+          scenario_params = scenarios[market_scenario]
+          
+          # Simulate innovation portfolio
+          np.random.seed(42)  # For reproducible results
+          n_innovations = 50
+          
+          # Generate innovation metrics
+          innovations = []
+          for i in range(n_innovations):
+              innovation = {
+                  'id': f'UTCS-{i:04d}',
+                  'domain': np.random.choice(['AAA', 'CQH', 'IIS', 'EDI', 'PPP']),
+                  'technical_score': np.random.normal(700, 150),
+                  'market_potential': np.random.normal(600, 200),
+                  'implementation_complexity': np.random.normal(400, 100),
+                  'time_to_market': np.random.exponential(12),  # months
+                  'ip_strength': np.random.normal(500, 150),
+                  'team_capability': np.random.normal(650, 120),
+                  'competitive_advantage': np.random.normal(550, 180),
+                  'risk_factor': np.random.normal(300, 100)
+              }
+              
+              # Clamp values to valid ranges
+              for key in ['technical_score', 'market_potential', 'implementation_complexity', 
+                         'ip_strength', 'team_capability', 'competitive_advantage', 'risk_factor']:
+                  innovation[key] = max(0, min(1000, innovation[key]))
+              
+              innovation['time_to_market'] = max(1, min(60, innovation['time_to_market']))
+              
+              innovations.append(innovation)
+          
+          # Valuation algorithm (simplified version of smart contract logic)
+          def calculate_innovation_value(innovation, scenario_params):
+              # Core score weights (matching smart contract)
+              weights = {
+                  'technical': 0.25,
+                  'market': 0.25,
+                  'complexity': 0.15,
+                  'ip': 0.15,
+                  'team': 0.10,
+                  'competitive': 0.10
+              }
+              
+              # Calculate weighted core score
+              core_score = (
+                  innovation['technical_score'] * weights['technical'] +
+                  innovation['market_potential'] * weights['market'] +
+                  innovation['implementation_complexity'] * weights['complexity'] +
+                  innovation['ip_strength'] * weights['ip'] +
+                  innovation['team_capability'] * weights['team'] +
+                  innovation['competitive_advantage'] * weights['competitive']
+              )
+              
+              # Time adjustment
+              max_time = 36  # months
+              time_adjustment = max(0.5, 1.0 - (innovation['time_to_market'] / max_time) * 0.5)
+              
+              # Risk adjustment
+              risk_adjustment = max(0.5, 1.0 - (innovation['risk_factor'] / 1000) * 0.5)
+              
+              # Base valuation (1000 TEK per point)
+              base_value = 1000 * core_score
+              
+              # Apply adjustments and scenario factors
+              final_value = (base_value * time_adjustment * risk_adjustment * 
+                           scenario_params['adoption_factor'] / scenario_params['risk_discount'])
+              
+              return final_value
+          
+          # Calculate valuations
+          for innovation in innovations:
+              innovation['calculated_value'] = calculate_innovation_value(innovation, scenario_params)
+          
+          # Create DataFrame for analysis
+          df = pd.DataFrame(innovations)
+          
+          # Generate analysis
+          total_value = df['calculated_value'].sum()
+          avg_value = df['calculated_value'].mean()
+          median_value = df['calculated_value'].median()
+          
+          print(f"📈 Portfolio Analysis:")
+          print(f"   Total Value: {total_value:,.0f} TEK")
+          print(f"   Average Value: {avg_value:,.0f} TEK")
+          print(f"   Median Value: {median_value:,.0f} TEK")
+          
+          # Domain analysis
+          domain_analysis = df.groupby('domain')['calculated_value'].agg(['sum', 'mean', 'count']).round(0)
+          print(f"\n📊 Domain Analysis:")
+          print(domain_analysis)
+          
+          # Create visualizations
+          plt.style.use('seaborn-v0_8')
+          fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+          
+          # Value distribution
+          axes[0, 0].hist(df['calculated_value'], bins=20, alpha=0.7, color='skyblue')
+          axes[0, 0].set_title('Innovation Value Distribution')
+          axes[0, 0].set_xlabel('Value (TEK)')
+          axes[0, 0].set_ylabel('Frequency')
+          
+          # Domain comparison
+          domain_values = df.groupby('domain')['calculated_value'].sum()
+          axes[0, 1].pie(domain_values.values, labels=domain_values.index, autopct='%1.1f%%')
+          axes[0, 1].set_title('Value by Domain')
+          
+          # Technical score vs Value
+          axes[1, 0].scatter(df['technical_score'], df['calculated_value'], alpha=0.6)
+          axes[1, 0].set_xlabel('Technical Score')
+          axes[1, 0].set_ylabel('Innovation Value (TEK)')
+          axes[1, 0].set_title('Technical Score vs Value')
+          
+          # Time to market impact
+          axes[1, 1].scatter(df['time_to_market'], df['calculated_value'], alpha=0.6, color='orange')
+          axes[1, 1].set_xlabel('Time to Market (months)')
+          axes[1, 1].set_ylabel('Innovation Value (TEK)')
+          axes[1, 1].set_title('Time to Market vs Value')
+          
+          plt.tight_layout()
+          plt.savefig(f'/tmp/innovation_valuation_{simulation_id}.png', dpi=300, bbox_inches='tight')
+          plt.close()
+          
+          # Generate report
+          report = {
+              'simulation_id': simulation_id,
+              'timestamp': datetime.utcnow().isoformat() + 'Z',
+              'market_scenario': market_scenario,
+              'scenario_parameters': scenario_params,
+              'portfolio_summary': {
+                  'total_innovations': len(innovations),
+                  'total_value_tek': float(total_value),
+                  'average_value_tek': float(avg_value),
+                  'median_value_tek': float(median_value),
+                  'value_std_tek': float(df['calculated_value'].std())
+              },
+              'domain_breakdown': {
+                  domain: {
+                      'count': int(group['calculated_value'].count()),
+                      'total_value': float(group['calculated_value'].sum()),
+                      'avg_value': float(group['calculated_value'].mean())
+                  }
+                  for domain, group in df.groupby('domain')
+              },
+              'percentiles': {
+                  'p10': float(df['calculated_value'].quantile(0.1)),
+                  'p25': float(df['calculated_value'].quantile(0.25)),
+                  'p50': float(df['calculated_value'].quantile(0.5)),
+                  'p75': float(df['calculated_value'].quantile(0.75)),
+                  'p90': float(df['calculated_value'].quantile(0.9))
+              },
+              'correlations': {
+                  'technical_value': float(df['technical_score'].corr(df['calculated_value'])),
+                  'market_value': float(df['market_potential'].corr(df['calculated_value'])),
+                  'time_value': float(df['time_to_market'].corr(df['calculated_value'])),
+                  'risk_value': float(df['risk_factor'].corr(df['calculated_value']))
+              }
+          }
+          
+          # Save detailed data
+          df.to_csv(f'/tmp/innovation_data_{simulation_id}.csv', index=False)
+          
+          with open(f'/tmp/innovation_report_{simulation_id}.json', 'w') as f:
+              json.dump(report, f, indent=2)
+          
+          print(f"✅ Innovation valuation simulation complete")
+          print(f"📁 Results saved to /tmp/innovation_*_{simulation_id}.*")
+
+      - name: Upload innovation simulation artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: innovation-valuation-${{ needs.prepare-simulation.outputs.simulation_id }}
+          path: |
+            /tmp/innovation_*.png
+            /tmp/innovation_*.csv
+            /tmp/innovation_*.json
+
+  monte-carlo-simulation:
+    name: Monte Carlo risk simulation
+    runs-on: ubuntu-latest
+    needs: prepare-simulation
+    if: github.event.inputs.simulation_type == 'full' || github.event.inputs.simulation_type == 'monte_carlo' || github.event.inputs.simulation_type == ''
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib seaborn scipy
+
+      - name: Run Monte Carlo simulation
+        env:
+          SIMULATION_ID: ${{ needs.prepare-simulation.outputs.simulation_id }}
+          MARKET_SCENARIO: ${{ github.event.inputs.market_scenario || 'base' }}
+        shell: python
+        run: |
+          import numpy as np
+          import pandas as pd
+          import matplotlib.pyplot as plt
+          import seaborn as sns
+          import json
+          from datetime import datetime
+          import os
+          
+          simulation_id = os.environ['SIMULATION_ID']
+          market_scenario = os.environ['MARKET_SCENARIO']
+          
+          print(f"🎲 Running Monte Carlo simulation: {simulation_id}")
+          print(f"📊 Market scenario: {market_scenario}")
+          
+          # Simulation parameters
+          n_simulations = 10000
+          time_horizon = 5  # years
+          
+          # Market parameters by scenario
+          market_params = {
+              'optimistic': {
+                  'initial_market_size': 1e9,  # $1B
+                  'growth_rate_mean': 0.15,
+                  'growth_rate_std': 0.05,
+                  'adoption_rate_mean': 0.25,
+                  'adoption_rate_std': 0.08,
+                  'competition_factor_mean': 0.7,
+                  'competition_factor_std': 0.2
+              },
+              'base': {
+                  'initial_market_size': 5e8,  # $500M
+                  'growth_rate_mean': 0.10,
+                  'growth_rate_std': 0.03,
+                  'adoption_rate_mean': 0.15,
+                  'adoption_rate_std': 0.05,
+                  'competition_factor_mean': 0.5,
+                  'competition_factor_std': 0.15
+              },
+              'pessimistic': {
+                  'initial_market_size': 2e8,  # $200M
+                  'growth_rate_mean': 0.05,
+                  'growth_rate_std': 0.02,
+                  'adoption_rate_mean': 0.08,
+                  'adoption_rate_std': 0.03,
+                  'competition_factor_mean': 0.3,
+                  'competition_factor_std': 0.1
+              }
+          }
+          
+          params = market_params[market_scenario]
+          
+          # Run Monte Carlo simulations
+          np.random.seed(42)
+          results = []
+          
+          for i in range(n_simulations):
+              # Sample random parameters
+              growth_rate = np.random.normal(params['growth_rate_mean'], params['growth_rate_std'])
+              adoption_rate = np.random.normal(params['adoption_rate_mean'], params['adoption_rate_std'])
+              competition_factor = np.random.normal(params['competition_factor_mean'], params['competition_factor_std'])
+              
+              # Clamp values to reasonable ranges
+              growth_rate = max(0, min(0.5, growth_rate))
+              adoption_rate = max(0, min(1, adoption_rate))
+              competition_factor = max(0, min(1, competition_factor))
+              
+              # Simulate year-by-year
+              market_size = params['initial_market_size']
+              total_value = 0
+              
+              for year in range(1, time_horizon + 1):
+                  # Market growth
+                  market_size *= (1 + growth_rate)
+                  
+                  # Add some volatility
+                  volatility = np.random.normal(0, 0.1)
+                  market_size *= (1 + volatility)
+                  
+                  # Calculate value capture
+                  year_value = market_size * adoption_rate * competition_factor
+                  total_value += year_value / (1.1 ** year)  # NPV with 10% discount rate
+              
+              results.append({
+                  'simulation': i,
+                  'growth_rate': growth_rate,
+                  'adoption_rate': adoption_rate,
+                  'competition_factor': competition_factor,
+                  'total_value': total_value,
+                  'final_market_size': market_size
+              })
+          
+          # Create DataFrame
+          df = pd.DataFrame(results)
+          
+          # Calculate statistics
+          value_stats = {
+              'mean': df['total_value'].mean(),
+              'median': df['total_value'].median(),
+              'std': df['total_value'].std(),
+              'var_95': df['total_value'].quantile(0.05),  # Value at Risk (95%)
+              'var_99': df['total_value'].quantile(0.01),  # Value at Risk (99%)
+              'upside_90': df['total_value'].quantile(0.9),
+              'upside_95': df['total_value'].quantile(0.95)
+          }
+          
+          print(f"💰 Monte Carlo Results:")
+          print(f"   Mean Value: ${value_stats['mean']:,.0f}")
+          print(f"   Median Value: ${value_stats['median']:,.0f}")
+          print(f"   Standard Deviation: ${value_stats['std']:,.0f}")
+          print(f"   VaR (95%): ${value_stats['var_95']:,.0f}")
+          print(f"   VaR (99%): ${value_stats['var_99']:,.0f}")
+          print(f"   Upside (90%): ${value_stats['upside_90']:,.0f}")
+          
+          # Create visualizations
+          fig, axes = plt.subplots(2, 2, figsize=(15, 12))
+          
+          # Value distribution
+          axes[0, 0].hist(df['total_value'], bins=50, alpha=0.7, color='lightblue', density=True)
+          axes[0, 0].axvline(value_stats['mean'], color='red', linestyle='--', label='Mean')
+          axes[0, 0].axvline(value_stats['median'], color='orange', linestyle='--', label='Median')
+          axes[0, 0].axvline(value_stats['var_95'], color='darkred', linestyle='--', label='VaR 95%')
+          axes[0, 0].set_title('Total Value Distribution')
+          axes[0, 0].set_xlabel('Total Value ($)')
+          axes[0, 0].set_ylabel('Density')
+          axes[0, 0].legend()
+          
+          # Growth rate vs Value
+          axes[0, 1].scatter(df['growth_rate'], df['total_value'], alpha=0.3, s=1)
+          axes[0, 1].set_xlabel('Growth Rate')
+          axes[0, 1].set_ylabel('Total Value ($)')
+          axes[0, 1].set_title('Growth Rate vs Total Value')
+          
+          # Adoption rate vs Value
+          axes[1, 0].scatter(df['adoption_rate'], df['total_value'], alpha=0.3, s=1, color='green')
+          axes[1, 0].set_xlabel('Adoption Rate')
+          axes[1, 0].set_ylabel('Total Value ($)')
+          axes[1, 0].set_title('Adoption Rate vs Total Value')
+          
+          # Cumulative distribution
+          sorted_values = np.sort(df['total_value'])
+          p = np.arange(1, len(sorted_values) + 1) / len(sorted_values)
+          axes[1, 1].plot(sorted_values, p, linewidth=2)
+          axes[1, 1].axvline(value_stats['var_95'], color='darkred', linestyle='--', label='VaR 95%')
+          axes[1, 1].axvline(value_stats['upside_90'], color='darkgreen', linestyle='--', label='Upside 90%')
+          axes[1, 1].set_xlabel('Total Value ($)')
+          axes[1, 1].set_ylabel('Cumulative Probability')
+          axes[1, 1].set_title('Cumulative Distribution Function')
+          axes[1, 1].legend()
+          
+          plt.tight_layout()
+          plt.savefig(f'/tmp/monte_carlo_{simulation_id}.png', dpi=300, bbox_inches='tight')
+          plt.close()
+          
+          # Generate report
+          monte_carlo_report = {
+              'simulation_id': simulation_id,
+              'timestamp': datetime.utcnow().isoformat() + 'Z',
+              'market_scenario': market_scenario,
+              'parameters': params,
+              'simulation_config': {
+                  'n_simulations': n_simulations,
+                  'time_horizon': time_horizon,
+                  'discount_rate': 0.1
+              },
+              'statistics': value_stats,
+              'sensitivity_analysis': {
+                  'growth_rate_correlation': float(df['growth_rate'].corr(df['total_value'])),
+                  'adoption_rate_correlation': float(df['adoption_rate'].corr(df['total_value'])),
+                  'competition_factor_correlation': float(df['competition_factor'].corr(df['total_value']))
+              },
+              'risk_metrics': {
+                  'probability_of_loss': float((df['total_value'] < 0).mean()),
+                  'probability_above_mean': float((df['total_value'] > value_stats['mean']).mean()),
+                  'expected_shortfall_95': float(df['total_value'][df['total_value'] <= value_stats['var_95']].mean()),
+                  'sharpe_ratio': float(value_stats['mean'] / value_stats['std']) if value_stats['std'] > 0 else 0
+              }
+          }
+          
+          # Save results
+          df.to_csv(f'/tmp/monte_carlo_data_{simulation_id}.csv', index=False)
+          
+          with open(f'/tmp/monte_carlo_report_{simulation_id}.json', 'w') as f:
+              json.dump(monte_carlo_report, f, indent=2)
+          
+          print(f"✅ Monte Carlo simulation complete")
+
+      - name: Upload Monte Carlo artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: monte-carlo-${{ needs.prepare-simulation.outputs.simulation_id }}
+          path: |
+            /tmp/monte_carlo_*.png
+            /tmp/monte_carlo_*.csv
+            /tmp/monte_carlo_*.json
+
+  generate-report:
+    name: Generate tokenomics report
+    runs-on: ubuntu-latest
+    needs: [prepare-simulation, innovation-valuation-simulation, monte-carlo-simulation]
+    if: always() && needs.prepare-simulation.result == 'success'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: /tmp/artifacts
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Generate comprehensive report
+        env:
+          SIMULATION_ID: ${{ needs.prepare-simulation.outputs.simulation_id }}
+          TIMESTAMP: ${{ needs.prepare-simulation.outputs.timestamp }}
+          MARKET_SCENARIO: ${{ github.event.inputs.market_scenario || 'base' }}
+        shell: bash
+        run: |
+          echo "# TeknIA Tokenomics Simulation Report" > /tmp/tokenomics_report.md
+          echo "" >> /tmp/tokenomics_report.md
+          echo "**Simulation ID**: $SIMULATION_ID" >> /tmp/tokenomics_report.md
+          echo "**Timestamp**: $TIMESTAMP" >> /tmp/tokenomics_report.md
+          echo "**Market Scenario**: $MARKET_SCENARIO" >> /tmp/tokenomics_report.md
+          echo "**Workflow Run**: [$GITHUB_RUN_ID]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID)" >> /tmp/tokenomics_report.md
+          echo "" >> /tmp/tokenomics_report.md
+          
+          # Check if simulation artifacts exist
+          if [[ -d "/tmp/artifacts/innovation-valuation-$SIMULATION_ID" ]]; then
+            echo "## Innovation Valuation Analysis" >> /tmp/tokenomics_report.md
+            echo "✅ Innovation valuation simulation completed successfully" >> /tmp/tokenomics_report.md
+            echo "" >> /tmp/tokenomics_report.md
+            
+            # Extract key metrics from innovation report if available
+            if [[ -f "/tmp/artifacts/innovation-valuation-$SIMULATION_ID"/innovation_report_*.json ]]; then
+              innovation_report=$(ls /tmp/artifacts/innovation-valuation-$SIMULATION_ID/innovation_report_*.json | head -1)
+              total_value=$(python3 -c "import json; print(f\"{json.load(open('$innovation_report'))['portfolio_summary']['total_value_tek']:,.0f}\")")
+              avg_value=$(python3 -c "import json; print(f\"{json.load(open('$innovation_report'))['portfolio_summary']['average_value_tek']:,.0f}\")")
+              
+              echo "- **Total Portfolio Value**: $total_value TEK" >> /tmp/tokenomics_report.md
+              echo "- **Average Innovation Value**: $avg_value TEK" >> /tmp/tokenomics_report.md
+              echo "" >> /tmp/tokenomics_report.md
+            fi
+          else
+            echo "## Innovation Valuation Analysis" >> /tmp/tokenomics_report.md
+            echo "❌ Innovation valuation simulation failed or skipped" >> /tmp/tokenomics_report.md
+            echo "" >> /tmp/tokenomics_report.md
+          fi
+          
+          if [[ -d "/tmp/artifacts/monte-carlo-$SIMULATION_ID" ]]; then
+            echo "## Monte Carlo Risk Analysis" >> /tmp/tokenomics_report.md
+            echo "✅ Monte Carlo simulation completed successfully" >> /tmp/tokenomics_report.md
+            echo "" >> /tmp/tokenomics_report.md
+            
+            # Extract key metrics from Monte Carlo report if available
+            if [[ -f "/tmp/artifacts/monte-carlo-$SIMULATION_ID"/monte_carlo_report_*.json ]]; then
+              mc_report=$(ls /tmp/artifacts/monte-carlo-$SIMULATION_ID/monte_carlo_report_*.json | head -1)
+              mean_value=$(python3 -c "import json; print(f\"\${json.load(open('$mc_report'))['statistics']['mean']:,.0f}\")")
+              var_95=$(python3 -c "import json; print(f\"\${json.load(open('$mc_report'))['statistics']['var_95']:,.0f}\")")
+              
+              echo "- **Expected Value**: $mean_value" >> /tmp/tokenomics_report.md
+              echo "- **Value at Risk (95%)**: $var_95" >> /tmp/tokenomics_report.md
+              echo "" >> /tmp/tokenomics_report.md
+            fi
+          else
+            echo "## Monte Carlo Risk Analysis" >> /tmp/tokenomics_report.md
+            echo "❌ Monte Carlo simulation failed or skipped" >> /tmp/tokenomics_report.md
+            echo "" >> /tmp/tokenomics_report.md
+          fi
+          
+          echo "## Simulation Status" >> /tmp/tokenomics_report.md
+          echo "- Innovation Valuation: ${{ needs.innovation-valuation-simulation.result }}" >> /tmp/tokenomics_report.md
+          echo "- Monte Carlo: ${{ needs.monte-carlo-simulation.result }}" >> /tmp/tokenomics_report.md
+          echo "" >> /tmp/tokenomics_report.md
+          
+          echo "## Artifacts" >> /tmp/tokenomics_report.md
+          echo "Simulation artifacts are available in the GitHub Actions artifacts for this run." >> /tmp/tokenomics_report.md
+
+      - name: Create output directory
+        run: |
+          mkdir -p "$SIMULATION_OUTPUT_DIR"
+
+      - name: Save report to repository
+        env:
+          SIMULATION_ID: ${{ needs.prepare-simulation.outputs.simulation_id }}
+        run: |
+          cp /tmp/tokenomics_report.md "$SIMULATION_OUTPUT_DIR/tokenomics_report_${SIMULATION_ID}.md"
+          
+          # Create or update latest report
+          cp /tmp/tokenomics_report.md "$SIMULATION_OUTPUT_DIR/latest_tokenomics_report.md"
+          
+          echo "📊 Tokenomics report saved to $SIMULATION_OUTPUT_DIR/"
+
+      - name: Upload final report
+        uses: actions/upload-artifact@v4
+        with:
+          name: tokenomics-report-${{ needs.prepare-simulation.outputs.simulation_id }}
+          path: |
+            /tmp/tokenomics_report.md
+            ${{ env.SIMULATION_OUTPUT_DIR }}/*.md
+
+      - name: Generate summary
+        shell: bash
+        run: |
+          echo "# 🪙 Weekly Tokenomics Simulation" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Simulation ID**: ${{ needs.prepare-simulation.outputs.simulation_id }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Market Scenario**: ${{ github.event.inputs.market_scenario || 'base' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Innovation Valuation: ${{ needs.innovation-valuation-simulation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Monte Carlo Analysis: ${{ needs.monte-carlo-simulation.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "📁 **Artifacts**: Check the artifacts section for detailed results and visualizations" >> $GITHUB_STEP_SUMMARY
+          echo "📊 **Report**: Saved to \`$SIMULATION_OUTPUT_DIR/latest_tokenomics_report.md\`" >> $GITHUB_STEP_SUMMARY

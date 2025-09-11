@@ -1,0 +1,15 @@
+# AQUA Webhook Service Dependencies
+
+flask>=2.3.0
+flask-cors>=4.0.0
+jsonschema>=4.17.0
+pyyaml>=6.0
+web3>=6.0.0
+eth-account>=0.9.0
+eth-utils>=2.0.0
+gunicorn>=21.0.0
+
+# Development dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+python-dotenv>=1.0.0

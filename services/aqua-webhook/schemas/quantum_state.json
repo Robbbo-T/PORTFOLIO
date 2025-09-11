@@ -1,0 +1,350 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://robbbo-t.space/schemas/tfa/quantum_state.json",
+  "title": "Quantum State (QS) Manifest Schema",
+  "description": "Schema for TFA V2 Quantum State manifests",
+  "version": "2.0.0",
+  "type": "object",
+  "required": ["type", "name", "version", "state_data", "measurement_protocols"],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "QS",
+      "description": "Manifest type identifier"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable name for the quantum state"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+(?:-[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+      "description": "Semantic version of the manifest"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "Optional description of the quantum state"
+    },
+    "state_data": {
+      "$ref": "#/definitions/QuantumStateData",
+      "description": "Quantum state representation data"
+    },
+    "measurement_protocols": {
+      "type": "array",
+      "minItems": 1,
+      "description": "Measurement protocols for the quantum state",
+      "items": {
+        "$ref": "#/definitions/MeasurementProtocol"
+      }
+    },
+    "coherence_metrics": {
+      "$ref": "#/definitions/CoherenceMetrics",
+      "description": "Coherence and decoherence characteristics"
+    },
+    "preparation_method": {
+      "$ref": "#/definitions/PreparationMethod",
+      "description": "How the quantum state was prepared"
+    },
+    "entanglement_map": {
+      "$ref": "#/definitions/EntanglementMap",
+      "description": "Entanglement relationships with other qubits"
+    },
+    "error_correction": {
+      "$ref": "#/definitions/ErrorCorrection",
+      "description": "Error correction applied to the state"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Additional metadata",
+      "properties": {
+        "created_by": {"type": "string"},
+        "laboratory": {"type": "string"},
+        "temperature": {"type": "number"},
+        "pressure": {"type": "number"},
+        "magnetic_field": {"type": "number"},
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"}
+        }
+      }
+    }
+  },
+  "definitions": {
+    "QuantumStateData": {
+      "type": "object",
+      "required": ["representation_type"],
+      "properties": {
+        "representation_type": {
+          "type": "string",
+          "enum": ["state_vector", "density_matrix", "bloch_sphere", "process_matrix"],
+          "description": "Type of quantum state representation"
+        },
+        "dimension": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Hilbert space dimension"
+        },
+        "state_vector": {
+          "type": "array",
+          "description": "Complex amplitudes for state vector representation",
+          "items": {
+            "$ref": "#/definitions/ComplexNumber"
+          }
+        },
+        "density_matrix": {
+          "type": "array",
+          "description": "Density matrix elements",
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/ComplexNumber"
+            }
+          }
+        },
+        "bloch_coordinates": {
+          "type": "object",
+          "description": "Bloch sphere coordinates for single qubit",
+          "properties": {
+            "x": {"type": "number"},
+            "y": {"type": "number"},
+            "z": {"type": "number"}
+          },
+          "required": ["x", "y", "z"]
+        },
+        "purity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "State purity (1 for pure states, <1 for mixed)"
+        },
+        "normalization": {
+          "type": "number",
+          "description": "Trace or norm of the state"
+        }
+      },
+      "oneOf": [
+        {
+          "properties": {
+            "representation_type": {"const": "state_vector"},
+            "state_vector": {"minItems": 2}
+          },
+          "required": ["state_vector"]
+        },
+        {
+          "properties": {
+            "representation_type": {"const": "density_matrix"},
+            "density_matrix": {"minItems": 2}
+          },
+          "required": ["density_matrix"]
+        },
+        {
+          "properties": {
+            "representation_type": {"const": "bloch_sphere"}
+          },
+          "required": ["bloch_coordinates"]
+        }
+      ]
+    },
+    "ComplexNumber": {
+      "type": "object",
+      "required": ["real", "imag"],
+      "properties": {
+        "real": {
+          "type": "number",
+          "description": "Real part"
+        },
+        "imag": {
+          "type": "number",
+          "description": "Imaginary part"
+        }
+      }
+    },
+    "MeasurementProtocol": {
+      "type": "object",
+      "required": ["name", "type", "operators"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Protocol name"
+        },
+        "type": {
+          "type": "string",
+          "enum": ["projective", "povm", "continuous", "weak"],
+          "description": "Type of measurement"
+        },
+        "operators": {
+          "type": "array",
+          "description": "Measurement operators",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": "string"},
+              "matrix": {
+                "type": "array",
+                "items": {
+                  "type": "array",
+                  "items": {"$ref": "#/definitions/ComplexNumber"}
+                }
+              }
+            }
+          }
+        },
+        "basis": {
+          "type": "string",
+          "enum": ["computational", "hadamard", "pauli_x", "pauli_y", "pauli_z"],
+          "description": "Measurement basis"
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Measurement duration in microseconds"
+        },
+        "readout_fidelity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Readout fidelity"
+        }
+      }
+    },
+    "CoherenceMetrics": {
+      "type": "object",
+      "properties": {
+        "t1_relaxation_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "T1 relaxation time in microseconds"
+        },
+        "t2_coherence_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "T2 coherence time in microseconds"
+        },
+        "t2_echo_time": {
+          "type": "number",
+          "minimum": 0,
+          "description": "T2* echo time in microseconds"
+        },
+        "dephasing_rate": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Dephasing rate in Hz"
+        },
+        "decoherence_model": {
+          "type": "string",
+          "enum": ["amplitude_damping", "phase_damping", "depolarizing", "thermal"],
+          "description": "Decoherence model used"
+        },
+        "fidelity": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "State preparation fidelity"
+        }
+      }
+    },
+    "PreparationMethod": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string",
+          "enum": ["ground_state", "laser_cooling", "gate_sequence", "adiabatic", "variational"],
+          "description": "Preparation method"
+        },
+        "gate_sequence": {
+          "type": "array",
+          "description": "Sequence of gates for preparation",
+          "items": {
+            "type": "object",
+            "properties": {
+              "gate": {"type": "string"},
+              "targets": {
+                "type": "array",
+                "items": {"type": "integer"}
+              },
+              "parameters": {
+                "type": "array",
+                "items": {"type": "number"}
+              }
+            }
+          }
+        },
+        "duration": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Preparation time in microseconds"
+        },
+        "success_probability": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Success probability of preparation"
+        }
+      }
+    },
+    "EntanglementMap": {
+      "type": "object",
+      "properties": {
+        "entangled_qubits": {
+          "type": "array",
+          "description": "List of entangled qubit identifiers",
+          "items": {"type": "string"}
+        },
+        "entanglement_type": {
+          "type": "string",
+          "enum": ["bell_state", "ghz_state", "cluster_state", "graph_state"],
+          "description": "Type of entanglement"
+        },
+        "concurrence": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Entanglement measure (concurrence)"
+        },
+        "negativity": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Entanglement measure (negativity)"
+        }
+      }
+    },
+    "ErrorCorrection": {
+      "type": "object",
+      "properties": {
+        "code_type": {
+          "type": "string",
+          "enum": ["surface_code", "color_code", "repetition_code", "steane_code", "shor_code"],
+          "description": "Error correction code type"
+        },
+        "logical_qubits": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of logical qubits encoded"
+        },
+        "physical_qubits": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of physical qubits used"
+        },
+        "error_threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Error correction threshold"
+        },
+        "syndrome_extraction": {
+          "type": "object",
+          "description": "Syndrome extraction protocol",
+          "properties": {
+            "frequency": {"type": "number"},
+            "duration": {"type": "number"}
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
