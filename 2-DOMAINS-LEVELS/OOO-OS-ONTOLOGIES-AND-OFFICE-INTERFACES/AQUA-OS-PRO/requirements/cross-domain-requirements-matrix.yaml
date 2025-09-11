@@ -1,0 +1,581 @@
+# AQUA OS PRO — Cross-Domain Requirements Matrix (Quantum-Classical Predictive Route Optimizer)
+# Artifact ID (UTCS-MI v5.0): AQUA-OS-PRO/OOO/SI/REQ/0001
+# LLC = Lifecycle Level Context • QS = QUANTUM SUPERPOSITION STATE • FE = FEDERATION ENTANGLEMENT
+# Quantum Bridge Flow: CB → QB → UE/FE → FWD → QS
+
+metadata:
+  title: "AQUA OS PRO Cross-Domain Requirements Matrix"
+  version: "1.0"
+  created: "2025-01-27"
+  author: "TFA V2 Portfolio System"
+  scope: "10-minute receding-horizon 4D trajectory optimization at cruise Mach"
+  target_system: "AMPEL360 BWB Q100 MSN 0001 Digital Twin Flight Test"
+  study_case: "Madrid (LEMD) → Naples (LIRN) route optimization (~814 nm)"
+
+# Global Top-Level Requirements (GTLR)
+global_requirements:
+  GTLR-SI-0001:
+    layer: SI
+    llc: [DES, DEV]
+    cax: [CAD, CAE, CAI]
+    statement: "The system shall compute a 10-minute receding-horizon 4D trajectory at cruise Mach, updating at ≤30 s cadence, using live met tiles and aircraft twin dynamics."
+    acceptance: "Demonstrated in SIL with time-deterministic loop ≤ 300 ms per cycle on reference hardware."
+
+  GTLR-DI-0002:
+    layer: DI
+    llc: [DES, DEV]
+    cax: [CAO, CAC]
+    statement: "Interfaces shall conform to domain contracts (/met/tiles, /sensors/*, /traj/proposed, /fms/delta) with versioned schemas and change-control."
+    acceptance: "Interface Conformance Report + schema lint in CI."
+
+  GTLR-CB-0003:
+    layer: CB
+    llc: [DEV]
+    cax: [CAE, CAI]
+    statement: "The classical compute path shall provide deterministic NMPC solve using CasADi/acados class, with bounded jitter < 20%."
+    acceptance: "RT profiling with worst-case jitter over 3 h run."
+
+  GTLR-QB-0004:
+    layer: QB
+    llc: [DES, DEV]
+    cax: [CAI]
+    statement: "The quantum path shall support optional QAOA/VQE surrogate optimizers for scenario ensembles, surfaced behind a strategy selector without safety-critical dependency."
+    acceptance: "A/B benchmark showing parity or improvement in objective under ensemble uncertainty."
+
+  GTLR-UE-0005:
+    layer: UE
+    llc: [DES]
+    cax: [CAD, CAE]
+    statement: "Physical/virtual unit elements (winds, EDR, convective masks, icing P) must be normalized to continuous fields with defined uncertainty priors."
+    acceptance: "Unit catalog + uncertainty calibration report."
+
+  GTLR-FE-0006:
+    layer: FE
+    llc: [DEV, OPS]
+    cax: [CAO, LIB]
+    statement: "Federated orchestration shall permit multi-aircraft/ground nodes to share risk fields and constraints under FE policies."
+    acceptance: "Federation test across 3 nodes with conflict-free merge."
+
+  GTLR-FWD-0007:
+    layer: FWD
+    llc: [DES, DEV]
+    cax: [CAI, CAE]
+    statement: "Predictive/retrodictive Wave Dynamics shall expose a nowcast shim (0–20 min) and bias-corrector over base NWP."
+    acceptance: "Skill improvement ≥ X% on 10-min wind/EDR metrics vs baseline."
+
+  GTLR-QS-0008:
+    layer: QS
+    llc: [DEV, OPS]
+    cax: [CAV, CAS]
+    statement: "All optimizer outputs must include state provenance (QS tags: α=proposed, β=loaded, ψ=executing, φ=archived) with rollback paths."
+    acceptance: "QS state machine tested with forced rollbacks."
+
+# Domain-Specific Requirements (15 domains)
+domain_requirements:
+
+  # AAA - AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES
+  AAA:
+    AAA-SI-0101:
+      layer: SI
+      llc: [DES, DEV]
+      cax: [CAD, CAE]
+      statement: "Provide calibrated BWB-Q100 aero-propulsive model for cruise/turn with bank ≤ 25°."
+      acceptance: "Twin validation vs reference polars."
+
+    AAA-CV-0102:
+      layer: CV
+      llc: [DEV]
+      cax: [CAE]
+      statement: "Expose thrust/drag/fuel APIs with uncertainty envelopes."
+      acceptance: "API conformance + unit tests."
+
+    AAA-CB-0103:
+      layer: CB
+      llc: [DEV]
+      cax: [CAI]
+      statement: "Point-mass + wind-relative kinematics integrated in classical solver."
+      acceptance: "Monte-Carlo within ±ε vs truth."
+
+    AAA-FWD-0104:
+      layer: FWD
+      llc: [DES]
+      cax: [CAE]
+      statement: "Provide EDR→load penalty mapping."
+      acceptance: "Smooth, differentiable field verified."
+
+    AAA-QS-0105:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "Archive executed micro-routes with QS=φ and DET records."
+      acceptance: "Digital thread artifact present."
+
+  # AAP - AIRPORT-ADAPTABLE-PLATFORMS
+  AAP:
+    AAP-SE-0201:
+      layer: SE
+      llc: [DES]
+      cax: [CAD]
+      statement: "Define Station Envelope for terminal area integration (SID/STAR overlays)."
+      acceptance: "Terminal procedures integrated."
+
+    AAP-DI-0202:
+      layer: DI
+      llc: [DEV]
+      cax: [CAO]
+      statement: "Publish interface for ATC constraints ingestion (TMI, capacity)."
+      acceptance: "ATC interface tested."
+
+    AAP-FWD-0203:
+      layer: FWD
+      llc: [DES]
+      cax: [CAI]
+      statement: "Short-horizon vector fields for arrival-time predictability."
+      acceptance: "Arrival time accuracy metrics."
+
+    AAP-QS-0204:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "QS labels for airport-driven reroutes."
+      acceptance: "QS state tracking verified."
+
+  # CCC - COCKPIT-CABIN-AND-CARGO
+  CCC:
+    CCC-DI-0301:
+      layer: DI
+      llc: [DES]
+      cax: [CAD]
+      statement: "FMS delta-load JSON schema; human-over-the-loop ack."
+      acceptance: "Crew interface validated."
+
+    CCC-CB-0302:
+      layer: CB
+      llc: [DEV]
+      cax: [CAI]
+      statement: "Command-safe outputs: HDG/ALT changes bounded by SOP."
+      acceptance: "SOP compliance verified."
+
+    CCC-UE-0303:
+      layer: UE
+      llc: [DES]
+      cax: [CAE]
+      statement: "Present confidence bands and risk explainers to crew UI."
+      acceptance: "UI usability tested."
+
+    CCC-QS-0304:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "Crew-accepted state sets QS:β → QS:ψ; auto-log."
+      acceptance: "State transition logged."
+
+  # CQH - CRYOGENICS-QUANTUM-AND-H2
+  CQH:
+    CQH-QB-0401:
+      layer: QB
+      llc: [DES, DEV]
+      cax: [CAI]
+      statement: "Optional QAOA/VQE modules for ensemble solve (non-DAL)."
+      acceptance: "Quantum modules integrated."
+
+    CQH-UE-0402:
+      layer: UE
+      llc: [DES]
+      cax: [CAD]
+      statement: "Quantum sensor specs: bias, stability, dead-time."
+      acceptance: "Sensor model validated."
+
+    CQH-FE-0403:
+      layer: FE
+      llc: [DEV]
+      cax: [CAO]
+      statement: "Broker to route quantum job batches to available QPU/HPC."
+      acceptance: "Job routing tested."
+
+    CQH-QS-0404:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "QS tagging for quantum results with classical fallback."
+      acceptance: "Fallback mechanism verified."
+
+  # DDD - DIGITAL-AND-DATA-DEFENSE
+  DDD:
+    DDD-DI-0501:
+      layer: DI
+      llc: [DEV]
+      cax: [CAC]
+      statement: "Zero-trust data plane, signed tiles, replay guards."
+      acceptance: "Security audit passed."
+
+    DDD-FE-0502:
+      layer: FE
+      llc: [DEV]
+      cax: [CAO]
+      statement: "Federation policies for cross-org risk-field sharing."
+      acceptance: "Policy enforcement verified."
+
+    DDD-QS-0503:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS, CAV]
+      statement: "Immutable DET/ledger notarization of advisories."
+      acceptance: "Blockchain integration tested."
+
+  # EDI - ELECTRONICS-DIGITAL-INSTRUMENTS
+  EDI:
+    EDI-CI-0601:
+      layer: CI
+      llc: [DEV]
+      cax: [CAE]
+      statement: "Sensor forward models (GNSS/INS/AHRS/air-data/radar)."
+      acceptance: "Sensor models validated."
+
+    EDI-CB-0602:
+      layer: CB
+      llc: [DEV]
+      cax: [CAE]
+      statement: "UKF/EnKF estimator with bias states."
+      acceptance: "Estimator performance verified."
+
+    EDI-UE-0603:
+      layer: UE
+      llc: [DES]
+      cax: [CAD]
+      statement: "Noise PSD and Allan variance catalog."
+      acceptance: "Noise characterization complete."
+
+  # EEE - ECOLOGICAL-EFFICIENT-ELECTRIFICATION
+  EEE:
+    EEE-FWD-0701:
+      layer: FWD
+      llc: [DES]
+      cax: [CAE, CAI]
+      statement: "Fuel/emissions cost function terms with lifecycle weights."
+      acceptance: "Eco-optimization validated."
+
+    EEE-QS-0702:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "QS tagging of eco-rationale in outputs."
+      acceptance: "Eco-rationale tracked."
+
+  # EER - ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION
+  EER:
+    EER-UE-0801:
+      layer: UE
+      llc: [DES]
+      cax: [CAD]
+      statement: "Ingest EDR, icing, convective fields as continuous risk layers."
+      acceptance: "Environmental data integrated."
+
+    EER-FWD-0802:
+      layer: FWD
+      llc: [DEV]
+      cax: [CAI]
+      statement: "Nowcast shim 0–20 min with bias correction."
+      acceptance: "Nowcast accuracy verified."
+
+    EER-QS-0803:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "Archive environmental deltas alongside routes."
+      acceptance: "Environmental tracking complete."
+
+  # IIF - INDUSTRIAL-INFRASTRUCTURE-FACILITIES
+  IIF:
+    IIF-SE-0901:
+      layer: SE
+      llc: [DES]
+      cax: [CAO]
+      statement: "Deployment envelopes (on-prem HPC, edge, cloud)."
+      acceptance: "Deployment options validated."
+
+    IIF-FE-0902:
+      layer: FE
+      llc: [DEV]
+      cax: [CAO]
+      statement: "Cluster scheduling & observability for solver pods."
+      acceptance: "Cluster management tested."
+
+    IIF-QS-0903:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "QS state visibility across sites."
+      acceptance: "Multi-site visibility verified."
+
+  # IIS - INTEGRATED-INTELLIGENCE-SOFTWARE
+  IIS:
+    IIS-CB-1001:
+      layer: CB
+      llc: [DEV]
+      cax: [CAI]
+      statement: "Deterministic NMPC engine with warm-start."
+      acceptance: "NMPC performance verified."
+
+    IIS-QB-1002:
+      layer: QB
+      llc: [DEV]
+      cax: [CAI]
+      statement: "Quantum strategy adapter with unit/integration tests."
+      acceptance: "Quantum adapter tested."
+
+    IIS-FE-1003:
+      layer: FE
+      llc: [DEV]
+      cax: [CAO]
+      statement: "Orchestrator for microservices (sensors, met, solve)."
+      acceptance: "Orchestration tested."
+
+    IIS-QS-1004:
+      layer: QS
+      llc: [OPS]
+      cax: [CAV]
+      statement: "Telemetry + QS dashboards."
+      acceptance: "Dashboards operational."
+
+  # LCC - LINKAGES-CONTROL-AND-COMMUNICATIONS
+  LCC:
+    LCC-DI-1101:
+      layer: DI
+      llc: [DEV]
+      cax: [CAC]
+      statement: "Data link protocols (SATCOM, ACARS-like, IP) with QoS tiers."
+      acceptance: "Communication protocols tested."
+
+    LCC-CB-1102:
+      layer: CB
+      llc: [DEV]
+      cax: [CAE]
+      statement: "Time sync (PTP/GPSDO) for multi-stream fusion."
+      acceptance: "Time synchronization verified."
+
+    LCC-FE-1103:
+      layer: FE
+      llc: [OPS]
+      cax: [CAO]
+      statement: "Multi-asset coordination semantics."
+      acceptance: "Multi-asset coordination tested."
+
+  # LIB - LOGISTICS-INVENTORY-AND-BLOCKCHAIN
+  LIB:
+    LIB-FE-1201:
+      layer: FE
+      llc: [OPS]
+      cax: [CAO, LIB]
+      statement: "QUAChain notarization of advisories and tiles."
+      acceptance: "Blockchain notarization tested."
+
+    LIB-QS-1202:
+      layer: QS
+      llc: [AUD]
+      cax: [CAS]
+      statement: "Audit trail export with QS states."
+      acceptance: "Audit trails complete."
+
+  # MMM - MECHANICAL-AND-MATERIAL-MODULES
+  MMM:
+    MMM-SE-1301:
+      layer: SE
+      llc: [DES]
+      cax: [CAD]
+      statement: "Equipment bay envelopes for compute and sensors."
+      acceptance: "Physical integration verified."
+
+    MMM-CV-1302:
+      layer: CV
+      llc: [DEV]
+      cax: [CAE]
+      statement: "Thermal/power budgets for sustained compute."
+      acceptance: "Thermal analysis complete."
+
+  # OOO - OS-ONTOLOGIES-AND-OFFICE-INTERFACES (Primary domain)
+  OOO:
+    OOO-SI-1401:
+      layer: SI
+      llc: [DES]
+      cax: [CAD, CAO]
+      statement: "Ontology for topics (/met/tiles, /traj/*, QS/FE tags)."
+      acceptance: "Ontology schema validated."
+
+    OOO-CB-1402:
+      layer: CB
+      llc: [DEV]
+      cax: [CAI]
+      statement: "API/SDKs, CLI, and EFB viewer modules."
+      acceptance: "APIs tested and documented."
+
+    OOO-QS-1403:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "QS governance, role-based visibility."
+      acceptance: "Access control verified."
+
+  # PPP - PROPULSION-AND-FUEL-SYSTEMS
+  PPP:
+    PPP-CV-1501:
+      layer: CV
+      llc: [DEV]
+      cax: [CAE]
+      statement: "Fuel flow model with bleed/electrical loads."
+      acceptance: "Fuel model validated."
+
+    PPP-FWD-1502:
+      layer: FWD
+      llc: [DES]
+      cax: [CAI]
+      statement: "Objective term weights for fuel vs time vs risk."
+      acceptance: "Optimization weights calibrated."
+
+    PPP-QS-1503:
+      layer: QS
+      llc: [OPS]
+      cax: [CAS]
+      statement: "Post-flight fuel deltas archived with QS=φ."
+      acceptance: "Fuel tracking complete."
+
+# Interface & Topic Contracts (DI)
+interface_contracts:
+  "/met/tiles":
+    description: "GRIB/NetCDF tiles + bias metadata, timestamps, signatures"
+    schema_version: "v1.0"
+    security: "signed"
+    
+  "/sensors/*":
+    description: "Streams: GNSS, INS, air data, radar; quantum IMU (optional) with dead-time flags"
+    schema_version: "v1.0"
+    real_time: true
+    
+  "/traj/proposed":
+    description: "4D micro-trajectory (lat, lon, FL, time), QS=α"
+    schema_version: "v1.0"
+    qs_state: "proposed"
+    
+  "/fms/delta":
+    description: "Command deltas (HDG/ALT/speed or lateral offsets), QS=β on crew accept"
+    schema_version: "v1.0"
+    qs_state: "loaded"
+    
+  "/risk/fields":
+    description: "EDR/convective/icing continuous fields with gradients for solver"
+    schema_version: "v1.0"
+    continuous: true
+    
+  "/fe/federation":
+    description: "Policies, merges, and entanglement semantics across assets"
+    schema_version: "v1.0"
+    federation: true
+
+# CAx Digital Requirements by LLC Phase
+cax_llc_deliverables:
+  STR:
+    cax: [CAO, CAB]
+    deliverable: "Mission & governance brief; initial value/risk thesis"
+    acceptance: "Approved in ORB-GATE-STR"
+    
+  CON:
+    cax: [CAD, CAE]
+    deliverable: "Concept MBSE (SysML), context diagrams, route-optim use cases"
+    acceptance: "Model review passed"
+    
+  DES:
+    cax: [CAD, CAI]
+    deliverable: "Interface specs, ontologies, optimizer design, uncertainty model"
+    acceptance: "Design baseline signed"
+    
+  DEV:
+    cax: [CAI, CAE]
+    deliverable: "Implement NMPC, estimators, quantum adapter, FE broker"
+    acceptance: "Unit/integration tests ≥ 90% pass"
+    
+  TST:
+    cax: [CAT, CAV]
+    deliverable: "SIL/HIL benches, scenario libraries, real-tile replays"
+    acceptance: "Test report & defects triaged"
+    
+  INT:
+    cax: [CAO, CAT]
+    deliverable: "Environment & data-plane integration"
+    acceptance: "End-to-end ingest→solve demo"
+    
+  CRT:
+    cax: [CAV, CAC]
+    deliverable: "Certification evidence (advisory scope), hazard analysis"
+    acceptance: "Compliance checklist complete"
+    
+  PRD:
+    cax: [CAM, CAP]
+    deliverable: "Packaging, deployment charts, runbooks"
+    acceptance: "Reproducible builds in CI/CD"
+    
+  OPS:
+    cax: [CAO, CAS]
+    deliverable: "Live ops procedures, dashboards, QS/FE telemetry"
+    acceptance: "24×7 SLOs met for 30 days"
+    
+  MNT:
+    cax: [CAS, CAV]
+    deliverable: "Patch/upgrade process, config drift control"
+    acceptance: "Mean-time-to-restore ≤ target"
+    
+  REP:
+    cax: [CAS]
+    deliverable: "Incident & anomaly reporting, EDR mismatches"
+    acceptance: "Root-cause documented"
+    
+  UPG:
+    cax: [CAI, CAM]
+    deliverable: "Model/solver updates with A/B and rollback"
+    acceptance: "Canary success criteria met"
+    
+  EXT:
+    cax: [CAE]
+    deliverable: "Extensions (new sensors/QPUs/domains) via DI contracts"
+    acceptance: "Compatibility matrix updated"
+    
+  RET:
+    cax: [CAO, CAS]
+    deliverable: "Retirement plan, data archival (QS=φ)"
+    acceptance: "Data retained per policy"
+    
+  AUD:
+    cax: [CAC, LIB]
+    deliverable: "Ledger proofs, QS/FE audit logs"
+    acceptance: "External audit passed"
+
+# Quantum Bridge Flow Validation
+quantum_bridge:
+  flow_sequence: ["CB", "QB", "UE", "FE", "FWD", "QS"]
+  
+  CB_to_QB:
+    description: "Classical bit patterns bridge to quantum superposition"
+    validation: "Quantum state preparation verified"
+    
+  QB_to_UE_FE:
+    description: "Quantum states processed through unit and federation elements"
+    validation: "Entanglement preservation verified"
+    
+  UE_FE_to_FWD:
+    description: "Federated elements feed wave dynamics prediction"
+    validation: "Predictive accuracy metrics met"
+    
+  FWD_to_QS:
+    description: "Wave dynamics generate quantum state artifacts"
+    validation: "State coherence maintained"
+
+# Governance & Change Control
+governance:
+  change_gates: ["ORB-STR", "DES", "DEV", "INT", "OPS"]
+  risk_management: "Keep quantum path optional; advisory scope until DAL upgrade plan agreed"
+  naming_convention: "Enforce UTCS-MI v5.0 IDs and QS/FE tags in all artifacts"
+  
+validation:
+  structure: "TFA validator passes; no flat LLC paths"
+  schema: "JSON Schema validation for manifests (incl. QS)"
+  terminology: "Only approved terms (FEDERATION ENTANGLEMENT, Station Envelope)"
+  security: "GitHub App tokens for CI operations"

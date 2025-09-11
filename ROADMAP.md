@@ -233,7 +233,7 @@ Deliver a rigorously validated, quantum-classical extensible aerospace portfolio
 - ✅ **Schema**: JSON Schema validation for manifests (incl. QS)
 - ✅ **Canonicalization**: recomputed hash matches `canonical_hash`
 - ✅ **FE**: EIP-712 signature architecture implemented
-- ✅ **Terminology**: No forbidden terms (`Fine Element`, `Station Envelop`)
+- ✅ **Terminology**: Only approved terms (FEDERATION ENTANGLEMENT, Station Envelope)
 - ✅ **Security**: GitHub App tokens for CI operations
 
 ---
