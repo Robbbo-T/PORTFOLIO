@@ -205,12 +205,7 @@ The TFA V2 implementation includes a complete quantum-classical bridge:
 - **Element Bridge**: UE (Unit Element) ↔ FE (Federation Element)
 - **Wave Dynamics**: FWD for predictive/retrodictive analysis
 - **State Management**: QS for quantum state definitions and measurements
-├── STATES/
-│   └── QS/  (QUANTUM STATE)
-└── META/
-└── README.md
 
-```
 
 ### LLC Codes — Canonical Meanings (TFA V2)
 
