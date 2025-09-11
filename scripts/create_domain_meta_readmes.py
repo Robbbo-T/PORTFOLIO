@@ -76,8 +76,11 @@ def main():
         if readme.exists():
             print(f"Skipping existing: {readme}")
         else:
-            readme.write_text(content, encoding="utf-8")
-            print(f"Created: {readme}")
+            try:
+                readme.write_text(content, encoding="utf-8")
+                print(f"Created: {readme}")
+            except OSError as e:
+                print(f"Error creating {readme}: {e}")
 
 if __name__ == "__main__":
     main()
