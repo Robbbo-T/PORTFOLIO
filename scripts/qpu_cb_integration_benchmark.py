@@ -640,7 +640,7 @@ async def main():
         # QS Integration
         qs_results = results.get("qs_integration", {}).get("summary", {})
         if "error" not in qs_results:
-            print(f"\n📋 QS-UTCS Integration:")
+            print("\n📋 QS-UTCS Integration:")
             print(f"   Basic Commit: {'✅' if qs_results.get('basic_commit_success') else '❌'}")
             print(f"   UTCS Anchoring: {'✅' if qs_results.get('utcs_anchoring_working') else '❌'}")
             print(f"   Stress Test Rate: {qs_results.get('stress_test_success_rate', 0):.1%}")
