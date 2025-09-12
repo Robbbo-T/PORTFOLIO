@@ -121,7 +121,7 @@ class MasterProgressReporter:
             ("Process Automation", False, 15)  # TODO: Implement
         ]
         
-        completed = sum(weight * (1.0 if complete == True else complete) 
+        completed = sum(weight * (1.0 if complete is True else complete) 
                        for _, complete, weight in progress_items)
         
         return {
