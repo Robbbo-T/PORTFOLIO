@@ -360,7 +360,7 @@ class MasterProgressReporter:
                 status_icon = "✅" if status else "⏳"
                 md += f"- {status_icon} {criterion.replace('_', ' ').title()}\n"
             
-            md += f"""
+            md += """
 **Next Milestones**:
 """
             for milestone in obj_data.get('next_milestones', []):
