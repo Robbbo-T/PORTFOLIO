@@ -624,7 +624,7 @@ async def main():
         # Comparison Results
         comparison = results.get("head_to_head_comparison", {}).get("summary", {})
         if "error" not in comparison:
-            print(f"\n⚔️  QPU vs CB Comparison:")
+            print("\n⚔️  QPU vs CB Comparison:")
             print(f"   Comparisons: {comparison.get('successful_comparisons', 0)}/{comparison.get('total_comparisons', 0)}")
             print(f"   QPU Win Rate: {comparison.get('qpu_win_rate', 0):.1%}")
             print(f"   Avg Quantum Advantage: {comparison.get('average_quantum_advantage', 0):.3f}")
