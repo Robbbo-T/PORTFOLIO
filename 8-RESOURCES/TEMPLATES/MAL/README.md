@@ -9,7 +9,7 @@ Each MAL corresponds to a TFA layer and provides shared services:
 - `CB/` - Classical Bit services  
 - `QB/` - Qubit services
 - `UE/` - Unit Element services
-- `FE/` - Federation Element services  
+- `FE/` - Federation Entanglement services  
 - `FWD/` - Forward Wave Dynamics services
 - `QS/` - Quantum State services
 

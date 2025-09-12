@@ -1,4 +1,4 @@
-# MAL-FE (Federation Element Service)
+# MAL-FE (Federation Entanglement Service)
 
 Shared Federation service for multi-asset coordination and policy enforcement across all domains.
 
@@ -17,7 +17,7 @@ MAL-FE provides coordination, deconfliction, and policy management for multi-org
 
 ```yaml
 mal_fe:
-  service_type: "federation_element"
+  service_type: "federation_entanglement"
   profiles:
     ops_safe: true
     regulated: true

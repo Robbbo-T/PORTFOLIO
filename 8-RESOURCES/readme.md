@@ -61,7 +61,7 @@ Starter docs and stubs for every **LLC** code. Copy them into a domain’s `TFA/
 
   * **UE/FE/FWD/QS** → `TEMPLATES/TFA-LAYER-TEMPLATES/ELEMENTS-TEMPLATES/…`, `WAVES-TEMPLATES/FWD-…/`, `STATES-TEMPLATES/QS-QUANTUM-STATE/`
 
-> 🔎 Each template uses **placeholder tokens** like `{{PROGRAM}}`, `{{DOMAIN}}`, `{{LLC}}`. See [META guide](./TEMPLATES/META/README.md).
+> 🔎 Each template uses **placeholder tokens** like `[PROGRAM]`, `[DOMAIN]`, `[LLC]`. See [META guide](./TEMPLATES/META/README.md).
 
 ### CAx Lifecycle Templates
 
@@ -131,7 +131,7 @@ Learn more: [Quantum–Classical Bridge](../docs/quantum-classical-bridge.md) ·
 * **Naming**: `CODE-NAME-WITH-DASHES/` (e.g., `AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES`)
 * **LLC folders only** under `TFA/<GROUP>/<LLC>/` (no flat LLC under domain root)
 * **Template files**: `specification.template.yaml`, `README.template.md`
-* **Placeholders**: `{{UPPER_SNAKE}}` for required; `[optional]` for optional blocks
+* **Placeholders**: `[PLACEHOLDER]` for required; `[optional]` for optional blocks
 * **Doc badges**: MIT, TFA-V2, Layers, CI validators
 * **Compliance**: S1000D exports, DO-178C/254 traces collected in **QS** + **UTCS** anchors
 
