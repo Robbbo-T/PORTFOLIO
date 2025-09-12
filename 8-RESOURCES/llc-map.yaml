@@ -171,11 +171,54 @@ usage:
 # Governance contact
 contacts:
   owner: "Amedeo Pelliccia"
-  governance_doc: "0-STRATEGY/GOVERNANCE.md">>>>>>> main
+  governance_doc: "0-STRATEGY/GOVERNANCE.md"
 
-  - pattern: "\\bStation\\s+Envelop\\b"
-    replacement: "Station Envelope"
-    reason: "SE must be Station Envelope, not Envelop"
+# TFA Layer structure for scaffolding
+tfa_layers:
+  SYSTEMS:
+    description: "System-level coordination and interfaces"
+    llc_codes: ["SI", "DI"]
+  STATIONS:
+    description: "Physical and logical station boundaries"
+    llc_codes: ["SE"]
+  COMPONENTS:
+    description: "Hierarchical component management"
+    llc_codes: ["CV", "CE", "CC", "CI", "CP"]
+  BITS:
+    description: "Classical computation layer"
+    llc_codes: ["CB"]
+  QUBITS:
+    description: "Quantum computation layer"
+    llc_codes: ["QB"]
+  ELEMENTS:
+    description: "Classical and federated elements"
+    llc_codes: ["UE", "FE"]
+  WAVES:
+    description: "Predictive and wave dynamics"
+    llc_codes: ["FWD"]
+  STATES:
+    description: "Quantum state management"
+    llc_codes: ["QS"]
+  META:
+    description: "Domain metadata and documentation"
+    files: ["README.md"]
+
+# Simple mapping for validator compatibility
+llc_codes:
+  SI: "SYSTEM INTEGRATION"
+  DI: "DOMAIN INTERFACE"
+  SE: "STATION ENVELOPE"
+  CV: "COMPONENT VENDOR"
+  CE: "COMPONENT EQUIPMENT"
+  CC: "CONFIGURATION CELL"
+  CI: "CONFIGURATION ITEM"
+  CP: "COMPONENT PART"
+  CB: "CLASSICAL BIT"
+  QB: "QUBIT"
+  UE: "UNIT ELEMENT"
+  FE: "FEDERATION ENTANGLEMENT"
+  FWD: "Future/Foresight/Fluctuant/Functional Waves Dynamics"
+  QS: "QUANTUM STATE"
 
 domains:
   - "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES"
