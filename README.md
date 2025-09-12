@@ -354,20 +354,17 @@ flowchart LR
 classDef d fill:#eef,stroke:#99f,stroke-width:1px;
 ```
 
-- **MAPs** (dominios) que exponen APIs estables
-- **MALs** (servicios bridge) que proporcionan servicios horizontales
-- **Backbone** (OPTIMO-DT, UTCS, CI/CD) que mantiene coherencia
+**MAPs** (domains) that expose stable APIs  
+**MALs** (bridge services) that provide horizontal services  
+**Backbone** (OPTIMO-DT, UTCS, CI/CD) that maintains coherence  
 
-## 💡 Valor Único como Plataforma Host
+## 💡 Unique Value as a Host Platform  
 
-Esta plataforma se posiciona como un **ecosistema inteligente multidimensional y multisectorial** que permite:
+This platform positions itself as an **intelligent, multidimensional, and multisectoral ecosystem** that enables:  
 
-1. **Estructura determinística** con árboles TFA uniformes
-2. **Computación híbrida integrada** (CB/QB/FE/FWD/QS)
-3. **Hilo digital nativo** con OPTIMO-DT
-4. **Cumplimiento como código** (S1000D/MBSE)
-5. **Proveniencia inmutable** con UTCS
-6. **Escalabilidad multi-tenant** a través de federación
----
-
-
+1. **Deterministic structure** with uniform TFA trees  
+2. **Integrated hybrid computing** (CB/QB/FE/FWD/QS)  
+3. **Native digital thread** with OPTIMO-DT  
+4. **Compliance as code** (S1000D/MBSE)  
+5. **Immutable provenance** with UTCS  
+6. **Multi-tenant scalability** through federation  
