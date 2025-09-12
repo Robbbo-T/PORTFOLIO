@@ -1,0 +1,53 @@
+graph TD
+    %% TFA V2 Layer Stack Diagram
+    
+    subgraph "TFA Layer Stack"
+        QS[QS - Quantum State]
+        FWD[FWD - Forward Wave Dynamics]
+        FE[FE - Federation Element]
+        UE[UE - Unit Element]
+        QB[QB - Qubit]
+        CB[CB - Classical Bit]
+        
+        %% Layer connections
+        QS --> FWD
+        FWD --> FE
+        FE --> UE
+        UE --> QB
+        QB --> CB
+    end
+    
+    subgraph "Components & Stations"
+        CV[CV - Component Vendor]
+        CE[CE - Component Equipment]
+        CC[CC - Configuration Cell]
+        CI[CI - Configuration Item]
+        CP[CP - Component Part]
+        SE[SE - Station Envelope]
+    end
+    
+    subgraph "Systems"
+        SI[SI - System Integration]
+        DI[DI - Domain Interface]
+    end
+    
+    %% Integration flows
+    SI --> CB
+    DI --> SI
+    SE --> UE
+    CV --> CE
+    CE --> CC
+    CC --> CI
+    CI --> CP
+    
+    classDef quantum fill:#e1f5fe
+    classDef classical fill:#f3e5f5
+    classDef elements fill:#e8f5e8
+    classDef components fill:#fff3e0
+    classDef systems fill:#fce4ec
+    
+    class QB,QS quantum
+    class CB classical  
+    class UE,FE,FWD elements
+    class CV,CE,CC,CI,CP,SE components
+    class SI,DI systems
