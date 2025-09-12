@@ -632,7 +632,7 @@ async def main():
         # FWD Integration
         fwd_results = results.get("fwd_integration", {}).get("summary", {})
         if "error" not in fwd_results:
-            print(f"\n🌊 FWD Nowcast Integration:")
+            print("\n🌊 FWD Nowcast Integration:")
             print(f"   Tests: {fwd_results.get('successful_tests', 0)}/4")
             print(f"   Avg Gen Time: {fwd_results.get('average_generation_time_ms', 0):.2f}ms")
             print(f"   PRO Integration: {'✅' if fwd_results.get('pro_integration_success') else '❌'}")
