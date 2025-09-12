@@ -36,7 +36,7 @@ jobs:
             --format json \
             --no-progress \
             --output .lychee/out.json \
-            --include '**/*.md' '**/*.html' \
+            --include '\.(md|html)$' \
             --root-dir "${{ github.workspace }}" \
             --accept 200,204,429 \
             --timeout 10 \
