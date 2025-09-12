@@ -368,7 +368,7 @@ class MasterProgressReporter:
             
             md += "\n---\n\n"
         
-        md += f"""## 🎯 Priority Next Actions
+        md += """## 🎯 Priority Next Actions
 
 """
         for i, action in enumerate(report_data['next_actions'][:5], 1):
