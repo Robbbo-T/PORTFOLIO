@@ -218,7 +218,7 @@ class MasterProgressReporter:
             ("Module Proposals", min(module_proposals / 1.0, 1.0) * 25, 25)
         ]
         
-        completed = sum(weight * (1.0 if complete == True else complete) 
+        completed = sum(weight * (1.0 if complete is True else complete) 
                        for _, complete, weight in progress_items)
         
         return {
