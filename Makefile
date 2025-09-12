@@ -19,8 +19,7 @@ help:
 # Create complete TFA scaffolding (idempotent) + quantum bridge buckets
 scaffold: quantum-bridge
 	@echo "🏗️ Scaffolding TFA V2 structure..."
-	@python3 -c '
-from pathlib import Path; root = Path('.').resolve(); domains = ['AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES','AAP-AIRPORT-ADAPTABLE-PLATFORMS','CCC-COCKPIT-CABIN-AND-CARGO','CQH-CRYOGENICS-QUANTUM-AND-H2','DDD-DIGITAL-AND-DATA-DEFENSE','EDI-ELECTRONICS-DIGITAL-INSTRUMENTS','EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION','EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION','IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES','IIS-INTEGRATED-INTELLIGENCE-SOFTWARE','LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS','LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN','MMM-MECHANICAL-AND-MATERIAL-MODULES','OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES','PPP-PROPULSION-AND-FUEL-SYSTEMS']; tree = {'SYSTEMS': ['SI','DI'],'STATIONS': ['SE'],'COMPONENTS': ['CV','CE','CC','CI','CP'],'BITS': ['CB'],'QUBITS': ['QB'],'ELEMENTS': ['UE','FE'],'WAVES': ['FWD'],'STATES': ['QS'],'META': ['README.md']}; base_root = root/'2-DOMAINS-LEVELS'; [[(base_root/d/'TFA'/layer).mkdir(parents=True, exist_ok=True) or [(base_root/d/'TFA'/layer/leaf).mkdir(exist_ok=True) if not leaf.endswith('.md') else (base_root/d/'TFA'/layer/leaf).write_text('# META\\n', encoding='utf-8') if not (base_root/d/'TFA'/layer/leaf).exists() else None for leaf in leaves] for layer, leaves in tree.items()] for d in domains]; print('Scaffold ensured for TFA trees.')"
+	@python3 scripts/scaffold_tfa.py
 	@echo "✅ TFA scaffolding complete"
 
 # Validate TFA structure
