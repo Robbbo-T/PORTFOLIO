@@ -266,7 +266,7 @@ class MasterProgressReporter:
             ("Scaling Roadmap", roadmap_exists, 20)
         ]
         
-        completed = sum(weight * (1.0 if complete == True else complete) 
+        completed = sum(weight * (1.0 if complete is True else complete) 
                        for _, complete, weight in progress_items)
         
         return {
