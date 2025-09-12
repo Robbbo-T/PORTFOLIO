@@ -374,7 +374,7 @@ class MasterProgressReporter:
         for i, action in enumerate(report_data['next_actions'][:5], 1):
             md += f"{i}. {action}\n"
         
-        md += f"""
+        md += """
 
 ## ⚠️ Risk Assessment
 
