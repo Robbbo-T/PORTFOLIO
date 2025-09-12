@@ -1,7 +1,7 @@
 {
   "test_metadata": {
-    "timestamp": 1757696528.5773437,
-    "duration_s": 1.4080545902252197,
+    "timestamp": 1757696636.295258,
+    "duration_s": 1.4078752994537354,
     "overall_success": true
   },
   "component_results": {
@@ -96,23 +96,23 @@
     "qs": {
       "basic": {
         "success": true,
-        "state_id": "e8976f7f-776f-4411-a63d-cec4b46da35f",
+        "state_id": "a7b8cca1-6177-48d6-8e81-854245972f1a",
         "utcs_id": "TEST/QS/BASIC",
-        "content_hash": "blake3:2a78ad9eadb200df",
+        "content_hash": "blake3:2f903fba17fb5401",
         "commit_time_ms": 60.0,
         "qs_backend": "MAL-QS",
         "anchor_status": "not_requested"
       },
       "anchored": {
         "success": true,
-        "state_id": "613b6cac-e05c-447b-bc01-9b1c8696f35b",
+        "state_id": "5f6b09bd-c53a-4c4f-9567-db5b56395948",
         "utcs_id": "TEST/QS/ANCHORED",
-        "content_hash": "blake3:ddbf092aac12352f",
+        "content_hash": "blake3:64815b918b5021c6",
         "commit_time_ms": 150.0,
         "qs_backend": "MAL-QS",
         "anchor_status": "anchored",
         "utcs_anchor": {
-          "transaction_hash": "e72108b87b74b5582622864409b65828a341a0d5ed6e090211713d847345c174",
+          "transaction_hash": "836dce7d2553f25a345705d7b941679d29d0fab517411433570eb256abd298d2",
           "block_number": 123456,
           "network": "utcs-testnet"
         }
@@ -120,7 +120,7 @@
     },
     "pro": {
       "success": true,
-      "cycle_time_ms": 722.9814529418945,
+      "cycle_time_ms": 722.9709625244141,
       "domains_processed": 4,
       "domain_results": {
         "AAA": {
