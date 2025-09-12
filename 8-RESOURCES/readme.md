@@ -45,28 +45,28 @@ Starter docs and stubs for every **LLC** code. Copy them into a domain’s `TFA/
 
 * Systems
 
-  * **SI**—System Integration → `TEMPLATES/TFA-LAYER-TEMPLATES/SYSTEMS/SI/README.md`
-  * **DI**—Domain Interface → `TEMPLATES/TFA-LAYER-TEMPLATES/SYSTEMS/DI/`
+  * **SI**—System Integration → `TEMPLATES/TFA-LAYER-TEMPLATES/SYSTEMS-TEMPLATES/SI-SYSTEM-INTEGRATION/`
+  * **DI**—Domain Interface → `TEMPLATES/TFA-LAYER-TEMPLATES/SYSTEMS-TEMPLATES/DI-DOMAIN-INTERFACE/`
 * Stations
 
-  * **SE**—Station Envelope → `TEMPLATES/TFA-LAYER-TEMPLATES/STATIONS/SE/`
+  * **SE**—Station Envelope → `TEMPLATES/TFA-LAYER-TEMPLATES/STATIONS-TEMPLATES/SE-STATION-ENVELOPE/`
 * Components
 
-  * **CV/CE/CC/CI/CP** → `TEMPLATES/TFA-LAYER-TEMPLATES/COMPONENTS/…`
+  * **CV/CE/CC/CI/CP** → `TEMPLATES/TFA-LAYER-TEMPLATES/COMPONENTS-TEMPLATES/…`
 * Bits & Qubits
 
-  * **CB**—Classical Bit → `TEMPLATES/TFA-LAYER-TEMPLATES/BITS/CB/`
-  * **QB**—Qubit → `TEMPLATES/TFA-LAYER-TEMPLATES/QUBITS/QB/README.md`
+  * **CB**—Classical Bit → `TEMPLATES/TFA-LAYER-TEMPLATES/BITS-TEMPLATES/CB-CLASSICAL-BIT/`
+  * **QB**—Qubit → `TEMPLATES/TFA-LAYER-TEMPLATES/QUBITS-TEMPLATES/QB-QUBIT/`
 * Elements & Waves & States
 
-  * **UE/FE/FWD/QS** → `TEMPLATES/TFA-LAYER-TEMPLATES/ELEMENTS/…`, `…/WAVES/FWD/`, `…/STATES/QS/`
+  * **UE/FE/FWD/QS** → `TEMPLATES/TFA-LAYER-TEMPLATES/ELEMENTS-TEMPLATES/…`, `WAVES-TEMPLATES/FWD-…/`, `STATES-TEMPLATES/QS-QUANTUM-STATE/`
 
 > 🔎 Each template uses **placeholder tokens** like `{{PROGRAM}}`, `{{DOMAIN}}`, `{{LLC}}`. See [META guide](./TEMPLATES/META/README.md).
 
 ### CAx Lifecycle Templates
 
 Process documentation and checklists across **CAB → CAV**:
-`TEMPLATES/CAx/` *(e.g., CAB-Brainstorming, CAD-MBSE, CAT-Testing, CAV-Verification)*
+`TEMPLATES/CAX-LIFECYCLE-TEMPLATES/` *(e.g., CAB-BRAINSTORMING, CAD-DESIGN, CAT-TESTING, CAV-VERIFICATION)*
 
 ### Segment Packs
 
@@ -163,7 +163,7 @@ make check        # validate TFA + quantum layers + links
 
 ```bash
 # Example: new SI under AAA
-cp -r 8-RESOURCES/TEMPLATES/TFA-LAYER-TEMPLATES/SYSTEMS/SI/* \
+cp -r 8-RESOURCES/TEMPLATES/TFA-LAYER-TEMPLATES/SYSTEMS-TEMPLATES/SI-SYSTEM-INTEGRATION/* \
       2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/SYSTEMS/SI/
 ```
 
