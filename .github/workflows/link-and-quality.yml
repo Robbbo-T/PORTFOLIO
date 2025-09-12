@@ -37,7 +37,7 @@ jobs:
             --no-progress \
             --output .lychee/out.json \
             --include '**/*.md' '**/*.html' \
-            --root-dir . \
+            --root-dir "${{ github.workspace }}" \
             --accept 200,204,429 \
             --timeout 10 \
             --retry-wait-time 2 \
@@ -52,10 +52,10 @@ jobs:
 
       - name: Content quality - classify working links
         env:
-          USE_LLM: "true"                                   # set "false" to skip LLM
-          LLM_PROVIDER: "openai"                            # openai | azure | anthropic
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}     # or provider-specific secret
-          OPENAI_MODEL: "gpt-4o-mini"                       # any you prefer
+          USE_LLM: "true"
+          LLM_PROVIDER: "openai"
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: "gpt-4o-mini"
         run: |
           python tools/llm_link_quality.py \
             --lychee .lychee/out.json \
