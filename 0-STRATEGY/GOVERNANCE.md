@@ -39,7 +39,8 @@ This document outlines Pelliccia's comprehensive aerospace governance model, des
 
 #### Continuous Compliance
 - **DO-178C, S1000D, ISO, MBSE** compliance as "compliance-as-code"
-- **AMOReS** (Aerospace Modeling, Operations, Research, and Engineering Standards) pipelines
+- **AMOReS — Aerospace Model Operating Regulative Execution System**  
+The regulative execution system enforcing operating rules across MAP/MAL pipelines, providing deterministic compliance, provenance (UTCS), and runtime governance inside the TFA/OPTIMO-DT digital thread.
 - Digital evidence pipelines for automated compliance validation
 - Proactive compliance verification rather than reactive audits
 
