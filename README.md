@@ -308,11 +308,24 @@ Licensed under **MIT** — see [`LICENSE`](./LICENSE).
 **Quick Links**
 
 * [Strategy & Vision](./0-STRATEGY/)
+* [Master's Project Framework](./0-STRATEGY/MASTER-PROJECT-FRAMEWORK.md) 
 * [CAx Methodology](./1-CAX-METHODOLOGY/)
 * [Aerospace Domains](./2-DOMAINS-LEVELS/)
 * [AQUA-OS PRO App](./services/aqua-os-pro/)
 * [Blockchain (UTCS)](./6-UTCS-BLOCKCHAIN/)
 * [Governance & Community](./7-GOVERNANCE/)
+
+### 🎓 Master's Project Integration
+
+This portfolio serves as the practical implementation backbone for the **"Máster en Dirección y Gestión de Proyectos"**, providing:
+
+- **[Repository Audit Framework](./0-STRATEGY/MASTER-PROJECT-FRAMEWORK/AUDIT/)**: External validation and quality assurance
+- **[End-to-End Workflows](./0-STRATEGY/MASTER-PROJECT-FRAMEWORK/WORKFLOWS/)**: Complete process documentation from idea to decision
+- **[European Impact Strategy](./0-STRATEGY/MASTER-PROJECT-FRAMEWORK/EU-IMPACT/)**: Visibility through proposals, publications, and standards
+- **[Collaboration Network](./0-STRATEGY/MASTER-PROJECT-FRAMEWORK/COLLABORATION/)**: Academic and industry partnership framework
+- **[Recognition Building](./0-STRATEGY/MASTER-PROJECT-FRAMEWORK/RECOGNITION/)**: "Architect of Futures" thought leadership positioning
+
+**Progress Tracking**: Use `make master-progress` to generate comprehensive progress reports.
 
 ---
 

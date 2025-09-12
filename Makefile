@@ -1,7 +1,7 @@
 # TFA V2 Portfolio Management Makefile
 # Scaffolding, validation, and maintenance commands
 
-.PHONY: help scaffold check validate domains quantum-bridge clean
+.PHONY: help scaffold check validate domains quantum-bridge master-progress clean
 
 # Default target
 help:
@@ -13,6 +13,7 @@ help:
 	@echo "  validate         - Run TFA structure validator"
 	@echo "  domains          - Show domain status"
 	@echo "  quantum-bridge   - Create quantum-classical bridge code buckets"
+	@echo "  master-progress  - Generate Master's Project progress report"
 	@echo "  clean            - Remove temporary files"
 	@echo "  help             - Show this help"
 
@@ -60,6 +61,12 @@ quantum-bridge:
 	@[ -f 5-ARTIFACTS-IMPLEMENTATION/CODE/python/federation-elements/README.md ] || echo "# Federation Entanglement Implementations" > 5-ARTIFACTS-IMPLEMENTATION/CODE/python/federation-elements/README.md
 	@[ -f 5-ARTIFACTS-IMPLEMENTATION/CODE/python/wave-dynamics/README.md ] || echo "# Wave Dynamics Implementations" > 5-ARTIFACTS-IMPLEMENTATION/CODE/python/wave-dynamics/README.md
 	@echo "✅ Quantum-classical bridge buckets ready"
+
+# Master's Project Progress Report
+master-progress:
+	@echo "📊 Generating Master's Project Progress Report..."
+	@python3 scripts/generate_master_progress_report.py
+	@echo "✅ Progress report generated: 0-STRATEGY/MASTER-PROJECT-FRAMEWORK/PROGRESS-REPORT.md"
 
 # Clean temporary files
 clean:
