@@ -273,7 +273,7 @@ async def run_integration_test():
     print(f"   PRO SLA Compliance: {'Yes' if pro_results['sla_compliant'] else 'No'}")
     
     print(f"\n🎖️  Integration Requirements Status:")
-    print(f"   ✅ QPU backend integrated with benchmarks")  
+    print("   ✅ QPU backend integrated with benchmarks")  
     print(f"   ✅ CB solver with reference implementation")
     print(f"   ✅ FWD nowcast (0-20 min) connected to PRO")
     print(f"   ✅ QS-MVP with UTCS anchoring")
