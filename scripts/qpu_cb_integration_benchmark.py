@@ -617,7 +617,7 @@ async def main():
         cb_results = results.get("individual_backends", {}).get("cb_backend", {})
         if "error" not in cb_results:
             cb_summary = cb_results.get("performance_summary", {})
-            print(f"\n🔢 CB Backend:")
+            print("\n🔢 CB Backend:")
             print(f"   Tests: {cb_summary.get('successful_tests', 0)}/{cb_summary.get('total_tests', 0)}")
             print(f"   Avg Time: {cb_summary.get('average_execution_time_ms', 0):.2f}ms")
         
