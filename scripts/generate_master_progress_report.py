@@ -419,7 +419,7 @@ def main():
     with open(md_path, 'w') as f:
         f.write(md_report)
     
-    print(f"✅ Master's project progress report generated")
+    print("✅ Master's project progress report generated")
     print(f"📊 Overall progress: {report_data['overall_progress']:.1f}%")
     print(f"📄 Reports saved to: {json_path} and {md_path}")
     
