@@ -1,0 +1,223 @@
+{
+  "test_metadata": {
+    "timestamp": 1757696636.295258,
+    "duration_s": 1.4078752994537354,
+    "overall_success": true
+  },
+  "component_results": {
+    "qpu_cb": {
+      "qpu": {
+        "success": true,
+        "utcs_id": "TEST/QPU/001",
+        "strategy": "qaoa",
+        "quantum_result": {
+          "energy": -2.5,
+          "confidence": 0.95
+        },
+        "processing_time_ms": 100.0,
+        "quantum_backend": "MAL-QB"
+      },
+      "cb": {
+        "success": true,
+        "utcs_id": "TEST/CB/001",
+        "solver_type": "linear_programming",
+        "objective_value": -2.3,
+        "solution": {
+          "variables": [
+            1.0,
+            2.0,
+            1.5,
+            0.8
+          ]
+        },
+        "processing_time_ms": 50.0,
+        "classical_backend": "MAL-CB"
+      },
+      "quantum_advantage": 0.08695652173913052
+    },
+    "fwd": {
+      "success": true,
+      "utcs_id": "TEST/FWD/20min",
+      "tiles": [
+        {
+          "tile_id": "tile_0",
+          "latitude": 40.0,
+          "longitude": -74.0,
+          "data_type": "weather",
+          "values": {
+            "temperature": 20,
+            "wind_speed": 10,
+            "visibility": 5000
+          },
+          "confidence": "high"
+        },
+        {
+          "tile_id": "tile_1",
+          "latitude": 40.1,
+          "longitude": -73.9,
+          "data_type": "weather",
+          "values": {
+            "temperature": 21,
+            "wind_speed": 12,
+            "visibility": 6000
+          },
+          "confidence": "high"
+        },
+        {
+          "tile_id": "tile_2",
+          "latitude": 40.2,
+          "longitude": -73.8,
+          "data_type": "weather",
+          "values": {
+            "temperature": 22,
+            "wind_speed": 14,
+            "visibility": 7000
+          },
+          "confidence": "high"
+        },
+        {
+          "tile_id": "tile_3",
+          "latitude": 40.3,
+          "longitude": -73.7,
+          "data_type": "weather",
+          "values": {
+            "temperature": 23,
+            "wind_speed": 16,
+            "visibility": 8000
+          },
+          "confidence": "high"
+        }
+      ],
+      "generation_time_ms": 80.0,
+      "coverage_percentage": 95.0,
+      "overall_confidence": "high",
+      "fwd_backend": "MAL-FWD"
+    },
+    "qs": {
+      "basic": {
+        "success": true,
+        "state_id": "a7b8cca1-6177-48d6-8e81-854245972f1a",
+        "utcs_id": "TEST/QS/BASIC",
+        "content_hash": "blake3:2f903fba17fb5401",
+        "commit_time_ms": 60.0,
+        "qs_backend": "MAL-QS",
+        "anchor_status": "not_requested"
+      },
+      "anchored": {
+        "success": true,
+        "state_id": "5f6b09bd-c53a-4c4f-9567-db5b56395948",
+        "utcs_id": "TEST/QS/ANCHORED",
+        "content_hash": "blake3:64815b918b5021c6",
+        "commit_time_ms": 150.0,
+        "qs_backend": "MAL-QS",
+        "anchor_status": "anchored",
+        "utcs_anchor": {
+          "transaction_hash": "836dce7d2553f25a345705d7b941679d29d0fab517411433570eb256abd298d2",
+          "block_number": 123456,
+          "network": "utcs-testnet"
+        }
+      }
+    },
+    "pro": {
+      "success": true,
+      "cycle_time_ms": 722.9709625244141,
+      "domains_processed": 4,
+      "domain_results": {
+        "AAA": {
+          "success": true,
+          "layers": {
+            "CB": {
+              "processed": true,
+              "time_ms": 30.0
+            },
+            "QB": {
+              "processed": true,
+              "time_ms": 80.0,
+              "quantum_used": true
+            },
+            "FWD": {
+              "processed": true,
+              "time_ms": 50.0
+            },
+            "QS": {
+              "processed": true,
+              "time_ms": 20.0
+            }
+          },
+          "total_time_ms": 180.0
+        },
+        "PPP": {
+          "success": true,
+          "layers": {
+            "CB": {
+              "processed": true,
+              "time_ms": 30.0
+            },
+            "QB": {
+              "processed": true,
+              "time_ms": 80.0,
+              "quantum_used": true
+            },
+            "FWD": {
+              "processed": true,
+              "time_ms": 50.0
+            },
+            "QS": {
+              "processed": true,
+              "time_ms": 20.0
+            }
+          },
+          "total_time_ms": 180.0
+        },
+        "EDI": {
+          "success": true,
+          "layers": {
+            "CB": {
+              "processed": true,
+              "time_ms": 30.0
+            },
+            "QB": {
+              "processed": true,
+              "time_ms": 80.0,
+              "quantum_used": true
+            },
+            "FWD": {
+              "processed": true,
+              "time_ms": 50.0
+            },
+            "QS": {
+              "processed": true,
+              "time_ms": 20.0
+            }
+          },
+          "total_time_ms": 180.0
+        },
+        "IIS": {
+          "success": true,
+          "layers": {
+            "CB": {
+              "processed": true,
+              "time_ms": 30.0
+            },
+            "QB": {
+              "processed": true,
+              "time_ms": 80.0,
+              "quantum_used": true
+            },
+            "FWD": {
+              "processed": true,
+              "time_ms": 50.0
+            },
+            "QS": {
+              "processed": true,
+              "time_ms": 20.0
+            }
+          },
+          "total_time_ms": 180.0
+        }
+      },
+      "sla_compliant": false,
+      "quantum_used": true
+    }
+  }
+}
