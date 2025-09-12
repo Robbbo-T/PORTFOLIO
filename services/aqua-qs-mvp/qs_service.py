@@ -62,12 +62,12 @@ class UTCSAnchor:
 class QuantumState:
     """Complete quantum state with provenance and anchoring"""
     state_data: QuantumStateData
-    content_hash: str
+    content_hash: Optional[str] = None
     utcs_anchor: Optional[UTCSAnchor] = None
     created_at: float = field(default_factory=time.time)
     
     def __post_init__(self):
-        if not self.content_hash:
+        if self.content_hash is None:
             self.content_hash = self._calculate_hash()
     
     def _calculate_hash(self) -> str:
