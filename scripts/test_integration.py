@@ -276,7 +276,7 @@ async def run_integration_test():
     print("   ✅ QPU backend integrated with benchmarks")  
     print(f"   ✅ CB solver with reference implementation")
     print(f"   ✅ FWD nowcast (0-20 min) connected to PRO")
-    print(f"   ✅ QS-MVP with UTCS anchoring")
+    print("   ✅ QS-MVP with UTCS anchoring")
     print(f"   ✅ Common benchmark framework")
     
     # Save results
