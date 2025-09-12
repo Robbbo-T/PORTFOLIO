@@ -8,7 +8,7 @@
 
 ## 0) Quick Links
 
-* **TFA Architecture (overview):** `8-RESOURCES/8-RESOURCES/TFA-ARCHITECTURE.md`
+* **TFA Architecture (overview):** `8-RESOURCES/TFA-ARCHITECTURE.md`
 * **Quantum–Classical Bridge:** `docs/quantum-classical-bridge.md`
 * **AQUA-OS PRO (reference spec):** `services/aqua-os-pro/AQUA-OS-PRO-SPEC.md`
 * **Schemas (route loop):** `services/aqua-os-pro/schemas/route_optimization.json`
