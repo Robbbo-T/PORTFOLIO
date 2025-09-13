@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "BLG Domain Wall Device Schema",
+  "description": "Schema for bilayer graphene domain wall device parameters and configurations",
+  "type": "object",
+  "properties": {
+    "device_id": {
+      "type": "string",
+      "description": "Unique identifier for the device"
+    },
+    "material_parameters": {
+      "type": "object",
+      "properties": {
+        "bilayer_graphene": {
+          "type": "object",
+          "properties": {
+            "lattice_constant": {
+              "type": "number",
+              "minimum": 0,
+              "description": "In-plane lattice constant in meters"
+            },
+            "interlayer_spacing": {
+              "type": "number", 
+              "minimum": 0,
+              "description": "C-axis spacing in meters"
+            }
+          },
+          "required": ["lattice_constant", "interlayer_spacing"]
+        },
+        "hopping_parameters": {
+          "type": "object",
+          "properties": {
+            "t0": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Intralayer nearest neighbor hopping in eV"
+            },
+            "t1": {
+              "type": "number", 
+              "minimum": 0,
+              "description": "Interlayer hopping (AB sites) in eV"
+            },
+            "t3": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Trigonal warping parameter in eV"
+            },
+            "t4": {
+              "type": "number",
+              "minimum": 0, 
+              "description": "Interlayer next-nearest neighbor in eV"
+            }
+          },
+          "required": ["t0", "t1", "t3", "t4"]
+        }
+      },
+      "required": ["bilayer_graphene", "hopping_parameters"]
+    },
+    "interlayer_bias_calibration": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "type": "string",
+          "enum": ["parallel-plate + Hartree screening"]
+        },
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "C_t": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Top gate capacitance per unit area in F/m^2"
+            },
+            "C_b": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Back gate capacitance per unit area in F/m^2"
+            },
+            "d_t": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Top gate dielectric thickness in meters"
+            },
+            "d_b": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Back gate dielectric thickness in meters"
+            },
+            "epsilon_r_t": {
+              "type": "number",
+              "minimum": 1,
+              "description": "Top dielectric relative permittivity"
+            },
+            "epsilon_r_b": {
+              "type": "number",
+              "minimum": 1,
+              "description": "Back dielectric relative permittivity"
+            }
+          },
+          "required": ["C_t", "C_b", "d_t", "d_b", "epsilon_r_t", "epsilon_r_b"]
+        },
+        "voltage_to_bias_conversion": {
+          "type": "object",
+          "properties": {
+            "alpha": {
+              "type": "number",
+              "description": "Top gate efficiency in eV/V"
+            },
+            "beta": {
+              "type": "number", 
+              "description": "Back gate efficiency in eV/V"
+            },
+            "V_tg0": {
+              "type": "number",
+              "description": "Top gate offset voltage in V"
+            },
+            "V_bg0": {
+              "type": "number",
+              "description": "Back gate offset voltage in V"
+            }
+          },
+          "required": ["alpha", "beta", "V_tg0", "V_bg0"]
+        },
+        "operating_ranges": {
+          "type": "object",
+          "properties": {
+            "V_tg_min": {"type": "number"},
+            "V_tg_max": {"type": "number"},
+            "V_bg_min": {"type": "number"},
+            "V_bg_max": {"type": "number"},
+            "max_interlayer_bias": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Maximum interlayer bias in eV"
+            }
+          },
+          "required": ["V_tg_min", "V_tg_max", "V_bg_min", "V_bg_max", "max_interlayer_bias"]
+        }
+      },
+      "required": ["model", "parameters", "voltage_to_bias_conversion", "operating_ranges"]
+    },
+    "domain_wall_parameters": {
+      "type": "object", 
+      "properties": {
+        "profile_type": {
+          "type": "string",
+          "enum": ["tanh", "linear", "step"]
+        },
+        "characteristic_width": {
+          "type": "array",
+          "items": {"type": "number", "minimum": 0},
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Min and max width range in meters"
+        },
+        "length": {
+          "type": "array", 
+          "items": {"type": "number", "minimum": 0},
+          "minItems": 2,
+          "maxItems": 2,
+          "description": "Min and max device length in meters"
+        },
+        "creation_method": {
+          "type": "string",
+          "enum": ["strain_engineering", "electrostatic_gating"]
+        },
+        "control_mechanism": {
+          "type": "string",
+          "enum": ["dual_gate_bias", "single_gate", "mechanical_strain"]
+        }
+      },
+      "required": ["profile_type", "characteristic_width", "length", "creation_method", "control_mechanism"]
+    },
+    "valley_chern_physics": {
+      "type": "object",
+      "properties": {
+        "valley_chern_number": {
+          "type": "integer",
+          "enum": [-1, 1],
+          "description": "Valley Chern number per valley (per spin)"
+        },
+        "chern_number_change": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Total Chern number change across domain wall"
+        },
+        "kink_channels_per_valley": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of co-propagating kink channels per valley"
+        },
+        "trigonal_warping_effects": {
+          "type": "boolean",
+          "description": "Whether v3 trigonal warping splits dispersions"
+        }
+      },
+      "required": ["valley_chern_number", "chern_number_change", "kink_channels_per_valley"]
+    }
+  },
+  "required": [
+    "device_id",
+    "material_parameters", 
+    "interlayer_bias_calibration",
+    "domain_wall_parameters",
+    "valley_chern_physics"
+  ]
+}

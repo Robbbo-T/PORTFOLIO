@@ -1,0 +1,82 @@
+# Default BLG Domain Wall Device Configuration
+# This file provides reference parameters for bilayer graphene domain wall devices
+
+device_id: "BLG-DW-v1.0"
+
+material_parameters:
+  bilayer_graphene:
+    lattice_constant: 0.246e-9  # m, in-plane lattice constant
+    interlayer_spacing: 0.335e-9  # m, c-axis spacing
+    
+  hopping_parameters:
+    t0: 2.7     # eV, intralayer nearest neighbor
+    t1: 0.4     # eV, interlayer (AB sites)
+    t3: 0.315   # eV, trigonal warping
+    t4: 0.044   # eV, interlayer next-nearest neighbor
+    
+  dielectric_environment:
+    substrate: "hBN"
+    encapsulation: "hBN"
+    relative_permittivity: 4.5
+
+interlayer_bias_calibration:
+  model: "parallel-plate + Hartree screening"
+  parameters:
+    C_t: 50e-6  # F/m^2, top gate capacitance per unit area
+    C_b: 45e-6  # F/m^2, back gate capacitance per unit area
+    d_t: 10e-9  # m, top gate dielectric thickness
+    d_b: 300e-9 # m, back gate dielectric thickness
+    epsilon_r_t: 3.9  # relative permittivity, top dielectric (SiO2)
+    epsilon_r_b: 3.9  # relative permittivity, back dielectric (SiO2)
+    
+  voltage_to_bias_conversion:
+    # U = α(V_tg - V_tg0) + β(V_bg - V_bg0)
+    alpha: 0.85  # eV/V, top gate efficiency
+    beta: 0.15   # eV/V, back gate efficiency
+    V_tg0: 0.0   # V, top gate offset voltage
+    V_bg0: 0.0   # V, back gate offset voltage
+    
+  screening_corrections:
+    thomas_fermi_length: 0.8e-9  # m, screening length in graphene
+    dielectric_environment: "hBN/SiO2"
+    temperature_dependence: true
+    
+  operating_ranges:
+    V_tg_min: -10.0  # V
+    V_tg_max: 10.0   # V
+    V_bg_min: -40.0  # V 
+    V_bg_max: 40.0   # V
+    max_interlayer_bias: 200e-3  # eV
+
+domain_wall_parameters:
+  profile_type: "tanh"
+  characteristic_width: [2e-9, 30e-9]  # m, tunable range
+  length: [1e-6, 10e-6]  # m, device length
+  
+  creation_method: "strain_engineering"  # or "electrostatic_gating"
+  control_mechanism: "dual_gate_bias"
+  
+  confinement_metrics:
+    localization_length_target: [5e-9, 50e-9]  # m
+    energy_gap_target: [1e-3, 50e-3]  # eV
+    mode_purity_target: 0.8  # dimensionless
+
+valley_chern_physics:
+  valley_chern_number: 1  # ±1 per valley (per spin)
+  chern_number_change: 2  # |ΔCv| = 2 across domain wall
+  kink_channels_per_valley: 2  # co-propagating channels
+  trigonal_warping_effects: true  # v3 splits dispersions
+
+# Simulation parameters
+simulation:
+  energy_range: [-0.1, 0.1]  # eV
+  energy_points: 100
+  num_modes: 10
+  transport_leads: 2
+  
+# Experimental targets
+targets:
+  localization_contrast: 5.0  # STS LDOS contrast (DW vs domains)
+  q_factor: 20.0  # Quasi-bound state Q-factor at 4K
+  switching_ratio: 1000.0  # On/off ratio (dimensionless)
+  ballistic_length: 1e-6  # m, minimum ballistic segment
