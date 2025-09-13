@@ -45,10 +45,10 @@ flowchart LR
   R2 --> C
 
 Invariantes de Idempotencia
-1.Conmutatividad parcial: re-ejecutar acciones no cambia el resultado final.
-2.Efecto nulo en convergencia: si Delta=0, no hay efectos laterales.
-3.Determinismo observable: misma Intención + misma Realidad ⇒ mismo resultado.
-4.Prueba de fijación: la segunda pasada del lazo no produce cambios materiales.
+1. Conmutatividad parcial: re-ejecutar acciones no cambia el resultado final.
+2. Efecto nulo en convergencia: si Delta=0, no hay efectos laterales.
+3. Determinismo observable: misma Intención + misma Realidad ⇒ mismo resultado.
+4. Prueba de fijación: la segunda pasada del lazo no produce cambios materiales.
 ```
 
 ⸻
