@@ -143,10 +143,16 @@ Learn more: [Quantum–Classical Bridge](../docs/quantum-classical-bridge.md) ·
 
 * Structure: `.github/workflows/tfa_structure_validator.yml`
 * Quantum layers & terminology guard: `.github/workflows/quantum-layers-check.yml`
+* Lexicon guard: `.github/workflows/lexicon-guard.yml`
 * Links & Quality: `.github/workflows/link-and-quality.yml`
 * UTCS Anchors: `.github/workflows/anchor_utcs.yml`
 
 All template packs are **CI-aware**: copying them preserves structure & required sections.
+
+## 🤖 AI Assistant Configuration
+
+* **Copilot Instructions**: `.github/COPILOT_INSTRUCTIONS.md` - Repository-level AI guidance for TFA architecture, quantum-classical bridge patterns, and AQUA/UTCS integration
+* **Test Prompts**: `.github/prompts/copilot-smoke.md` - Validation prompts to verify AI assistant understanding of TFA rules and terminology
 
 ---
 
