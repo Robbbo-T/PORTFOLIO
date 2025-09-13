@@ -57,8 +57,30 @@ class BLG_DW_System:
 
         return np.array(conductances)
 
-    def extract_modes(self):
-        """Find confined and quasi-bound states"""
-        # Eigenvalue solver for bound states
-        # Returns: energies, wavefunctions, localization_lengths
-        pass
+    def extract_modes(self, num_modes=5):
+        """Find confined and quasi-bound states
+        Returns:
+            energies: array of eigenvalues
+            wavefunctions: array of eigenvectors
+            localization_lengths: array of localization lengths
+        """
+        # Build the system and get the Hamiltonian matrix
+        sys = self.make_system()
+        ham_mat = sys.hamiltonian_submatrix(sparse=True)
+
+        # Use eigsh to find a few lowest-energy eigenstates
+        # (Assume system is particle-hole symmetric, so use sigma=0)
+        energies, wavefunctions = eigsh(ham_mat, k=num_modes, sigma=0, which='LM')
+
+        # Calculate localization lengths (e.g., via inverse participation ratio)
+        localization_lengths = []
+        for psi in wavefunctions.T:
+            # Normalize wavefunction
+            psi_norm = psi / np.linalg.norm(psi)
+            # Inverse participation ratio (IPR)
+            ipr = np.sum(np.abs(psi_norm)**4)
+            # Localization length estimate: 1/IPR
+            loc_length = 1.0 / ipr if ipr > 0 else np.inf
+            localization_lengths.append(loc_length)
+
+        return energies, wavefunctions, np.array(localization_lengths)
