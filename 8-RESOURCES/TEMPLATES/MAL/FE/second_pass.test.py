@@ -10,7 +10,12 @@ def apply_manifest(manifest: Path) -> dict:
 
 def test_second_pass_no_delta(tmp_path: Path):
     manifest = tmp_path / "manifest.yaml"
-    manifest.write_text("actions: []", encoding="utf-8")
+    manifest.write_text(
+        "actions:\n"
+        "  - name: example_action\n"
+        "    type: noop\n",
+        encoding="utf-8"
+    )
     first = apply_manifest(manifest)
     second = apply_manifest(manifest)
     assert second["delta"] == 0
