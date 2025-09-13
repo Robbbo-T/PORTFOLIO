@@ -1,0 +1,68 @@
+# Consense Policy Language (CPL) Schema
+# DKDC Protocol v0.1
+
+cpl_version: "0.1"
+controller: "did:example:amedeo"
+processors:
+  - "did:example:llm.gateway"
+
+# Purpose binding - declared development intents only
+purpose: "Co-author BWB-Q100 READMEs and CI rules"
+
+# Scopes define what context may flow
+scopes:
+  - "read:repo:0-STRATEGY/GOVERNANCE.md"
+  - "read:repo:2-DOMAINS-LEVELS/**/README.md"
+  - "write:suggestions:pull-requests"
+
+# Lifecycle Level Context
+llc: "project"  # ephemeral | session | project | portfolio
+
+# Retention and revocation policies
+retention:
+  ttl: "PT4H"  # ISO 8601 duration - 4 hours
+  revoke_on:
+    - "branch:main:protected"
+    - "role_change"
+    - "policy_violation"
+
+# Deterministic redactions
+redactions:
+  - path: "**/personal/**"
+  - path: "**/secrets/**"
+  - selector: "emails, tokens, credentials"
+
+# Export controls
+export_controls:
+  allow_internet: false
+  allow_model_to_model: true
+  allow_third_party: false
+  restrict_domains: []
+
+# Privacy preservation
+privacy:
+  differential_privacy:
+    epsilon: 2.0
+    mechanism: "laplace"
+  canaries:
+    - "DKDC-CANARY-%RND%"
+  watermarks: true
+
+# Revocation endpoint
+revocation_uri: "https://dkdc.aqua/revoke/{policy_id}"
+
+# Audit requirements
+auditable: true
+det_required: true
+
+# UTCS-MI compatibility
+utcs_mi_compliance: true
+s1000d_format: true
+
+# Multi-party consense requirements
+approvals:
+  required:
+    - "controller"
+    - "steward:AAA"
+  threshold: 2
+  timeout: "PT1H"  # 1 hour for consense completion
