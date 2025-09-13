@@ -1,0 +1,40 @@
+# DKDC Context Offer Configuration
+# Example configuration for creating a context sharing offer
+
+ddi:
+  project: "utcs:proj:AMEDEO/BWB-Q100"
+  statement: "Co-author BWB-Q100 READMEs, implement cross-repo governance links, and add CI policy validation"
+  inputs:
+    - repo: "Robbbo-T/Portfolio"
+      path: "0-STRATEGY/GOVERNANCE.md"
+    - repo: "Robbbo-T/Portfolio" 
+      path: "2-DOMAINS-LEVELS/**/README.md"
+  outputs:
+    - "prs:readme-normalizer"
+    - "ci:link-checker"
+    - "governance:det-anchors"
+  metrics:
+    - coverage: crosslink_ratio >= 0.95
+    - latency: prs_within_hours <= 2
+  approvals:
+    required:
+      - "controller"
+      - "steward:AAA"
+
+catalog:
+  - path: "0-STRATEGY/GOVERNANCE.md"
+    hash: "sha256-abc123456789"
+    license: "Apache-2.0"
+  - path: "2-DOMAINS-LEVELS/**/README.md"
+    pattern: true
+  - path: "1-CAX-METHODOLOGY/CAF-FINANCE/DKDC/README.md"
+    hash: "sha256-def456789abc"
+    utcs_mi: "EstándarUniversal:DKDC-v0.1-README-001"
+
+llc: "project"
+
+controller: "did:example:amedeo"
+
+processors:
+  - "did:example:llm.gateway"
+  - "did:example:copilot"

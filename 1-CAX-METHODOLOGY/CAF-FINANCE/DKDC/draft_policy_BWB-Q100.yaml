@@ -1,0 +1,35 @@
+auditable: true
+controller: did:example:amedeo
+cpl_version: '0.1'
+export_controls:
+  allow_internet: false
+  allow_model_to_model: true
+  allow_third_party: false
+llc: project
+privacy:
+  canaries:
+  - DKDC-CANARY-%RND%
+  differential_privacy:
+    epsilon: 2.0
+    mechanism: laplace
+  watermarks: true
+processors:
+- did:example:llm.gateway
+purpose: Co-author BWB-Q100 READMEs, implement cross-repo governance links, and add
+  CI policy validation
+redactions:
+- path: '**/personal/**'
+- path: '**/secrets/**'
+- selector: emails, tokens, credentials, passwords
+retention:
+  revoke_on:
+  - policy_violation
+  ttl: P7D
+revocation_uri: ''
+scopes:
+- read:repo:0-STRATEGY/GOVERNANCE.md
+- read:repo:2-DOMAINS-LEVELS/**/README.md
+- read:repo:1-CAX-METHODOLOGY/CAF-FINANCE/DKDC/README.md
+- write:suggestions:pull-requests
+- write:ci:rules
+utcs_mi_compliance: true

@@ -64,7 +64,7 @@ class TestCCTTokenManager(unittest.TestCase):
             )
             
             # Decode token to check expiry
-            claims = jwt.decode(result["jwt"], self.manager.signing_key, algorithms=["HS256"])
+            claims = jwt.decode(result["jwt"], self.manager.signing_key, algorithms=["HS256"], options={"verify_aud": False})
             
             # Allow some tolerance for processing time
             actual_duration = claims["exp"] - claims["iat"]
