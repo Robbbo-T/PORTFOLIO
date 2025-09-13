@@ -57,7 +57,7 @@ Invariantes de Idempotencia
 
 ### 4.1 Intención (manifest mínimo)
 
-```
+```yaml
 artifact_id: "uuid-v4 | nombre-canonico"
 llc_code: "FE"           # o QS/CE/…
 domain: "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES"
