@@ -239,12 +239,12 @@ All calls logged as audit events: teknia.mint.requested, teknia.minted, teknia.b
 
 11) Tokenomics (reference)
 
-ParameterChoiceRationale
-TypeUtility / RWA-backedAligns with compliance; maps to verified outcomes
-SupplyDynamic (policy-gated)Mint on proof; burn on redemption
-PegISO 14064 (CO₂) or USD indexStability for contracts & accounting
-RedemptionAudits, compute, quantum timeKeeps value inside ecosystem
-
+| Parameter   | Choice / Value                  | Rationale                                         |
+|-------------|---------------------------------|---------------------------------------------------|
+| Type        | Utility / RWA-backed            | Aligns with compliance; maps to verified outcomes  |
+| Supply      | Dynamic (policy-gated)          | Mint on proof; burn on redemption                  |
+| Peg         | ISO 14064 (CO₂) or USD index    | Stability for contracts & accounting               |
+| Redemption  | Audits, compute, quantum time   | Keeps value inside ecosystem                       |
 Accounting mapping: treat as earned incentives / liabilities until redemption (deployment-specific; consult finance).
 
 ⸻
