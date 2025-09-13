@@ -7,6 +7,8 @@ on:
     branches: [ main, develop ]
   workflow_dispatch:
 
+# For complete governance framework, see: 0-STRATEGY/WORKFLOWS/README.md
+
 jobs:
   validate:
     name: Validate TFA V2 Architecture
@@ -52,3 +54,11 @@ jobs:
             exit 1
           fi
           echo "✅ No flat LLC paths detected"
+
+      - name: Validate governance framework
+        run: |
+          if [ ! -f "0-STRATEGY/WORKFLOWS/README.md" ]; then
+            echo "::error::Missing governance framework: 0-STRATEGY/WORKFLOWS/README.md"
+            exit 1
+          fi
+          echo "✅ Governance framework present and accessible"
