@@ -38,10 +38,7 @@ class BLG_DW_System:
         sys[(lat(i, j) for i in range(self.length)
              for j in range(self.width))] = onsite
 
-        # Add magnetic field via Peierls substitution
-        if self.B > 0:
-            # Implementation of vector potential...
-            pass
+        # Magnetic field support not yet implemented.
 
         return sys.finalized()
 
