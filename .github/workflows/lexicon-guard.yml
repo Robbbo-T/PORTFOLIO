@@ -1,0 +1,55 @@
+name: Lexicon Guard
+
+on:
+  pull_request:
+    paths:
+      - '**/*.md'
+      - '**/*.py'
+      - '**/*.ts'
+      - '**/*.js'
+      - '**/*.yaml'
+      - '**/*.yml'
+      - '**/*.json'
+
+jobs:
+  scan:
+    name: Scan for deprecated terminology
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Fail on deprecated terms
+        shell: bash
+        run: |
+          set -euo pipefail
+          
+          echo "🔍 Scanning for deprecated terminology..."
+          
+          # Check for deprecated terms with better error reporting
+          deprecated_found=false
+          
+          # Scan for "Fine Element" (deprecated - should be "Federation Entanglement")
+          if grep -RInE "\bFine[[:space:]]+Element\b" \
+              --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
+              --include='*.py' --include='*.ts' --include='*.js' . ; then
+            echo "::error::❌ 'Fine Element' found - use 'Federation Entanglement' instead"
+            deprecated_found=true
+          fi
+          
+          # Scan for "Station Envelop" (typo - should be "Station Envelope")  
+          if grep -RInE "\bStation[[:space:]]+Envelop\b" \
+              --include='*.md' --include='*.yaml' --include='*.yml' --include='*.json' \
+              --include='*.py' --include='*.ts' --include='*.js' . ; then
+            echo "::error::❌ 'Station Envelop' found - use 'Station Envelope' instead"
+            deprecated_found=true
+          fi
+          
+          if [ "$deprecated_found" = true ]; then
+            echo ""
+            echo "📚 Reference: Check .github/COPILOT_INSTRUCTIONS.md for approved terminology"
+            echo "🔧 Run 'make check' locally to validate before pushing"
+            exit 1
+          fi
+          
+          echo "✅ No deprecated terminology found"

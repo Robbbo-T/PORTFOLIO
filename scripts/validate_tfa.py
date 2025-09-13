@@ -136,6 +136,10 @@ def find_issues():
         "scripts/scaffold_tfa.py",                 # Scaffolding script (if present)
         "8-RESOURCES/llc-map.yaml",                # Canonical map defines phrases by design
         ".github/workflows/quantum-layers-check.yml",
+        ".github/COPILOT_INSTRUCTIONS.md",        # Instructional context for forbidden terms
+        ".github/prompts/copilot-smoke.md",       # Test prompts referencing forbidden terms
+        ".github/workflows/lexicon-guard.yml",    # Lexicon guard references forbidden terms
+        "CONTRIBUTING.md",                        # May reference forbidden terms in context
     }
     for path in REPO.rglob("*"):
         if path.is_file() and path.suffix in text_exts:
