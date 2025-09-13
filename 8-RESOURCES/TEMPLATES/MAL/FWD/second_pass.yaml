@@ -1,0 +1,6 @@
+# MAL-FWD second-pass test template
+# Execute MAL-FWD forecast twice; subsequent runs should yield no additional updates.
+forecast:
+  horizon: 1h
+  parameters:
+    sample: value

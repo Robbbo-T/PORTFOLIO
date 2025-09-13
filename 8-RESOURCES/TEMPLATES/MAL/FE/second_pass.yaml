@@ -1,0 +1,7 @@
+# MAL-FE second-pass test template
+# Run MAL-FE apply twice; the second run should report no changes.
+actions:
+  - name: ensure:config
+    idempotent_key: example.domain/config
+    params:
+      key: value
