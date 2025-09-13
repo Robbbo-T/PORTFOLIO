@@ -15,11 +15,12 @@ Quick links:
 
 1) Principles (authoritative)
 
-PrincipleWhy it matters
-Real-world asset–backedUnits bound to measurable outcomes (e.g., 1 CO2_SAVED = 1 kg CO₂ avoided; 1 QTIME = 1 hour quantum compute).
-Regulatory-firstUtility tokens with verifiable provenance; designed to align with EASA/FAA/NATO guidance (no investment promise, no speculative utility).
-Federated & trustlessRewards only issue when FE (Federation Entanglement) consensus validates outcomes; no single issuer.
-Cross-segment paritySame rules across AIR / SPACE / GROUND / DEFENSE / CROSS programs.
+| Principle                | Why it matters                                                                                                                        |
+|--------------------------|---------------------------------------------------------------------------------------------------------------------------------------|
+| Real-world asset–backed  | Units bound to measurable outcomes (e.g., 1 CO2_SAVED = 1 kg CO₂ avoided; 1 QTIME = 1 hour quantum compute).                         |
+| Regulatory-first         | Utility tokens with verifiable provenance; designed to align with EASA/FAA/NATO guidance (no investment promise, no speculative utility). |
+| Federated & trustless    | Rewards only issue when FE (Federation Entanglement) consensus validates outcomes; no single issuer.                                 |
+| Cross-segment parity     | Same rules across AIR / SPACE / GROUND / DEFENSE / CROSS programs.                                                                   |
 
 Legal note: this spec is not legal advice; deployments must pass jurisdictional review.
 
