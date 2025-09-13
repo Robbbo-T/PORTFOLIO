@@ -81,7 +81,7 @@ canonical_hash: "0x..."   # keccak256(JSON canónico)
 
 ### 4.2 Sistema Agente (contrato MAL)
 
-```
+```yaml
 agent:
   name: "MAL-FE"
   policy:
