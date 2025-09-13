@@ -31,7 +31,8 @@ class BLG_DW_System:
         def onsite(site):
             x, y = site.pos
             layer = site.family  # 0:A1, 1:B1, 2:A2, 3:B2
-            bias = self.U/2 if layer < 2 else -self.U/2
+            # Position-dependent bias using stacking_phase(x)
+            bias = (self.U/2 if layer < 2 else -self.U/2) * stacking_phase(x)
             return bias
 
         # Define scattering region with DW
