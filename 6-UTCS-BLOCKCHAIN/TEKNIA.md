@@ -251,14 +251,13 @@ Accounting mapping: treat as earned incentives / liabilities until redemption (d
 
 12) Implementation roadmap
 
-PhaseActionOutcome
-Q4 2025Publish schemas + contract stubs; wire CITemplates usable across 15 domains
-Q1 2026Pilot AMPEL360 (fuel savings)Verified CO₂ tokens on UTCS testnet
-Q2 2026EU ETS integration (bridge oracle)Carbon credit settlement path
-Q3 2026NATO defense market (air-gapped)Mission-tied rewards with multisig
-2027Cross-sector clearingH₂ ↔ bandwidth ↔ audit credits
-
-
+| Phase      | Action                                   | Outcome                                 |
+|------------|------------------------------------------|-----------------------------------------|
+| Q4 2025    | Publish schemas + contract stubs; wire CI| Templates usable across 15 domains      |
+| Q1 2026    | Pilot AMPEL360 (fuel savings)            | Verified CO₂ tokens on UTCS testnet     |
+| Q2 2026    | EU ETS integration (bridge oracle)       | Carbon credit settlement path           |
+| Q3 2026    | NATO defense market (air-gapped)         | Mission-tied rewards with multisig      |
+| 2027       | Cross-sector clearing                    | H₂ ↔ bandwidth ↔ audit credits          |
 ⸻
 
 13) Ready-to-commit artifacts (ask to generate)
