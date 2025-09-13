@@ -221,7 +221,7 @@ Splits (example FE policy): OEM 60% · Operator 25% · Regulator 10% · Communit
    •   Privacy: store PII off-chain; only hashes on UTCS.
    •   Defense: air-gapped CI, artifact signing, multisig, export-control checks.
 
-require(QSProof(verifier).isWhitelisted(qsHash), "Unverified QS");
+require(QSProof(verifier).verify(qsHash), "Unverified QS");
 require(tokenType == keccak256("REAL_WORLD_ASSET"), "Utility only");
 
 
