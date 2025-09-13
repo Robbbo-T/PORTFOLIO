@@ -202,13 +202,13 @@ Governance hooks
 
 8) Programs & tokens (ready patterns)
 
-ProgramSegmentToken(s)Source of truth
-AMPEL360 BWB-Q100AIRCO2_SAVED, FUEL_SAVEDPRO results → QS
-GAIA Quantum SATSPACEQUANTUM_BANDWIDTH, LATENCY_SLAMAL-QB + LCC telemetry → QS
-ARES-X UAS SWARMDEFENSESWARM_DEFENSE, EW_RESPONSEFE Scheduler + DDD sensors → QS
-H2-CORRIDOR-XCROSSH2_DELIVERED, CO2_REDUCTION, REGULATORY_COMPLIANCELIB + EER + EEE → QS
-ROBBBO-T MROGROUNDMRO_TASK, MTBF_IMPROVEMENTMMM + IIS diagnostics → QS
-
+| Program         | Segment         | Token(s)                                   | Source of Truth                |
+|-----------------|-----------------|--------------------------------------------|-------------------------------|
+| AMPEL360        | BWB-Q100AIR     | CO2_SAVED, FUEL_SAVED                      | PRO results → QS              |
+| GAIA Quantum SAT| SPACEQUANTUM    | BANDWIDTH, LATENCY_SLAM                    | AL-QB + LCC telemetry → QS    |
+| ARES-X UAS      | SWARMDEFENSE    | SWARM_DEFENSE, EW_RESPONSE                 | FE Scheduler + DDD sensors → QS|
+| H2-CORRIDOR-X   | CROSSH2         | DELIVERED, CO2_REDUCTION, REGULATORY_COMPLIANCE | LIB + EER + EEE → QS     |
+| ROBBBO-T MRO    | GROUNDMRO       | TASK, MTBF_IMPROVEMENT                     | MMM + IIS diagnostics → QS    |
 Splits (example FE policy): OEM 60% · Operator 25% · Regulator 10% · Community 5%.
 
 ⸻
