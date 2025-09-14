@@ -1,0 +1,38 @@
+# Generated code
+gen/
+
+# Build artifacts
+build/
+dist/
+target/
+bin/
+obj/
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+*.exe
+
+# Gradle
+.gradle/
+gradle-daemon.log
+
+# Dependencies
+node_modules/
+.nuget/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+.vs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

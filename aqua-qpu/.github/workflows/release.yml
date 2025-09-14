@@ -1,0 +1,17 @@
+name: release
+on:
+  workflow_dispatch:
+
+jobs:
+  tag:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create changelog (placeholder)
+        run: echo "Changelog" > CHANGELOG.md
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v0.1.0
+          name: v0.1.0
+          body_path: CHANGELOG.md

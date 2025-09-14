@@ -1,0 +1,24 @@
+name: build-dotnet
+on:
+  push: { paths: ['clients/dotnet/**', 'proto/**'] }
+  pull_request: { paths: ['clients/dotnet/**', 'proto/**'] }
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with: { dotnet-version: '8.0.x' }
+      - name: Cache NuGet
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: ${{ runner.os }}-nuget-
+      - name: Restore
+        run: dotnet restore clients/dotnet/device-agent/DeviceAgent.sln
+      - name: Build
+        run: dotnet build --no-restore -c Release clients/dotnet/device-agent/DeviceAgent.sln
+      - name: Test
+        run: echo "No tests yet"

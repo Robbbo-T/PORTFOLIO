@@ -1,0 +1,9 @@
+name: e2e-smoke
+on:
+  workflow_dispatch:
+
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "TODO: deploy to ephemeral K8s namespace and run smoke tests."
