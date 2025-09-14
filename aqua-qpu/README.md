@@ -12,10 +12,15 @@ make proto.gen   # outputs stubs under ./gen (not committed)
 ```
 
 ## Run services
-
 ```bash
 make build.java && make run.java
 CONTROLPLANE_ADDR=http://localhost:9090 make run.agent
+```
+
+## Docker (local stack)
+```bash
+docker compose up --build
+# gRPC on localhost:9090, Postgres on 5432, agent runs once against controlplane
 ```
 
 ## Codegen (without committing generated code)

@@ -1,0 +1,28 @@
+version: "3.9"
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_PASSWORD: aqua
+      POSTGRES_USER: aqua
+      POSTGRES_DB: aqua
+    ports: ["5432:5432"]
+
+  controlplane:
+    build:
+      context: .
+      dockerfile: services/controlplane-java/Dockerfile
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/aqua
+      SPRING_DATASOURCE_USERNAME: aqua
+      SPRING_DATASOURCE_PASSWORD: aqua
+    depends_on: [postgres]
+    ports: ["9090:9090"]
+
+  agent:
+    build:
+      context: .
+      dockerfile: clients/dotnet/device-agent/Dockerfile
+    environment:
+      CONTROLPLANE_ADDR: http://controlplane:9090
+    depends_on: [controlplane]

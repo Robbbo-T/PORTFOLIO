@@ -12,8 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: bufbuild/buf-setup-action@v1
+      # - uses: actions/cache@v4
+      #   with:
+      #     path: ~/.cache/buf
+      #     key: ${{ runner.os }}-buf-${{ hashFiles('**/*.proto') }}
       - name: buf format
-        run: buf format -w
+        run: buf format --diff --exit-code
       - name: buf lint
         run: buf lint
       - name: buf breaking
