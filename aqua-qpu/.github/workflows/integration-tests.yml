@@ -39,6 +39,6 @@ jobs:
         run: |
           # Start server in background
           (cd services/controlplane-java && java -jar build/libs/controlplane-java-0.1.0-SNAPSHOT.jar &) 
-          # Give it a moment
-          sleep 8
+          # Wait until gRPC port is open (max 30s)
+          timeout 30 bash -c 'until (echo > /dev/tcp/127.0.0.1/9090) 2>/dev/null; do sleep 1; done'
           CONTROLPLANE_ADDR=http://localhost:9090 dotnet run --project clients/dotnet/device-agent/DeviceAgent/DeviceAgent.csproj

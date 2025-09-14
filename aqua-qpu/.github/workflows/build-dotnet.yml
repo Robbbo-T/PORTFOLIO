@@ -21,4 +21,4 @@ jobs:
       - name: Build
         run: dotnet build --no-restore -c Release clients/dotnet/device-agent/DeviceAgent.sln
       - name: Test
-        run: echo "No tests yet"
+        run: dotnet test --no-build -c Release clients/dotnet/device-agent/DeviceAgent.Tests/DeviceAgent.Tests.csproj
