@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "DKDC Context Graph",
+  "description": "JSON-LD context graph schema for DKDC protocol",
+  "type": "object",
+  "properties": {
+    "@context": {
+      "type": "string",
+      "const": "https://dkdc.aqua/ctx/v0.1"
+    },
+    "@type": {
+      "type": "string",
+      "const": "DKDCGraph"
+    },
+    "graph_id": {
+      "type": "string",
+      "pattern": "^dkdc:graph:[0-9a-f]{4,}$"
+    },
+    "actors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "@type": { "const": "Actor" },
+          "id": { "type": "string" },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["controller", "processor", "steward", "auditor", "author"]
+            }
+          },
+          "org": { "type": "string" }
+        },
+        "required": ["@type", "id", "roles"]
+      }
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "@type": { "const": "Project" },
+          "id": { 
+            "type": "string",
+            "pattern": "^utcs:proj:"
+          },
+          "llc": {
+            "type": "string",
+            "enum": ["ephemeral", "session", "project", "portfolio"]
+          },
+          "intents": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        },
+        "required": ["@type", "id", "llc"]
+      }
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "@type": { "const": "Artifact" },
+          "id": { "type": "string" },
+          "hash": { 
+            "type": "string",
+            "pattern": "^sha256-[0-9a-f]{64}$"
+          },
+          "license": { "type": "string" },
+          "utcs_mi": { 
+            "type": "string",
+            "pattern": "^EstándarUniversal:"
+          }
+        },
+        "required": ["@type", "id", "hash"]
+      }
+    },
+    "policies": {
+      "type": "array",
+      "items": { 
+        "type": "string",
+        "pattern": "^policy:consense:[0-9a-f]{4,}$"
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^det:tx:[0-9a-f]{4,}$"
+      }
+    }
+  },
+  "required": ["@context", "@type", "graph_id", "actors", "projects", "artifacts", "policies", "evidence"]
+}

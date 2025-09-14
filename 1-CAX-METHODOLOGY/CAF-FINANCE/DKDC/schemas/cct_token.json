@@ -1,0 +1,95 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Context Capability Token (CCT)",
+  "description": "SD-JWT payload schema for DKDC Context Capability Tokens",
+  "type": "object",
+  "properties": {
+    "iss": {
+      "type": "string",
+      "description": "Issuer - consense engine DID",
+      "pattern": "^did:"
+    },
+    "sub": {
+      "type": "string", 
+      "description": "Subject - controller DID",
+      "pattern": "^did:"
+    },
+    "aud": {
+      "type": "string",
+      "description": "Audience - processor DID", 
+      "pattern": "^did:"
+    },
+    "iat": {
+      "type": "integer",
+      "description": "Issued at timestamp"
+    },
+    "exp": {
+      "type": "integer", 
+      "description": "Expiration timestamp"
+    },
+    "dkdc": {
+      "type": "object",
+      "description": "DKDC-specific claims",
+      "properties": {
+        "cpl_hash": {
+          "type": "string",
+          "pattern": "^sha256-[0-9a-f]{64}$",
+          "description": "Hash of the consense policy"
+        },
+        "llc": {
+          "type": "string",
+          "enum": ["ephemeral", "session", "project", "portfolio"],
+          "description": "Lifecycle Level Context"
+        },
+        "scopes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Authorized scopes"
+        },
+        "purpose": {
+          "type": "string",
+          "description": "Purpose binding identifier"
+        },
+        "redaction_vectors": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Redaction patterns"
+        },
+        "dp": {
+          "type": "object",
+          "properties": {
+            "epsilon": { "type": "number" },
+            "mechanism": { "type": "string" }
+          },
+          "description": "Differential privacy parameters"
+        },
+        "export": {
+          "type": "object",
+          "properties": {
+            "internet": { "type": "boolean" },
+            "model_to_model": { "type": "boolean" },
+            "third_party": { "type": "boolean" }
+          },
+          "description": "Export control flags"
+        },
+        "det_id": {
+          "type": "string",
+          "pattern": "^det:tx:[0-9a-f]{4,}$",
+          "description": "Digital Evidence Twin transaction ID"
+        },
+        "rev": {
+          "type": "string",
+          "format": "uri",
+          "description": "Revocation endpoint URL"
+        },
+        "utcs_mi": {
+          "type": "string",
+          "pattern": "^EstándarUniversal:",
+          "description": "UTCS-MI identifier"
+        }
+      },
+      "required": ["cpl_hash", "llc", "scopes", "purpose", "det_id", "rev"]
+    }
+  },
+  "required": ["iss", "sub", "aud", "iat", "exp", "dkdc"]
+}
