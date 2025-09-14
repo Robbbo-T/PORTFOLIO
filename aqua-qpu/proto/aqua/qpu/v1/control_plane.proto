@@ -1,0 +1,33 @@
+syntax = "proto3";
+package aqua.qpu.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "Aqua.Qpu.V1";
+option java_package = "com.aqua.qpu.v1";
+option java_multiple_files = true;
+
+// Commands from CB->QB for trap biasing
+message BiasCommand {
+  string channel = 1;
+  double volts = 2;
+  double slew_V_per_s = 3;
+}
+
+// Telemetry/state for the device
+message DeviceState {
+  string device_id = 1;
+  double temperature_K = 2;
+  double magnetic_field_T = 3;
+  double vacuum_Pa = 4;
+  map<string, double> analog = 5;
+  map<string, string> status = 6;
+  google.protobuf.Timestamp time = 7;
+}
+
+// Control-plane operations
+service ControlPlane {
+  rpc GetState(google.protobuf.Empty) returns (DeviceState);
+  rpc ApplyBias(stream BiasCommand) returns (google.protobuf.Empty);
+}

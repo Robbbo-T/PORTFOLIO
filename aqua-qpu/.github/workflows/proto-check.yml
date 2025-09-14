@@ -1,0 +1,21 @@
+name: proto-check
+on:
+  pull_request:
+    paths: [ 'proto/**', 'buf.yaml', 'buf.gen.yaml' ]
+  push:
+    branches: [ main ]
+    paths: [ 'proto/**', 'buf.yaml', 'buf.gen.yaml' ]
+
+jobs:
+  buf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: bufbuild/buf-setup-action@v1
+      - name: buf format
+        run: buf format -w
+      - name: buf lint
+        run: buf lint
+      - name: buf breaking
+        if: github.event_name == 'pull_request'
+        run: buf breaking --against '.git#branch=main'

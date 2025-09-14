@@ -1,0 +1,31 @@
+# Generated code
+gen/
+
+# Build artifacts
+build/
+dist/
+target/
+*.jar
+*.exe
+
+# Dependencies
+node_modules/
+.nuget/
+
+# IDE files
+.vscode/
+.idea/
+*.suo
+*.user
+.vs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/

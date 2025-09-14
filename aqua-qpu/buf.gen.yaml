@@ -1,0 +1,13 @@
+version: v1
+plugins:
+  # C# client/server (we only use Client in the .NET agent project)
+  - plugin: buf.build/protocolbuffers/csharp
+    out: gen/dotnet
+  - plugin: buf.build/grpc/csharp
+    out: gen/dotnet
+  # Java stubs (if you want to generate via buf occasionally)
+  - plugin: buf.build/protocolbuffers/java
+    out: gen/java
+    opt: java_multiple_files=true
+  - plugin: buf.build/grpc/java
+    out: gen/java

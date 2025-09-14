@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: controlplane-java
+  datasource:
+    url: jdbc:postgresql://localhost:5432/aqua
+    username: aqua
+    password: aqua
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+server:
+  port: 0   # Spring actuators on random port, gRPC on 9090
