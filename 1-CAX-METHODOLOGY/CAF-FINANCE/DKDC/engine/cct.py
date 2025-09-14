@@ -189,7 +189,7 @@ class CCTTokenManager:
                 expired.append(token_id)
         
         for token_id in expired:
-            if data["status"] != "revoked":  # Keep revoked tokens for CRL
+            if self.issued_tokens[token_id]["status"] != "revoked":  # Keep revoked tokens for CRL
                 del self.issued_tokens[token_id]
                 
     def validate_scopes(self, token_claims: Dict, requested_scopes: List[str]) -> bool:
