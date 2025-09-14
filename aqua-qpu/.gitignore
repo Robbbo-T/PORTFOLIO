@@ -5,6 +5,8 @@ gen/
 build/
 dist/
 target/
+bin/
+obj/
 *.jar
 !gradle/wrapper/gradle-wrapper.jar
 *.exe
