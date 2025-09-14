@@ -6,7 +6,12 @@ build/
 dist/
 target/
 *.jar
+!gradle/wrapper/gradle-wrapper.jar
 *.exe
+
+# Gradle
+.gradle/
+gradle-daemon.log
 
 # Dependencies
 node_modules/

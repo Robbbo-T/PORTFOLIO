@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "WBq8c9oUR79g74kzhwWnPF2XOeqt5PK8jBL3Yh1fgxf9Kkshn5KIw+bLCIMVTNMVHlUPcZx1FOet0ld/ljegxg==",
+  "success": true,
+  "projectFilePath": "/home/runner/work/PORTFOLIO/PORTFOLIO/aqua-qpu/clients/dotnet/device-agent/DeviceAgent/DeviceAgent.csproj",
+  "expectedPackageFiles": [
+    "/home/runner/.nuget/packages/google.protobuf/3.25.3/google.protobuf.3.25.3.nupkg.sha512",
+    "/home/runner/.nuget/packages/grpc.core.api/2.62.0/grpc.core.api.2.62.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/grpc.net.client/2.62.0/grpc.net.client.2.62.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/grpc.net.common/2.62.0/grpc.net.common.2.62.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/grpc.tools/2.62.0/grpc.tools.2.62.0.nupkg.sha512",
+    "/home/runner/.nuget/packages/microsoft.extensions.logging.abstractions/6.0.0/microsoft.extensions.logging.abstractions.6.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

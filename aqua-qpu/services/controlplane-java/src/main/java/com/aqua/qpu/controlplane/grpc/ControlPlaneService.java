@@ -1,8 +1,8 @@
 package com.aqua.qpu.controlplane.grpc;
 
-import aqua.qpu.v1.ControlPlaneGrpc;
-import aqua.qpu.v1.ControlPlaneOuterClass;
-import aqua.qpu.v1.ControlPlaneOuterClass.BiasCommand;
+import com.aqua.qpu.v1.ControlPlaneGrpc;
+import com.aqua.qpu.v1.BiasCommand;
+import com.aqua.qpu.v1.DeviceState;
 import com.google.protobuf.Empty;
 import com.google.protobuf.Timestamp;
 import io.grpc.stub.StreamObserver;
@@ -14,10 +14,10 @@ import java.time.Instant;
 public class ControlPlaneService extends ControlPlaneGrpc.ControlPlaneImplBase {
 
   @Override
-  public void getState(Empty request, StreamObserver<ControlPlaneOuterClass.DeviceState> responseObserver) {
+  public void getState(Empty request, StreamObserver<DeviceState> responseObserver) {
     var now = Instant.now();
     var ts = Timestamp.newBuilder().setSeconds(now.getEpochSecond()).setNanos(now.getNano()).build();
-    var state = ControlPlaneOuterClass.DeviceState.newBuilder()
+    var state = DeviceState.newBuilder()
         .setDeviceId("BLG-DW-001")
         .setTemperatureK(4.20)
         .setMagneticFieldT(0.00)
