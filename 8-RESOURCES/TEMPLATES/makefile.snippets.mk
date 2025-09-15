@@ -1,0 +1,31 @@
+TFA_TEMPLATES := 8-RESOURCES/TEMPLATES
+TFA_SCHEMA    := $(TFA_TEMPLATES)/tfa.schema.json
+TFA_REPO_JSON ?= $(TFA_TEMPLATES)/tfa.repo.example.json
+TFA_VALIDATOR := $(TFA_TEMPLATES)/tfa_tta_validator.py
+
+.PHONY: scaffold check
+scaffold::
+	@python3 - <<-'PY'
+	import os, json, re, pathlib
+	domains = [
+	 "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES","AAP-AIRPORT-ADAPTABLE-PLATFORMS",
+	 "CCC-COCKPIT-CABIN-AND-CARGO","CQH-CRYOGENICS-QUANTUM-AND-H2","DDD-DIGITAL-AND-DATA-DEFENSE",
+	 "EDI-ELECTRONICS-DIGITAL-INSTRUMENTS","EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION",
+	 "EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION","IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES",
+	 "IIS-INTEGRATED-INTELLIGENCE-SOFTWARE","LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS",
+	 "LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN","MMM-MECHANICAL-AND-MATERIAL-MODULES",
+	 "OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES","PPP-PROPULSION-AND-FUEL-SYSTEMS"
+	]
+	groups = ["SYSTEMS","STATIONS","COMPONENTS","BITS","QUBITS","ELEMENTS","WAVES","STATES"]
+	for d in domains:
+	    for g in groups:
+	        path = f"2-DOMAINS-LEVELS/{d}/TFA/{g}/META/"
+	        os.makedirs(path, exist_ok=True)
+	        readme = pathlib.Path(path,"README.md")
+	        if not readme.exists():
+	            readme.write_text(f"# {d} · {g}\n\nCanonical TFA node.\n")
+	print("Scaffold complete.")
+	PY
+
+check::
+	@python3 $(TFA_VALIDATOR) $(TFA_REPO_JSON) --fail-nonzero
