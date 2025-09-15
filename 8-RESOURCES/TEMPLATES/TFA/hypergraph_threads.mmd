@@ -1,0 +1,21 @@
+graph LR
+  A1["AAA:SYS:overview (README)"]
+  A2["AAA:COMP:wing_spec (SPEC)"]
+  A3["AAA:BITS:wing_test (TEST)"]
+  P1["PPP:STN:pipeline (CODE)"]
+  P2["PPP:BITS:util (CODE)"]
+
+  %% E edges (b -> a)
+  A1 --> A2
+  A2 --> A3
+  P1 --> P2
+
+  %% X edges (threading)
+  A2 --- P1
+  P1 --- A3
+
+  %% hyperedge hub
+  H1["H1: wing-fuel-thermal | Topics={wing,fuel,thermal} | D={AAA,PPP} | L={COMPONENTS,BITS,STATIONS}"]
+  H1 --- A2
+  H1 --- P1
+  H1 --- A3

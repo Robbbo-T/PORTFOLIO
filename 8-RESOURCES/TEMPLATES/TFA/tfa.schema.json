@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Top Final Algorithm (TFA) Spec",
+  "type": "object",
+  "required": ["D", "L", "T", "A", "E", "X", "I", "R", "V", "M", "Phi"],
+  "properties": {
+    "D": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Dominios"
+    },
+    "L": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "description": "Capas TFA en orden jerárquico (coarse→fine)"
+    },
+    "T": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [
+          {"type": "string", "description": "Dominio ∈ D"},
+          {"type": "string", "description": "Capa ∈ L"}
+        ],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "description": "Nodos jerárquicos T ⊆ D×L"
+    },
+    "A": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["mu", "tau", "lambda"],
+        "properties": {
+          "mu": {"type": "string", "description": "UTCS–MI id"},
+          "tau": {"type": "string", "description": "Tipo (README,SPEC,CODE,TEST,...)"},
+          "lambda": {
+            "type": "array",
+            "prefixItems": [{"type": "string"}, {"type": "string"}],
+            "minItems": 2,
+            "maxItems": 2,
+            "description": "Ubicación (d,l) ∈ T"
+          },
+          "content_score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2,
+            "default": 0,
+            "description": "V5: 0 placeholder, 1 template, 2 completo"
+          },
+          "root": {"type": "boolean", "default": false}
+        },
+        "additionalProperties": false
+      },
+      "description": "Artefactos"
+    },
+    "E": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [{"type": "string"}, {"type": "string"}],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "description": "Aristas estructurales (b→a) sobre ids μ"
+    },
+    "X": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [{"type": "string"}, {"type": "string"}],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "description": "Aristas de threading (direccionales; se puede duplicar para ↔)"
+    },
+    "need_readme_nodes": {
+      "type": "array",
+      "items": {
+        "type": "array",
+        "prefixItems": [{"type": "string"}, {"type": "string"}],
+        "minItems": 2,
+        "maxItems": 2
+      },
+      "description": "Nodos t que requieren README"
+    },
+    "I": {
+      "type": "object",
+      "required": ["language", "version"],
+      "properties": {
+        "language": {"type": "string", "const": "UTCS–MI"},
+        "version": {"type": "string"},
+        "grammar": {"type": "string", "description": "EBNF/regex"},
+        "validator": {"type": "string", "description": "Nombre de función parse en CI"}
+      }
+    },
+    "R": {
+      "type": "object",
+      "properties": {
+        "no_orphan_unless_root": {"type": "boolean", "default": true},
+        "min_crossref": {"type": "boolean", "default": true},
+        "id_canonical": {"type": "boolean", "default": true}
+      },
+      "additionalProperties": true
+    },
+    "V": {
+      "type": "object",
+      "properties": {
+        "V1": {"type": "string", "description": "parse(μ)"},
+        "V2": {"type": "string", "description": "λ(a) ∈ T"},
+        "V3": {"type": "string", "description": "No-huérfano"},
+        "V4": {"type": "string", "description": "Cross-ref"},
+        "V5": {"type": "string", "description": "score contenido {0,1,2}"}
+      },
+      "additionalProperties": false
+    },
+    "M": {
+      "type": "object",
+      "description": "Morfismos/semántica de trazabilidad",
+      "additionalProperties": true
+    },
+    "Phi": {
+      "type": "object",
+      "required": ["alpha", "beta", "gamma", "delta", "epsilon"],
+      "properties": {
+        "alpha": {"type": "number", "exclusiveMinimum": 0},
+        "beta": {"type": "number", "exclusiveMinimum": 0},
+        "gamma": {"type": "number", "exclusiveMinimum": 0},
+        "delta": {"type": "number", "exclusiveMinimum": 0},
+        "epsilon": {"type": "number", "exclusiveMinimum": 0}
+      }
+    }
+  },
+  "additionalProperties": false
+}
