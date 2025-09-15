@@ -143,7 +143,7 @@ class TFARepo:
 
     # ---------- checks extra ----------
     def strict_tfa_only_check(self) -> List[str]:
-        """Si los artifacts tienen 'path', verificamos el patrón canónico y consistencia dom=λ.dom."""
+        """If artifacts have 'path', verify canonical pattern and consistency dom=λ.dom."""
         errors = []
         for a in self.A.values():
             if not a.path:
