@@ -158,7 +158,7 @@ class TFARepo:
         return errors
 
     def quantum_layers_check(self) -> List[str]:
-        """Exige presencia de al menos un artifact por capa requerida."""
+        """Requires presence of at least one artifact per required layer."""
         present = defaultdict(int)
         for a in self.A.values():
             d, l = a.lam
