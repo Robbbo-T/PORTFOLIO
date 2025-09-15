@@ -1,19 +1,21 @@
 # TFA Template Assets
 
-This folder contains self-contained resources for validating and visualising Top Final Algorithm (TFA) repositories.
+This directory now serves as an index for the Top Final Algorithm (TFA) scaffolding helpers located one level up under `8-RESOURCES/TEMPLATES/`.
 
 ## Contents
 
-- `tfa.schema.json` — JSON Schema (Draft 2020-12) describing the canonical 7-tuple structure plus structural (`E`) and threading (`X`) graphs.
-- `tfa_tta_validator.py` — reference Python helper that evaluates validation rules V1–V5, computes Φ scores, and produces a greedy traceability test set (TTA) with coverage reports.
-- `poset_T.mmd` — Mermaid diagram expressing the per-domain partial order over layers.
-- `hypergraph_threads.mmd` — Mermaid “hypergraph” using hub nodes to emulate threading edges across artifacts.
+- `../tfa.schema.json` — JSON Schema (Draft 2020-12) describing the canonical tuple, artefact graph structure, and policy flags such as `strict_tfa_only` and `quantum_layers_required`.
+- `../tfa.repo.example.json` — Minimal repository instance aligned with the portfolio’s 15 domains and the bridge layers (CB/QB/UE/FE/FWD/QS).
+- `../tfa_tta_validator.py` — Reference validator that enforces V₁…V₅, computes Φ, performs greedy TTA coverage, checks STRICT TFA-ONLY paths, and verifies required quantum layers.
+- `../makefile.snippets.mk` — Makefile include that wires `make scaffold` and `make check` to the validator and quantum-layer scaffolding helpers.
+- `../mermaid/poset_T.md` — Mermaid diagram of the per-domain layer poset.
+- `../mermaid/thread_hypergraph.md` — Mermaid “hypergraph” illustrating threading edges across artefacts.
 
 ## CI Integration
 
-1. Validate repository manifests against `tfa.schema.json`.
-2. Run `python3 8-RESOURCES/TEMPLATES/TFA/tfa_tta_validator.py` (or import the module) inside the CI pipeline. Enforce ΔΦ < 0 and require full coverage across `T`.
-3. Fail the job when `need_readme_nodes` declares a location without an associated README artifact.
-4. Export hashes, identifiers, and traceability anchors to the DET/QAUDIT ledger for auditable evidence chains.
+1. Validate repository manifests against `8-RESOURCES/TEMPLATES/tfa.schema.json` (see `.github/workflows/tfa-ci.yml`).
+2. Run `python3 8-RESOURCES/TEMPLATES/tfa_tta_validator.py <repo.json> --fail-nonzero` to report Φ, greedy TTA coverage, STRICT TFA-ONLY violations, and quantum-layer presence.
+3. Fail the job when `need_readme_nodes` declares a location without an associated README artefact.
+4. Track Φ deltas and remediation priorities in programme governance reports.
 
-Adjust Φ weightings (`alpha` … `epsilon`) as needed for programme priorities.
+Adjust Φ weightings (`alpha` … `epsilon`) as needed for programme priorities and update `R.quantum_layers_required` to tune layer expectations.

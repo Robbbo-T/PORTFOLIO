@@ -18,7 +18,7 @@ help:
 	@echo "  help             - Show this help"
 
 # Create complete TFA scaffolding (idempotent) + quantum bridge buckets
-scaffold: quantum-bridge
+scaffold:: quantum-bridge
 	@echo "🏗️ Scaffolding TFA V2 structure..."
 	@python3 scripts/scaffold_tfa.py
 	@echo "✅ TFA scaffolding complete"
@@ -29,7 +29,7 @@ validate:
 	@python3 scripts/validate_tfa.py
 
 # Aggregate checks
-check: validate
+check:: validate
 	@echo "🎯 All checks passed!"
 
 # Show domain status
@@ -75,3 +75,5 @@ clean:
 	@find . -name "*.pyc" -delete 2>/dev/null || true
 	@find . -name ".DS_Store" -delete 2>/dev/null || true
 	@echo "✅ Cleanup complete"
+# Include shared TFA scaffolding/validation targets
+include 8-RESOURCES/TEMPLATES/makefile.snippets.mk

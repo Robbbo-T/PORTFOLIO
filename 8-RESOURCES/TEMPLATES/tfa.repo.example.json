@@ -1,0 +1,343 @@
+{
+  "D": [
+    "AAA",
+    "AAP",
+    "CCC",
+    "CQH",
+    "DDD",
+    "EDI",
+    "EEE",
+    "EER",
+    "IIF",
+    "IIS",
+    "LCC",
+    "LIB",
+    "MMM",
+    "OOO",
+    "PPP"
+  ],
+  "L": [
+    "SYSTEMS",
+    "STATIONS",
+    "COMPONENTS",
+    "BITS",
+    "QUBITS",
+    "ELEMENTS",
+    "WAVES",
+    "STATES"
+  ],
+  "T": [
+    [
+      "AAA",
+      "SYSTEMS"
+    ],
+    [
+      "AAA",
+      "STATIONS"
+    ],
+    [
+      "AAA",
+      "COMPONENTS"
+    ],
+    [
+      "AAA",
+      "BITS"
+    ],
+    [
+      "AAA",
+      "QUBITS"
+    ],
+    [
+      "AAA",
+      "ELEMENTS"
+    ],
+    [
+      "AAA",
+      "WAVES"
+    ],
+    [
+      "AAA",
+      "STATES"
+    ],
+    [
+      "PPP",
+      "SYSTEMS"
+    ],
+    [
+      "PPP",
+      "STATIONS"
+    ],
+    [
+      "PPP",
+      "COMPONENTS"
+    ],
+    [
+      "PPP",
+      "BITS"
+    ],
+    [
+      "PPP",
+      "QUBITS"
+    ],
+    [
+      "PPP",
+      "ELEMENTS"
+    ],
+    [
+      "PPP",
+      "WAVES"
+    ],
+    [
+      "PPP",
+      "STATES"
+    ],
+    [
+      "IIS",
+      "SYSTEMS"
+    ],
+    [
+      "IIS",
+      "STATIONS"
+    ],
+    [
+      "IIS",
+      "COMPONENTS"
+    ],
+    [
+      "IIS",
+      "BITS"
+    ],
+    [
+      "IIS",
+      "QUBITS"
+    ],
+    [
+      "IIS",
+      "ELEMENTS"
+    ],
+    [
+      "IIS",
+      "WAVES"
+    ],
+    [
+      "IIS",
+      "STATES"
+    ]
+  ],
+  "A": [
+    {
+      "mu": "AAA:SI:MAP-AAA:README",
+      "tau": "README",
+      "lambda": [
+        "AAA",
+        "SYSTEMS"
+      ],
+      "content_score": 2,
+      "root": true
+    },
+    {
+      "mu": "AAA:CO:COMP-AAA:README",
+      "tau": "README",
+      "lambda": [
+        "AAA",
+        "COMPONENTS"
+      ],
+      "content_score": 1
+    },
+    {
+      "mu": "PPP:SI:MAP-PPP:README",
+      "tau": "README",
+      "lambda": [
+        "PPP",
+        "SYSTEMS"
+      ],
+      "content_score": 2,
+      "root": true
+    },
+    {
+      "mu": "PPP:ST:OPS-PPP:README",
+      "tau": "README",
+      "lambda": [
+        "PPP",
+        "STATIONS"
+      ],
+      "content_score": 1
+    },
+    {
+      "mu": "IIS:SI:MAL-QS:SPEC",
+      "tau": "SPEC",
+      "lambda": [
+        "IIS",
+        "SYSTEMS"
+      ],
+      "content_score": 2,
+      "root": true
+    },
+    {
+      "mu": "MAL:CB:orchestrator.py",
+      "tau": "CODE",
+      "lambda": [
+        "IIS",
+        "BITS"
+      ],
+      "content_score": 2
+    },
+    {
+      "mu": "MAL:QB:qsearch.strat",
+      "tau": "MODEL",
+      "lambda": [
+        "IIS",
+        "QUBITS"
+      ],
+      "content_score": 1
+    },
+    {
+      "mu": "MAL:FE:federation.spec",
+      "tau": "SPEC",
+      "lambda": [
+        "IIS",
+        "ELEMENTS"
+      ],
+      "content_score": 1
+    },
+    {
+      "mu": "MAL:FWD:nowcast.api",
+      "tau": "SPEC",
+      "lambda": [
+        "IIS",
+        "WAVES"
+      ],
+      "content_score": 1
+    },
+    {
+      "mu": "QS:state-ledger.md",
+      "tau": "README",
+      "lambda": [
+        "IIS",
+        "STATES"
+      ],
+      "content_score": 1
+    }
+  ],
+  "E": [
+    [
+      "AAA:SI:MAP-AAA:README",
+      "AAA:CO:COMP-AAA:README"
+    ],
+    [
+      "PPP:SI:MAP-PPP:README",
+      "PPP:ST:OPS-PPP:README"
+    ],
+    [
+      "AAA:SI:MAP-AAA:README",
+      "MAL:CB:orchestrator.py"
+    ],
+    [
+      "PPP:SI:MAP-PPP:README",
+      "MAL:FE:federation.spec"
+    ],
+    [
+      "MAL:CB:orchestrator.py",
+      "MAL:FWD:nowcast.api"
+    ],
+    [
+      "IIS:SI:MAL-QS:SPEC",
+      "MAL:CB:orchestrator.py"
+    ],
+    [
+      "IIS:SI:MAL-QS:SPEC",
+      "MAL:QB:qsearch.strat"
+    ],
+    [
+      "IIS:SI:MAL-QS:SPEC",
+      "MAL:FE:federation.spec"
+    ],
+    [
+      "IIS:SI:MAL-QS:SPEC",
+      "MAL:FWD:nowcast.api"
+    ],
+    [
+      "IIS:SI:MAL-QS:SPEC",
+      "QS:state-ledger.md"
+    ]
+  ],
+  "X": [
+    [
+      "AAA:SI:MAP-AAA:README",
+      "PPP:SI:MAP-PPP:README"
+    ],
+    [
+      "AAA:SI:MAP-AAA:README",
+      "IIS:SI:MAL-QS:SPEC"
+    ],
+    [
+      "PPP:SI:MAP-PPP:README",
+      "IIS:SI:MAL-QS:SPEC"
+    ],
+    [
+      "AAA:CO:COMP-AAA:README",
+      "PPP:ST:OPS-PPP:README"
+    ],
+    [
+      "MAL:CB:orchestrator.py",
+      "MAL:FWD:nowcast.api"
+    ],
+    [
+      "MAL:QB:qsearch.strat",
+      "MAL:FWD:nowcast.api"
+    ],
+    [
+      "MAL:FE:federation.spec",
+      "QS:state-ledger.md"
+    ],
+    [
+      "QS:state-ledger.md",
+      "AAA:CO:COMP-AAA:README"
+    ]
+  ],
+  "need_readme_nodes": [
+    [
+      "AAA",
+      "COMPONENTS"
+    ],
+    [
+      "PPP",
+      "STATIONS"
+    ]
+  ],
+  "I": {
+    "language": "UTCS\u2013MI",
+    "version": "v5",
+    "grammar": "<EBNF here>",
+    "validator": "parse_utcs_mi"
+  },
+  "R": {
+    "no_orphan_unless_root": true,
+    "min_crossref": true,
+    "id_canonical": true,
+    "strict_tfa_only": true,
+    "quantum_layers_required": [
+      "CB",
+      "QB",
+      "UE",
+      "FE",
+      "FWD",
+      "QS"
+    ]
+  },
+  "V": {
+    "V1": "parse(\u03bc)",
+    "V2": "\u03bb(a)\u2208T",
+    "V3": "no-hu\u00e9rfano",
+    "V4": "cross-ref",
+    "V5": "contenido{0,1,2}"
+  },
+  "M": {},
+  "Phi": {
+    "alpha": 1000,
+    "beta": 200,
+    "gamma": 40,
+    "delta": 5,
+    "epsilon": 1
+  }
+}
