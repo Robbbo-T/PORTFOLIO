@@ -1,0 +1,11 @@
+graph TD
+  subgraph AAA
+    AAA_SYS["AAA/SYSTEMS"] --> AAA_STN["AAA/STATIONS"]
+    AAA_STN --> AAA_COMP["AAA/COMPONENTS"]
+    AAA_COMP --> AAA_BITS["AAA/BITS"]
+  end
+  subgraph PPP
+    PPP_SYS["PPP/SYSTEMS"] --> PPP_STN["PPP/STATIONS"]
+    PPP_STN --> PPP_COMP["PPP/COMPONENTS"]
+    PPP_COMP --> PPP_BITS["PPP/BITS"]
+  end
