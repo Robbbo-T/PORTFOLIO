@@ -25,7 +25,7 @@ class Artifact:
     lam: NodeT
     content_score: int = 0
     root: bool = False
-    path: Optional[str] = None  # opcional: path real del repo para STRICT TFA-ONLY
+    path: Optional[str] = None  # optional: actual repo path for STRICT TFA-ONLY
 
 @dataclass
 class TFARepo:
