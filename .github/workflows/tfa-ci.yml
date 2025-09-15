@@ -24,8 +24,11 @@ sch = json.load(open('8-RESOURCES/TEMPLATES/tfa.schema.json'))
 doc = json.load(open('8-RESOURCES/TEMPLATES/tfa.repo.example.json'))
 v = Draft202012Validator(sch)
 errs = sorted(v.iter_errors(doc), key=lambda e: e.path)
+had_error = False
 for e in errs:
     print("SCHEMA:", e.message, "at", list(e.path))
+    had_error = True
+if had_error:
     sys.exit(1)
 print("Schema OK")
 PY
