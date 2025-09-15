@@ -4,7 +4,7 @@
   "type": "object",
   "required": ["D", "L", "T", "A", "E", "X", "I", "R", "V", "M", "Phi"],
   "properties": {
-    "D": { "type": "array", "items": {"type": "string"}, "description": "Dominios" },
+    "D": { "type": "array", "items": {"type": "string"}, "description": "Domains" },
     "L": {
       "type": "array",
       "items": { "type": "string" },
