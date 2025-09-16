@@ -60,7 +60,7 @@ Each domain is organized under `TFA/` with deterministic traceability:
 | **QB**                     | Qubit                                     | QUBITS     | Quantum computation        |
 | **UE**                     | Unit Element                              | ELEMENTS   | Classical fundamentals     |
 | **FE**                     | Federation Entanglement                   | ELEMENTS   | Distributed orchestration  |
-| **FWD**                    | Future/Waves Dynamics                     | WAVES      | Predictive/retrodictive    |
+| **FWD**                    | Forward/Waves Dynamics                     | WAVES      | Predictive/retrodictive    |
 | **QS**                     | Quantum State                             | STATES     | State/provenance           |
 
 **STRICT TFA-ONLY policy**
