@@ -40,6 +40,7 @@ Scope: mechanical systems, materials, structural subsystems, fatigue and mainten
       linked_airframe: "AMPEL360-BWB-Q100 MSN001"
       hash: "0xdef456..."
     - stage: recycling
+      # Projected end-of-life date for documentation purposes
       date: 2045-03-10
       method: "solvolysis / CNT recovery"
       hash: "0xghi789..."
