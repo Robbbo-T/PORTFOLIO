@@ -1,0 +1,55 @@
+controls:
+  - id: AQUA-AITP-G1
+    name: Governance Baseline
+    layer: CB
+    gate: G1
+    description: Ensure policy publication, scope coverage, inventory assurance, and target setting align with MQ-5 entry.
+    evidence:
+      - type: document
+        path: qs://governance/policy
+      - type: dataset
+        path: s3://ghg-inventory/latest
+    metrics:
+      - id: KPI-EMISSIONS-SCOPE
+        name: Scope emissions coverage completeness
+        formula: covered_scopes / 3
+        threshold: 1.0
+  - id: AQUA-AITP-G2
+    name: SAF & Infrastructure Launch
+    layer: UE
+    gate: G2
+    description: Validate SAF compliance, infrastructure approvals, and demo funding with linked evidence bundles.
+    evidence:
+      - type: contract
+        path: fe://supply/saf-offtake
+      - type: approval
+        path: cb://infrastructure/program
+    metrics:
+      - id: KPI-SAF-BLEND
+        name: SAF blend percentage
+        formula: saf_volume / total_fuel_volume
+        threshold: ">= 0.02"  # Replace 0.02 with the actual ReFuelEU SAF blend floor if known
+      - id: KPI-DEMO-FUNDING
+        name: Zero-emission demo funding status
+        formula: funded_programs / planned_programs
+        threshold: ">= 1"
+  - id: AQUA-AITP-G3
+    name: Verified Performance Lift
+    layer: FWD
+    gate: G3
+    description: Confirm >10% intensity reduction versus 2019 baseline with third-party verification logged in QS.
+    evidence:
+      - type: report
+        path: qs://assurance/performance
+      - type: dataset
+        path: fe://telemetry/emissions
+    metrics:
+      - id: KPI-INTENSITY-DELTA
+        name: Emissions intensity delta
+        formula: 1 - (current_intensity / baseline_2019)
+        threshold: ">= 0.10"
+      - id: KPI-ASSURANCE-STATUS
+        name: Assurance opinion rating
+        formula: rating
+        rating_scale: [limited, reasonable, absolute]  # Explicitly define possible values and their order
+        threshold: ">= limited"  # Comparison is now meaningful with defined scale
