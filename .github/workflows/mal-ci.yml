@@ -1,0 +1,29 @@
+name: MAL / Deterministic Control CI
+
+on:
+  push:
+    paths:
+      - '8-RESOURCES/TEMPLATES/MAL/**'
+      - 'scripts/mal_ci_checks.py'
+      - '.github/workflows/mal-ci.yml'
+      - '2-DOMAINS-LEVELS/**/MAL/**'
+  pull_request:
+    paths:
+      - '8-RESOURCES/TEMPLATES/MAL/**'
+      - 'scripts/mal_ci_checks.py'
+      - '.github/workflows/mal-ci.yml'
+      - '2-DOMAINS-LEVELS/**/MAL/**'
+
+jobs:
+  validate-manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install MAL CI dependencies
+        run: pip install jsonschema pyyaml
+      - name: Validate MAL manifests and fences
+        run: python scripts/mal_ci_checks.py --verbose 8-RESOURCES/TEMPLATES/MAL/manifest.sample.yaml
