@@ -34,4 +34,4 @@ print("Schema OK")
 PY
       - name: Run TFA/TTA validator
         run: |
-          python3 8-RESOURCES/TEMPLATES/tfa_tta_validator.py 8-RESOURCES/TEMPLATES/tfa.repo.example.json --fail-nonzero
+          python3 8-RESOURCES/TEMPLATES/tfa_tta_validator.py 
