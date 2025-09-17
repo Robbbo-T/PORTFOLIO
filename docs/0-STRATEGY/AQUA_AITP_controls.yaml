@@ -28,7 +28,7 @@ controls:
       - id: KPI-SAF-BLEND
         name: SAF blend percentage
         formula: saf_volume / total_fuel_volume
-        threshold: ">= ReFuelEU_floor"
+        threshold: ">= 0.02"  # Replace 0.02 with the actual ReFuelEU SAF blend floor if known
       - id: KPI-DEMO-FUNDING
         name: Zero-emission demo funding status
         formula: funded_programs / planned_programs
