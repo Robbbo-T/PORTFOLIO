@@ -11,8 +11,13 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+pytestmark = pytest.mark.asyncio
+
 
 async def test_qpu_cb_integration():
     """Test basic QPU and CB integration functionality"""

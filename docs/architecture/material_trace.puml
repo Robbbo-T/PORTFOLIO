@@ -1,0 +1,24 @@
+@startuml
+actor Supplier
+actor Lab
+actor Integrator
+actor Recycler
+
+rectangle "CSDB / Object Store" as CSDB
+collections "Permissioned Chain" as Chain
+
+Supplier -> CSDB : Upload Material Passport + Certificates (off-chain)
+Supplier -> Chain : registerBatch(hash(passport))
+Lab -> CSDB : Upload signed lab report
+Lab -> Chain : attestTest(hash(report))
+Integrator -> Chain : recordEvent(INSTALL, hash(dm + pnr))
+Integrator -> CSDB : Attach DM metadata (hazardous_materials, passport ref)
+Recycler -> Chain : recordEvent(RECYCLE, hash(batch))
+Recycler -> CSDB : Close-out evidence package
+
+note right of Chain
+  On-chain: hashes + minimal metadata
+  Off-chain: encrypted, signed documents
+  UTCS anchors map transactions to S1000D Issue 6 DM references
+end note
+@enduml

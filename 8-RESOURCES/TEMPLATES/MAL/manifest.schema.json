@@ -1,0 +1,362 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aqua-os.example/schemas/mal-manifest.schema.json",
+  "title": "Master Application Layer manifest",
+  "description": "Schema describing deterministic MAL controller manifests.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mal"
+  ],
+  "properties": {
+    "mal": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "utcs_mi",
+        "llc",
+        "cycle",
+        "modes",
+        "rbac",
+        "fences",
+        "telemetry",
+        "tests"
+      ],
+      "properties": {
+        "utcs_mi": {
+          "type": "string",
+          "minLength": 1,
+          "description": "UTCS manifest identifier for the MAL controller"
+        },
+        "llc": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Owning lower-level controller or organization"
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional human readable description of the MAL controller"
+        },
+        "cycle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "period_ms",
+            "deadline_ms",
+            "jitter_max_ms"
+          ],
+          "properties": {
+            "period_ms": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Scan cycle period in milliseconds"
+            },
+            "deadline_ms": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "description": "Deadline for completing the scan cycle in milliseconds"
+            },
+            "jitter_max_ms": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Maximum allowed jitter for a scan cycle"
+            },
+            "heartbeat_cycles": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of cycles between deterministic heartbeat emissions"
+            },
+            "watchdog_cycles": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Number of consecutive missed cycles allowed before watchdog trips"
+            }
+          }
+        },
+        "modes": {
+          "type": "array",
+          "description": "Enumerated modes supported by the MAL controller",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "allOf": [
+            {
+              "contains": {
+                "const": "INIT"
+              }
+            },
+            {
+              "contains": {
+                "const": "SELF_TEST"
+              }
+            },
+            {
+              "contains": {
+                "const": "NORMAL"
+              }
+            },
+            {
+              "contains": {
+                "const": "DEGRADED"
+              }
+            },
+            {
+              "contains": {
+                "const": "SAFE_SHUT"
+              }
+            }
+          ]
+        },
+        "rbac": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "classes"
+          ],
+          "properties": {
+            "classes": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name",
+                  "permits"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "permits": {
+                    "type": "array",
+                    "minItems": 1,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1
+                    },
+                    "uniqueItems": true
+                  }
+                }
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "fences": {
+          "type": "array",
+          "minItems": 1,
+          "description": "Safety fences that must evaluate to true for safe operation",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "expr",
+              "trip_mode"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1
+              },
+              "expr": {
+                "type": "string",
+                "minLength": 1
+              },
+              "trip_mode": {
+                "type": "string",
+                "minLength": 1
+              },
+              "severity": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "telemetry": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "deterministic_fields"
+          ],
+          "properties": {
+            "deterministic_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "minItems": 1,
+              "uniqueItems": true,
+              "allOf": [
+                {
+                  "contains": {
+                    "const": "cycle_id"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "ts"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "lat_ms"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "jitter_ms"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "mode"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "fences_state"
+                  }
+                },
+                {
+                  "contains": {
+                    "const": "det_anchor"
+                  }
+                }
+              ]
+            },
+            "extra_fields": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              },
+              "uniqueItems": true
+            }
+          }
+        },
+        "tests": {
+          "type": "object",
+          "additionalProperties": true,
+          "required": [
+            "wcet_budget_ms"
+          ],
+          "properties": {
+            "wcet_budget_ms": {
+              "type": "object",
+              "additionalProperties": true,
+              "required": [
+                "acquire",
+                "validate",
+                "decide",
+                "actuate",
+                "report"
+              ],
+              "properties": {
+                "acquire": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "validate": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "decide": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "actuate": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "report": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "audit": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              }
+            },
+            "jitter_samples_ms": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "fence_cases": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "inputs",
+                  "expected"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "inputs": {
+                    "type": "object",
+                    "additionalProperties": {
+                      "type": [
+                        "number",
+                        "string",
+                        "boolean"
+                      ]
+                    }
+                  },
+                  "expected": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "material_passport_refs": {
+          "type": "array",
+          "description": "References to ledger-backed material passports required by the controller.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "mp_id"
+            ],
+            "properties": {
+              "mp_id": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Material passport identifier (MP- prefix)."
+              },
+              "usage": {
+                "type": "string",
+                "minLength": 1,
+                "description": "Free-form description of how the material is used within the MAL scope."
+              }
+            }
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

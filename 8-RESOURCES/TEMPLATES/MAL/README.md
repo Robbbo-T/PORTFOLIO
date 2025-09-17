@@ -6,10 +6,10 @@ MAL templates provide horizontal bridge services that are shared across all doma
 
 Each MAL corresponds to a TFA layer and provides shared services:
 
-- `CB/` - Classical Bit services  
+- `CB/` - Classical Bit services
 - `QB/` - Qubit services
 - `UE/` - Unit Element services
-- `FE/` - Federation Entanglement services  
+- `FE/` - Federation Entanglement services
 - `FWD/` - Forward Wave Dynamics services
 - `QS/` - Quantum State services
 
@@ -28,3 +28,18 @@ Each MAL corresponds to a TFA layer and provides shared services:
 4. Test the integrated MAP + MAL configuration
 
 See the main 8-RESOURCES README and Quantum-Classical Bridge documentation for detailed usage.
+
+## Deterministic Validation Assets
+
+- `manifest.schema.json` — JSON Schema contract for MAL controller manifests.
+- `manifest.sample.yaml` — Reference manifest illustrating cycle budgets, RBAC classes, and fence cases.
+- `tests/hil_sil_test_template.py` — Base harness and assertions for MAL HIL/SIL determinism checks.
+- `scripts/mal_ci_checks.py` — Repository-wide helper that validates manifests, budgets, and safety fences.
+
+The schema and helper script are exercised by the `mal-ci.yml` GitHub Actions workflow to guarantee manifests remain compliant.
+
+## Material Provenance Controls
+
+- `material_passport_refs` — Optional manifest block referencing the ledger-backed material passports (see `8-RESOURCES/MATERIALS/material_passports.yaml`) required by the controller.
+- Material passport entries contain the UTCS chain anchor, lifecycle events, and compliance attestations for graphene/CNT lots.
+- CI cross-checks references via `scripts/mal_ci_checks.py` and enforces dataset integrity with `scripts/material_passport_ci.py`.

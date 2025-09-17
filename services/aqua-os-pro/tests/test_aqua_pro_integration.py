@@ -7,6 +7,7 @@ Comprehensive integration testing for the AQUA OS PRO layer across all domains a
 
 import asyncio
 import pytest
+import pytest_asyncio
 import json
 import time
 from pathlib import Path
@@ -42,7 +43,7 @@ class TestAquaProIntegration:
             federation_enabled=True
         )
     
-    @pytest.fixture
+    @pytest_asyncio.fixture
     async def orchestrator(self, config):
         """Initialized orchestrator"""
         orch = AquaProOrchestrator(config)
