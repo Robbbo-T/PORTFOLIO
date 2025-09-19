@@ -1,0 +1,43 @@
+name: Python Optional Runtime Matrix
+
+on:
+  push:
+    paths:
+      - 'pyproject.toml'
+      - 'src/**'
+      - 'scripts/**'
+      - 'services/**/*.py'
+      - '3-PROJECTS-USE-CASES/**/*.py'
+      - '.github/workflows/python-optional-matrix.yml'
+  pull_request:
+    paths:
+      - 'pyproject.toml'
+      - 'src/**'
+      - 'scripts/**'
+      - 'services/**/*.py'
+      - '3-PROJECTS-USE-CASES/**/*.py'
+      - '.github/workflows/python-optional-matrix.yml'
+
+jobs:
+  test:
+    name: "Extras: ${{ matrix.extras }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        extras:
+          - dev,aiohttp
+          - dev,anyio
+          - dev,trio
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+      - name: Install project with optional extras
+        run: pip install ".[${{ matrix.extras }}]"
+      - name: Run pytest suite
+        run: pytest -q
