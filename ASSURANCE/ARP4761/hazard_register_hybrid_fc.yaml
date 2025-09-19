@@ -1,0 +1,29 @@
+hazards:
+  - id: "HZ-001"
+    title: "HVDC arc"
+    severity: "Hazardous"
+    initial_likelihood: "Possible"
+    controls:
+      - "AFDI"
+      - "segregation"
+    residual_risk: "Remote"
+    verification: "bench AFDI"
+    links:
+      tests:
+        - "test_safety_cage.py::test_trip_latency_afdi"
+      requirements:
+        - "FADEC_X/REQ-001#surge_protection"
+  - id: "HZ-002"
+    title: "Fuel cell thermal runaway"
+    severity: "Major"
+    initial_likelihood: "Remote"
+    controls:
+      - "thermal monitoring"
+      - "emergency shutdown"
+    residual_risk: "Extremely Remote"
+    verification: "thermal test"
+    links:
+      tests:
+        - "test_invariants.py::test_invariant_vbus"
+      requirements:
+        - "FADEC_X/REQ-002#thermal_limits"
