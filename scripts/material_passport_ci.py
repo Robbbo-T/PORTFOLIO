@@ -157,14 +157,17 @@ def validate_dataset(path: Path) -> List[Dict[str, Any]]:
 
     summaries: List[Dict[str, Any]] = []
     seen_ids: set[str] = set()
+    duplicate_ids: set[str] = set()
     for index, passport in enumerate(passports):
         passport_map = require_mapping(passport, f"passports[{index}]")
         summary = validate_passport(passport_map, index)
         mp_id = summary["mp_id"]
         if mp_id in seen_ids:
-            raise ValueError(f"Duplicate passport identifier detected: {mp_id}")
+            duplicate_ids.add(mp_id)
         seen_ids.add(mp_id)
         summaries.append(summary)
+    if duplicate_ids:
+        raise ValueError(f"Duplicate passport identifiers detected: {', '.join(sorted(duplicate_ids))}")
     return summaries
 
 
