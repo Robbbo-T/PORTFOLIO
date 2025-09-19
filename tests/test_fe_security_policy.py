@@ -1,4 +1,6 @@
-import json, pathlib, jsonschema
+import json
+import pathlib
+import jsonschema
 BASE = pathlib.Path(__file__).parents[1]
 def load(p): return json.loads(pathlib.Path(p).read_text())
 
