@@ -2,29 +2,30 @@ mal:
   utcs_mi: "AAA.DI.MAL.FLIGHT_CTRL.v0.1"
   llc: "SI"
   description: "Flight control MAL orchestrating aerodynamic surfaces"
+
   cycle:
-    period_ms: 20
+    period_ms: 20           # 50 Hz
     deadline_ms: 18
     jitter_max_ms: 1.5
     heartbeat_cycles: 5
     watchdog_cycles: 2
+
   modes:
     - INIT
     - SELF_TEST
     - NORMAL
     - DEGRADED
     - SAFE_SHUT
+
   rbac:
     classes:
       - name: OP_LIMITED
         description: "Ops limited authority for minor setpoints"
-        permits:
-          - SETPOINT_MINOR
+        permits: [SETPOINT_MINOR]
       - name: ENG_FULL
         description: "Engineering authority for full setpoints and mode transitions"
-        permits:
-          - MODE_SWITCH
-          - SETPOINT_FULL
+        permits: [MODE_SWITCH, SETPOINT_FULL]
+
   fences:
     - name: AOA_LIMIT
       expr: "alpha_deg <= 15.0"
@@ -34,18 +35,17 @@ mal:
       expr: "ias_kt >= 60"
       trip_mode: DEGRADED
       description: "Guard stall margin with indicated airspeed floor"
+
   telemetry:
-    deterministic_fields:
-      - cycle_id
-      - ts
-      - lat_ms
-      - jitter_ms
-      - mode
-      - fences_state
-      - det_anchor
-    extra_fields:
-      - watchdog_state
-      - heartbeat_ok
+    deterministic_fields: [cycle_id, ts, lat_ms, jitter_ms, mode, fences_state, det_anchor]
+    extra_fields: [watchdog_state, heartbeat_ok]
+
+  material_passport_refs:
+    - mp_id: "MP-GR-2025-000123"
+      usage: "Wing skin graphene panel"
+    - mp_id: "MP-CNT-2025-000045"
+      usage: "CNT structural strut"
+
   tests:
     wcet_budget_ms:
       acquire: 3.0
@@ -53,24 +53,17 @@ mal:
       decide: 7.0
       actuate: 4.0
       report: 2.0
-    jitter_samples_ms:
-      - 0.4
-      - 0.7
-      - 1.0
+    jitter_samples_ms: [0.4, 0.7, 1.0]
     fence_cases:
       - name: AOA_LIMIT
-        inputs:
-          alpha_deg: 14.2
+        inputs: { alpha_deg: 14.2 }
         expected: true
       - name: AOA_LIMIT
-        inputs:
-          alpha_deg: 17.0
+        inputs: { alpha_deg: 17.0 }
         expected: false
       - name: IAS_MIN
-        inputs:
-          ias_kt: 70
+        inputs: { ias_kt: 70 }
         expected: true
       - name: IAS_MIN
-        inputs:
-          ias_kt: 45
+        inputs: { ias_kt: 45 }
         expected: false

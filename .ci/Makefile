@@ -24,7 +24,10 @@ arp:
 	pytest -q tests/test_hazard_linkage.py
 
 extensions:
-	pytest -q tests/test_qb_result_contract_negative.py
+	pytest -q tests/test_arp4761x_propagation.py
 	pytest -q tests/test_arp4761x_stl_sanity.py
+	pytest -q tests/test_qb_result_contract.py
+	pytest -q tests/test_qb_result_contract_negative.py
 	pytest -q tests/test_qb_orchestration.py
+	pytest -q tests/test_fe_contracts.py
 	pytest -q tests/test_fe_security_policy.py

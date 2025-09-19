@@ -1,0 +1,108 @@
+version: 1
+issue: "6.0"
+passports:
+  - mp_id: "MP-GR-2025-000123"
+    material:
+      type: "graphene"
+      form: "flake"
+      grade: "A1"
+      spec_refs: ["ISO/TS-80004-13", "ASTM-D7868"]
+    batch:
+      batch_id: "GR-FLK-2309-001"
+      qty:
+        value: 12.5
+        unit: "kg"
+      lot_date: "2025-09-10"
+      supplier:
+        name: "NanoSup SA"
+        did: "did:org:nanosup"
+      origin_country: "ES"
+    properties:
+      carbon_pct: 99.7
+      residual_metal_ppm:
+        Fe: 8
+        Ni: 3
+      k_w_mk: 2300
+    safety_hazmat:
+      reach_compliant: true
+      sds_cid: "bafybeibmnsds"
+    attestations:
+      supplier_cert_cid: "bafybeisuppliercert"
+      lab_reports:
+        - lab:
+            name: "MetLab"
+            did: "did:lab:metlab"
+          report_cid: "bafybeimetlabreport1"
+          method: "Raman"
+          sha256: "0xabc123456789"
+    lifecycle:
+      - t: "2025-09-12T14:03:00Z"
+        kind: "PRODUCTION"
+        actor: "did:org:nanosup"
+        tx: "0xprodgr123"
+      - t: "2025-09-20T08:00:00Z"
+        kind: "INSTALL"
+        actor: "did:org:ampel360"
+        link:
+          dmcode: "S1000D-A-53-BWB-0502-03A-040A-A"
+          assembly_pnr: "AF-BWB-53-501-LH"
+        tx: "0xinstgr456"
+    chain_anchor:
+      chain: "besu-permnet"
+      passport_sha256: "0xbde2a1a8ad0dfd82bf1234e72f155bb2f790b0a2ec716e58afb9f83a79b3ccfe"
+      owner: "did:org:ampel360"
+      status: "ACTIVE"
+  - mp_id: "MP-CNT-2025-000045"
+    material:
+      type: "cnt"
+      form: "yarn"
+      grade: "Q2"
+      spec_refs: ["ISO/TS-80004-4", "IEC-TS-62607-2-1"]
+    batch:
+      batch_id: "CNT-YRN-2308-045"
+      qty:
+        value: 6.75
+        unit: "kg"
+      lot_date: "2025-08-22"
+      supplier:
+        name: "NanoWeave Labs"
+        did: "did:org:nanoweave"
+      origin_country: "NL"
+    properties:
+      tensile_strength_mpa: 6200
+      residual_metal_ppm:
+        Fe: 25
+        Co: 12
+    safety_hazmat:
+      reach_compliant: true
+      sds_cid: "bafybeicntsds"
+    attestations:
+      supplier_cert_cid: "bafybeicntcert"
+      lab_reports:
+        - lab:
+            name: "CNT Analytics BV"
+            did: "did:lab:cntanalytics"
+          report_cid: "bafybeicntreport1"
+          method: "TGA"
+          sha256: "0xcntlabhash"
+    lifecycle:
+      - t: "2025-08-24T11:15:00Z"
+        kind: "PRODUCTION"
+        actor: "did:org:nanoweave"
+        tx: "0xprodcnt111"
+      - t: "2025-09-05T09:45:00Z"
+        kind: "TEST"
+        actor: "did:lab:cntanalytics"
+        tx: "0xtestcnt222"
+      - t: "2025-09-23T16:20:00Z"
+        kind: "INSTALL"
+        actor: "did:org:ampel360"
+        link:
+          dmcode: "S1000D-A-29-BWB-0604-01A-040A-A"
+          assembly_pnr: "AF-BWB-29-301-RH"
+        tx: "0xinstcnt333"
+    chain_anchor:
+      chain: "besu-permnet"
+      passport_sha256: "0xe384bc3f3cb959186b9627516af4116fd3d79d1e2abcfb27f63d804daf81d0c5"
+      owner: "did:org:ampel360"
+      status: "ACTIVE"

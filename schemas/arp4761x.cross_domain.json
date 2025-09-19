@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaia-qao.org/schemas/arp4761x.cross_domain.json",
+  "title": "ARP4761‑X Cross‑Domain Hazard Propagation",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "scenarios": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^CDS-[0-9]{3}$" },
+          "title": { "type": "string" },
+          "initiators": { "type": "array", "items": { "type": "string", "pattern": "^HZ-[0-9]{3}$" }, "minItems": 1 },
+          "domains": {
+            "type": "array",
+            "items": { "type": "string", "enum": ["PPP","EDI","LCC","AAP","ECS","ELE","FCS","NAV","COM","CAB","STR","MAT","MAN","OPS"] },
+            "minItems": 2
+          },
+          "paths": {
+            "description": "Cadenas de propagación entre dominios con mecanismos y retrasos",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "from": { "type": "string" },
+                "to": { "type": "string" },
+                "mechanism": { "type": "string" },
+                "latency_ms": { "type": "integer", "minimum": 0 },
+                "attenuation": { "type": "number", "minimum": 0.0, "maximum": 1.0 }
+              },
+              "required": ["from","to","mechanism"]
+            }
+          },
+          "cross_controls": { "type": "array", "items": { "type": "string" } },
+          "residual_risk": { "type": "string" },
+          "links": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "tests": { "type": "array", "items": { "type": "string" } },
+              "requirements": { "type": "array", "items": { "type": "string" } }
+            }
+          }
+        },
+        "required": ["id","title","initiators","domains","paths"]
+      }
+    }
+  },
+  "required": ["scenarios"]
+}
