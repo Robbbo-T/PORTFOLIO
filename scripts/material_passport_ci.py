@@ -202,8 +202,16 @@ def main(argv: List[str] | None = None) -> int:
         print(f"\n=== Validating {path} ===")
         try:
             results = validate_dataset(path)
+        except yaml.YAMLError as exc:
+            print(f"ERROR: Failed to parse YAML in {path}: {exc}")
+            failures = True
+            continue
+        except ValueError as exc:
+            print(f"ERROR: Validation error in {path}: {exc}")
+            failures = True
+            continue
         except Exception as exc:  # pylint: disable=broad-except
-            print(f"ERROR: {exc}")
+            print(f"ERROR: Unexpected error in {path}: {exc}")
             failures = True
             continue
         print_summary(results)
