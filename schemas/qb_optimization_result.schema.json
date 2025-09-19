@@ -1,19 +1,34 @@
+
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://gaia-qao.org/schemas/qb_optimization_result.schema.json",
-  "title": "QB Layer Optimization Result",
+  "title": "QB Optimization Result",
   "type": "object",
   "additionalProperties": false,
   "properties": {
-    "problem_id": { "type": "string", "pattern": "^QB-[A-Z0-9_.-]+$" },
-    "method": { "type": "string", "enum": ["QAOA","VQE","Ising","Anneal","Hybrid"] },
-    "encoding": { "type": "string", "enum": ["QUBO","Ising","MILP"] },
-    "timestamp_utc": { "type": "string", "format": "date-time" },
-    "seed": { "type": ["integer","string"] },
+    "problem_id": {
+      "type": "string",
+      "pattern": "^QB-[A-Za-z0-9_.-]+$"
+    },
+    "method": {
+      "type": "string",
+      "enum": ["QAOA", "VQE", "Anneal", "Annealing", "Hybrid"]
+    },
+    "encoding": {
+      "type": "string",
+      "enum": ["QUBO", "Ising", "Hamiltonian", "MILP"]
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "seed": {
+      "type": ["integer", "string"]
+    },
     "decision": {
       "type": "object",
-      "description": "Selección discreta de modos/setpoints candidatos",
-      "additionalProperties": { "type": ["boolean","number","string"] }
+      "description": "Discrete selections / setpoints returned by the optimizer",
+      "additionalProperties": { "type": ["boolean", "number", "string"] }
     },
     "objective": {
       "type": "object",
@@ -22,25 +37,60 @@
         "units": { "type": "string" },
         "gap_pct": { "type": "number", "minimum": 0 }
       },
-      "required": ["value"]
+      "required": ["value"],
+      "additionalProperties": false
     },
     "constraints": {
       "type": "object",
-      "description": "Valores de restricciones evaluados en la solución propuesta",
-      "additionalProperties": { "type": ["number","boolean"] }
+      "description": "Constraint values evaluated at the proposed decision",
+      "additionalProperties": { "type": ["number", "boolean"] }
     },
     "feasible": { "type": "boolean" },
     "classical_check": {
       "type": "object",
-      "description": "Verificación CB: violaciones detectadas y motivos de rechazo si aplica",
+      "description": "CB-side verification summary (violations/reasons)",
       "additionalProperties": false,
       "properties": {
         "accepted": { "type": "boolean" },
         "violations": { "type": "array", "items": { "type": "string" } }
       }
     },
-    "trace_refs": { "type": "array", "items": { "type": "string", "format": "uri-reference" } },
-    "det_anchor": { "$ref": "det_anchor.schema.json" }
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "flight_id": { "type": "string" },
+        "phase_id": {
+          "type": "string",
+          "enum": ["Taxi", "T/O", "Climb", "Cruise", "Descent", "Approach", "Rollout"]
+        },
+        "model_versions": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "env_digest": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA-256 of environment/config pack"
+        }
+      }
+    },
+    "trace_refs": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri-reference" }
+    },
+    "det_anchor": {
+      "$ref": "det_anchor.schema.json"
+    }
   },
-  "required": ["problem_id","method","encoding","timestamp_utc","decision","objective","feasible"]
+  "required": [
+    "problem_id",
+    "method",
+    "encoding",
+    "timestamp_utc",
+    "decision",
+    "objective",
+    "feasible"
+  ]
 }
+

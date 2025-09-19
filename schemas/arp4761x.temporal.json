@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaia-qao.org/schemas/arp4761x.temporal.json",
+  "title": "ARP4761X Temporal Hazard Graph",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "nodes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "domain": { "type": "string", "enum": ["PPP", "EDI", "LCC", "AAA"] },
+          "state": { "type": "string", "enum": ["Nominal", "Derated", "Failed"] }
+        },
+        "required": ["id", "domain", "state"]
+      }
+    },
+    "edges": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "from": { "type": "string" },
+          "to": { "type": "string" },
+          "guard_stl": { "type": "string" }
+        },
+        "required": ["from", "to", "guard_stl"]
+      }
+    }
+  },
+  "required": ["nodes", "edges"]
+}
