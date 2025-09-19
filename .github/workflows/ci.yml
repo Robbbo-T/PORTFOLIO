@@ -1,15 +1,53 @@
 name: CI
+
 on:
   push:
   pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12"]
+
+    env:
+      # Propaga a todos los pytest de tu Makefile (junit se sobreescribe en cada target, ok)
+      PYTEST_ADDOPTS: "--maxfail=1 --disable-warnings --junitxml=reports/junit-${{ matrix.python-version }}.xml"
+
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
-        with: { python-version: "3.12" }
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+
       - name: Install dev deps
-        run: python3 -m pip install -r requirements-dev.txt
-      - name: Run core tests
-        run: make -f .ci/Makefile test
+        run: |
+          if [ -f requirements-dev.txt ]; then python -m pip install -r requirements-dev.txt; fi
+          # instala opcionalmente runtime si lo tienes separado
+          if [ -f requirements.txt ]; then python -m pip install -r requirements.txt; fi
+          # instala paquete editable si aplica
+          if [ -f setup.py ] || [ -f pyproject.toml ]; then python -m pip install -e .; fi
+
+      - name: MAL schema sanity (optional)
+        if: ${{ hashFiles('scripts/mal_ci_checks.py') != '' }}
+        run: |
+          python scripts/mal_ci_checks.py \
+            --schema 8-RESOURCES/TEMPLATES/MAL/manifest.schema.json \
+            --verbose --soft-passport-check || exit 1
+
+      - name: Run core tests (Makefile)
+        run: |
+          if [ -f .ci/Makefile ]; then
+            make -f .ci/Makefile test
+         
