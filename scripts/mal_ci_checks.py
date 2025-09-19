@@ -8,6 +8,7 @@ additional deterministic control checks:
 * RBAC class sanity checks
 * Safety-fence expression validation with safe evaluation
 * Optional fence-case simulations declared in the manifest tests section
+* Optional material passport references cross-check (registry-backed)
 
 The script is intentionally deterministic so CI runs are reproducible.
 """
@@ -21,20 +22,23 @@ import random
 import statistics
 import sys
 from dataclasses import dataclass
-from pathlib import Path
 from functools import lru_cache
+from pathlib import Path
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import yaml
+
 try:
     from jsonschema import Draft202012Validator
 except ImportError:
     print(
         "Error: The 'jsonschema' package is required to run this script.\n"
-        "Please install it using 'pip install jsonschema' and try again.",
+        "Install it via: pip install jsonschema",
         file=sys.stderr,
     )
     sys.exit(1)
+
+# Defaults (override with CLI flags if needed)
 SCHEMA_PATH = Path("8-RESOURCES/TEMPLATES/MAL/manifest.schema.json")
 SAMPLE_MANIFEST = Path("8-RESOURCES/TEMPLATES/MAL/manifest.sample.yaml")
 PASSPORT_DATASET = Path("8-RESOURCES/MATERIALS/material_passports.yaml")
@@ -46,10 +50,10 @@ ALLOWED_FUNC_MAP: Dict[str, Any] = {
     "round": round,
 }
 
+
 @dataclass(frozen=True)
 class CycleSample:
     """Synthetic observation of a MAL scan cycle."""
-
     index: int
     duration_ms: float
     jitter_ms: float
@@ -90,7 +94,6 @@ class SafeEvaluator(ast.NodeVisitor):
         super().__init__()
         self.context = context
 
-    # pylint: disable=invalid-name,missing-function-docstring
     def visit_Expression(self, node: ast.Expression) -> Any:
         return self.visit(node.body)
 
@@ -149,7 +152,7 @@ class SafeEvaluator(ast.NodeVisitor):
         args = [self.visit(arg) for arg in node.args]
         return func(*args)
 
-    def generic_visit(self, node: ast.AST) -> Any:  # pylint: disable=signature-differs
+    def generic_visit(self, node: ast.AST) -> Any:
         raise ValueError(f"Unsupported AST node: {type(node).__name__}")
 
 
@@ -164,7 +167,6 @@ def load_yaml(path: Path) -> Dict[str, Any]:
 @lru_cache(maxsize=1)
 def load_material_passport_index() -> Dict[str, Mapping[str, Any]]:
     """Load the material passport dataset into a lookup table."""
-
     if not PASSPORT_DATASET.exists():
         return {}
     dataset = load_yaml(PASSPORT_DATASET)
@@ -276,7 +278,7 @@ def build_contexts(tree: ast.AST, variable_names: Sequence[str]) -> Tuple[Dict[s
 
 def safe_eval(tree: ast.AST, context: Mapping[str, Any]) -> Any:
     evaluator = SafeEvaluator(context)
-    return evaluator.visit(tree)  # type: ignore[arg-type]
+    return evaluator.visit(tree)
 
 
 def validate_cycle(manifest: Mapping[str, Any]) -> Dict[str, Any]:
@@ -297,9 +299,7 @@ def validate_cycle(manifest: Mapping[str, Any]) -> Dict[str, Any]:
     budget_values = [float(value) for value in budgets.values() if isinstance(value, (int, float))]
     budget_sum = sum(budget_values)
     if budget_sum > period + 1e-9:
-        raise ValueError(
-            f"Sum of WCET budgets {budget_sum:.3f}ms exceeds period {period}ms"
-        )
+        raise ValueError(f"Sum of WCET budgets {budget_sum:.3f}ms exceeds period {period}ms")
 
     cycle_samples = simulate_cycle_trace(
         budgets,
@@ -310,25 +310,17 @@ def validate_cycle(manifest: Mapping[str, Any]) -> Dict[str, Any]:
     max_duration = max(sample.duration_ms for sample in cycle_samples)
     max_jitter = max(sample.jitter_ms for sample in cycle_samples)
     if max_duration > deadline + 1e-6:
-        raise ValueError(
-            f"Synthetic cycle duration {max_duration:.3f}ms exceeds deadline {deadline}ms"
-        )
+        raise ValueError(f"Synthetic cycle duration {max_duration:.3f}ms exceeds deadline {deadline}ms")
     if max_jitter > jitter_max + 1e-6:
-        raise ValueError(
-            f"Synthetic jitter {max_jitter:.3f}ms exceeds bound {jitter_max}ms"
-        )
+        raise ValueError(f"Synthetic jitter {max_jitter:.3f}ms exceeds bound {jitter_max}ms")
 
     jitter_samples = tests.get("jitter_samples_ms", [])
     if jitter_samples:
         observed_max = max(float(item) for item in jitter_samples)
         if observed_max > jitter_max + 1e-6:
-            raise ValueError(
-                f"Recorded jitter sample {observed_max:.3f}ms exceeds bound {jitter_max}ms"
-            )
+            raise ValueError(f"Recorded jitter sample {observed_max:.3f}ms exceeds bound {jitter_max}ms")
         if len(jitter_samples) >= 3:
-            jitter_p95 = statistics.quantiles(
-                [float(item) for item in jitter_samples], n=20
-            )[18]
+            jitter_p95 = statistics.quantiles([float(item) for item in jitter_samples], n=20)[18]
         else:
             jitter_p95 = observed_max
     else:
@@ -361,10 +353,7 @@ def simulate_cycle_trace(
     ]
     budget_total = sum(value for _, value in numeric_items)
     if budget_total <= 0:
-        return [
-            CycleSample(index=i, duration_ms=0.0, jitter_ms=0.0, stage_durations={})
-            for i in range(sample_count)
-        ]
+        return [CycleSample(index=i, duration_ms=0.0, jitter_ms=0.0, stage_durations={}) for i in range(sample_count)]
 
     upper_bound = min(deadline, budget_total)
     base_total = min(upper_bound, budget_total * 0.85)
@@ -397,14 +386,7 @@ def simulate_cycle_trace(
             stage_durations[last_stage] = max(0.0, remaining)
 
         jitter = 0.0 if index == 0 else abs(total - previous_total)
-        samples.append(
-            CycleSample(
-                index=index,
-                duration_ms=total,
-                jitter_ms=jitter,
-                stage_durations=stage_durations,
-            )
-        )
+        samples.append(CycleSample(index=index, duration_ms=total, jitter_ms=jitter, stage_durations=stage_durations))
         previous_total = total
 
     return samples
@@ -441,12 +423,8 @@ def validate_fences(manifest: Mapping[str, Any]) -> List[Dict[str, Any]]:
         tree = ast.parse(expr, mode="eval")
         variables = _collect_variable_names(tree)
         safe_ctx, trip_ctx = build_contexts(tree, variables)
-        safe_value = bool(
-            safe_eval(tree, {**ALLOWED_FUNC_MAP, **safe_ctx})
-        )
-        trip_value = bool(
-            safe_eval(tree, {**ALLOWED_FUNC_MAP, **trip_ctx})
-        )
+        safe_value = bool(safe_eval(tree, {**ALLOWED_FUNC_MAP, **safe_ctx}))
+        trip_value = bool(safe_eval(tree, {**ALLOWED_FUNC_MAP, **trip_ctx}))
         if not safe_value:
             raise ValueError(f"Fence '{name}' evaluates to false under safe synthetic context")
         if trip_value:
@@ -464,20 +442,13 @@ def validate_fences(manifest: Mapping[str, Any]) -> List[Dict[str, Any]]:
                 )
             case_results.append(f"inputs={inputs} -> {result}")
         reports.append(
-            {
-                "name": name,
-                "variables": variables,
-                "safe_context": safe_ctx,
-                "trip_context": trip_ctx,
-                "cases_checked": case_results,
-            }
+            {"name": name, "variables": variables, "safe_context": safe_ctx, "trip_context": trip_ctx, "cases_checked": case_results}
         )
     return reports
 
 
 def validate_material_passport_refs(mal: Mapping[str, Any]) -> Optional[List[Dict[str, str]]]:
     """Validate the material_passport_refs block when present."""
-
     refs = mal.get("material_passport_refs")
     if refs is None:
         return None
@@ -502,9 +473,7 @@ def validate_material_passport_refs(mal: Mapping[str, Any]) -> Optional[List[Dic
         summary.append({"mp_id": mp_id, "usage": usage or ""})
 
     if missing:
-        raise ValueError(
-            "material_passport_refs references unknown passport IDs: " + ", ".join(sorted(set(missing)))
-        )
+        raise ValueError("material_passport_refs references unknown passport IDs: " + ", ".join(sorted(set(missing))))
 
     return summary
 
@@ -560,7 +529,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         print(f"\n=== Validating {manifest_path} ===")
         try:
             report = run_checks(manifest_path, validator)
-        except Exception as exc:  # pylint: disable=broad-except
+        except Exception as exc:  # keep CI-friendly
             failures = True
             print(f"ERROR: {exc}")
             continue
@@ -583,17 +552,13 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
             joined = ", ".join(ref["mp_id"] for ref in passport_refs)
             print(f"Material passports referenced: {len(passport_refs)} ({joined})")
         for fence in report["fences"]:
-            print(
-                f"Fence '{fence['name']}': safe_ctx={fence['safe_context']} trip_ctx={fence['trip_context']}"
-            )
+            print(f"Fence '{fence['name']}': safe_ctx={fence['safe_context']} trip_ctx={fence['trip_context']}")
             if args.verbose:
                 for case_line in fence["cases_checked"]:
                     print(f"    case {case_line}")
         if args.verbose:
             for sample in cycle["samples"]:
-                print(
-                    f"    cycle {sample.index}: duration={sample.duration_ms:.3f}ms jitter={sample.jitter_ms:.3f}ms"
-                )
+                print(f"    cycle {sample.index}: duration={sample.duration_ms:.3f}ms jitter={sample.jitter_ms:.3f}ms")
 
     if failures:
         return 1

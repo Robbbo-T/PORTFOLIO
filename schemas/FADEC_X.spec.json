@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaia-qao.org/schemas/FADEC_X.spec.json",
+  "title": "FADEC-X Hybrid Power Split Spec",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "hvdc": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "v_nom": { "type": "number", "minimum": 100, "maximum": 2000 },
+        "v_min": { "type": "number" },
+        "v_max": { "type": "number" },
+        "afdi_latency_ms": { "type": "integer", "minimum": 0, "maximum": 10 }
+      },
+      "required": ["v_nom","v_min","v_max","afdi_latency_ms"]
+    },
+    "surge": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "s_min": { "type": "number", "minimum": 0.0, "maximum": 0.2 },
+        "trip_latency_ms": { "type": "integer", "minimum": 0, "maximum": 200 }
+      },
+      "required": ["s_min","trip_latency_ms"]
+    },
+    "fuel_cell": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "p_cont_kw": { "type": "number", "minimum": 0 },
+        "p_peak_kw": { "type": "number", "minimum": 0 },
+        "peak_duration_s": { "type": "integer", "minimum": 0 },
+        "ramp_kw_per_s": { "type": "number", "minimum": 0 },
+        "t_min_c": { "type": "number" },
+        "t_max_c": { "type": "number" },
+        "j_max": { "type": "number", "minimum": 0 }
+      },
+      "required": ["p_cont_kw","p_peak_kw","peak_duration_s","ramp_kw_per_s"]
+    },
+    "amb": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reserve_energy_j": { "type": "number", "minimum": 0 },
+        "rundown_time_s": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["reserve_energy_j","rundown_time_s"]
+    },
+    "modes": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["NORMAL","ASSIST","ECO","DEGRADED","SAFE_SHUTDOWN"] },
+      "minItems": 3
+    },
+    "trip_table": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "monitor": { "type": "string" },
+          "threshold": { "type": ["number","string"] },
+          "action": { "type": "string" },
+          "latency_ms": { "type": "integer", "minimum": 0 }
+        },
+        "required": ["monitor","action","latency_ms"]
+      }
+    }
+  },
+  "required": ["hvdc","surge","fuel_cell","amb","modes","trip_table"]
+}

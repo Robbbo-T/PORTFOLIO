@@ -85,15 +85,19 @@ domain_wall_parameters:
   profile_type: "tanh"
   characteristic_width: [2e-9, 30e-9]  # m, tunable range
   length: [1e-6, 10e-6]  # m, device length
-  
+
   creation_method: "strain_engineering"  # or "electrostatic_gating"
   control_mechanism: "dual_gate_bias"
-  
+
   confinement_metrics:
     localization_length_target: [5e-9, 50e-9]  # m
     energy_gap_target: [1e-3, 50e-3]  # eV
     mode_purity_target: 0.8  # dimensionless
 ```
+
+## Fabrication & Transfer Notes
+
+- Large-area graphene supply relies on CVD growth on catalytic metal foils with subsequent transfer to insulating stacks, following the scalable process established by Pandey et al. for wafer-scale films with low sheet resistance and minimal defect density (Appl. Phys. Lett. 96, 073102, 2010). Layer-by-layer assembly of such films enables deterministic bilayer stacks prior to AB/BA domain engineering.
 
 ## Simulation Framework
 
@@ -119,3 +123,4 @@ The transport simulation is implemented in `simulations/dw_transport.py` using t
 - Martin et al. - Theory of kink channels in gated BLG
 - Ju et al. - Experimental observation of chiral modes
 - McCann & Koshino - Canonical low-energy BLG reference
+- Pandey et al. - Large-scale graphene films synthesized on metals and transferred to insulators for electronic applications
