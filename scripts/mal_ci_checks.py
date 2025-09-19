@@ -39,7 +39,7 @@ ALLOWED_FUNC_MAP: Dict[str, Any] = {
     "round": round,
 }
 
-@dataclass
+@dataclass(frozen=True)
 class CycleSample:
     """Synthetic observation of a MAL scan cycle."""
 
