@@ -26,8 +26,15 @@ from functools import lru_cache
 from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 import yaml
-from jsonschema import Draft202012Validator
-
+try:
+    from jsonschema import Draft202012Validator
+except ImportError:
+    print(
+        "Error: The 'jsonschema' package is required to run this script.\n"
+        "Please install it using 'pip install jsonschema' and try again.",
+        file=sys.stderr,
+    )
+    sys.exit(1)
 SCHEMA_PATH = Path("8-RESOURCES/TEMPLATES/MAL/manifest.schema.json")
 SAMPLE_MANIFEST = Path("8-RESOURCES/TEMPLATES/MAL/manifest.sample.yaml")
 PASSPORT_DATASET = Path("8-RESOURCES/MATERIALS/material_passports.yaml")
