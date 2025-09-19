@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaia-qao.org/schemas/qb_optimization_result.schema.json",
+  "title": "QB Layer Optimization Result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "problem_id": { "type": "string", "pattern": "^QB-[A-Z0-9_.-]+$" },
+    "method": { "type": "string", "enum": ["QAOA","VQE","Ising","Anneal","Hybrid"] },
+    "encoding": { "type": "string", "enum": ["QUBO","Ising","MILP"] },
+    "timestamp_utc": { "type": "string", "format": "date-time" },
+    "seed": { "type": ["integer","string"] },
+    "decision": {
+      "type": "object",
+      "description": "Selección discreta de modos/setpoints candidatos",
+      "additionalProperties": { "type": ["boolean","number","string"] }
+    },
+    "objective": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "number" },
+        "units": { "type": "string" },
+        "gap_pct": { "type": "number", "minimum": 0 }
+      },
+      "required": ["value"]
+    },
+    "constraints": {
+      "type": "object",
+      "description": "Valores de restricciones evaluados en la solución propuesta",
+      "additionalProperties": { "type": ["number","boolean"] }
+    },
+    "feasible": { "type": "boolean" },
+    "classical_check": {
+      "type": "object",
+      "description": "Verificación CB: violaciones detectadas y motivos de rechazo si aplica",
+      "additionalProperties": false,
+      "properties": {
+        "accepted": { "type": "boolean" },
+        "violations": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "trace_refs": { "type": "array", "items": { "type": "string", "format": "uri-reference" } },
+    "det_anchor": { "$ref": "det_anchor.schema.json" }
+  },
+  "required": ["problem_id","method","encoding","timestamp_utc","decision","objective","feasible"]
+}
