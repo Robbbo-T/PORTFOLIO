@@ -1,6 +1,6 @@
-.PHONY: test schema brex invariants trips qs arp
+.PHONY: test schema brex invariants trips qs arp extensions
 
-test: schema brex invariants trips qs arp
+test: schema brex invariants trips qs arp extensions
 
 schema:
 	pytest -q tests/test_schema_spec.py
@@ -19,3 +19,6 @@ qs:
 
 arp:
 	pytest -q tests/test_hazard_linkage.py
+
+extensions:
+	pytest -q tests/test_arp4761x_propagation.py tests/test_qb_result_contract.py tests/test_fe_contracts.py

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaia-qao.org/schemas/fe_federation_contract.schema.json",
+  "title": "Federation Contract (FE Layer)",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "federation_id": { "type": "string", "pattern": "^FE-[A-Z0-9_.-]+$" },
+    "policy": { "type": "string", "enum": ["SafetyFirst","EnergyMin","NoiseMin","EmissionsMin","Mixed"] },
+    "members": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "aircraft_id": { "type": "string" },
+          "role": { "type": "string", "enum": ["Leader","Peer","Observer"] },
+          "capabilities": { "type": "array", "items": { "type": "string" } }
+        },
+        "required": ["aircraft_id","role"]
+      },
+      "minItems": 1
+    },
+    "quorum": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "size": { "type": "integer", "minimum": 1 },
+        "consensus": { "type": "string", "enum": ["Majority","2/3","Byzantine","Leader+1"] }
+      },
+      "required": ["size","consensus"]
+    },
+    "coordination": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "topics": { "type": "array", "items": { "type": "string", "enum": ["PowerShare","SurgeShare","AirspaceSlot","TaxiQueue","BLIAllocation","Emergency"] } },
+        "period_ms": { "type": "integer", "minimum": 10 },
+        "latency_budget_ms": { "type": "integer", "minimum": 1 }
+      },
+      "required": ["topics","period_ms","latency_budget_ms"]
+    },
+    "security": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "auth": { "type": "string", "enum": ["mTLS","PQ-KEM","Ed25519"] },
+        "integrity": { "type": "string", "enum": ["SHA-256","SHA3-256"] },
+        "replay_protection": { "type": "boolean" }
+      },
+      "required": ["auth","integrity"]
+    },
+    "det_anchor": { "$ref": "det_anchor.schema.json" }
+  },
+  "required": ["federation_id","policy","members","quorum","coordination","security"]
+}
