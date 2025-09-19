@@ -186,7 +186,7 @@ def print_summary(results: List[Dict[str, Any]]) -> None:
     print(f"Passports validated: {total}")
     print("  Status counts: " + ", ".join(f"{status}={count}" for status, count in sorted(status_counts.items())))
     print("  Material types: " + ", ".join(f"{typ}={count}" for typ, count in sorted(type_counts.items())))
-    print("  Unique actors: " + str(len(actors)))
+    print(f"  Unique actors: {len(actors)}")
 
 
 def main(argv: List[str] | None = None) -> int:
