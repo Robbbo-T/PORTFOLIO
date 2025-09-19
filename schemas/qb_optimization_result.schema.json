@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://gaia-qao.org/schemas/qb_optimization_result.schema.json",
+  "title": "QB Optimization Result",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "problem_id": { "type": "string", "pattern": "^QB-[A-Za-z0-9_.-]+$" },
+    "method": { "type": "string", "enum": ["QAOA", "VQE", "QUBO", "Annealing"] },
+    "encoding": { "type": "string", "enum": ["QUBO", "Ising", "Hamiltonian"] },
+    "timestamp_utc": { "type": "string", "format": "date-time" },
+    "decision": { "type": "object" },
+    "objective": {
+      "type": "object",
+      "properties": {
+        "value": { "type": "number" }
+      },
+      "required": ["value"]
+    },
+    "feasible": { "type": "boolean" },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "flight_id": { "type": "string" },
+        "phase_id": { "type": "string", "enum": ["Taxi", "T/O", "Climb", "Cruise", "Descent", "Approach", "Rollout"] },
+        "model_versions": { "type": "object", "additionalProperties": { "type": "string" } },
+        "env_digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "required": ["flight_id", "phase_id"]
+    }
+  },
+  "required": ["problem_id", "method", "encoding", "timestamp_utc", "decision", "objective", "feasible", "context"]
+}

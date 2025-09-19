@@ -23,7 +23,18 @@
       "minItems": 1
     },
     "content_hash_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
-    "signature": { "type": "string", "pattern": "^(DET:(ed25519|ecdsa):)[A-Za-z0-9+/=.-]+$" }
+    "signature": { "type": "string", "pattern": "^(DET:(ed25519|ecdsa):)[A-Za-z0-9+/=.-]+$" },
+    "context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "flight_id": { "type": "string" },
+        "phase_id": { "type": "string", "enum": ["Taxi", "T/O", "Climb", "Cruise", "Descent", "Approach", "Rollout"] },
+        "model_versions": { "type": "object", "additionalProperties": { "type": "string" } },
+        "env_digest": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      },
+      "required": ["flight_id", "phase_id"]
+    }
   },
-  "required": ["utcs_code","timestamp_utc","event","trace_refs","content_hash_sha256","signature"]
+  "required": ["utcs_code","timestamp_utc","event","trace_refs","content_hash_sha256","signature","context"]
 }

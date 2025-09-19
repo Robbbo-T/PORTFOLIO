@@ -37,6 +37,12 @@ def test_det_anchor_schema():
         "event":{"mode":"ASSIST->ECO","reasons":["S<9%"],"limits":{"surge_idx":0.085,"v_bus":792}},
         "trace_refs":["telemetry://fadec-x/seg/123#t0..t1"],
         "content_hash_sha256":"e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1",
-        "signature":"DET:ed25519:ABCDEF"
+        "signature":"DET:ed25519:ABCDEF",
+        "context": {
+            "flight_id": "FL-ABC-123",
+            "phase_id": "Cruise",
+            "model_versions": {"fadecx": "v2.1.0", "hvdc": "v1.3.2"},
+            "env_digest": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456"
+        }
     }
     jsonschema.validate(instance=anchor, schema=schema)

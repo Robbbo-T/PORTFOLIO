@@ -1,6 +1,9 @@
-.PHONY: test schema brex invariants trips qs arp
+.PHONY: bootstrap test schema brex invariants trips qs arp extensions
 
-test: schema brex invariants trips qs arp
+bootstrap:
+	python3 -m pip install -r requirements-dev.txt -q
+
+test: bootstrap schema brex invariants trips qs arp extensions
 
 schema:
 	pytest -q tests/test_schema_spec.py
@@ -19,3 +22,9 @@ qs:
 
 arp:
 	pytest -q tests/test_hazard_linkage.py
+
+extensions:
+	pytest -q tests/test_qb_result_contract_negative.py
+	pytest -q tests/test_arp4761x_stl_sanity.py
+	pytest -q tests/test_qb_orchestration.py
+	pytest -q tests/test_fe_security_policy.py
