@@ -15,7 +15,7 @@ jobs:
           fi
       - name: Canonical lint
         run: |
-          python tools/validate_paths.py || true
+          python tools/validate_paths.py
       - name: Portfolio checks
         run: |
           make validate || true
