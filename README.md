@@ -51,21 +51,21 @@ This powerful pattern separates domain-specific business logic from reusable, cr
 ```mermaid
 graph TD
     subgraph Programs [Program-Scale Use Cases]
-        P1[AMPEL360 BWB]
-        P2[GAIA Quantum SAT]
+        P1["AMPEL360 BWB"]
+        P2["GAIA Quantum SAT"]
     end
 
     subgraph MAPs [Vertical Domain Logic]
-        MAP_AAA[MAP-AAA<br/>(Aerodynamics)]
-        MAP_PPP[MAP-PPP<br/>(Propulsion)]
-        MAP_LCC[MAP-LCC<br/>(Comms)]
+        MAP_AAA["MAP-AAA<br/>(Aerodynamics)"]
+        MAP_PPP["MAP-PPP<br/>(Propulsion)"]
+        MAP_LCC["MAP-LCC<br/>(Comms)"]
     end
 
     subgraph MALs [Horizontal Reusable Services]
-        MAL_CB[MAL-CB<br/>Classical Solver]
-        MAL_QB[MAL-QB<br/>Quantum Solver]
-        MAL_FE[MAL-FE<br/>Federation]
-        MAL_QS[MAL-QS<br/>Provenance]
+        MAL_CB["MAL-CB<br/>Classical Solver"]
+        MAL_QB["MAL-QB<br/>Quantum Solver"]
+        MAL_FE["MAL-FE<br/>Federation"]
+        MAL_QS["MAL-QS<br/>Provenance"]
     end
 
     P1 -- consumes --> MAP_AAA
