@@ -224,7 +224,8 @@ def iter_candidate_files(root: Path, policy: ExtensionPolicy) -> Iterator[Path]:
             suffix = path.suffix
             if not suffix:
                 continue
-            if policy.canonical_for(suffix) is None and suffix.casefold() not in policy.alias_map:
+            suffix_cf = suffix.casefold()
+            if policy.canonical_for(suffix) is None and suffix_cf not in policy.alias_map:
                 continue
             yield path
 
