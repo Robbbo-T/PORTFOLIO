@@ -68,7 +68,7 @@ jobs:
               if k not in d: errs.append(f"{p}: missing {k}")
             # Formats (optional but if present must match)
             if "nsn" in d and not nsn_re.match(d["nsn"]):  errs.append(f"{p}: bad NSN {d['nsn']}")
-            if "niin" in d and not niin_re.match(str(d["niin"])): errs.append(f"{p}: bad NIIN {d['niin']}")
+            if "niin" in d and not niin_re.match(str(d["niin"]).zfill(9)): errs.append(f"{p}: bad NIIN {d['niin']}")
             if "cage" in d and not cage_re.match(d["cage"]): errs.append(f"{p}: bad CAGE {d['cage']}")
             # SNS=ATA*100
             ata = d.get("ata_chapter","")[:2]
