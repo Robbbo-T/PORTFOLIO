@@ -1,0 +1,274 @@
+utcs_id: utcs:roadmap:tfa-aqua:v2025-2030:v2.1.0
+version: 2.1.0
+author: Amedeo Pelliccia
+generated: '2024-05-21T12:00:00Z'
+timeframe:
+  start: '2025-09'
+  end: '2030-12'
+cax_methodology:
+  name: CAx (metodología propietaria de Amedeo Pelliccia)
+  utcs_id: utcs:cax:charter:doc:CX-0001:v1.0.0
+  definition_ref: CAX-CHARTER/cax_charter.md
+  catalog_ref: 1-CAX-METHODOLOGY/cax_catalog.yaml
+  proprietary: true
+  ip_notice: Uso bajo licencia AQUA-OS Enterprise. © Amedeo Pelliccia.
+domain_catalog: roadmap/domains.yaml
+mal_matrix: maps/domain_mal_matrix.csv
+lcm_adapter_config: lcm/proprietary_cax_adapters.yaml
+phases:
+- code: v2.2
+  name: UTCS Smart Contracts & CaC Baseline
+  start: '2025-10'
+  end: '2025-12'
+  dependencies:
+  - v2.0
+  standards_gates:
+  - DO-178C_Level_C_ready
+  critical_path: true
+  deliverables:
+  - name: UTCS anchor service v1.0
+    domain: LIB
+    utcs_id: utcs:deliverable:lib:utcs-anchor:v1
+    acceptance_criteria:
+    - 99.5% transaction success rate
+    - Multi-sig wallet integrated
+    - Gas optimization < 100k per anchor
+  - name: DET anchor generator
+    domain: IIS
+    utcs_id: utcs:deliverable:iis:det-generator:v1
+    acceptance_criteria:
+    - Schema validation passing
+    - Cryptographic signatures verified
+    - Trace refs complete
+  - name: FE quorum governance
+    domain: DDD
+    utcs_id: utcs:deliverable:ddd:fe-quorum:v1
+    acceptance_criteria:
+    - EIP-712 implementation complete
+    - 2-of-3 multi-sig tested
+    - Role segregation enforced
+  - name: Activación CAx (baseline) en UTCS/DET
+    domain: CROSS
+    utcs_id: utcs:cax:activation:baseline:v1
+    acceptance_criteria:
+    - Charter CAx referenciado en roadmap (UTCS)
+    - Matriz dominio→MAL en /maps activa y validada en CI
+    - Adapters LCM referenciados y con tests de trazas
+- code: v2.5
+  name: AGI Module Integration
+  start: '2026-04'
+  end: '2026-09'
+  dependencies:
+  - v2.2
+  standards_gates:
+  - DO-178C_Level_B
+  - ARP4761_PSSA
+  critical_path: true
+  deliverables:
+  - name: Claude API integration for CaaS
+    domain: IIS
+    utcs_id: utcs:deliverable:iis:claude-caas:v1
+    acceptance_criteria:
+    - 80% evidence auto-generation
+    - Response time < 2 sec
+    - Rate limiting implemented
+  - name: Knowledge graph v1.0
+    domain: OOO
+    utcs_id: utcs:deliverable:ooo:knowledge-graph:v1
+    acceptance_criteria:
+    - 15 domains mapped
+    - 10k+ entities indexed
+    - SPARQL endpoint active
+- code: v3.0
+  name: OPTIMO-DT Digital Twin Sync
+  start: '2027-01'
+  end: '2027-12'
+  dependencies:
+  - v2.5
+  standards_gates:
+  - DO-178C_Level_A
+  - DO-254_integration
+  - ARP4754A_full
+  critical_path: true
+  deliverables:
+  - name: Real-time CFD twin
+    domain: AAA
+    utcs_id: utcs:deliverable:aaa:rt-cfd-twin:v1
+    acceptance_criteria:
+    - GPU cluster operational
+    - < 2% reality deviation
+    - 1ms update rate
+  - name: H2 system twin
+    domain: CQH
+    utcs_id: utcs:deliverable:cqh:h2-twin:v1
+    acceptance_criteria:
+    - Cryogenic modeling accurate
+    - Safety certification complete
+    - Leak detection < 1ppm
+- code: v4.0
+  name: Full Quantum Extension
+  start: '2028-01'
+  end: '2030-12'
+  dependencies:
+  - v3.0
+  standards_gates:
+  - ICAO_methodology_candidate
+  - ISO_quantum_computing
+  critical_path: false
+  deliverables:
+  - name: Quantum route optimizer
+    domain: IIS
+    utcs_id: utcs:deliverable:iis:quantum-route:v1
+    acceptance_criteria:
+    - 1000x speedup demonstrated
+    - NISQ compatibility
+    - Error correction implemented
+programs:
+- code: AMPEL360
+  name: BWB-Q100 Advanced Blended Wing
+  segment: AIR
+  start: '2025-10'
+  end: '2029-10'
+  budget_eur: 450000000
+  team_size: 120
+  milestones:
+  - name: PDR
+    target: '2026-01-31'
+    gates:
+    - CaaS_Alpha
+    status: planned
+  - name: CDR
+    target: '2026-07-31'
+    gates:
+    - DO-178C_Level_B
+    status: planned
+  - name: First Flight
+    target: '2027-09-30'
+    gates:
+    - DO-178C_Level_A
+    status: planned
+- code: GAIA-SAT
+  name: Quantum Satellite Constellation
+  segment: SPACE
+  start: '2026-01'
+  end: '2028-12'
+  budget_eur: 180000000
+  team_size: 45
+  milestones:
+  - name: Demo Launch
+    target: '2026-12-31'
+    gates:
+    - ESA_ARTES
+    status: planned
+- code: ARES-X
+  name: UAS SWARM Defense System
+  segment: DEFENSE
+  start: '2026-06'
+  end: '2029-06'
+  budget_eur: 220000000
+  team_size: 80
+  milestones:
+  - name: NATO Eval
+    target: '2028-06-30'
+    gates:
+    - STANAG_4586
+    status: planned
+- code: H2-CORRIDOR-X
+  name: European Hydrogen Infrastructure
+  segment: CROSS
+  start: '2026-03'
+  end: '2030-03'
+  budget_eur: 320000000
+  team_size: 95
+  milestones:
+  - name: Full Corridor
+    target: '2029-12-31'
+    gates:
+    - TEN-T_Integration
+    status: planned
+kpis:
+- metric: UTCS Transaction Success
+  target: '>99.5%'
+  measurement: Anchors written/attempted
+  phase: v2.2
+  current: 0
+- metric: Certification Reduction
+  target: '>50%'
+  measurement: vs traditional
+  phase: v2.5
+  current: 0
+- metric: Twin-Reality Deviation
+  target: <2%
+  measurement: Model vs sensors
+  phase: v3.0
+  current: 0
+- metric: Revenue
+  target: '>€100M'
+  measurement: Annual revenue
+  phase: v4.0
+  current: 0
+risks:
+- id: R-T1
+  category: Technical
+  description: Quantum hardware availability delays
+  probability: Medium
+  impact: High
+  owner: CTO
+  mitigation: Maintain CB/QB hybrid approach; use simulators
+  trigger: Vendor delivery slips > 6 months
+  contingency: Extend classical optimization; partner with multiple vendors
+  status: Open
+  review_date: '2025-12-31'
+- id: R-R1
+  category: Regulatory
+  description: Certification authority resistance to CaC/CaaS
+  probability: Medium
+  impact: High
+  owner: Compliance Lead
+  mitigation: Incremental certification; active engagement in EASA sandbox programs
+  trigger: Authority rejects automated evidence methodology
+  contingency: Generate traditional documentation from CaC artifacts; engage lobbyists
+  status: Open
+  review_date: '2026-03-31'
+okrs:
+- quarter: 2025Q4
+  objectives:
+  - id: O-UTCS-01
+    name: Achieve UTCS operational excellence
+    owner: Platform Lead
+    key_results:
+    - id: KR1
+      desc: Deploy UTCS anchor service with 99.5% uptime
+      target: 99.5
+      metric: uptime_percentage
+      current: 0
+    - id: KR2
+      desc: Anchor 1,000+ DET events from CI/CD
+      target: 1000
+      metric: anchor_count
+      current: 0
+- quarter: 2026Q2
+  objectives:
+  - id: O-AGI-01
+    name: Demonstrate AGI-powered certification efficiency
+    owner: AI Lead
+    key_results:
+    - id: KR1
+      desc: Auto-generate 80% of evidence for a Level C component
+      target: 80
+      metric: auto_gen_ratio_pct
+      current: 0
+  - id: O-ACADEMIC-01
+    name: Solidify academic and thought leadership
+    owner: Amedeo Pelliccia
+    key_results:
+    - id: KR1
+      desc: Successfully defend Master's thesis
+      target: '2026-05-31'
+      metric: defense_date
+      current: null
+    - id: KR2
+      desc: Publish 2 papers in peer-reviewed journals/conferences
+      target: 2
+      metric: paper_count
+      current: 0
