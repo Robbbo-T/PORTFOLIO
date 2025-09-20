@@ -11,22 +11,13 @@ from typing import Sequence
 
 # Allow running both as ``python tools/migrate_extensions.py`` and
 # ``python -m tools.migrate_extensions``.
-try:  # pragma: no cover - direct script execution
-    from extensions_policy import (  # type: ignore[import-not-found]
-        PolicyError,
-        RenameOperation,
-        ensure_policy_exists,
-        load_policy,
-        plan_renames,
-    )
-except ModuleNotFoundError:  # pragma: no cover - module execution
-    from tools.extensions_policy import (  # type: ignore[import-not-found]
-        PolicyError,
-        RenameOperation,
-        ensure_policy_exists,
-        load_policy,
-        plan_renames,
-    )
+from .extensions_policy import (
+    PolicyError,
+    RenameOperation,
+    ensure_policy_exists,
+    load_policy,
+    plan_renames,
+)
 
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
