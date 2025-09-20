@@ -23,8 +23,6 @@ fields:
   sns: { 
     type: integer, 
     description: "System Number Sequence (SNS), calculated as ATA_chapter * 100. Must match the ATA chapter multiplied by 100.",
-    # If your schema system supports custom constraints, you could add:
-    # x-constraint: "sns == int(ata_chapter.split('-')[0]) * 100"
   }
   tfa_llc:          { type: string, enum: [SI,DI,SE,CV,CE,CC,CI,CP,CB,QB,UE,FE,FWD,QS] }
   spare_class:      { type: string, enum: [ROTABLE, REPAIRABLE, CONSUMABLE, KIT] }
