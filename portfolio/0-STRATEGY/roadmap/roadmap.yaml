@@ -12,6 +12,11 @@ cax_methodology:
   catalog_ref: 1-CAX-METHODOLOGY/cax_catalog.yaml
   proprietary: true
   ip_notice: Uso bajo licencia AQUA-OS Enterprise. © Amedeo Pelliccia.
+asi_t_ecosystem:
+  definition_ref: utcs:asi-t:charter:doc:AT-0001:v1.0.0
+  catalog_ref: utcs:asi-t:meta:catalog:AT-0001:v1.0.0
+  ip_notice: "ASI-T is proprietary under AQUA-OS Enterprise; third-party marks belong to their owners."
+  depends_on: [utcs:tfa:architecture:core:REF-0001, utcs:aqua:quantum-bridge:REF-0001]
 domain_catalog: roadmap/domains.yaml
 mal_matrix: maps/domain_mal_matrix.csv
 lcm_adapter_config: lcm/proprietary_cax_adapters.yaml
@@ -48,12 +53,19 @@ phases:
     - 2-of-3 multi-sig tested
     - Role segregation enforced
   - name: Activación CAx (baseline) en UTCS/DET
-    domain: CROSS
-    utcs_id: utcs:cax:activation:baseline:v1
+    domain: OOO
+    utcs_id: utcs:deliverable:ooo:cax-baseline-utcs-det:v1
     acceptance_criteria:
-    - Charter CAx referenciado en roadmap (UTCS)
-    - Matriz dominio→MAL en /maps activa y validada en CI
-    - Adapters LCM referenciados y con tests de trazas
+    - "Charter CAx y ASI-T referenciados (CX-0001, AT-0001)"
+    - "Matriz dominio→MAL validada en CI (100% dominios)"
+    - "Adapters LCM propietarios enlazados a UTCS (cax:// bindings)"
+  - name: ASI-T Core enablement (TFA Architecture + Quantum Bridge)
+    domain: IIS
+    utcs_id: utcs:deliverable:iis:asi-t-core-enable:v1
+    acceptance_criteria:
+    - "Trust/Data-Security/Interoperability/Governance/DLT hooks presentes"
+    - "Quantum Bridge stubs prontos (CB↔QB job class & RT envelopes)"
+    - "DET anchors para pruebas de extremo a extremo"
 - code: v2.5
   name: AGI Module Integration
   start: '2026-04'
