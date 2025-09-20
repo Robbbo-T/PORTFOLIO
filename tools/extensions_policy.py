@@ -80,7 +80,7 @@ def _normalise_extension(raw: str, *, allow_empty: bool = False) -> str:
             return ""
         raise PolicyError("Extension entry cannot be null")
 
-    extension = str(raw).strip()
+    extension = raw.strip()
     if not extension:
         if allow_empty:
             return ""
