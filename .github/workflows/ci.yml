@@ -78,7 +78,10 @@ jobs:
             ata = m.group(1) if m else ""
             try:
               if int(ata)*100 != int(d.get("sns", -1)): errs.append(f"{p}: SNS!=ATA*100")
-            except: errs.append(f"{p}: bad ATA/SNS")
+            except ValueError as ve:
+              errs.append(f"{p}: invalid ATA chapter format '{ata}' or SNS value '{d.get('sns', -1)}': {ve}")
+            except TypeError as te:
+              errs.append(f"{p}: missing or invalid type for ATA chapter or SNS value: {te}")
             # ICN structured
             icns = d.get("digital",{}).get("icn_structured")
             if icns and not icn_re.match(icns): errs.append(f"{p}: bad structured ICN {icns}")
