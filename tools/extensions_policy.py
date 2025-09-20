@@ -117,14 +117,14 @@ def _extract_aliases(raw_aliases: object) -> List[str]:
     return aliases
 
 
-Rather than one giant `load_policy`, you can split it into focused steps:  
-1. parse ignore‐dirs  
-2. parse families + alias_map  
-3. assemble the ExtensionPolicy
+# Rather than one giant `load_policy`, you can split it into focused steps:  
+# 1. parse ignore-dirs  
+# 2. parse families + alias_map  
+# 3. assemble the ExtensionPolicy
+#
+# Example refactoring:
 
-Example refactoring:
-
-```python
+# ```python
 # new helper
 def _parse_ignore_directories(raw: object) -> tuple[str, ...]:
     if isinstance(raw, str):
@@ -188,90 +188,7 @@ def load_policy(path: Path | None = None) -> ExtensionPolicy:
         alias_map=alias_map,
         ignore_directories=ignore_dirs,
     )
-    """Load the extension policy from *path*.
 
-    Raises :class:`FileNotFoundError` if the policy file is absent and
-    :class:`PolicyError` if the content is malformed.
-    """
-
-    policy_path = path or DEFAULT_POLICY_PATH
-    data = policy_path.read_text(encoding="utf-8")
-    try:
-        parsed = yaml.safe_load(data) or {}
-    except yaml.YAMLError as exc:  # pragma: no cover - surfaced to caller
-        raise PolicyError(f"Invalid YAML syntax in {policy_path}: {exc}") from exc
-
-    if not isinstance(parsed, Mapping):
-        raise PolicyError("Policy document must be a mapping")
-
-    version = parsed.get("version", "1")
-    families_raw = parsed.get("families", {})
-    if not isinstance(families_raw, Mapping):
-        raise PolicyError("'families' must be a mapping of family definitions")
-
-    ignore_raw = parsed.get("ignore_directories", [])
-    if isinstance(ignore_raw, str):
-        ignore_iter: Iterable[str] = [ignore_raw]
-    elif isinstance(ignore_raw, Sequence):
-        ignore_iter = ignore_raw
-    else:
-        raise PolicyError("'ignore_directories' must be a sequence of strings")
-    ignore_directories = tuple(str(entry).strip() for entry in ignore_iter if str(entry).strip())
-
-    alias_map: Dict[str, str] = {}
-    families: List[ExtensionFamily] = []
-    canonical_seen: Dict[str, str] = {}
-
-    for family_name, body in sorted(families_raw.items()):
-        if not isinstance(body, Mapping):
-            raise PolicyError(
-                f"Family '{family_name}' must be defined as a mapping"
-            )
-
-        canonical_raw = body.get("canonical")
-        if canonical_raw is None:
-            raise PolicyError(
-                f"Family '{family_name}' is missing required 'canonical' entry"
-            )
-        canonical = _normalise_extension(str(canonical_raw))
-        canonical_key = canonical.casefold()
-        if canonical_key in canonical_seen:
-            other = canonical_seen[canonical_key]
-            raise PolicyError(
-                f"Canonical extension '{canonical}' reused in '{family_name}' and '{other}'"
-            )
-        canonical_seen[canonical_key] = family_name
-
-        aliases = _extract_aliases(body.get("aliases") or body.get("variants") or body.get("synonyms"))
-
-        normalised_aliases: List[str] = []
-        for alias in aliases:
-            alias_key = alias.casefold()
-            if alias_key == canonical_key:
-                continue
-            existing = alias_map.get(alias_key)
-            if existing and existing != canonical:
-                raise PolicyError(
-                    f"Alias '{alias}' in family '{family_name}' conflicts with canonical '{existing}'"
-                )
-            alias_map[alias_key] = canonical
-            normalised_aliases.append(alias)
-
-        families.append(
-            ExtensionFamily(
-                name=str(family_name),
-                canonical=canonical,
-                aliases=tuple(normalised_aliases),
-            )
-        )
-
-    return ExtensionPolicy(
-        version=version,
-        path=policy_path,
-        families=tuple(families),
-        alias_map=alias_map,
-        ignore_directories=tuple(ignore_directories),
-    )
 
 
 @dataclass(frozen=True)

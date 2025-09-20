@@ -1,0 +1,26 @@
+# This file assigns ownership for different parts of the robbbo-t-asi-t-transition repository.
+
+# --- Audience Baselines ---
+
+# Developers own the platform code
+/platform/workspaces/services/ @team-backend
+/platform/workspaces/frontend/ @team-frontend
+/platform/workspaces/packages/ @team-platform
+
+# Operations/SRE own the infrastructure and deployment configurations
+/platform/operations/ @team-ops
+/k8s/ @team-ops
+
+# Domain Experts own the engineering logic and TFA artifacts
+/portfolio/2-DOMAINS-LEVELS/ @team-domain-experts
+/portfolio/1-CAX-METHODOLOGY/ @team-domain-experts
+
+# Governance owns the strategic documents, policies, and CI/CD workflows
+/portfolio/0-STRATEGY/ @team-governance
+/portfolio/7-GOVERNANCE/ @team-governance
+/.github/workflows/ @team-governance
+
+# --- Global Files ---
+/Makefile @team-platform
+/pyproject.toml @team-platform
+/README.md @team-governance

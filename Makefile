@@ -1,8 +1,21 @@
 # TFA V2 Portfolio Management Makefile
 # Scaffolding, validation, and maintenance commands
 
-.PHONY: help scaffold check validate domains quantum-bridge master-progress clean \
-bootstrap pre-commit-install lint test canonical-plan canonical-apply canonical-verify ci
+# Canonical Project Slug
+PROJECT_SLUG ?= robbbo-t-asi-t-transition
+PYTHON_PKG = robbbot_asi_t_transition
+K8S_NAMESPACE = robbbot-asi-t-tr
+
+# Docker Configuration
+GITHUB_OWNER ?= Robbbo-T
+GIT_REF ?= $(shell git rev-parse --short HEAD 2>/dev/null || echo dev)
+IMAGE_NAME ?= $(PROJECT_SLUG)
+IMAGE_TAG ?= $(GIT_REF)
+IMAGE ?= ghcr.io/$(GITHUB_OWNER)/$(IMAGE_NAME):$(IMAGE_TAG)
+
+.PHONY: help print-vars scaffold check validate domains quantum-bridge master-progress clean \
+bootstrap pre-commit-install lint test canonical-plan canonical-apply canonical-verify ci \
+docker-build docker-push
 
 PY := python
 
@@ -11,6 +24,7 @@ help:
 	@echo "🚀 TFA V2 Portfolio Management"
 	@echo ""
 	@echo "Available targets:"
+	@echo "  print-vars       - Show canonical project variables"
 	@echo "  bootstrap        - Install/upgrade core Python tooling"
 	@echo "  pre-commit-install - Install pre-commit hooks"
 	@echo "  lint             - Run canonical extension lint checks"
@@ -24,9 +38,17 @@ help:
 	@echo "  validate         - Run TFA structure validator"
 	@echo "  domains          - Show domain status"
 	@echo "  quantum-bridge   - Create quantum-classical bridge code buckets"
+	@echo "  docker-build     - Build Docker image with canonical naming"
+	@echo "  docker-push      - Push Docker image to registry"
 	@echo "  master-progress  - Generate Master's Project progress report"
 	@echo "  clean            - Remove temporary files"
 	@echo "  help             - Show this help"
+
+print-vars:
+	@echo "Project Slug: $(PROJECT_SLUG)"
+	@echo "Python Package: $(PYTHON_PKG)"
+	@echo "K8s Namespace: $(K8S_NAMESPACE)"
+	@echo "Docker Image: $(IMAGE)"
 
 bootstrap:
 	$(PY) -m pip install --upgrade pip -q
@@ -125,6 +147,15 @@ clean:
 	@find . -name "*.pyc" -delete 2>/dev/null || true
 	@find . -name ".DS_Store" -delete 2>/dev/null || true
 	@echo "✅ Cleanup complete"
+
+# Docker build and push targets
+docker-build:
+	@echo "Building Docker image: $(IMAGE)..."
+	@docker build -t $(IMAGE) . || true
+
+docker-push:
+	@echo "Pushing Docker image: $(IMAGE)..."
+	@docker push $(IMAGE) || true
 
 # Idempotent scaffolding for CQH domain
 .PHONY: scaffold-cqh
