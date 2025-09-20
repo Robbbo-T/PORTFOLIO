@@ -70,6 +70,14 @@ validate:
 	@echo "🔍 Running TFA structure validation..."
 	@python3 scripts/validate_tfa.py
 
+# Alias for GitHub Actions workflow
+validate-tfa: validate
+
+# Run quantum layers consistency check
+check-quantum-layers:
+	@echo "🔬 Running quantum layers consistency check..."
+	@python3 scripts/validate_tfa.py
+
 # Aggregate checks
 check:: validate
 	@echo "🎯 All checks passed!"
@@ -117,5 +125,35 @@ clean:
 	@find . -name "*.pyc" -delete 2>/dev/null || true
 	@find . -name ".DS_Store" -delete 2>/dev/null || true
 	@echo "✅ Cleanup complete"
+
+# Idempotent scaffolding for CQH domain
+.PHONY: scaffold-cqh
+scaffold-cqh:
+	@echo "Scaffolding CQH-CRYOGENICS-QUANTUM-AND-H2 domain..."
+	# Create TFA layer directories (if they don't exist)
+	mkdir -p 2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/ \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/SYSTEMS/DI \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/SYSTEMS/SI \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/STATIONS/SE \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/COMPONENTS/CV \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/COMPONENTS/CE \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/COMPONENTS/CC \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/COMPONENTS/CI \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/COMPONENTS/CP \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/BITS/CB \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/QUBITS/QB \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/ELEMENTS/UE \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/ELEMENTS/FE \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/WAVES/FWD \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/STATES/QS \
+	         2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/META
+	# Add META/README.md if not present
+	@if [ ! -f "2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/META/README.md" ]; then \
+	    echo "# CQH Domain TFA Structure" > 2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/META/README.md; \
+	    echo "(Placeholder README for CQH domain)" >> 2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/META/README.md; \
+	    echo "Added META/README.md placeholder."; \
+	fi
+	@echo "CQH domain scaffolding complete."
+
 # Include shared TFA scaffolding/validation targets
 include 8-RESOURCES/TEMPLATES/makefile.snippets.mk

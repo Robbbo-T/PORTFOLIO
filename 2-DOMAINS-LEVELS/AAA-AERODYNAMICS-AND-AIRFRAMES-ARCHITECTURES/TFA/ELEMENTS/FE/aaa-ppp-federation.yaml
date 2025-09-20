@@ -1,0 +1,29 @@
+# AAA-PPP Federation Entanglement Manifest
+
+type: FE
+name: AAA-PPP-Federation
+version: "1.0.0"
+members:
+  - domain: AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES
+    role: coordinator
+    weight: 1
+    capabilities: ["flight-data-sharing"]
+    endpoints:
+      api: "https://aaa.example.com/api"
+  - domain: PPP-PROPULSION-AND-FUEL-SYSTEMS
+    role: participant
+    weight: 1
+    capabilities: ["fuel-usage-sync"]
+    endpoints:
+      api: "https://ppp.example.com/api"
+orchestration_rules:
+  consensus_protocol: "simple-majority"
+  quorum_threshold: 0.66
+  timeout_seconds: 60
+# EIP-712 signature fields (placeholders to be filled after signing):
+nonce: 1
+canonical_hash: "{to-be-computed}"
+signature:
+  r: "{placeholder_r}"
+  s: "{placeholder_s}"
+  v: 27

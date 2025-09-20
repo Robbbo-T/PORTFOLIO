@@ -1,0 +1,19 @@
+# Bell State Experiment - Quantum State Manifest
+
+type: QS
+name: Bell-State-Experiment
+version: "0.1.0"
+description: "Entangled Bell state generated from two qubits."
+provenance:
+  parent_artifacts:
+    - id: "CQH-QB-EXP1-A"   # Source Qubit A (from CQH domain)
+      type: QB
+      role: "entangled-qubit-1"
+    - id: "CQH-QB-EXP1-B"   # Source Qubit B (from CQH domain)
+      type: QB
+      role: "entangled-qubit-2"
+outcome:
+  state: "Phi-plus"         # Bell state |Φ+> outcome
+  fidelity: 0.95            # Measured fidelity of entanglement
+canonical_hash: "{computed_after_experiment}"
+utcs_candidate_id: "UTCS-2025-09-20-CQH-00001"
