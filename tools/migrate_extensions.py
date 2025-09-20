@@ -44,8 +44,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
 
 def describe_plan(plan: Sequence[RenameOperation]) -> str:
     lines = ["Pending canonical renames:"]
-    for op in plan:
-        lines.append(f" - {op.source} -> {op.target}")
+    lines.extend(f" - {op.source} -> {op.target}" for op in plan)
     lines.append("Run with --apply to perform the renames.")
     return "\n".join(lines)
 
