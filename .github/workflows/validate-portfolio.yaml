@@ -10,7 +10,9 @@ jobs:
       - name: Install tools
         run: |
           python -m pip install --upgrade pip
-          [ -f requirements-dev.txt ] && python -m pip install -r requirements-dev.txt || true
+          if [ -f requirements-dev.txt ]; then
+            python -m pip install -r requirements-dev.txt
+          fi
       - name: Canonical lint
         run: |
           python tools/validate_paths.py || true
