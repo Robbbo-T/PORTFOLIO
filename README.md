@@ -1,12 +1,21 @@
-# Amedeo Pelliccia · Professional Portfolio
+# Robbbo-T — ASI-T (Aerospace Super-Intelligence Transformers)
 
-> **Classical–Quantum Extensible Aerospace**
-> A unified host platform for engineering, certifying, and operating next-generation aerospace systems. Built on a strict **TFA** hierarchy across **15 domains**, a hybrid **quantum–classical bridge** (CB→QB→QS), and the **OPTIMO-DT** digital thread, all enforced by **Compliance-as-Code**.
+**Repository Slug:** `robbbo-t-asi-t-transition`
 
-![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
-![Architecture: TFA V2](https://img.shields.io/badge/TFA-V2-critical.svg)
-![Quantum Layers](https://img.shields.io/badge/Layers-CB|QB|UE|FE|FWD|QS-8A2BE2.svg)
-![CI Status](https://img.shields.io/badge/CI-validators--green.svg)
+**Vision:** Aerospace Super-Intelligence Transformers enabling a Sustainable Industry Transition (ASI-T).
+
+This repository contains the full-stack platform and engineering portfolio for the ASI-T initiative, organized under a strict TFA architecture with a quantum-classical bridge.
+
+## Audience baselines
+- Developers & SRE → `platform/`
+- Domain Experts → `portfolio/2-domains-levels/` and `portfolio/1-cax-methodology/`
+- Governance/Auditors → `portfolio/0-strategy/` and `portfolio/7-governance/`
+
+## Quickstart
+```bash
+make print-vars
+make validate
+```
 
 ---
 
