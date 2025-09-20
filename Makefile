@@ -1,13 +1,24 @@
 # TFA V2 Portfolio Management Makefile
 # Scaffolding, validation, and maintenance commands
 
-.PHONY: help scaffold check validate domains quantum-bridge master-progress clean
+.PHONY: help scaffold check validate domains quantum-bridge master-progress clean \
+bootstrap pre-commit-install lint test canonical-plan canonical-apply canonical-verify ci
+
+PY := python
 
 # Default target
 help:
 	@echo "🚀 TFA V2 Portfolio Management"
 	@echo ""
 	@echo "Available targets:"
+	@echo "  bootstrap        - Install/upgrade core Python tooling"
+	@echo "  pre-commit-install - Install pre-commit hooks"
+	@echo "  lint             - Run canonical extension lint checks"
+	@echo "  test             - Execute pytest suite"
+	@echo "  canonical-plan   - Preview canonical extension migration"
+	@echo "  canonical-apply  - Apply canonical extension migration"
+	@echo "  canonical-verify - Ensure no pending canonical renames"
+	@echo "  ci               - Run lint, tests, and canonical verification"
 	@echo "  scaffold         - Create missing TFA structure and implementation buckets"
 	@echo "  check            - Run all validations"
 	@echo "  validate         - Run TFA structure validator"
@@ -16,6 +27,37 @@ help:
 	@echo "  master-progress  - Generate Master's Project progress report"
 	@echo "  clean            - Remove temporary files"
 	@echo "  help             - Show this help"
+
+bootstrap:
+	$(PY) -m pip install --upgrade pip -q
+	$(PY) -m pip install -q pyyaml pre-commit pytest hypothesis
+
+pre-commit-install: bootstrap
+	pre-commit install -t pre-commit -t pre-push
+
+lint:
+	$(PY) tools/lint_extensions.py
+
+test:
+	pytest -q
+
+canonical-plan: bootstrap
+	@$(PY) tools/migrate_extensions.py || true
+
+canonical-apply: bootstrap
+	@$(PY) tools/check_git_clean.py
+	@git switch -c chore/canonical-extensions 2>/dev/null || git switch chore/canonical-extensions
+	$(PY) tools/migrate_extensions.py --apply
+	pre-commit run -a || true
+	git add -A
+	git commit -m "chore: normalize extensions per policy" || true
+	@echo "✔ canonical-apply done. Revisa el diff y sube PR."
+
+canonical-verify: bootstrap
+	@$(PY) tools/migrate_extensions.py && echo "OK: no pending canonical renames"
+
+ci: bootstrap lint test canonical-verify
+	@echo "CI pack OK"
 
 # Create complete TFA scaffolding (idempotent) + quantum bridge buckets
 scaffold:: quantum-bridge

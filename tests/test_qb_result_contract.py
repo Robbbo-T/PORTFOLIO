@@ -32,7 +32,12 @@ def test_qb_result_minimum():
         "event":{"mode":"QB_SOLN","reasons":["gap<3%"],"limits":{"surge_idx":0.09}},
         "trace_refs":["qb://runs/42#log"],
         "content_hash_sha256":"e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1e3f1",
-        "signature":"DET:ed25519:ABCDEF"
+        "signature":"DET:ed25519:ABCDEF",
+        "context":{
+          "flight_id":"AMP-42",
+          "phase_id":"Cruise",
+          "model_versions":{"optimizer":"1.0.0"}
+        }
       }
     }
     validator.validate(sample)
