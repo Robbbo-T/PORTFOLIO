@@ -1,0 +1,84 @@
+version: 1
+title: "NATO-PNR canonical record"
+description: "Single source of truth for hardware assets with NATO codification + TFA/CAx/UTCS links"
+
+fields:
+
+  # Identity & codification (external)
+  pnr_id:           { type: string, required: true }    # your internal PNR key (stable)
+  item_name:        { type: string, required: true }    # noun designation
+  nsn:              { type: string, pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{7}$" }  # FSC-NCB-NIIN
+  niin:             { type: string, pattern: "^[0-9]{9}$" }                    # 9 digits (NCB+7)
+  cage:             { type: string, pattern: "^[A-Z0-9]{5}$" }                 # NCAGE/CAGE (5 chars)
+  mpn:              { type: string }                                           # Manufacturer Part Number
+  manufacturer:     { type: string }
+  alt_ids:          { type: array, items: { type: string } }                   # legacy PNs, drawing numbers
+
+  # Program & classification (internal)
+  ata_chapter:      { 
+    type: string, 
+    pattern: "^[0-9]{2}$|^[0-9]{2}-[0-9]{2}$",
+    description: "ATA chapter code. Used to calculate SNS: SNS = ATA_chapter * 100."
+  }
+  sns: { 
+    type: integer, 
+    description: "System Number Sequence (SNS), calculated as ATA_chapter * 100. Must match the ATA chapter multiplied by 100.",
+  }
+  tfa_llc:          { type: string, enum: [SI,DI,SE,CV,CE,CC,CI,CP,CB,QB,UE,FE,FWD,QS] }
+  spare_class:      { type: string, enum: [ROTABLE, REPAIRABLE, CONSUMABLE, KIT] }
+  effectivity:      { type: object }                  # models/blocks/serial ranges
+
+  # Basic specifications
+  specs:
+    type: object
+    fields:
+      mass_kg:            { type: number }
+      envelope_mm:        { type: object, fields: { L: number, W: number, H: number } }
+      materials:          { type: array, items: { type: string } }
+      finish:             { type: string }
+      mech_interfaces:    { type: array, items: { type: string } }   # e.g., bolt pattern, flange std
+      elec_interfaces:    { type: array, items: { type: string } }   # connectors, voltage, bus
+      env_ratings:        { type: object }                            # temp, vibration, IP, DO-160 tags
+      performance:        { type: object }                            # key KPIs (thrust, flow, etc.)
+      reliability:        { type: object, fields: { mtbf_hr: number, mttf_hr: number } }
+      maintainability:    { type: object, fields: { mmh_per_removal: number } }
+      hazards:            { type: array, items: { type: string } }    # e.g., pressure vessel, hazmat
+
+  # Compliance & governance
+  compliance:
+    type: object
+    fields:
+      standards:          { type: array, items: { type: string } }   # DO-160, EN, ISO…
+      reach_rohs:         { type: object, fields: { reach: boolean, rohs: boolean } }
+      safety_class:       { type: string }                            # e.g., DAL level or internal class
+      export_control:     { type: object, fields: { eccn: string, itar: boolean } }
+
+  # Digital thread
+  digital:
+    type: object
+    fields:
+      utcs_root_ref:      { type: string }     # global idempotent anchor
+      teknia_anchor:      { type: string }     # TEKNIA Δ+ ref (valuation record)
+      icn_structured:     { type: string, pattern: "^[0-9]{2}-[A-Z]{2,3}-[A-Z]{2,3}-[A-Z]{2,4}-[0-9]{3}$" }
+      dm_refs:            { type: array, items: { type: string } }   # S1000D DM codes
+      cmf_ref:            { type: string }                           # Component Manifest
+      spc_ref:            { type: string }                           # Spare Part Catalogue entry
+
+  # Artifact targets — where work runs (dev/test/build/operate)
+  cax_targets:
+    type: object
+    fields:
+      CAD: { type: object, fields: { tool: string, project: string, vault: string } }
+      CAE: { type: object, fields: { solver: string, deck_path: string, cluster: string } }
+      CAM: { type: object, fields: { cam_system: string, postproc: string, nc_store: string } }
+      CAT: { type: object, fields: { lab: string, rig: string, procedure_dm: string } }
+      CAS: { type: object, fields: { ietp: string, amm_dm: string, ri_dm: string } }
+
+  # Lifecycle & configuration control
+  lifecycle:
+    type: object
+    fields:
+      baseline:      { type: string }               # config baseline id
+      change_log:    { type: array, items: { type: object } }  # ECO/ECR refs
+      status:        { type: string, enum: [draft, proto, qual, released, retired] }
+      serialization: { type: object }               # per-SN mapping if needed
