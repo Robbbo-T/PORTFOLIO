@@ -50,4 +50,38 @@ jobs:
         run: |
           if [ -f .ci/Makefile ]; then
             make -f .ci/Makefile test
+          fi
+
+      - name: Validate NATO-PNR records
+        run: |
+          python - << 'PY'
+          import re, sys, yaml, glob
+          errs=[]
+          nsn_re  = re.compile(r"^[0-9]{4}-[0-9]{2}-[0-9]{7}$")
+          niin_re = re.compile(r"^[0-9]{9}$")
+          cage_re = re.compile(r"^[A-Z0-9]{5}$")
+          icn_re  = re.compile(r"^[0-9]{2}-[A-Z]{2,3}-[A-Z]{2,3}-[A-Z]{2,4}-[0-9]{3}$")
+          for p in glob.glob("8-RESOURCES/CATALOGS/pnr/*.yaml"):
+            d = yaml.safe_load(open(p, encoding='utf-8'))
+            # Requireds
+            for k in ["pnr_id","item_name","ata_chapter","sns","tfa_llc","spare_class","cax_targets"]:
+              if k not in d: errs.append(f"{p}: missing {k}")
+            # Formats (optional but if present must match)
+            if "nsn" in d and not nsn_re.match(d["nsn"]):  errs.append(f"{p}: bad NSN {d['nsn']}")
+            if "niin" in d and not niin_re.match(str(d["niin"])): errs.append(f"{p}: bad NIIN {d['niin']}")
+            if "cage" in d and not cage_re.match(d["cage"]): errs.append(f"{p}: bad CAGE {d['cage']}")
+            # SNS=ATA*100
+            ata = d.get("ata_chapter","")[:2]
+            try:
+              if int(ata)*100 != int(d.get("sns", -1)): errs.append(f"{p}: SNS!=ATA*100")
+            except: errs.append(f"{p}: bad ATA/SNS")
+            # ICN structured
+            icns = d.get("digital",{}).get("icn_structured")
+            if icns and not icn_re.match(icns): errs.append(f"{p}: bad structured ICN {icns}")
+            # CAx targets minimal keys
+            for k in ["CAD","CAE","CAM","CAT","CAS"]:
+              if k not in d["cax_targets"]: errs.append(f"{p}: missing cax_targets.{k}")
+          if errs: print("\n".join(errs)); sys.exit(1)
+          print("NATO-PNR records OK")
+          PY
          

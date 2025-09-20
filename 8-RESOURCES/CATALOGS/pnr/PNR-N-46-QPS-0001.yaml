@@ -1,0 +1,60 @@
+pnr_id: "PNR-N-46-QPS-0001"
+item_name: "Quantum Processing System (QPS) Controller Assembly"
+nsn: "7025-12-3456789"          # FSC 7025 (ADP Input/Output), NCB 12, NIIN 3456789
+niin: "123456789"
+cage: "1ABCD"
+mpn: "QPS-CTRL-ASSY-01"
+manufacturer: "Quantum Global Act S.L."
+alt_ids: ["DWG-46-CTRL-001"]
+
+ata_chapter: "46"
+sns: 4600
+tfa_llc: CE
+spare_class: ROTABLE
+effectivity:
+  product:
+    - { model: "GAIA-AIR A360e-BWB", block: "Q100", range: "MSN001–MSN050" }
+
+specs:
+  mass_kg: 6.8
+  envelope_mm: { L: 320, W: 220, H: 90 }
+  materials: ["6061-T6 Alu chassis", "CFRP lid", "SnPb-free solder"]
+  finish: "Alodine + black anodize"
+  mech_interfaces: ["4x M6 on 160x180 mm pattern", "ARINC 600 short"]
+  elec_interfaces: ["28VDC, 8A max", "ARINC429", "Ethernet AFDX", "Discrete I/O 28V"]
+  env_ratings: { do160_sections: ["A3","B2","C1","D1"], ip_rating: "IP54", temp_c: "-20..+60" }
+  performance: { qbit_link_if: "QSPI-over-cryocable proxy", sync_ppm: 5 }
+  reliability: { mtbf_hr: 35000 }
+  maintainability: { mmh_per_removal: 0.7 }
+  hazards: ["ESD sensitive"]
+
+compliance:
+  standards: ["DO-160G (selected)", "EN 9100 build", "IPC-A-610 class 3"]
+  reach_rohs: { reach: true, rohs: true }
+  safety_class: "Internal: Class C (non-flight critical)"
+  export_control: { eccn: "5A992", itar: false }
+
+digital:
+  utcs_root_ref: "0x6e…f29"
+  teknia_anchor: "TEK-DELTA-S07-QPS-VAL-0003"
+  icn_structured: "46-CAD-CE-DSN-001"
+  dm_refs:
+    - "DMC-GAA-4600-SD-00-E-0001.XML"  # QPS system description
+    - "DMC-GAA-4600-ARVR-00-E-0012.XML" # AR/VR maintenance
+    - "DMC-GAA-4600-BIT-00-E-0011.XML"  # Blockchain tech interface
+  cmf_ref: "CMF-46-QPS-ASSY-01.yaml"
+  spc_ref: "SPC_QPS.yaml"
+
+cax_targets:
+  CAD: { tool: "CATIA V5", project: "GAIA/QPS", vault: "PLM/GAIA-QPS" }
+  CAE: { solver: "Ansys Mechanical + EM", deck_path: "2-DOMAINS-LEVELS/EDI/TFA/BITS/CB/CAE/QPS", cluster: "HPC-AURORA" }
+  CAM: { cam_system: "NX CAM", postproc: "Heidenhain iTNC530", nc_store: "MFG/NC/QPS" }
+  CAT: { lab: "LAB-ELEC-01", rig: "RIG-QPS-CTRL-A", procedure_dm: "DMC-GAA-4600-TEST-00-E-0101.XML" }
+  CAS: { ietp: "IETP/GAIA/QPS", amm_dm: "DMC-GAA-4600-AMM-00-E-0201.XML", ri_dm: "DMC-GAA-4600-RI-00-E-0301.XML" }
+
+lifecycle:
+  baseline: "BL-QPS-A1"
+  change_log:
+    - { id: "ECO-46-2025-014", note: "Connector swap to ARINC600", date: "2025-09-10" }
+  status: "released"
+  serialization: {}
