@@ -71,7 +71,11 @@ jobs:
             if "niin" in d and not niin_re.match(str(d["niin"]).zfill(9)): errs.append(f"{p}: bad NIIN {d['niin']}")
             if "cage" in d and not cage_re.match(d["cage"]): errs.append(f"{p}: bad CAGE {d['cage']}")
             # SNS=ATA*100
-            ata = d.get("ata_chapter","")[:2]
+            ata_chapter_val = d.get("ata_chapter", "")
+            # Extract the first numeric part (handles 'NN' and 'NN-NN')
+            import re
+            m = re.match(r"^(\d{2})", ata_chapter_val)
+            ata = m.group(1) if m else ""
             try:
               if int(ata)*100 != int(d.get("sns", -1)): errs.append(f"{p}: SNS!=ATA*100")
             except: errs.append(f"{p}: bad ATA/SNS")
