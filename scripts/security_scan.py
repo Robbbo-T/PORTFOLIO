@@ -23,7 +23,8 @@ patterns = [
 def file_contains_secret(filepath):
     """Check if a file contains any patterns matching secrets."""
     try:
-        text = open(filepath, 'r', errors='ignore').read()
+        with open(filepath, 'r', errors='ignore') as f:
+            text = f.read()
         for pat in patterns:
             if pat.search(text):
                 return True
