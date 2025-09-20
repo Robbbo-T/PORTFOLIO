@@ -117,7 +117,77 @@ def _extract_aliases(raw_aliases: object) -> List[str]:
     return aliases
 
 
+Rather than one giant `load_policy`, you can split it into focused steps:  
+1. parse ignore‐dirs  
+2. parse families + alias_map  
+3. assemble the ExtensionPolicy
+
+Example refactoring:
+
+```python
+# new helper
+def _parse_ignore_directories(raw: object) -> tuple[str, ...]:
+    if isinstance(raw, str):
+        items = [raw]
+    elif isinstance(raw, Sequence):
+        items = raw
+    else:
+        raise PolicyError("'ignore_directories' must be a sequence or string")
+    return tuple(s.strip() for s in items if s and s.strip())
+
+# new helper
+def _build_families(
+    families_raw: Mapping[str, object]
+) -> tuple[list[ExtensionFamily], dict[str, str]]:
+    alias_map: dict[str, str] = {}
+    families: list[ExtensionFamily] = []
+    seen: dict[str, str] = {}
+
+    for fam_name, body in sorted(families_raw.items()):
+        if not isinstance(body, Mapping):
+            raise PolicyError(f"Family {fam_name!r} must be a mapping")
+        canonical = _normalise_extension(body["canonical"])
+        key = canonical.casefold()
+        if key in seen:
+            raise PolicyError(f"'{canonical}' reused: {seen[key]} & {fam_name}")
+        seen[key] = fam_name
+
+        aliases = _extract_aliases(body.get("aliases") or body.get("variants") or [])
+        valid = []
+        for a in aliases:
+            ck = a.casefold()
+            if ck == key:
+                continue
+            if ck in alias_map and alias_map[ck] != canonical:
+                raise PolicyError(f"Alias conflict {a!r} in {fam_name}")
+            alias_map[ck] = canonical
+            valid.append(a)
+
+        families.append(ExtensionFamily(fam_name, canonical, tuple(valid)))
+
+    return families, alias_map
+
+# simplified load_policy
 def load_policy(path: Path | None = None) -> ExtensionPolicy:
+    policy_path = path or DEFAULT_POLICY_PATH
+    parsed = yaml.safe_load(policy_path.read_text("utf-8")) or {}
+    if not isinstance(parsed, Mapping):
+        raise PolicyError("Policy must be a mapping")
+
+    ignore_dirs = _parse_ignore_directories(parsed.get("ignore_directories", []))
+    families_raw = parsed.get("families", {})
+    if not isinstance(families_raw, Mapping):
+        raise PolicyError("'families' must be a mapping")
+
+    families, alias_map = _build_families(families_raw)
+
+    return ExtensionPolicy(
+        version=parsed.get("version", "1"),
+        path=policy_path,
+        families=tuple(families),
+        alias_map=alias_map,
+        ignore_directories=ignore_dirs,
+    )
     """Load the extension policy from *path*.
 
     Raises :class:`FileNotFoundError` if the policy file is absent and
