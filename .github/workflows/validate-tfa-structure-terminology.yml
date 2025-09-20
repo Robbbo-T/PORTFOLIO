@@ -1,0 +1,24 @@
+name: Validate TFA Structure and Terminology
+on: pull_request
+
+jobs:
+  validate-tfa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run TFA Structure Validator
+        run: make validate-tfa   # e.g., runs tfa_structure_validator script or similar
+
+      - name: Run Quantum Layers Consistency Check
+        run: make check-quantum-layers   # runs quantum_layers_check script
+
+      - name: Enforce Terminology (no deprecated terms)
+        run: |
+          DEPRECATED_TERMS='Fine[[:space:]]*Element|Station[[:space:]]*Envelop[^e]'
+          if grep -R -E "$DEPRECATED_TERMS" 2-DOMAINS-LEVELS/; then 
+            echo "❌ Forbidden terminology found! Failing the build."
+            exit 1 
+          else 
+            echo "✅ No deprecated terms detected."
+          fi
