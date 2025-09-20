@@ -58,7 +58,7 @@ def test_fe_manifest_validation():
             }
         }
         
-        print(f"✅ FE manifest validation result:")
+        print("✅ FE manifest validation result:")
         print(f"   Valid: {result.get('valid', False)}")
         print(f"   Canonical Hash: {result.get('canonical_hash', 'N/A')}")
         print(f"   Errors: {len(result.get('errors', []))}")
