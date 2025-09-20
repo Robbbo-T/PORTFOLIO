@@ -73,7 +73,6 @@ jobs:
             # SNS=ATA*100
             ata_chapter_val = d.get("ata_chapter", "")
             # Extract the first numeric part (handles 'NN' and 'NN-NN')
-            import re
             m = re.match(r"^(\d{2})", ata_chapter_val)
             ata = m.group(1) if m else ""
             try:
