@@ -1,0 +1,11 @@
+*.pdf   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.cgm   binary
+*.glb   binary
+*.usdz  binary
+*.stp   binary
+*.step  binary
+*.parquet binary
