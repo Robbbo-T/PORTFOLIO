@@ -232,7 +232,71 @@ The result is a **coherent, intelligent, and multisectoral** ecosystem for the c
 *   [`services/`](./services/) — Deployed AQUA-OS microservices.
 *   [`docs/`](./docs/) — High-level architecture and methodology documentation.
 
----
+## 7.1 📚 Docs Structure
+
+> Canonical layout of [`docs/`](./docs/) for architecture, bridges, and standards crosswalks. All files are Markdown unless noted.
+
+```text
+docs/
+├── index.md                          # Landing page (high-level overview + pointers)
+├── architecture/
+│   ├── tfa-overview.md               # TFA layers, roles, invariants
+│   ├── quantum-classical-bridge.md   # CB→QB→UE/FE→FWD→QS (detail & patterns)
+│   ├── map-mal-pattern.md            # MAP (vertical) / MAL (horizontal) pattern
+│   └── reference-models.md           # Reference stacks, deployment topologies
+├── domains/
+│   ├── domains-index.md              # 15-domain index with short blurbs
+│   ├── AAA-aerodynamics.md           # Domain capsule + TFA tree example
+│   ├── AAP-airports.md
+│   ├── … (one file per domain) …
+│   └── PPP-propulsion.md
+├── bridges/
+│   ├── map-process.md                # TFA domain ↔ ATA/SNS ↔ regulation annex (MAP process)
+│   ├── mal-bridge.md                 # CAx → LLC alignment + gICD triad
+│   ├── gICD/
+│   │   ├── icn-spec.md               # ICN (Interface Control Network)
+│   │   ├── pbs-spec.md               # PBS (Product Breakdown Structure)
+│   │   └── ibs-spec.md               # IBS (Illustrated Breakdown)
+│   └── schemas/                      # JSON Schema/XSD for bridge contracts
+│       ├── icn.schema.json
+│       ├── pbs.schema.json
+│       └── ibs.schema.json
+├── compliance/
+│   ├── icao-annex-16.md              # Noise, emissions, CO₂ alignment
+│   ├── ata-sns-crosswalk.md          # ATA/SNS crosswalk tables to MAP
+│   ├── s1000d-guidance.md            # DM structure, CSDB, applicability rules
+│   └── do330-tool-qualification.md   # Tool qualification playbook (TQL)
+├── programs/
+│   ├── programs-index.md             # Five programs overview + status
+│   ├── ampel360-bwb-q100.md
+│   ├── gaia-quantum-sat.md
+│   ├── diagnostics-mro-robbbo-t.md
+│   ├── ares-x-uas-swarm.md
+│   └── h2-corridor-x.md
+├── guides/
+│   ├── authoring-guide.md            # Docs conventions, link hygiene, glossary use
+│   ├── contribution-guide.md         # How to PR docs & run link checks
+│   └── style.md                      # Style, naming, abbreviations (TFA/LLC/CB/QB…)
+└── glossary.md                       # Central glossary (ICN/PBS/IBS=gICD, TFA, LLC, CAx…)
+```
+
+**Key pointers**
+
+* **MAP process:** [`bridges/map-process.md`](./docs/bridges/map-process.md) — domain → ATA/SNS → regulation annex.
+* **MAL bridge:** [`bridges/mal-bridge.md`](./docs/bridges/mal-bridge.md) — **CAx → LLC** + **gICD** triad (**ICN/PBS/IBS**).
+* **Quantum–Classical Bridge:** [`architecture/quantum-classical-bridge.md`](./docs/architecture/quantum-classical-bridge.md).
+* **Compliance crosswalks:** [`compliance/ata-sns-crosswalk.md`](./docs/compliance/ata-sns-crosswalk.md), [`compliance/icao-annex-16.md`](./docs/compliance/icao-annex-16.md).
+* **Domains capsule index:** [`domains/domains-index.md`](./docs/domains/domains-index.md).
+* **Programs index:** [`programs/programs-index.md`](./docs/programs/programs-index.md).
+* **Glossary:** [`glossary.md`](./docs/glossary.md) (includes **IBS = Illustrated Breakdown** and **gICD** = ICN+PBS+IBS).
+
+### Optional: add Docs to the table of contents
+
+```markdown
+- [7. Repo Structure](#7--repo-structure)
+  - [7.1 Docs Structure](#71--docs-structure)
+```
+
 
 ## 8. 💻 Getting Started
 
