@@ -7,7 +7,7 @@ This repository contains the full-stack platform and engineering portfolio for t
 
 ## Audience baselines
 
-* Developers & SRE → `platform/`
+* Developers & SRE → `portfolio/platform/`
 * Domain Experts → `portfolio/2-DOMAINS-LEVELS/` and `portfolio/1-CAX-METHODOLOGY/`
 * Governance/Auditors → `portfolio/0-STRATEGY/` and `portfolio/7-GOVERNANCE/`
 
