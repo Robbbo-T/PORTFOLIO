@@ -18,7 +18,6 @@ import sys
 import os
 
 # Add the module path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '5-ARTIFACTS-IMPLEMENTATION', 'CODE', 'python', 'classical-bits'))
 
 from cqea_runner import CQEARunner, ManifestConfig
 from cqea_kernel import create_kernel
