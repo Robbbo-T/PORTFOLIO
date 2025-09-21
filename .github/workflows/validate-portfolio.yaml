@@ -7,19 +7,26 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.11', cache: pip }
-      - name: Install tools
+      - name: Install Genesis CI requirements
         run: |
           python -m pip install --upgrade pip
+          pip install -r ASI-T/GENESIS/CI/requirements.txt
           if [ -f requirements-dev.txt ]; then
-            python -m pip install -r requirements-dev.txt
+            pip install -r requirements-dev.txt
           fi
-      - name: Canonical lint
-        run: |
-          python tools/validate_paths.py
-      - name: Portfolio checks
+      - name: Path grammar & UTCS headers
+        run: python ASI-T/GENESIS/SCRIPTS/check_paths.py
+      - name: Schema validation
+        run: python ASI-T/GENESIS/SCRIPTS/validate_schemas.py
+      - name: FCR enforcement
+        env:
+          GITHUB_PR_BODY: ${{ github.event.pull_request.body }}
+        run: python ASI-T/GENESIS/SCRIPTS/fcr_enforcer.py
+      - name: Evidence linting
+        run: python ASI-T/GENESIS/SCRIPTS/evidence_lint.py
+      - name: Legacy portfolio checks
         run: |
           make validate || true
-      - name: Ensure no emojis/spaces in paths
+      - name: Canonical naming validation
         run: |
-          if git ls-files | grep -E "[[:space:]]|[^\x00-\x7F]"; then
-            echo "Forbidden chars (spaces/emojis) in paths"; exit 1; fi
+          python tools/validate_paths.py

@@ -1,0 +1,5 @@
+# ASI-T Genesis CI Requirements
+# Required packages for Genesis validation scripts
+
+pyyaml>=6.0
+jsonschema>=4.0.0

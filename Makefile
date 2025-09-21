@@ -15,7 +15,8 @@ IMAGE ?= ghcr.io/$(GITHUB_OWNER)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 .PHONY: help print-vars scaffold check validate domains quantum-bridge master-progress clean \
 bootstrap pre-commit-install lint test canonical-plan canonical-apply canonical-verify ci \
-docker-build docker-push scaffold-llc-readmes mod-base mod-stack
+docker-build docker-push scaffold-llc-readmes mod-base mod-stack \
+genesis.check genesis.ci lint-names
 
 PY := python
 
@@ -45,6 +46,9 @@ help:
 	@echo "  docker-push      - Push Docker image to registry"
 	@echo "  master-progress  - Generate Master's Project progress report"
 	@echo "  clean            - Remove temporary files"
+	@echo "  genesis.check    - Run Genesis validation checks (path grammar, UTCS headers, FCR, evidence)"
+	@echo "  genesis.ci       - Run full Genesis CI suite locally"
+	@echo "  lint-names       - Validate file naming conventions"
 	@echo "  help             - Show this help"
 
 print-vars:
@@ -213,3 +217,26 @@ mod-stack: mod-base
 	@mkdir -p services/mod-base/stack/evidence
 	@$(PY) services/mod-base/stack/apply_stack.py --stack services/mod-base/stack/stack.yaml
 	@echo "✅ MOD-STACK composition completed"
+
+# Genesis validation targets
+genesis.check: bootstrap
+	@echo "🔍 Genesis Validation Checks"
+	@echo "========================================="
+	@echo "📋 Path grammar & UTCS headers..."
+	@$(PY) ASI-T/GENESIS/SCRIPTS/check_paths.py
+	@echo "📋 Schema validation..."
+	@$(PY) ASI-T/GENESIS/SCRIPTS/validate_schemas.py
+	@echo "📋 Evidence linting..."
+	@$(PY) ASI-T/GENESIS/SCRIPTS/evidence_lint.py
+	@echo "📋 FCR enforcement..."
+	@$(PY) ASI-T/GENESIS/SCRIPTS/fcr_enforcer.py
+	@echo "✅ All Genesis checks passed"
+
+genesis.ci: genesis.check
+	@echo "🔄 Genesis CI Suite Complete"
+	@echo "✅ Repository ready for Genesis compliance"
+
+lint-names:
+	@echo "🔍 Validating file naming conventions..."
+	@$(PY) tools/validate_paths.py
+	@echo "✅ File naming validation complete"
