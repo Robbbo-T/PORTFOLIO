@@ -1,11 +1,11 @@
 {
   "utcs_anchor": {
-    "canonical_hash": "26801bcf07b9ab715e520b644645940f1d198cea206544b82b9241258bbb913c",
+    "canonical_hash": "a8f12f8044564aca229ff039af6f2d2eb06d53b665c2939f9395547a49c95675",
     "det": {
       "utcs_fields": {
         "id": "LCC:AVIONICS:PARTITION-SCHEDULE:2025-09-21",
-        "ts_start": 1758448475.5140052,
-        "ts_end": 1758448475.5141394,
+        "ts_start": 1758448557.086603,
+        "ts_end": 1758448557.0866494,
         "bridge": "CB\u2192QB\u2192UE\u2192FE\u2192FWD\u2192QS",
         "determinism": true
       },
@@ -24,7 +24,7 @@
         "adversarial_mode": true
       },
       "performance": {
-        "duration_ms": 0.1342296600341797,
+        "duration_ms": 0.04649162292480469,
         "within_slo": true
       }
     }

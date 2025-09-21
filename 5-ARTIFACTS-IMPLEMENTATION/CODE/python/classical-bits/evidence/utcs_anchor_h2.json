@@ -1,11 +1,11 @@
 {
   "utcs_anchor": {
-    "canonical_hash": "f453ec66416ab35ccea2ef17b1069cbdba597425ad14b4a3dab9f4cf0c750917",
+    "canonical_hash": "d9bdafd511c72771b344c30a798fee2fe8315fab807b1b28034c3d6a513117f8",
     "det": {
       "utcs_fields": {
         "id": "AAA:AMP-BWB-Q100:ROUTE-ENERGY-OPT:2025-09-21",
-        "ts_start": 1758448475.5108948,
-        "ts_end": 1758448475.5109973,
+        "ts_start": 1758448557.2243698,
+        "ts_end": 1758448557.2244365,
         "bridge": "CB\u2192QB\u2192UE\u2192FE\u2192FWD\u2192QS",
         "determinism": true
       },
@@ -24,7 +24,7 @@
         "adversarial_mode": true
       },
       "performance": {
-        "duration_ms": 0.10251998901367188,
+        "duration_ms": 0.0667572021484375,
         "within_slo": true
       }
     }
