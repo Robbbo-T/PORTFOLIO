@@ -11,7 +11,6 @@ from pathlib import Path
 import sys
 
 # Add the templates directory to the path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '8-RESOURCES', 'TEMPLATES'))
 
 from aqua_dual_literacy_validator import (
     PromptReadinessValidator,
