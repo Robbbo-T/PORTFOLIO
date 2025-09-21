@@ -18,20 +18,20 @@ jobs:
       - name: Validate TFA JSON schema
         run: |
           python - <<'PY'
-import json, sys
-from jsonschema import validate, Draft202012Validator
-sch = json.load(open('8-RESOURCES/TEMPLATES/tfa.schema.json'))
-doc = json.load(open('8-RESOURCES/TEMPLATES/tfa.repo.example.json'))
-v = Draft202012Validator(sch)
-errs = sorted(v.iter_errors(doc), key=lambda e: e.path)
-had_error = False
-for e in errs:
-    print("SCHEMA:", e.message, "at", list(e.path))
-    had_error = True
-if had_error:
-    sys.exit(1)
-print("Schema OK")
-PY
+          import json, sys
+          from jsonschema import validate, Draft202012Validator
+          sch = json.load(open('8-RESOURCES/TEMPLATES/tfa.schema.json'))
+          doc = json.load(open('8-RESOURCES/TEMPLATES/tfa.repo.example.json'))
+          v = Draft202012Validator(sch)
+          errs = sorted(v.iter_errors(doc), key=lambda e: e.path)
+          had_error = False
+          for e in errs:
+              print("SCHEMA:", e.message, "at", list(e.path))
+              had_error = True
+          if had_error:
+              sys.exit(1)
+          print("Schema OK")
+          PY
       - name: Run TFA/TTA validator
         run: |
           python3 8-RESOURCES/TEMPLATES/tfa_tta_validator.py 

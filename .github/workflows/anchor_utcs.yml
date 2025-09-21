@@ -81,26 +81,26 @@ jobs:
             echo "   LLC Path: $llc_path"
             
             # Add to manifests JSON
-            python3 << EOF
-import json
-import sys
+            python3 - << 'PYTHON_SCRIPT'
+          import json
+          import sys
 
-# Read current manifests
-with open('$manifests_file', 'r') as f:
-    manifests = json.load(f)
+          # Read current manifests
+          with open('$manifests_file', 'r') as f:
+              manifests = json.load(f)
 
-# Add new manifest
-manifests.append({
-    'file': '$file',
-    'domain': '$domain',
-    'llc_path': '$llc_path',
-    'relative_path': '$file'
-})
+          # Add new manifest
+          manifests.append({
+              'file': '$file',
+              'domain': '$domain',
+              'llc_path': '$llc_path',
+              'relative_path': '$file'
+          })
 
-# Write back
-with open('$manifests_file', 'w') as f:
-    json.dump(manifests, f, indent=2)
-EOF
+          # Write back
+          with open('$manifests_file', 'w') as f:
+              json.dump(manifests, f, indent=2)
+          PYTHON_SCRIPT
             has_changes=true
           }
           
@@ -204,34 +204,22 @@ EOF
           
           # Read manifest file
           if [[ "$MANIFEST_FILE" =~ \.(yaml|yml)$ ]]; then
-            manifest_json=$(python3 -c "
-import yaml, json, sys
-with open('$MANIFEST_FILE', 'r') as f:
-    data = yaml.safe_load(f)
-print(json.dumps(data))
-")
+            manifest_json=$(python3 - << 'YAML_TO_JSON'
+          import yaml, json, sys
+          with open('$MANIFEST_FILE', 'r') as f:
+              data = yaml.safe_load(f)
+          print(json.dumps(data))
+          YAML_TO_JSON
+          )
           else
             manifest_json=$(cat "$MANIFEST_FILE")
           fi
           
           # Prepare validation request
-          validation_request=$(python3 << 'EOF'
-import json
-import os
-
-manifest = json.loads(os.environ['manifest_json'])
-domain = os.environ['DOMAIN']
-llc_path = os.environ['LLC_PATH']
-
-request = {
-    "manifest": manifest,
-    "domain": domain,
-    "llc_path": llc_path
-}
-
-print(json.dumps(request))
-EOF
-)
+          export manifest_json="$manifest_json"
+          export DOMAIN="$DOMAIN"
+          export LLC_PATH="$LLC_PATH"
+          validation_request=$(python3 -c "import json,os; print(json.dumps({'manifest': json.loads(os.environ['manifest_json']), 'domain': os.environ['DOMAIN'], 'llc_path': os.environ['LLC_PATH']}))")
           
           echo "📤 Sending validation request to AQUA..."
           
@@ -256,30 +244,16 @@ EOF
           
           # Parse validation response
           validation_result=$(echo "$response_body")
-          is_valid=$(echo "$validation_result" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-print(data.get('valid', False))
-")
+          is_valid=$(echo "$validation_result" | python3 -c "import json,sys; print(json.load(sys.stdin).get('valid', False))")
           
           if [[ "$is_valid" != "True" ]]; then
             echo "❌ Manifest validation failed"
-            echo "$validation_result" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-errors = data.get('errors', [])
-for error in errors:
-    print(f\"Error: {error}\")
-"
+            echo "$validation_result" | python3 -c "import json,sys; [print(f'Error: {error}') for error in json.load(sys.stdin).get('errors', [])]"
             exit 1
           fi
           
           # Extract canonical hash
-          canonical_hash=$(echo "$validation_result" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-print(data.get('canonical_hash', ''))
-")
+          canonical_hash=$(echo "$validation_result" | python3 -c "import json,sys; print(json.load(sys.stdin).get('canonical_hash', ''))")
           
           echo "✅ Validation successful!"
           echo "📝 Canonical hash: $canonical_hash"
@@ -306,28 +280,10 @@ print(data.get('canonical_hash', ''))
           echo "   LLC Path: $LLC_PATH"
           
           # Prepare anchor request
-          anchor_request=$(python3 << 'EOF'
-import json
-import os
-
-request = {
-    "canonical_hash": os.environ['CANONICAL_HASH'],
-    "submission_id": os.environ['CANONICAL_HASH'][:16],  # Use first 16 chars as submission ID
-    "metadata": {
-        "domain": os.environ['DOMAIN'],
-        "llc_path": os.environ['LLC_PATH'],
-        "pr_number": os.environ.get('pr_number', 0),
-        "commit_sha": os.environ.get('GITHUB_SHA', ''),
-        "workflow_run_id": os.environ.get('GITHUB_RUN_ID', ''),
-        "repository": os.environ.get('GITHUB_REPOSITORY', ''),
-        "ref": os.environ.get('GITHUB_REF', ''),
-        "actor": os.environ.get('GITHUB_ACTOR', '')
-    }
-}
-
-print(json.dumps(request))
-EOF
-)
+          export CANONICAL_HASH="$CANONICAL_HASH"  
+          export DOMAIN="$DOMAIN"
+          export LLC_PATH="$LLC_PATH"
+          anchor_request=$(python3 -c "import json,os; print(json.dumps({'canonical_hash': os.environ['CANONICAL_HASH'], 'submission_id': os.environ['CANONICAL_HASH'][:16], 'metadata': {'domain': os.environ['DOMAIN'], 'llc_path': os.environ['LLC_PATH'], 'pr_number': int(os.environ.get('pr_number', '0')), 'commit_sha': os.environ.get('GITHUB_SHA', ''), 'workflow_run_id': os.environ.get('GITHUB_RUN_ID', ''), 'repository': os.environ.get('GITHUB_REPOSITORY', ''), 'ref': os.environ.get('GITHUB_REF', ''), 'actor': os.environ.get('GITHUB_ACTOR', '')}}))")
           
           echo "📤 Sending anchor request to AQUA..."
           
@@ -355,11 +311,7 @@ EOF
             
             # Extract anchor details
             anchor_result=$(echo "$response_body")
-            anchor_tx_hash=$(echo "$anchor_result" | python3 -c "
-import json, sys
-data = json.load(sys.stdin)
-print(data.get('anchor_tx_hash', ''))
-")
+            anchor_tx_hash=$(echo "$anchor_result" | python3 -c "import json,sys; print(json.load(sys.stdin).get('anchor_tx_hash', ''))")
             
             echo "🔗 Anchor transaction: $anchor_tx_hash"
             
@@ -382,26 +334,11 @@ print(data.get('anchor_tx_hash', ''))
           echo "🔄 Updating OPTIMO-DT digital thread..."
           
           # Create thread update entry
-          thread_update=$(python3 << 'EOF'
-import json
-import os
-from datetime import datetime
-
-update = {
-    "event_type": "utcs_anchor",
-    "timestamp": datetime.utcnow().isoformat() + "Z",
-    "canonical_hash": os.environ['CANONICAL_HASH'],
-    "anchor_tx_hash": os.environ['ANCHOR_TX_HASH'],
-    "domain": os.environ['DOMAIN'],
-    "llc_path": os.environ['LLC_PATH'],
-    "workflow_run_id": os.environ.get('GITHUB_RUN_ID', ''),
-    "commit_sha": os.environ.get('GITHUB_SHA', ''),
-    "repository": os.environ.get('GITHUB_REPOSITORY', '')
-}
-
-print(json.dumps(update, indent=2))
-EOF
-)
+          export CANONICAL_HASH="$CANONICAL_HASH"
+          export ANCHOR_TX_HASH="$anchor_tx_hash"
+          export DOMAIN="$DOMAIN" 
+          export LLC_PATH="$LLC_PATH"
+          thread_update=$(python3 -c "import json,os; from datetime import datetime; print(json.dumps({'event_type': 'utcs_anchor', 'timestamp': datetime.utcnow().isoformat() + 'Z', 'canonical_hash': os.environ['CANONICAL_HASH'], 'anchor_tx_hash': os.environ['ANCHOR_TX_HASH'], 'domain': os.environ['DOMAIN'], 'llc_path': os.environ['LLC_PATH'], 'workflow_run_id': os.environ.get('GITHUB_RUN_ID', ''), 'commit_sha': os.environ.get('GITHUB_SHA', ''), 'repository': os.environ.get('GITHUB_REPOSITORY', '')}, indent=2))")
           
           echo "📝 Thread update:"
           echo "$thread_update"

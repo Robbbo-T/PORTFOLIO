@@ -46,7 +46,7 @@ jobs:
         run: |
           python scripts/mal_ci_checks.py \
             --schema 8-RESOURCES/TEMPLATES/MAL/manifest.schema.json \
-            --verbose --soft-passport-check
+            --verbose
 
       - name: Lint canonical extensions (make lint if present)
         shell: bash
