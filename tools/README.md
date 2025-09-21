@@ -9,8 +9,39 @@ The link and content quality system provides:
 - **Content classification** into quality categories using heuristics + optional LLM
 - **Badge generation** for visual status indication  
 - **Automated reporting** via GitHub Actions
+- **Path drift prevention** to catch merge artifacts automatically
 
 ## Tools
+
+### `path_drift_checker.py`
+Lightweight path drift detection focused on preventing merge artifacts and broken repository structure.
+
+**Usage:**
+```bash
+python tools/path_drift_checker.py
+```
+
+**What it checks:**
+- Merge conflict markers in markdown files
+- Backup files (*.backup, *.old, *.orig) that indicate merge issues  
+- Critical repository structure integrity
+- Broken symbolic links
+
+**Integration:**
+Used by `.github/workflows/link-check.yml` for fast path drift prevention.
+
+### `cleanup_backup_files.py`
+Utility to clean up backup files and merge artifacts detected by the path drift checker.
+
+**Usage:**
+```bash
+python tools/cleanup_backup_files.py
+```
+
+**What it does:**
+- Removes backup files with common patterns (*.backup, *.old, *.orig, *~)
+- Reports what was cleaned up
+- Helps maintain clean repository state
 
 ### `links_summary.py`
 Processes Lychee JSON output to generate link status badges and summary tables.
@@ -61,9 +92,17 @@ python tools/quality_summary.py .qa_cache/quality_report.json
 ### `quality_rubric.yaml`
 Domain-aware content classification rules for TFA layers (CB, QB, SE, SI, etc.).
 
-## GitHub Workflow
+## GitHub Workflows
 
-The `.github/workflows/link-and-quality.yml` workflow runs automatically on:
+### `.github/workflows/link-check.yml` (NEW)
+Fast path drift prevention workflow that runs on every push/PR:
+- Executes in under 5 minutes
+- Detects merge artifacts and backup files
+- Validates critical repository structure
+- Fails fast on path drift issues
+
+### `.github/workflows/link-and-quality.yml`
+Comprehensive link and content quality assessment:
 - Push to main/develop/copilot branches
 - Pull requests
 - Daily schedule (3 AM UTC)

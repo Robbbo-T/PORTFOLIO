@@ -1,0 +1,70 @@
+name: Link Check (Path Drift Prevention)
+
+on:
+  push:
+    branches: [ main, develop, "copilot/**" ]
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+jobs:
+  link_check:
+    name: Check for Path Drift & Merge Artifacts
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          
+      - name: Run path drift checker
+        run: |
+          python tools/path_drift_checker.py
+          
+      - name: Validate TFA structure (quick check)
+        run: |
+          # Quick validation of TFA structure exists (check current structure)
+          if [ ! -d "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS" ]; then
+            echo "❌ Missing TFA domains structure"
+            exit 1
+          fi
+          
+          # Check for basic critical directories  
+          missing_roots=""
+          for root in "tools" ".github" "portfolio"; do
+            if [ ! -d "$root" ]; then
+              missing_roots="$missing_roots $root"
+            fi
+          done
+          
+          if [ -n "$missing_roots" ]; then
+            echo "❌ Missing critical directories:$missing_roots"
+            exit 1
+          fi
+          
+          echo "✅ Basic structure validation passed"
+          
+      - name: Check for common path drift patterns
+        run: |
+          # Check for duplicate README files that might indicate merge issues
+          duplicates=$(find . -name "README.md.*" -o -name "*.backup" -o -name "*.old" | grep -v ".git")
+          if [ -n "$duplicates" ]; then
+            echo "⚠️ Found potential merge artifacts:"
+            echo "$duplicates"
+            # Don't fail on this, just warn
+          fi
+          
+          # Check for broken symbolic links
+          broken_links=$(find . -type l ! -exec test -e {} \; -print 2>/dev/null || true)
+          if [ -n "$broken_links" ]; then
+            echo "❌ Found broken symbolic links:"
+            echo "$broken_links" 
+            exit 1
+          fi
+          
+          echo "✅ Path drift pattern check passed"
