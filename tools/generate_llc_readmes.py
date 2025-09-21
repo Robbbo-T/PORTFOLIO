@@ -151,7 +151,7 @@ def main():
         return
 
     count = 0
-    # Itera sobre todos los directorios LLC que se puedan encontrar
+    # Iterates over all LLC directories that can be found
     for group_name, llcs in LLC_DEFINITIONS.items():
         for llc_code, definition in llcs.items():
             # Busca todos los directorios que coincidan con esta capa LLC
