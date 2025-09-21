@@ -121,7 +121,11 @@ def execute_fcr2_actions() -> bool:
         # 1. Run apply_stack.py
         print("  1. Running stack composition...")
         import subprocess
-        result = subprocess.run(['make', 'mod-stack'], capture_output=True, text=True)
+        try:
+            result = subprocess.run(['make', 'mod-stack'], capture_output=True, text=True, timeout=300)
+        except subprocess.TimeoutExpired:
+            print("  ✗ Stack composition timed out after 300 seconds.")
+            return False
         if result.returncode != 0:
             print(f"  ✗ Stack composition failed: {result.stderr}")
             return False
