@@ -47,7 +47,7 @@ class DecisionKernel:
         self.solvers[name] = fn
         logger.info(f"Registered solver: {name}")
 
-    def run(self, cfg: RunConfig, model: Dict[str, Any]) -> tuple[Dict[str, Any], Dict[str, Any]]:
+    def run(self, cfg: RunConfig, model: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         """
         Execute CQEA decision loop with full provenance
         
