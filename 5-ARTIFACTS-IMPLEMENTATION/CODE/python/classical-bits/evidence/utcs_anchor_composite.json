@@ -1,0 +1,63 @@
+{
+  "utcs_anchor": {
+    "canonical_hash": "1c7e4c675ceee2681e850636a8f231aaa634f6791b31e0aead81186b52231b07",
+    "det": {
+      "utcs_fields": {
+        "id": "MMM:COMPOSITE:PLY-DROP-OPT:2025-09-21",
+        "ts_start": 1758448475.5173266,
+        "ts_end": 1758448475.5174358,
+        "bridge": "CB\u2192QB\u2192UE\u2192FE\u2192FWD\u2192QS",
+        "determinism": true
+      },
+      "solver": "qaoa_stub",
+      "metrics": {
+        "objective": 127.79999999999998,
+        "solve_time_ms": 12.0,
+        "beta_gamma": "prepared",
+        "p_layers": 2,
+        "shots": 1024,
+        "quantum_advantage": 0.5
+      },
+      "config": {
+        "problem_id": "MMM:COMPOSITE:PLY-DROP-OPT:2025-09-21",
+        "model_path": "manifests/composite_layup.yaml",
+        "solver": "qaoa_stub",
+        "seed": 42,
+        "adversarial_mode": true
+      },
+      "performance": {
+        "duration_ms": 0.10919570922851562,
+        "within_slo": true
+      }
+    }
+  },
+  "result": {
+    "status": "FEASIBLE",
+    "x": {
+      "var_0": 0,
+      "var_1": 1,
+      "var_2": 2,
+      "var_3": 3
+    },
+    "metrics": {
+      "objective": 127.79999999999998,
+      "solve_time_ms": 12.0,
+      "beta_gamma": "prepared",
+      "p_layers": 2,
+      "shots": 1024,
+      "quantum_advantage": 0.5
+    },
+    "quantum_params": {
+      "beta": [
+        0.1,
+        0.2
+      ],
+      "gamma": [
+        0.2,
+        0.4
+      ],
+      "circuit_depth": 4
+    }
+  },
+  "manifest_id": "MMM:COMPOSITE:PLY-DROP-OPT:2025-09-21"
+}

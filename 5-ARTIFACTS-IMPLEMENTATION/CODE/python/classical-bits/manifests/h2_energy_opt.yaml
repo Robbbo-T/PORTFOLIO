@@ -1,0 +1,41 @@
+# CQEA Run Manifest - H₂ Energy Optimization
+# BWB-Q100 route-level energy optimization with hydrogen boil-off modeling
+
+id: "AAA:AMP-BWB-Q100:ROUTE-ENERGY-OPT:2025-09-21"
+bridge: "CB→QB→UE→FE→FWD→QS"
+
+model:
+  kind: "MILP"
+  source: "models/route_energy_milp.yaml"
+  assumptions:
+    - steady_wind_field<=15kt
+    - payload=100 pax
+    - H2 cryo boil-off modeled
+    - thermal_management=active
+
+solver:
+  name: "milp"          # or qaoa_stub for quantum enhancement
+  seed: 42
+  precision: "high"
+
+resilience:
+  adversarial_mode: true
+  tests:
+    - "sensor_noise<=2σ"
+    - "schedule_jitter<=50ms"
+    - "wind_gust_perturbation<=10kt"
+    - "thermal_fluctuation<=5K"
+
+assurance:
+  outputs:
+    - "reports/h2_energy_tradeoffs.md"
+    - "evidence/utcs_anchor_h2.json"
+  certifiable: true
+  do178c_level: "DAL-C"
+
+# Performance targets
+performance:
+  max_solve_time_ms: 300
+  target_fuel_efficiency: 0.15  # kg H₂/passenger/km
+  range_km: 8000
+  cruise_altitude_ft: "35000-42000"

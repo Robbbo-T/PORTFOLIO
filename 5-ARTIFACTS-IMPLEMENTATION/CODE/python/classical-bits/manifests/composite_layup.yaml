@@ -1,0 +1,56 @@
+# CQEA Run Manifest - Composite Layup Optimization
+# Ply-drop optimization under buckling/fatigue constraints with quantum exploration
+
+id: "MMM:COMPOSITE:PLY-DROP-OPT:2025-09-21"
+bridge: "CB→QB→UE→FE→FWD→QS"
+
+model:
+  kind: "COMPOSITE"
+  source: "models/composite_layup.yaml"
+  assumptions:
+    - material=carbon_fiber_epoxy
+    - loading=combined_tension_compression
+    - environment=aerospace_standard
+    - manufacturing=autoclave_cure
+
+solver:
+  name: "qaoa_stub"     # Quantum enhancement for combinatorial optimization
+  seed: 42
+  quantum_backend: "simulator"
+  p_layers: 3
+
+resilience:
+  adversarial_mode: true
+  tests:
+    - "material_property_variation<=5%"
+    - "manufacturing_tolerance<=0.1mm"
+    - "loading_uncertainty<=10%"
+    - "environmental_degradation_sim"
+
+assurance:
+  outputs:
+    - "reports/composite_optimization_results.md"
+    - "evidence/utcs_anchor_composite.json"
+  certifiable: true
+  standard: "ASTM_D3039"
+  validation: "coupon_testing_required"
+
+# Structural requirements
+structure:
+  safety_factor: 1.5
+  fatigue_life_cycles: 1000000
+  max_weight_penalty: 0.1  # 10% over baseline
+  manufacturing_complexity: "medium"
+
+# Material properties
+material:
+  density_g_cm3: 1.6
+  elastic_modulus_gpa: 145
+  ultimate_strength_mpa: 1500
+  fiber_volume_fraction: 0.6
+
+# Quantum parameters
+quantum:
+  optimization_target: "pareto_front"
+  exploration_strategy: "gradient_free"
+  convergence_criteria: "objective_improvement<0.01"
