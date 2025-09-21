@@ -1,9 +1,20 @@
 # Copilot & Agents — Working Rules
 
+## 📋 Quick Reference
+
+**MANDATORY**: Read and follow the comprehensive [ASI-T Copilot Agent Styleguide](./ASI-T-COPILOT-AGENT-STYLEGUIDE.md) before any code changes.
+
+**Golden Rules Summary**:
+- UIX.v1 injection required before any agent action
+- TFA-Only path grammar enforcement: `LAYER/LLC/UTCS-ID`
+- MAL-EEM ethics & empathy guardrails (fail-closed)
+- QS/UTCS deterministic evidence in every PR
+- FCR-1 + FCR-2 two-step process for all merges
 
 ```bash
 .github/
 ├── copilot-instructions.md              # Main instructions file
+├── ASI-T-COPILOT-AGENT-STYLEGUIDE.md   # Comprehensive styleguide (READ FIRST)
 ├── workflows/
 │   ├── portfolio-ci.yml
 │   └── teknia-token-valuation.yml       # New: Token valuation workflow
@@ -17,9 +28,24 @@
     └── compliance-automation.md
 ```
 
-Key Additions to Copilot Instructions
+## ASI-T Development Patterns
 
-Based on existing instructions, we should add these TeknIA-specific guidelines:
+### Path Grammar Enforcement
+Always validate paths against the TFA canonical structure:
+```regex
+^(?:ASI-T|TFA)/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/[A-Z]{2}/(?:_revisions/REV_[A-Z]/HOV_[^/]+/)?[A-Z0-9-]{10,}\.md$
+```
+
+### UTCS-MI Front-Matter Requirements
+Every document must include proper UTCS-MI metadata with `configuration: baseline` for rev 0.
+
+### Revision Handling
+- **rev: 0** = baseline → stable filename without revision letter
+- **rev ≥ 1** = `_revisions/REV_<letter>/HOV_<MSN_RANGE>_<PHASES>/...`
+
+## TeknIA Token Development Guidelines
+
+Based on existing instructions, we add these TeknIA-specific guidelines:
 
 ```markdown
 ## TeknIA Token Development Guidelines
@@ -119,11 +145,11 @@ jobs:
 Add to your copilot instructions:
 
 ```markdown
-## Aerospace-Specific Token Patterns
+### Aerospace-Specific Token Patterns
 
-### When developing smart contracts for aerospace innovation:
+When developing smart contracts for aerospace innovation:
 1. Use UTCS-MI identifiers for all asset references
-2. Implement ARP4754A-compliant safety patterns
+2. Implement ARP4754A-compliant safety patterns  
 3. Include DO-178C style documentation generation
 4. Use S1000D-style technical data packaging
 
@@ -141,11 +167,26 @@ function mintInnovationTokens(
 }
 ```
 
-Integration Requirements
+### Integration Requirements
 
 · All token operations must emit QAL Bus events
-· Valuation changes must be recorded in the UTCS blockchain
+· Valuation changes must be recorded in the UTCS blockchain  
 · Royalty distributions must comply with financial regulations
+
+### CAx Lifecycle Integration
+
+Follow the 15 canonical CAx phases in chronological order:
+1. STRATEGY → CAX-METHODOLOGY → CAB → CAIR → CAD
+2. CAE → CAI → CAV → CAT → CAM  
+3. CA-PRO → CAO → CAF → CAS0 → CAEPOST
+
+Use HOV (Head-Of-Versions) pattern for revision management:
+```yaml
+hov:
+  msn_range: "MSN1-3"
+  phases: ["CAD","CAE","CAI"]
+  label: "MSN1-3 diseño+ingeniería+embedding"
+```
 
 ```
 
