@@ -353,9 +353,11 @@ class TestManifestExamples:
     
     @pytest.fixture
     def manifests_dir(self):
-        """Get the manifests directory path"""
+        """Get the manifests directory path (configurable via CQEA_MANIFESTS_DIR env var)"""
+        env_path = os.environ.get("CQEA_MANIFESTS_DIR")
+        if env_path:
+            return Path(env_path)
         return Path(__file__).parent.parent / "5-ARTIFACTS-IMPLEMENTATION" / "CODE" / "python" / "classical-bits" / "manifests"
-    
     def test_h2_energy_manifest(self, manifests_dir):
         """Test H₂ energy optimization manifest execution"""
         manifest_path = manifests_dir / "h2_energy_opt.yaml"
