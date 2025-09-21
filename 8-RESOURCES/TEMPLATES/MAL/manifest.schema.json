@@ -1,53 +1,121 @@
-mal_id: "MAL:CB:FLIGHT_CTRL"
-layer: "CB"
-version: "0.1.0"
-service_name: "Flight Control MAL — UTCS AAA.DI.MAL.FLIGHT_CTRL.v0.1"
-owner:
-  domain: "AAA.DI (LLC=SI)"
-  contact: "flight-ctrl@program.example"
-
-rbac:
-  roles: ["planner", "executor", "validator", "governance", "ledger"]
-  allowed_domains: ["AAP", "ASSURANCE", "MMM"]
-
-dependencies:
-  - { mal_ref: "MAL:UE:DataParsers",        min_version: "1.0.0" }
-  - { mal_ref: "MAL:FWD:TransientAnalyser", min_version: "0.2.0" }
-
-cycle_budgets:
-  # Derivado: 20 ms -> 50 Hz; deadline=18 ms -> max_ms=18; jitter=1.5 ms
-  - { loop: "supervisor", period_hz: 50, max_ms: 18.0, max_jitter_ms: 1.5 }
-  - { loop: "watchdog",   period_hz: 10, max_ms:  1.0, max_jitter_ms: 0.5 }  # 1/5 de lazo principal (heartbeat)
-  - { loop: "optimizer",  period_hz:  2, max_ms:  8.0, max_jitter_ms: 1.0 }
-
-safety_fences:
-  - name: "AOA_LIMIT"
-    kind: "custom"
-    thresholds: { expr: "alpha_deg <= 15.0", trip_mode: "SAFE_SHUT" }
-    action: "enter_SAFE_SHUT"
-  - name: "IAS_MIN"
-    kind: "custom"
-    thresholds: { expr: "ias_kt >= 60", trip_mode: "DEGRADED" }
-    action: "enter_DEGRADED"
-
-logging:
-  det_anchor_enabled: true
-  retention: "P180D"
-
-determinism:
-  seed: 42
-  reproducible: true
-
-material_passport_refs:
-  - token_id: "MP-GR-2025-000123"     # mapeado desde mp_id
-    ledger: "UTCS"
-    anchor: "0xTODO_MP_GR_2025_000123"  # RELLENAR con ancla real
-    lifecycle:
-      - { stage: production,  date: 2025-09-15 }
-      - { stage: integration, date: 2025-09-20 }
-  - token_id: "MP-CNT-2025-000045"
-    ledger: "UTCS"
-    anchor: "0xTODO_MP_CNT_2025_000045" # RELLENAR con ancla real
-    lifecycle:
-      - { stage: production,  date: 2025-09-16 }
-      - { stage: integration, date: 2025-09-21 }
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asi-t.dev/schemas/mal-manifest.json",
+  "title": "MAL Manifest Schema",
+  "description": "Schema for Main Application Layer (MAL) manifest files",
+  "type": "object",
+  "required": ["mal"],
+  "properties": {
+    "mal": {
+      "type": "object",
+      "required": ["utcs_mi", "llc", "description", "cycle", "modes", "rbac"],
+      "properties": {
+        "utcs_mi": {
+          "type": "string",
+          "description": "UTCS Mission Interface identifier"
+        },
+        "llc": {
+          "type": "string",
+          "description": "LLC layer identifier"
+        },
+        "description": {
+          "type": "string",
+          "description": "MAL description"
+        },
+        "cycle": {
+          "type": "object",
+          "required": ["period_ms", "deadline_ms"],
+          "properties": {
+            "period_ms": {
+              "type": "number",
+              "minimum": 0
+            },
+            "deadline_ms": {
+              "type": "number",
+              "minimum": 0
+            },
+            "jitter_max_ms": {
+              "type": "number",
+              "minimum": 0
+            },
+            "heartbeat_cycles": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "watchdog_cycles": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "modes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "rbac": {
+          "type": "object",
+          "required": ["classes"],
+          "properties": {
+            "classes": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["name", "description", "permits"],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "description": {
+                    "type": "string"
+                  },
+                  "permits": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "fences": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "guard": {
+                "type": "string"
+              },
+              "tests": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        },
+        "material_passport_refs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["mp_id"],
+            "properties": {
+              "mp_id": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
