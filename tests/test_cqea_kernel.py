@@ -18,7 +18,6 @@ import sys
 import os
 
 # Add the module path
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', '5-ARTIFACTS-IMPLEMENTATION', 'CODE', 'python', 'classical-bits'))
 
 from cqea_kernel import DecisionKernel, RunConfig, create_kernel, milp_solver, heuristic_solver, qaoa_stub
 
