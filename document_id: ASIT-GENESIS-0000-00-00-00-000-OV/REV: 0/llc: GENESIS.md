@@ -1,5 +1,4 @@
 ---
-
 id: ASIT-GENESIS-0000-00-00-00-000-OV
 REV: 0
 llc: GENESIS
@@ -9,7 +8,8 @@ classification: "INTERNAL / EVIDENCE-REQUIRED"
 version: "1.0.0"
 release\_date: 2025-09-21
 maintainer: "ASI-T Architecture Team"
-provenance:
+provenance: QS
+---
 policy\_hash: "sha256\:POLICY"
 model\_sha: "sha256\:MODEL"
 data\_manifest\_hash: "sha256\:DATA"
@@ -21,7 +21,6 @@ docs: "CC-BY-4.0"
 bridge: "CB→QB→UE→FE→FWD→QS"
 ethics\_guard: "MAL-EEM"
 
----
 
 # ASI‑T Genesis — Foundational Components
 
