@@ -30,7 +30,7 @@ jobs:
               if 'meta.yaml' in files:
                   # Check if this is in a TFA leaf directory
                   path_segments = root.split(os.sep)
-                  if any(seg in {'BITS','QUBITS','ELEMENTS','WAVES','STATES'} for seg in path_segments):
+                  if path_segments[-1] in {'CB','QB','UE','FE','FWD','QS'}:
                       meta_files_found += 1
                       meta_path = os.path.join(root, 'meta.yaml')
                       try:
