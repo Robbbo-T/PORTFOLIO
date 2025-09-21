@@ -1,0 +1,102 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["tfa", "map", "program", "mal", "provenance"],
+  "properties": {
+    "tfa": {
+      "type": "object",
+      "required": ["domain", "layer"],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "pattern": "^[A-Z]{3}$"
+        },
+        "layer": {
+          "type": "string",
+          "enum": ["SI", "DI", "SE", "CV", "CE", "CC", "CI", "CP", "CB", "QB", "UE", "FE", "FWD", "QS"]
+        }
+      }
+    },
+    "map": {
+      "type": "object",
+      "required": ["scheme", "chapter"],
+      "properties": {
+        "scheme": {
+          "type": "string",
+          "enum": ["ATA", "SNS"]
+        },
+        "chapter": {
+          "type": "string",
+          "pattern": "^[0-9]{2}$"
+        },
+        "label": {
+          "type": "string"
+        }
+      }
+    },
+    "gata": {
+      "type": "object",
+      "properties": {
+        "focus": {
+          "type": "string"
+        }
+      }
+    },
+    "program": {
+      "type": "object",
+      "required": ["key", "baseline"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "baseline": {
+          "type": "string",
+          "pattern": "^[0-9]{4}$"
+        }
+      }
+    },
+    "mal": {
+      "type": "object",
+      "required": ["bridge", "process"],
+      "properties": {
+        "bridge": {
+          "type": "string",
+          "enum": ["cax-llc"]
+        },
+        "process": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        }
+      }
+    },
+    "gicd": {
+      "type": "object",
+      "properties": {
+        "icn_ref": {
+          "type": "string"
+        },
+        "pbs_ref": {
+          "type": "string"
+        },
+        "ibs_ref": {
+          "type": "string"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["qs_required", "utcs_anchor"],
+      "properties": {
+        "qs_required": {
+          "type": "boolean"
+        },
+        "utcs_anchor": {
+          "type": "string",
+          "enum": ["required", "optional", "forbidden"]
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

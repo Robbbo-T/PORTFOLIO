@@ -380,6 +380,11 @@ python3 services/aqua-os-pro/validation/aqua_pro_validator.py
 * **UTCS Anchor:** `.github/workflows/anchor_utcs.yml`
 * **Path/Meta/Ethics Guards:** see §13.6 for `path-guard.yml`, `meta-validate.yml`, `ethics-guard.yml`, `provenance-guard.yml`.
 
+**Automation Contract Enforcement (Section 13):**
+* **Path Guard:** `./.github/workflows/path-guard.yml` — Enforces TFA path grammar and case rules
+* **Meta Validate:** `./.github/workflows/meta-validate.yml` — Validates meta.yaml against JSON schema
+* **Leaf Files:** `./.github/workflows/leaf-files.yml` — Ensures required files per TFA layer
+
 ---
 
 ## 10. 📈 Roadmap
@@ -537,8 +542,257 @@ make master-progress
 ```
 
 ---
+Killer starter! I see two quick wins to make it bullet-proof with your §13 contract:
 
-**Copy-paste this README as your new root `README.md`.**
+1. **Validate `meta.yaml` against the JSON Schema** (not just presence).
+2. **Add the missing UE + FWD required-file checks** (per §13.4).
 
+I also tightened the merge-marker grep (binary-safe), added `workflow_dispatch`, minimal perms, `concurrency`, and a tiny header-anchor check for Markdown.
 
-next: generate a small **link-check GitHub Action** to prevent path drift and catch future merge artifacts automatically.
+Drop-in replacement:
+
+```yaml
+# .github/workflows/link-check-and-path-validation.yml
+name: Link Check & Path Validation
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: '0 0 * * 0'          # Weekly on Sunday
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  merge-artifacts:
+    name: Detect Merge Artifacts
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for merge conflict markers
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Checking for merge conflict markers..."
+          if git grep -nI -E '^(<<<<<<<|=======|>>>>>>>)' -- . ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.pdf' ':!*.zip' ':!.git/' || false; then
+            git grep -nI -E '^(<<<<<<<|=======|>>>>>>>)' -- . ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.pdf' ':!*.zip' ':!.git/' \
+            | while IFS=: read -r file line _; do
+                echo "::error file=$file,line=$line::Merge conflict marker detected"
+              done
+            exit 1
+          fi
+          echo "✅ No merge conflict markers found"
+
+  path-validation:
+    name: Validate ASI-T Path Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate canonical roots (§13.1)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Validating canonical root directories..."
+          for dir in */ ; do
+            case "$dir" in
+              00-00-ASI-T-GENESIS/|01-00-USE-CASES-ENABLED/|02-00-PORTFOLIO-ENTANGLEMENT/|.github/|docs/|services/)
+                echo "✅ Valid: $dir" ;;
+              *)
+                [ -d "$dir" ] || continue
+                echo "::error file=$dir::Non-canonical top-level directory (violates §13.1)"
+                exit 1 ;;
+            esac
+          done
+
+      - name: Validate TFA path grammar (§13.2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Validating TFA path structure..."
+          find . -type d -path "*/2-DOMAINS-LEVELS/*/programs/*/conf_base/*/ata-*/cax-bridges/*/*/*" \
+          | while read -r path; do
+              if [[ "$path" =~ /([A-Z0-9-]+)/programs/([a-z0-9-]+)/conf_base/([0-9]{4})/([a-z0-9-]+)/ata-([0-9]{2})-([a-z0-9-]+)/cax-bridges/([a-z0-9-]+)/([A-Z]+)/([A-Z]+)$ ]]; then
+                layer="${BASH_REMATCH[8]}"; code="${BASH_REMATCH[9]}"
+                case "$layer" in SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES) : ;; *)
+                  echo "::error file=$path::Invalid TFA layer '$layer' (must be ALL CAPS)"; exit 1 ;; esac
+                case "$code" in SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS) : ;; *)
+                  echo "::error file=$path::Invalid TFA code '$code'"; exit 1 ;; esac
+              else
+                echo "::warning file=$path::Path doesn't fully match expected TFA structure"
+              fi
+            done
+
+      - name: Check for lowercase TFA layers (§13.2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Checking for incorrect lowercase TFA layers..."
+          LOWERCASE=$(find . -type d \( -name systems -o -name stations -o -name components -o -name bits -o -name qubits -o -name elements -o -name waves -o -name states \) -path "*/2-DOMAINS-LEVELS/*" | head -20)
+          if [ -n "$LOWERCASE" ]; then
+            echo "$LOWERCASE" | while read -r p; do
+              echo "::error file=$p::TFA layer must be ALL CAPS (violates §13.2)"
+            done
+            exit 1
+          fi
+          echo "✅ No lowercase TFA layers found"
+
+  link-check:
+    name: Check Documentation Links (local paths + anchors)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate markdown links & anchors
+        shell: python
+        run: |
+          import os, re, sys, pathlib
+          md_link = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+          header = re.compile(r'^(#{1,6})\s*(.+)$', re.M)
+          def slug(s):  # GitHub-style basic slug
+              import re
+              s = s.strip().lower()
+              s = re.sub(r'[^\w\s-]', '', s)
+              s = re.sub(r'\s+', '-', s)
+              return s
+          def exists_with_anchor(base, target):
+              if target.startswith('http') or target.startswith('mailto:'): return True
+              if target.startswith('#'):
+                  with open(base, 'r', encoding='utf-8', errors='ignore') as f:
+                      heads = [slug(m.group(2)) for m in header.finditer(f.read())]
+                  return slug(target[1:]) in heads
+              path, _, anchor = target.partition('#')
+              p = (pathlib.Path(base).parent / path).resolve() if path and not path.startswith('/') else pathlib.Path(path[1:] if path.startswith('/') else base).resolve()
+              if p.is_dir(): p = p / 'index.md'
+              cand = [p, p.with_suffix('.md')]
+              for c in cand:
+                  if c.exists():
+                      if anchor:
+                          with open(c, 'r', encoding='utf-8', errors='ignore') as f:
+                              heads = [slug(m.group(2)) for m in header.finditer(f.read())]
+                          return slug(anchor) in heads or anchor == ''
+                      return True
+              return False
+          errors, warns = [], []
+          for root, _, files in os.walk('.'):
+              if '/.' in root: continue
+              for fn in files:
+                  if not fn.endswith('.md'): continue
+                  fp = os.path.join(root, fn)
+                  txt = open(fp, 'r', encoding='utf-8', errors='ignore').read()
+                  for m in md_link.finditer(txt):
+                      tgt = m.group(2).strip()
+                      if not exists_with_anchor(fp, tgt):
+                          line = txt[:m.start()].count('\n')+1
+                          errors.append((fp, line, f"Broken link or anchor: {tgt}"))
+          for f,l,msg in errors:
+              print(f"::error file={f},line={l}::{msg}")
+          if errors:
+              print(f"❌ {len(errors)} broken links/anchors"); sys.exit(1)
+          print("✅ All markdown links/anchors valid")
+
+  meta-yaml-check:
+    name: Validate meta.yaml (presence + schema)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install pyyaml jsonschema
+      - name: Check presence + validate against schema (§13.3)
+        shell: python
+        run: |
+          import os, re, sys, yaml, json
+          from jsonschema import Draft202012Validator
+          schema_path = "02-00-PORTFOLIO-ENTANGLEMENT/docs/bridges/schemas/meta.schema.json"
+          if not os.path.exists(schema_path):
+              print(f"::error file={schema_path}::Schema not found"); sys.exit(1)
+          schema = json.load(open(schema_path))
+          validator = Draft202012Validator(schema)
+          leaf_re = re.compile(r'.*/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/(SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS)$')
+          errors = 0
+          for root, dirs, files in os.walk("02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS"):
+              if leaf_re.match(root):
+                  meta = os.path.join(root, "meta.yaml")
+                  if not os.path.isfile(meta):
+                      print(f"::error file={meta}::Missing required meta.yaml (violates §13.3)")
+                      errors += 1
+                  else:
+                      data = yaml.safe_load(open(meta))
+                      for e in validator.iter_errors(data):
+                          print(f"::error file={meta}::{e.message}")
+                          errors += 1
+          if errors: sys.exit(1)
+          print("✅ All meta.yaml present & schema-valid")
+
+  required-files:
+    name: Check Required Leaf Files (§13.4)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate required files by layer
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Checking required files per TFA layer..."
+          errors=0
+          # CB
+          find . -type d -path "*/BITS/CB" | while read -r d; do
+            for f in cb-config.json validate_cb_leaf.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for CB (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # QB
+          find . -type d -path "*/QUBITS/QB" | while read -r d; do
+            for f in qb-config.json validate_qb_leaf.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for QB (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # UE  (added)
+          find . -type d -path "*/ELEMENTS/UE" | while read -r d; do
+            for f in ue-contract.json validate_ue_contract.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for UE (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # FE
+          find . -type d -path "*/ELEMENTS/FE" | while read -r d; do
+            for f in fe-policy.yaml validate_fe_policy.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for FE (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # FWD (added)
+          find . -type d -path "*/WAVES/FWD" | while read -r d; do
+            for f in fwd-model.yaml validate_fwd_model.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for FWD (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # QS
+          find . -type d -path "*/STATES/QS" | while read -r d; do
+            for f in qs-proof.json validate_qs_proof.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for QS (§13.4)"; errors=$((errors+1)); }; done
+          done
+          [ $errors -eq 0 ] || { echo "❌ Found $errors missing required files"; exit 1; }
+          echo "✅ All required layer files present"
+
+  summary:
+    name: Validation Summary
+    needs: [merge-artifacts, path-validation, link-check, meta-yaml-check, required-files]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Summary
+        run: |
+          {
+            echo "## 📊 ASI-T Structure Validation Summary"
+            for j in merge-artifacts path-validation link-check meta-yaml-check required-files; do
+              r="${{ needs[j].result }}"
+              icon="✅"; [ "$r" = "success" ] || icon="❌"
+              name="$j"
+              echo "- $icon **${name//-/ }**: $r"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
+```
+
+Two housekeeping notes:
+
+* The README still shows a conflict hunk (`<<<<<<< … ======= … >>>>>>>`). Nuke that chunk and keep the **latest** §13 copy (the one matching this Action’s rules).
+* If you later permit extra top-level dirs (e.g., `tools/`), add them to the **canonical roots** case list or the guard will reject them—by design.
+
+Want me to add a tiny fixer script (`scripts/fix-anchors-and-paths.py`) that auto-rewrites stale README links to the new 00-01-02 cascade?
+

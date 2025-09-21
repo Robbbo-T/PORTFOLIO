@@ -1,0 +1,22 @@
+tfa:
+  domain: "IIF"
+  layer: "CB"
+map:
+  scheme: "ATA"
+  chapter: "05"
+  label: "Time Limits/Maintenance Checks"
+gata:
+  focus: "energy-positive-manufacturing"
+program:
+  key: "ampel360bwbq"
+  baseline: "0001"
+mal:
+  bridge: "cax-llc"
+  process: "manufacturing-optimization"
+gicd:
+  icn_ref: "../../gicd/icn.v1.json"
+  pbs_ref: "../../gicd/pbs.v1.json"
+  ibs_ref: "../../gicd/ibs.v1.json"
+provenance:
+  qs_required: true
+  utcs_anchor: "optional"

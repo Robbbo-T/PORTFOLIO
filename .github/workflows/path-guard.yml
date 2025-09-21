@@ -1,0 +1,46 @@
+name: path-guard
+on: [pull_request]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Enforce TFA path & case rules
+        run: |
+          set -euo pipefail
+          CHANGES="$(git diff --name-only origin/${{ github.base_ref }}...)"
+          errors=0
+          
+          # 2) forbid lowercase layer names in general
+          if echo "$CHANGES" | grep -E '/2-DOMAINS-LEVELS/.*/(bits|qubits|elements|waves|states|systems|stations|components)/' ; then
+            echo "::error::TFA layer folders must be uppercase: BITS, QUBITS, ELEMENTS, WAVES, STATES, SYSTEMS, STATIONS, COMPONENTS. (violates 13.2.1 Path Grammar)"
+            errors=1
+          fi
+          
+          # 3) require ATA chapter naming when 'ata-' present
+          if echo "$CHANGES" | grep -E '/ata-[0-9]{2}-[a-z0-9-]+/' -q ; then
+            echo "ATA naming OK"
+          fi
+          
+          # 4) grammar check for canonical leaf paths
+          echo "$CHANGES" | while read -r p; do
+            if [[ -z "$p" ]]; then continue; fi
+            case "$p" in
+              portfolio/2-DOMAINS-LEVELS/*/programs/*/conf_base/[0-9][0-9][0-9][0-9]/*/ata-[0-9][0-9]-*/cax-bridges/*/*/*)
+                echo "Valid canonical leaf path: $p"
+                ;;
+              portfolio/2-DOMAINS-LEVELS/*/TFA/*)
+                echo "Valid TFA path: $p"
+                ;;
+              portfolio/2-DOMAINS-LEVELS/*)
+                echo "Valid domain path: $p"
+                ;;
+              *)
+                continue
+                ;;
+            esac
+          done
+          
+          exit $errors

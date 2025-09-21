@@ -1,0 +1,70 @@
+name: meta-validate
+on: [pull_request]
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: 
+          python-version: '3.11'
+      - run: pip install jsonschema pyyaml
+      - name: Create validation script
+        run: |
+          cat > validate_meta.py << 'EOF'
+          import os, yaml, json, sys
+          from jsonschema import validate, Draft202012Validator
+
+          SCHEMA_PATH = 'docs/bridges/schemas/meta.schema.json'
+          try:
+              with open(SCHEMA_PATH) as f:
+                  schema = json.load(f)
+          except Exception as e:
+              print(f'::error file={SCHEMA_PATH}::Invalid JSON schema: {e}')
+              sys.exit(1)
+
+          errors = 0
+          meta_files_found = 0
+
+          for root, dirs, files in os.walk('portfolio/2-DOMAINS-LEVELS'):
+              if 'meta.yaml' in files:
+                  # Check if this is in a TFA leaf directory
+                  path_segments = root.split(os.sep)
+                  if path_segments[-1] in {'CB','QB','UE','FE','FWD','QS'}:
+                      meta_files_found += 1
+                      meta_path = os.path.join(root, 'meta.yaml')
+                      try:
+                          with open(meta_path, 'r') as f:
+                              data = yaml.safe_load(f)
+                          
+                          v = Draft202012Validator(schema)
+                          for e in v.iter_errors(data):
+                              print(f'::error file={meta_path}::{e.message} (violates 13.3 Mandatory Leaf Metadata)')
+                              errors += 1
+                              
+                          if errors == 0:
+                              print(f'✓ Valid meta.yaml: {meta_path}')
+                              
+                      except yaml.YAMLError as e:
+                          print(f'::error file={meta_path}::Invalid YAML: {e}')
+                          errors += 1
+                      except FileNotFoundError:
+                          print(f'::error file={meta_path}::File not found')
+                          errors += 1
+
+          print(f'Validated {meta_files_found} meta.yaml files')
+          if errors:
+              print(f'Found {errors} validation errors')
+              sys.exit(1)
+          else:
+              print('All meta.yaml files are valid')
+          EOF
+      - name: Validate meta.yaml against meta.schema.json
+        run: |
+          set -euo pipefail
+          SCHEMA="docs/bridges/schemas/meta.schema.json"
+          if [ ! -f "$SCHEMA" ]; then
+            echo "::error::$SCHEMA not found (violates 13.3 Mandatory Leaf Metadata)"
+            exit 1
+          fi
+          python3 validate_meta.py
