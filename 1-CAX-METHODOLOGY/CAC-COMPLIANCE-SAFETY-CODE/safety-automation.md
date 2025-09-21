@@ -457,13 +457,30 @@ MON 0 <= render_time_ms <= 10 ELSE ANNUNCIATE PFD_LATENCY WITHIN 20ms
 ## 8) Governance & Federation Entanglement (FE)
 
 * **Quorums**: Releases and anchor writes require FE quorum (e.g., `SI+QA`, or `DER+QA`).
-* **EIP‑712 FE signature block (placeholder)**:
+* **EIP‑712 FE signature block (example with explicit placeholders)**:
 
+<!-- The following JSON uses explicit placeholder values. Replace these with actual values in your implementation. -->
 ```json
 {
-  "domain": {"name": "AQUA-FE", "version": "1", "chainId": 777, "verifyingContract": "0x…"},
-  "message": {"anchor_id": "det:anchor:…", "utcs_id": "utcs:…", "ts": "2025-09-20T10:21:33Z"},
-  "primaryType": "Anchor", "types": {"Anchor": [{"name": "anchor_id", "type": "string"}, {"name": "utcs_id", "type": "string"}, {"name": "ts", "type": "string"}]}
+  "domain": {
+    "name": "AQUA-FE",
+    "version": "1",
+    "chainId": 777,
+    "verifyingContract": "REPLACE_WITH_CONTRACT_ADDRESS"
+  },
+  "message": {
+    "anchor_id": "REPLACE_WITH_ANCHOR_ID",
+    "utcs_id": "REPLACE_WITH_UTCS_ID",
+    "ts": "2025-09-20T10:21:33Z"
+  },
+  "primaryType": "Anchor",
+  "types": {
+    "Anchor": [
+      {"name": "anchor_id", "type": "string"},
+      {"name": "utcs_id", "type": "string"},
+      {"name": "ts", "type": "string"}
+    ]
+  }
 }
 ```
 
