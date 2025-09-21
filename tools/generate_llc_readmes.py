@@ -142,7 +142,7 @@ Key artifacts typically found in the `{llc_code}` layer include:
 """).strip()
 
 def main():
-    """Recorre la estructura y genera los READMEs."""
+    """Traverses the structure and generates the READMEs."""
     portfolio_root = pathlib.Path(__file__).resolve().parents[1]
     domains_root = portfolio_root / "portfolio" / "2-DOMAINS-LEVELS"
     
