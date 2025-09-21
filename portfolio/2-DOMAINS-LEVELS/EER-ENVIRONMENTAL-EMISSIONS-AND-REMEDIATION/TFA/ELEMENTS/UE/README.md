@@ -1,7 +1,17 @@
-# UE · UNIT ELEMENT (EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION)
+# Layer: Unit Element (UE)
 
-**Layer:** ELEMENTS
-**LLC Code:** UE
-**Canonical Meaning:** UNIT ELEMENT
+**UTCS**: `utcs:tfa:spec:llc:ue:v2.1.0`  
+**Group**: `ELEMENTS`
 
-This directory contains artifacts and implementations for the UNIT ELEMENT within the EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION domain.
+## Canonical Meaning
+
+This layer is responsible for **Contains fundamental, reusable, and testable software units (drivers, parsers, validators)**.
+
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#36-elements-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `UE` layer include:
+- `ue_manifest.yaml`
+- `ue_*.py`

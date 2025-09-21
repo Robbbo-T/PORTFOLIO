@@ -1,23 +1,18 @@
-# AAA · SYSTEMS · SI (System Integration)
+# Layer: System Integration (SI)
 
-**Scope**: Integrate aerodynamic & airframe subsystems into a coherent system: geometry → mesh → CFD/FEA → loads → performance → certification artifacts.
+**UTCS**: `utcs:tfa:spec:llc:si:v2.1.0`  
+**Group**: `SYSTEMS`
 
-**LLC**: SI (Lifecycle Level Context: System Integration)  
-**Upstream**: CAD/MBSE (CAD-DESIGN-MBSE), COMPONENTS/CE|CI, DI (Domain Interfaces)  
-**Downstream**: STATIONS/SE (envelope checks), ELEMENTS/FE (federation runs), STATES/QS (superposition-derived models)
+## Canonical Meaning
 
-## Responsibilities
-- Canonicalize inputs (units: SI m-kg-s-K; angles rad; pressure Pa).
-- Orchestrate pipelines (mesh, CFD, loads, margins).
-- Validate against `schemas/` and `integration-plan.yaml`.
-- Emit `performance_summary` for FE orchestration and UTCS anchoring.
+This layer is responsible for **Orchestration of multiple domains and services (MAP→MAL). Defines system-wide behavior, safety sequences, and data flows**.
 
-## Interfaces
-- **Internal API**: `openapi.yaml` (validate, run, summarize).
-- **Data contracts**: JSON Schemas under `schemas/`.
-- **Events**: `artifact.*`, `utcs.anchor.requested` via AQUA.
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#31-systems-group).
 
-## Acceptance
-- All interfaces listed in `integration-plan.yaml` present & green.
-- Test harness passes baseline cases (subsonic/transonic).
-- Interface matrix coverage ≥ 95%; CI green.
+## Artifacts in this Layer
+
+Key artifacts typically found in the `SI` layer include:
+- `routes.map.yaml`
+- `thg.temporal.json`
+- `optimo-joins.yaml`

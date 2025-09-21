@@ -1,7 +1,16 @@
-# CV · COMPONENT VENDOR (AAA)
+# Layer: Component Vendor (CV)
 
-Purpose: Approved vendor list for AAA parts and assemblies.
+**UTCS**: `utcs:tfa:spec:llc:cv:v2.1.0`  
+**Group**: `COMPONENTS`
 
-**Artifacts:**
-- `vendor-registry.*` — Vendor IDs, qualification status, contact, constraints
-- Links: CE specs, CI items
+## Canonical Meaning
+
+This layer is responsible for **Information about the supplier of a component**.
+
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#33-components-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `CV` layer include:
+- `<VENDOR_CODE>.vendor.yaml`
