@@ -1,0 +1,63 @@
+{
+  "artifact_id": "TEST/FAILURE/CASE",
+  "prompt_readiness": {
+    "spec_sheet": {
+      "goal": "bad goal",
+      "constraints": [],
+      "tool_access": {},
+      "safety_rails": {}
+    },
+    "golden_set": {
+      "inputs": [],
+      "expected_outputs": [],
+      "test_cases": [],
+      "eval_metrics": {}
+    },
+    "adversarial_suite": {
+      "instruction_inversion": [],
+      "role_hijack": [],
+      "tool_abuse": [],
+      "prompt_injection": [],
+      "pass_criteria": {
+        "max_failure_rate": 0.10,
+        "escalation_required": false
+      }
+    },
+    "utcs_anchor": {
+      "prompt_hash": "invalid_hash",
+      "data_snapshot_hash": "also_invalid",
+      "eval_results_hash": "still_invalid"
+    }
+  },
+  "quantum_mappability": {
+    "canonical_form": {
+      "problem_type": "INVALID_TYPE",
+      "derivation_notes": "too short",
+      "variable_mapping": {}
+    },
+    "encoding": {
+      "rationale": "short",
+      "penalty_weights": {},
+      "unit_conversion": {},
+      "scaling_justification": "also short"
+    },
+    "performance_budget": {
+      "noise_tolerance": 0.5,
+      "latency_budget": 0.1,
+      "baseline_gap": 5.0,
+      "fallback_criteria": ""
+    },
+    "utcs_anchor": {
+      "encoding_hash": "bad_hash",
+      "results_hash": "another_bad_hash"
+    }
+  },
+  "metadata": {
+    "timestamp": "2024-01-15T10:00:00Z",
+    "validation_version": "1.0.0",
+    "cb_qb_metadata": {
+      "classical_solution_hash": "sha256:test123",
+      "bridge_flow_version": "1.0.0"
+    }
+  }
+}
