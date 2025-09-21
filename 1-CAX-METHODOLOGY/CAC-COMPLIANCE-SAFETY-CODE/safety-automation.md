@@ -470,7 +470,7 @@ MON 0 <= render_time_ms <= 10 ELSE ANNUNCIATE PFD_LATENCY WITHIN 20ms
   },
   "message": {
     "anchor_id": "REPLACE_WITH_ANCHOR_ID",
-    "utcs_id": "REPLACE_WITH_UTCS_ID",
+    "utcs_id": "utcs:det:anchor:example:001",
     "ts": "2025-09-20T10:21:33Z"
   },
   "primaryType": "Anchor",
