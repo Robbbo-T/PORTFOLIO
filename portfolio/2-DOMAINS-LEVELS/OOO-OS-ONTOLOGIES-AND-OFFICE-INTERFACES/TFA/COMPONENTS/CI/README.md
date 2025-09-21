@@ -1,7 +1,16 @@
-# CI · CONFIGURATION ITEM (OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES)
+# Layer: Configuration Item (CI)
 
-**Layer:** COMPONENTS
-**LLC Code:** CI
-**Canonical Meaning:** CONFIGURATION ITEM
+**UTCS**: `utcs:tfa:spec:llc:ci:v2.1.0`  
+**Group**: `COMPONENTS`
 
-This directory contains artifacts and implementations for the CONFIGURATION ITEM within the OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES domain.
+## Canonical Meaning
+
+This layer is responsible for **A unique, specific instance of a component, linking hardware to its exact software/firmware load**.
+
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#33-components-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `CI` layer include:
+- `<INSTANCE_ID>.item.yaml`

@@ -1,7 +1,18 @@
-# DI · DOMAIN INTERFACE (CCC-COCKPIT-CABIN-AND-CARGO)
+# Layer: Domain Interface (DI)
 
-**Layer:** SYSTEMS
-**LLC Code:** DI
-**Canonical Meaning:** DOMAIN INTERFACE
+**UTCS**: `utcs:tfa:spec:llc:di:v2.1.0`  
+**Group**: `SYSTEMS`
 
-This directory contains artifacts and implementations for the DOMAIN INTERFACE within the CCC-COCKPIT-CABIN-AND-CARGO domain.
+## Canonical Meaning
+
+This layer is responsible for **Defines the formal, versioned API contract for a single domain's services (the MALs). This is the boundary layer**.
+
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#31-systems-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `DI` layer include:
+- `mal.contract.json`
+- `openapi.yaml`
+- `JSON schemas`

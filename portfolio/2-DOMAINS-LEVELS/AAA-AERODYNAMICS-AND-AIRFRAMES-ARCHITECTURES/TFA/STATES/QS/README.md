@@ -1,10 +1,17 @@
-# QS · QUANTUM STATE (AAA)
+# Layer: Quantum State (QS)
 
-Purpose: Canonical descriptors for quantum-state representations used by advanced AAA analyses (e.g., quantum-inspired optimization, uncertainty propagation). **Meaning is verbatim: QUANTUM STATE.**
+**UTCS**: `utcs:tfa:spec:llc:qs:v2.1.0`  
+**Group**: `STATES`
 
-**Artifacts:**
-- `quantum-state-schema.*` — State vector or density matrix metadata + measurement maps
+## Canonical Meaning
 
-Notes:
-- Keep physics notation explicit (`|ψ⟩`, density matrices ρ).
-- Provide classical mapping for toolchains consuming derived statistics.
+This layer is responsible for **The immutable, auditable evidence layer. Stores signed records of system operations and state transitions**.
+
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#38-states-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `QS` layer include:
+- `det_anchor.schema.json`
+- `anchors/`

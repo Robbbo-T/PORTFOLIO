@@ -1,7 +1,18 @@
-# CB · CLASSICAL BIT (DDD-DIGITAL-AND-DATA-DEFENSE)
+# Layer: Classical Bit (CB)
 
-**Layer:** BITS
-**LLC Code:** CB
-**Canonical Meaning:** CLASSICAL BIT
+**UTCS**: `utcs:tfa:spec:llc:cb:v2.1.0`  
+**Group**: `BITS`
 
-This directory contains artifacts and implementations for the CLASSICAL BIT within the DDD-DIGITAL-AND-DATA-DEFENSE domain.
+## Canonical Meaning
+
+This layer is responsible for **Contains the classical, deterministic algorithms, solvers, and computational logic**.
+
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#34-bits-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `CB` layer include:
+- `algos/`
+- `contracts/`
+- `tests/`

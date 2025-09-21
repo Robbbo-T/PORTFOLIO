@@ -1,16 +1,17 @@
-# FE · FEDERATION ENTANGLEMENT (AAA)
+# Layer: Federation Entanglement (FE)
 
-**Layer:** ELEMENTS
-**LLC Code:** FE
-**Canonical Meaning:** FEDERATION ENTANGLEMENT
+**UTCS**: `utcs:tfa:spec:llc:fe:v2.1.0`  
+**Group**: `ELEMENTS`
 
-This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES domain.
+## Canonical Meaning
 
-Purpose: Cross-domain orchestration and distributed element federation for aerodynamics and airframe architectures.
+This layer is responsible for **Defines the rules and contracts for secure, multi-agent or multi-organization collaboration**.
 
-**Artifacts:**
-- `federation-manifest.*` — Cross-domain federation configurations
-- `orchestration-rules.*` — Element coordination protocols
-- `distributed-state.*` — Shared state management
-- `se-station-links.*` — References to SE stations
-- `ci-baseline-links.*` — References to CI baselines
+For the full architectural context and governance rules, refer to the canonical definition in the
+[**_LLC-HIERARCHY.md**](../../../../_LLC-HIERARCHY.md#36-elements-group).
+
+## Artifacts in this Layer
+
+Key artifacts typically found in the `FE` layer include:
+- `fe_coalition.schema.json`
+- `contracts/`

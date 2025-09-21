@@ -15,7 +15,7 @@ IMAGE ?= ghcr.io/$(GITHUB_OWNER)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 .PHONY: help print-vars scaffold check validate domains quantum-bridge master-progress clean \
 bootstrap pre-commit-install lint test canonical-plan canonical-apply canonical-verify ci \
-docker-build docker-push
+docker-build docker-push scaffold-llc-readmes
 
 PY := python
 
@@ -34,6 +34,7 @@ help:
 	@echo "  canonical-verify - Ensure no pending canonical renames"
 	@echo "  ci               - Run lint, tests, and canonical verification"
 	@echo "  scaffold         - Create missing TFA structure and implementation buckets"
+	@echo "  scaffold-llc-readmes - Generate or update all canonical READMEs within TFA/LLC layers"
 	@echo "  check            - Run all validations"
 	@echo "  validate         - Run TFA structure validator"
 	@echo "  domains          - Show domain status"
@@ -188,3 +189,9 @@ scaffold-cqh:
 
 # Include shared TFA scaffolding/validation targets
 include 8-RESOURCES/TEMPLATES/makefile.snippets.mk
+
+## Generates or updates all canonical READMEs within the TFA/LLC layers
+scaffold-llc-readmes:
+	@echo "🏛️ Scaffolding canonical LLC READMEs across all domains and CAx tracks..."
+	@python tools/generate_llc_readmes.py
+	@echo "✅ Canonical READMEs are up to date."
