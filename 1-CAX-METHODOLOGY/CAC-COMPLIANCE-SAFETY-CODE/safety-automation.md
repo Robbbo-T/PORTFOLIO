@@ -359,7 +359,7 @@ curl -X POST "https://api.aqua.os/v1/certification/generate" \
    "flight_id": "Q100-DEV-042",
    "standard": "DO-178C_Level_B",
    "components": ["utcs:ci:avionics:fnc:primary-flight-display:123456"],
-   "time_range": {"start": "2023-10-26T10:00:00Z", "end": "2023-10-26T15:30:00Z"},
+   "time_range": {"start": "2025-09-20T10:00:00Z", "end": "2025-09-20T15:30:00Z"},
    "output_format": "pdf_interactive"
  }'
 ```
