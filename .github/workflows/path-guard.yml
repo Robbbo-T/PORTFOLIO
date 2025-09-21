@@ -13,12 +13,6 @@ jobs:
           CHANGES="$(git diff --name-only origin/${{ github.base_ref }}...)"
           errors=0
           
-          # 1) forbid lowercase 'bits/' under domains
-          if echo "$CHANGES" | grep -E '/2-DOMAINS-LEVELS/.*/bits/CB' ; then
-            echo "::error::Use 'BITS/CB' (uppercase) for TFA layer folders. (violates 13.2.1 Path Grammar)"
-            errors=1
-          fi
-          
           # 2) forbid lowercase layer names in general
           if echo "$CHANGES" | grep -E '/2-DOMAINS-LEVELS/.*/(bits|qubits|elements|waves|states|systems|stations|components)/' ; then
             echo "::error::TFA layer folders must be uppercase: BITS, QUBITS, ELEMENTS, WAVES, STATES, SYSTEMS, STATIONS, COMPONENTS. (violates 13.2.1 Path Grammar)"
