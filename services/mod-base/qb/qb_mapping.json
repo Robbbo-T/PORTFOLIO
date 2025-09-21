@@ -14,7 +14,7 @@
     },
     "altitude_penalty": {
       "qubit_range": [8, 15],
-      "encoding": "binary_fraction", 
+      "encoding": "binary_fraction",
       "precision": 8,
       "domain": [0.0, 0.1]
     },
