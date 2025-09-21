@@ -27,7 +27,7 @@ jobs:
         run: bash -lc 'shopt -s globstar; shellcheck scripts/**/*.sh || true'
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.x' # Choose the Python version needed
 
