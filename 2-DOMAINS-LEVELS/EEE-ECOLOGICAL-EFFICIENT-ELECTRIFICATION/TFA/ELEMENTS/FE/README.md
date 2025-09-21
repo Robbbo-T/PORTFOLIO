@@ -1,7 +1,0 @@
-# FE · FEDERATION ENTANGLEMENT (EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION)
-
-**Layer:** ELEMENTS
-**LLC Code:** FE
-**Canonical Meaning:** FEDERATION ENTANGLEMENT
-
-This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION domain.

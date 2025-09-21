@@ -1,7 +1,0 @@
-# CC · CONFIGURATION CELL (AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES)
-
-**Layer:** COMPONENTS
-**LLC Code:** CC
-**Canonical Meaning:** CONFIGURATION CELL
-
-This directory contains artifacts and implementations for the CONFIGURATION CELL within the AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES domain.

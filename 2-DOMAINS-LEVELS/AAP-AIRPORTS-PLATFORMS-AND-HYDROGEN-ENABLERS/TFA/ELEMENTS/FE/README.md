@@ -1,7 +1,0 @@
-# FE · FEDERATION ENTANGLEMENT (AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS)
-
-**Layer:** ELEMENTS
-**LLC Code:** FE
-**Canonical Meaning:** FEDERATION ENTANGLEMENT
-
-This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS domain.

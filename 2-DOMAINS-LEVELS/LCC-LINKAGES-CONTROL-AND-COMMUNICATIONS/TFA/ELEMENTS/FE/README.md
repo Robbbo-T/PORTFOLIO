@@ -1,7 +1,0 @@
-# FE · FEDERATION ENTANGLEMENT (LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS)
-
-**Layer:** ELEMENTS
-**LLC Code:** FE
-**Canonical Meaning:** FEDERATION ENTANGLEMENT
-
-This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS domain.

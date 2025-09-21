@@ -1,7 +1,0 @@
-# FE · FEDERATION ENTANGLEMENT (EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION)
-
-**Layer:** ELEMENTS
-**LLC Code:** FE
-**Canonical Meaning:** FEDERATION ENTANGLEMENT
-
-This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION domain.

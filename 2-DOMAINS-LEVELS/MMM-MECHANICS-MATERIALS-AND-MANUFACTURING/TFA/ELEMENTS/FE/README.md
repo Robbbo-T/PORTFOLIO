@@ -1,7 +1,0 @@
-# FE · FEDERATION ENTANGLEMENT (MMM-MECHANICS-MATERIALS-AND-MANUFACTURING)
-
-**Layer:** ELEMENTS
-**LLC Code:** FE
-**Canonical Meaning:** FEDERATION ENTANGLEMENT
-
-This directory contains artifacts and implementations for the FEDERATION ENTANGLEMENT within the MMM-MECHANICS-MATERIALS-AND-MANUFACTURING domain.
