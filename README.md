@@ -51,15 +51,66 @@ This repository is a **full-stack platform** and **engineering portfolio** for t
 
 ---
 
-## 0. 🛡️ Defense Principle
+# 0. 🛡️ Defense Principle — International Declaration of Intent
 
 **Universal Empathy & Ethics in Flight Machines** is the primary defense application of ASI-T.
+This declaration sets binding design and operational obligations for any autonomous or semi-autonomous flight system developed, integrated, tested, or deployed under ASI-T.
 
-* **Requirements:** human-on-the-loop, explicit non-harm constraints, transparency, data minimization.
-* **Software:** mandatory **Empathy & Ethics Module (EEM)** in the autonomy loop (perception → planning → *EEM.check/explain* → operator confirm → actuation).
-* **Evidence:** **QS/UTCS** provenance for policy/profile, model version, decisions, XAI artifacts, and approvals.
+## Intent
 
-All DEFENSE programs must bind to **ASI-T Universal Empathy v1**, call **MAL-EEM** hooks before actuation, and anchor evidence via QS/UTCS.
+We commit to systems that **prioritize human dignity, non-harm, transparency, and accountability**. Autonomy is permitted only where these conditions are **technically enforced, continuously verified, and auditable**.
+
+## Scope
+
+Applies to: all DEFENSE programs, subsystems, software, models, datasets, and operations across AIR / SPACE / GROUND / CROSS segments, including upgrades and derivatives.
+
+## Technical Obligations (MUST)
+
+* **Human-on-the-loop:** A qualified human operator SHALL retain real-time veto authority over any actuation capable of affecting life, safety, or critical infrastructure.
+* **Non-harm constraints:** Pre-action constraints SHALL forbid targeting of persons and enforce de-escalation unless a formally authorized, auditable exception is invoked.
+* **Transparency:** Every decision affecting safety SHALL be accompanied by an explanation artifact generated **before** or **at** actuation time.
+* **Data minimization & privacy:** Collection and processing SHALL be strictly purpose-bound and proportional to the safety objective.
+
+## Mandatory Software Component
+
+* **Empathy & Ethics Module (EEM):** All autonomy loops SHALL include an EEM checkpoint:
+  `perception → planning → EEM.check + EEM.explain → operator confirm → actuation`
+
+  * If **EEM.check** fails, the system SHALL execute an approved **de-escalation plan** (e.g., safe-hover/loiter-handoff/abort-RTB).
+  * Actuation SHALL NOT proceed without operator confirmation where required by policy.
+
+## Verification & Evidence (QS/UTCS)
+
+All safety-relevant actions SHALL produce immutable provenance anchored via **QS/UTCS**, including at minimum:
+
+* `policy_hash`, `policy_profile`
+* `model_sha`, `data_manifest`
+* `decision_record`, `xai_blob_hash`
+* `operator_id`, `approval_token`, `timestamp`
+
+Absence or corruption of required evidence SHALL block deployment and trigger incident handling.
+
+## Interoperability & Law
+
+Policies and constraints SHALL be expressed as **policies-as-code** mappable to international humanitarian law, rules of engagement, civil aviation safety norms, and applicable export controls. Cross-agency audits are **authorized and expected**.
+
+## Governance & Accountability
+
+* **Profile binding:** All DEFENSE programs MUST bind to **ASI-T Universal Empathy v1** (or successor), referenced in each system’s `meta.yaml`.
+* **Change control:** Any change to models, policies, or EEM code requires dual approval (engineering + ethics authority) and regenerates the QS/UTCS evidence chain.
+* **Continuous red-teaming:** Adversarial, bias, and escalation tests SHALL run on a defined cadence; findings MUST be remediated before release.
+
+## Non-Compliance & Safe-Fail
+
+If EEM is missing, degraded, or policy binding is invalid, the system SHALL:
+
+1. Inhibit actuation,
+2. Enter a pre-approved safe state, and
+3. Emit a QS/UTCS incident record for investigation.
+
+---
+
+**Implementation note:** All DEFENSE programs **must** call **MAL-EEM** hooks before actuation and **anchor evidence via QS/UTCS**. This declaration is actionable by CI/CD gates, runtime guards, and independent audit.
 
 ---
 
