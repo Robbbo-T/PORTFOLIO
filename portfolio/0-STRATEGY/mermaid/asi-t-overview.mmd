@@ -1,0 +1,30 @@
+flowchart LR
+  subgraph TFA["TFA Architecture Core"]
+    TE[Trust Establishment]
+    DS[Data Security]
+    IO[Interoperability]
+    GP[Governance & Policy]
+    DLT[Distributed Ledger]
+  end
+
+  subgraph ASIT["ASI-T Pillars"]
+    SIC[Super-Intelligence Core]
+    DTS[Digital Twin & Simulation]
+    ECH[Edge-Cloud Hybrid]
+    HAI[Human-AI Collaboration]
+  end
+
+  QB[Quantum Bridge]
+
+  TFA --> ASIT
+  QB  --> ECH
+  SIC -->|Aviation| AV[Autonomous Flight & Predictive Mx]
+  SIC -->|Space| SP[Constellation Ops & ISRU]
+  SIC -->|Defense| DF[Swarm & Threat Detection]
+  DTS --> AV
+  DTS --> SP
+  ECH --> AV
+  ECH --> SP
+  HAI --> AV
+  HAI --> DF
+  DLT -->|DET anchors| ASIT

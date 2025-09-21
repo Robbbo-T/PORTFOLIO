@@ -18,7 +18,7 @@ except Exception:  # pragma: no cover
     yaml = None  # handled below
 
 REPO = Path(__file__).resolve().parents[1]
-DOMAINS_DIR = REPO / "2-DOMAINS-LEVELS"
+DOMAINS_DIR = REPO / "portfolio" / "2-DOMAINS-LEVELS"
 
 EXPECTED_DOMAINS = [
     "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES",
@@ -99,7 +99,7 @@ def find_issues():
     # 1) Domains present
     if not DOMAINS_DIR.exists():
         issues.append(f"Missing directory: {DOMAINS_DIR.relative_to(REPO)}")
-        return issues
+        return issues, warnings
 
     # Identify existing domains (ignore hidden/underscore)
     existing = sorted([p.name for p in DOMAINS_DIR.iterdir() if p.is_dir() and not p.name.startswith('_')])
@@ -140,6 +140,7 @@ def find_issues():
         ".github/prompts/copilot-smoke.md",       # Test prompts referencing forbidden terms
         ".github/workflows/lexicon-guard.yml",    # Lexicon guard references forbidden terms
         "CONTRIBUTING.md",                        # May reference forbidden terms in context
+        "SMOKE_TEST_VALIDATION_SUMMARY.md",       # Test validation file with examples of forbidden terms
     }
     for path in REPO.rglob("*"):
         if path.is_file() and path.suffix in text_exts:
