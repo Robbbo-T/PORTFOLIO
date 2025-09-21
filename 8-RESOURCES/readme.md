@@ -31,7 +31,7 @@
 * **Schemas** used across services (AQUA-OS, OPTIMO-DT)
   Primary: [AQUA-OS PRO Route Schema](../services/aqua-os-pro/schemas/route_optimization.json)
 * **Style guides** (naming, folders, metadata)
-  See [TEMPLATES/META/README.md](./TEMPLATES/META/README.md)
+  [Copilot Agent Styleguide](./copilot_uix.md) · [TEMPLATES/META/README.md](./TEMPLATES/META/README.md)
 * **Example assets** (Mermaid diagrams, icons, placeholder datasets)
   `./ASSETS/…` *(add as needed)*
 
@@ -152,6 +152,7 @@ All template packs are **CI-aware**: copying them preserves structure & required
 ## 🤖 AI Assistant Configuration
 
 * **Copilot Instructions**: `.github/COPILOT_INSTRUCTIONS.md` - Repository-level AI guidance for TFA architecture, quantum-classical bridge patterns, and AQUA/UTCS integration
+* **Copilot Styleguide**: `./copilot_uix.md` - Normative standards for agent-driven artifact creation, UTCS-MI metadata, and TFA path grammar
 * **Test Prompts**: `.github/prompts/copilot-smoke.md` - Validation prompts to verify AI assistant understanding of TFA rules and terminology
 
 ---
