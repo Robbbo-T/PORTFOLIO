@@ -8,7 +8,7 @@ import pathlib
 import textwrap
 from typing import Dict, List
 
-# Definición canónica de los LLCs, sus grupos y significados.
+# Canonical definition of LLCs, their groups and meanings.
 LLC_DEFINITIONS = {
     "SYSTEMS": {
         "SI": {
