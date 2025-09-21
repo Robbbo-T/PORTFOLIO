@@ -1,0 +1,434 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asi-t.org/schemas/gata/contract/v1",
+  "title": "gATA Contract Schema",
+  "description": "JSON Schema for validating gATA (green Alternative Transport Aerospace) contracts and specifications",
+  "type": "object",
+  "required": [
+    "version",
+    "name",
+    "type",
+    "sustainability_aspects",
+    "ata_compatibility",
+    "domain",
+    "llc_path"
+  ],
+  "properties": {
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+(\\.\\d+)?$",
+      "description": "Semantic version of the gATA contract"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 100,
+      "description": "Human-readable name of the gATA contract"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "green_ata_chapter",
+        "sustainability_extension",
+        "environmental_compliance",
+        "green_innovation",
+        "circular_economy",
+        "emission_reduction",
+        "energy_efficiency"
+      ],
+      "description": "Type of gATA contract"
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 1000,
+      "description": "Detailed description of the contract purpose and scope"
+    },
+    "sustainability_aspects": {
+      "type": "object",
+      "required": ["primary_focus", "environmental_benefits"],
+      "properties": {
+        "primary_focus": {
+          "type": "string",
+          "enum": [
+            "carbon_neutrality",
+            "circular_economy",
+            "energy_efficiency",
+            "waste_reduction",
+            "alternative_fuels",
+            "renewable_energy",
+            "emission_reduction",
+            "noise_reduction",
+            "material_sustainability",
+            "lifecycle_optimization"
+          ],
+          "description": "Primary sustainability focus area"
+        },
+        "environmental_benefits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["benefit", "quantification", "measurement_unit"],
+            "properties": {
+              "benefit": {
+                "type": "string",
+                "description": "Description of environmental benefit"
+              },
+              "quantification": {
+                "type": "number",
+                "description": "Quantified benefit value"
+              },
+              "measurement_unit": {
+                "type": "string",
+                "description": "Unit of measurement for the benefit"
+              },
+              "confidence_level": {
+                "type": "string",
+                "enum": ["high", "medium", "low", "estimated"],
+                "default": "medium"
+              }
+            }
+          },
+          "minItems": 1,
+          "description": "List of quantified environmental benefits"
+        },
+        "carbon_impact": {
+          "type": "object",
+          "properties": {
+            "reduction_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Percentage reduction in carbon emissions"
+            },
+            "absolute_reduction": {
+              "type": "number",
+              "minimum": 0,
+              "description": "Absolute carbon reduction in tons CO2 equivalent"
+            },
+            "measurement_methodology": {
+              "type": "string",
+              "description": "Methodology used to measure carbon impact"
+            }
+          }
+        },
+        "circular_economy_aspects": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "design_for_disassembly",
+              "material_recyclability",
+              "component_reusability",
+              "waste_minimization",
+              "resource_efficiency",
+              "extended_product_life",
+              "sharing_economy_integration"
+            ]
+          },
+          "description": "Circular economy principles applied"
+        }
+      },
+      "description": "Comprehensive sustainability aspects of the contract"
+    },
+    "ata_compatibility": {
+      "type": "object",
+      "required": ["base_ata_chapter", "compatibility_level"],
+      "properties": {
+        "base_ata_chapter": {
+          "type": "string",
+          "pattern": "^(ata-)?\\d{2}(-.*)?$|^annex16-.*$",
+          "description": "Base ATA chapter this gATA contract extends"
+        },
+        "compatibility_level": {
+          "type": "string",
+          "enum": ["full", "partial", "extended", "new"],
+          "description": "Level of compatibility with standard ATA"
+        },
+        "interface_compatibility": {
+          "type": "boolean",
+          "description": "Whether interfaces remain compatible with standard ATA"
+        },
+        "data_format_compatibility": {
+          "type": "boolean",
+          "description": "Whether data formats remain compatible with standard ATA"
+        },
+        "procedure_compatibility": {
+          "type": "boolean",
+          "description": "Whether procedures remain compatible with standard ATA"
+        },
+        "migration_path": {
+          "type": "string",
+          "description": "Migration path from standard ATA to gATA"
+        }
+      },
+      "description": "ATA compatibility specifications"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES",
+        "AAP-AIRPORT-ADAPTABLE-PLATFORMS",
+        "CCC-COCKPIT-CABIN-AND-CARGO",
+        "CQH-CRYOGENICS-QUANTUM-AND-H2",
+        "DDD-DIGITAL-AND-DATA-DEFENSE",
+        "EDI-ELECTRONICS-DIGITAL-INSTRUMENTS",
+        "EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION",
+        "EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION",
+        "IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES",
+        "IIS-INTEGRATED-INTELLIGENCE-SOFTWARE",
+        "LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS",
+        "LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN",
+        "MMM-MECHANICAL-AND-MATERIAL-MODULES",
+        "OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES",
+        "PPP-PROPULSION-AND-FUEL-SYSTEMS"
+      ],
+      "description": "ASI-T domain this contract belongs to"
+    },
+    "llc_path": {
+      "type": "string",
+      "pattern": "^TFA/(SYSTEMS/(DI|SI)|COMPONENTS/(CV|CE|CC|CI|CP)|BITS/CB|QUBITS/QB|ELEMENTS/(UE|FE)|WAVES/FWD|STATES/QS)$|^CAX-BRIDGES/(CAD-DESIGN|CAE-ENGINEERING|CAI-AI-INTEGRATION|CAT-TESTING|CAV-VERIFICATION)(/.*)?$",
+      "description": "Logical Layer Component (LLC) path in TFA or CAx structure"
+    },
+    "technical_specifications": {
+      "type": "object",
+      "properties": {
+        "performance_requirements": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["requirement", "specification", "validation_method"],
+            "properties": {
+              "requirement": {
+                "type": "string",
+                "description": "Performance requirement description"
+              },
+              "specification": {
+                "type": "string",
+                "description": "Detailed technical specification"
+              },
+              "validation_method": {
+                "type": "string",
+                "description": "Method to validate the requirement"
+              },
+              "sustainability_impact": {
+                "type": "string",
+                "description": "How this requirement impacts sustainability"
+              }
+            }
+          }
+        },
+        "interfaces": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "protocol"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Interface name"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["api", "data_exchange", "physical", "electrical", "mechanical"],
+                "description": "Type of interface"
+              },
+              "protocol": {
+                "type": "string",
+                "description": "Interface protocol or standard"
+              },
+              "green_enhancements": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Sustainability enhancements to the interface"
+              }
+            }
+          }
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "type"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Dependency name"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["system", "component", "service", "standard", "regulation"],
+                "description": "Type of dependency"
+              },
+              "version": {
+                "type": "string",
+                "description": "Required version of dependency"
+              },
+              "green_requirements": {
+                "type": "string",
+                "description": "Sustainability requirements for the dependency"
+              }
+            }
+          }
+        }
+      },
+      "description": "Technical specifications and requirements"
+    },
+    "compliance": {
+      "type": "object",
+      "properties": {
+        "regulatory_standards": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["standard", "compliance_level"],
+            "properties": {
+              "standard": {
+                "type": "string",
+                "enum": [
+                  "ICAO_Annex16_Vol1",
+                  "ICAO_Annex16_Vol2",
+                  "ICAO_Annex16_Vol3",
+                  "EASA_Environmental",
+                  "FAA_Environmental",
+                  "ISO_14001",
+                  "ISO_50001",
+                  "AS9100",
+                  "S1000D"
+                ],
+                "description": "Regulatory standard or requirement"
+              },
+              "compliance_level": {
+                "type": "string",
+                "enum": ["full", "partial", "not_applicable", "pending"],
+                "description": "Level of compliance with the standard"
+              },
+              "evidence": {
+                "type": "string",
+                "description": "Evidence or documentation of compliance"
+              }
+            }
+          }
+        },
+        "environmental_certifications": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Environmental certifications achieved or targeted"
+        }
+      },
+      "description": "Compliance and certification information"
+    },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "phases": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["phase", "sustainability_considerations"],
+            "properties": {
+              "phase": {
+                "type": "string",
+                "enum": [
+                  "design",
+                  "manufacturing",
+                  "testing",
+                  "deployment",
+                  "operation",
+                  "maintenance",
+                  "upgrade",
+                  "end_of_life"
+                ],
+                "description": "Lifecycle phase"
+              },
+              "sustainability_considerations": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Sustainability considerations for this phase"
+              },
+              "environmental_impact": {
+                "type": "string",
+                "description": "Environmental impact assessment for this phase"
+              }
+            }
+          }
+        },
+        "end_of_life_strategy": {
+          "type": "object",
+          "properties": {
+            "recyclability_percentage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100,
+              "description": "Percentage of materials that can be recycled"
+            },
+            "disposal_method": {
+              "type": "string",
+              "description": "Preferred disposal method for non-recyclable components"
+            },
+            "material_recovery_plan": {
+              "type": "string",
+              "description": "Plan for recovering valuable materials"
+            }
+          }
+        }
+      },
+      "description": "Lifecycle management and sustainability considerations"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Creation timestamp"
+        },
+        "last_modified": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Last modification timestamp"
+        },
+        "authors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of contract authors"
+        },
+        "reviewers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of contract reviewers"
+        },
+        "approvers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "List of contract approvers"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tags for categorization and search"
+        },
+        "classification": {
+          "type": "string",
+          "enum": ["public", "internal", "restricted", "confidential"],
+          "default": "internal",
+          "description": "Information classification level"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
