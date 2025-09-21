@@ -1,8 +1,7 @@
 ---
 
-# UTCS-MI v5.0 HEADER
-
 id: ASIT-GENESIS-0000-00-00-00-000-OV
+REV: 0
 llc: GENESIS
 title: "ASI-T · Genesis — Foundational Components"
 status: BASELINE
@@ -21,7 +20,8 @@ code: "Apache-2.0"
 docs: "CC-BY-4.0"
 bridge: "CB→QB→UE→FE→FWD→QS"
 ethics\_guard: "MAL-EEM"
-------------------------
+
+---
 
 # ASI‑T Genesis — Foundational Components
 
