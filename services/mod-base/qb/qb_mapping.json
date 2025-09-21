@@ -41,7 +41,7 @@
         "weight": 1000.0
       },
       {
-        "type": "efficiency_bounds", 
+        "type": "efficiency_bounds",
         "description": "Fuel efficiency within operational bounds",
         "weight": 100.0
       }
