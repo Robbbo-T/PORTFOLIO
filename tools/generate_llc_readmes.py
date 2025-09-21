@@ -119,7 +119,7 @@ def generate_readme_content(group_name: str, llc_code: str, definition: Dict, re
     artifacts_list = "\n- ".join(f"`{a}`" for a in definition["artifacts"])
     anchor = definition["anchor"]
     
-    # Construye el enlace relativo al fichero de jerarquía
+    # Builds the relative link to the hierarchy file
     hierarchy_link = f"{relative_path_to_root}/_LLC-HIERARCHY.md{anchor}"
 
     return textwrap.dedent(f"""
