@@ -45,7 +45,7 @@ TFA/
 ```
 **Regex de validación (POSIX ERE):**
 ```regex
-^TFA/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/[A-Z]{2}/(?:_revisions/REV_[A-Z]/HOV_[A-Z0-9_-]+/)?(ASIT-[A-Z0-9-]+-[0-9]{4}-[A-Z]{2})\.md$
+^TFA/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/[A-Z]{2}/(_revisions/REV_[A-Z]/HOV_[A-Z0-9_-]+/)?(ASIT-[A-Z0-9-]+-[0-9]{4}-[A-Z]{2})\.md$
 ```
 
 ## 3. UTCS-MI Front-Matter Template
