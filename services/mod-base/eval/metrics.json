@@ -1,0 +1,10 @@
+{
+  "total_distance_nm": 1583.0,
+  "total_fuel_kg": 266.54,
+  "max_altitude_ft": 35000.0,
+  "efficiency_nm_per_kg": 5.9391,
+  "safety_margin": 0.875,
+  "segments_processed": 7,
+  "baseline_version": "1.0.0",
+  "deterministic": true
+}

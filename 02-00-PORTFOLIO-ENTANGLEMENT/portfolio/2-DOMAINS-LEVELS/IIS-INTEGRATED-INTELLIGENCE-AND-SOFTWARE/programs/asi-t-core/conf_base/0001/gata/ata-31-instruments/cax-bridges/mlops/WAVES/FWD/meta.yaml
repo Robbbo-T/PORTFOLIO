@@ -1,0 +1,15 @@
+id: "FWD-IIS-MLOps"
+version: "1.0.0"
+layer: "FWD"
+group: "WAVES"
+description: "Forward Wave Dynamics layer for IIS MLOps model propagation"
+canonical_path: "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/programs/asi-t-core/conf_base/0001/gata/ata-31-instruments/cax-bridges/mlops/WAVES/FWD"
+utcs_fields:
+  bridge: "FWD→QS"
+  determinism: true
+required_files:
+  - "meta.yaml"
+  - "fwd-model.yaml"
+  - "validate_fwd_model.py"
+maintainer: "ASI-T IIS Team"
+created: "2025-01-27T10:00:00Z"

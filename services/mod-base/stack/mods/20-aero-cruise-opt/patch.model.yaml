@@ -1,0 +1,10 @@
+parameters:
+  fuel_efficiency_factor: 0.90  # Further improved efficiency from aero optimization
+  altitude_penalty: 0.015  # Reduced penalty from better aerodynamics
+  cruise_optimization: true
+  
+processing:
+  aero_optimization: true
+  
+outputs:
+  include_aero_analysis: true

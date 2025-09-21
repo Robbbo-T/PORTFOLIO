@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://asi-t.dev/schemas/change_notice.schema.json",
+  "title": "ASI-T Change Notice Schema",
+  "description": "Schema for change notice artifacts in ASI-T ecosystem with FCR compliance",
+  "type": "object",
+  "required": ["cn_id", "component", "reason", "scope", "artifacts", "hashes"],
+  "properties": {
+    "cn_id": {
+      "type": "string",
+      "pattern": "^CN-[0-9]{8}-[0-9]{4}$",
+      "description": "Change notice identifier in format CN-YYYYMMDD-NNNN"
+    },
+    "component": {
+      "type": "string",
+      "enum": ["MOD-BASE", "MOD-STACK", "BasIC", "DOMAIN-LEAF", "SCHEMA", "CI-CD"],
+      "description": "Component affected by the change"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Human-readable reason for the change"
+    },
+    "scope": {
+      "type": "object",
+      "properties": {
+        "cb": {"type": "boolean", "description": "Classical bits affected"},
+        "qb": {"type": "boolean", "description": "Quantum bits affected"},
+        "ue": {"type": "boolean", "description": "Unit elements affected"},
+        "fe": {"type": "boolean", "description": "Federation elements affected"},
+        "fwd": {"type": "boolean", "description": "Forward wave dynamics affected"},
+        "qs": {"type": "boolean", "description": "Quantum state affected"}
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "metrics_path": {"type": "string", "description": "Path to metrics output"},
+        "evidence_path": {"type": "string", "description": "Path to QS evidence"},
+        "spec_path": {"type": "string", "description": "Path to specification"},
+        "data_path": {"type": "string", "description": "Path to data manifest"}
+      },
+      "additionalProperties": true
+    },
+    "hashes": {
+      "type": "object",
+      "properties": {
+        "spec_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "data_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "metrics_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "evidence_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      },
+      "additionalProperties": true
+    },
+    "signoff": {
+      "type": "object",
+      "properties": {
+        "basIC_sig_ref": {"type": "string", "description": "BasIC signature reference for DAL-relevant paths"},
+        "operator_id": {"type": "string", "description": "Operator identifier"},
+        "timestamp": {"type": "string", "format": "date-time"}
+      }
+    }
+  },
+  "additionalProperties": false
+}

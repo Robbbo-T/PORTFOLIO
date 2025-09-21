@@ -1,0 +1,14 @@
+id: "10-structure-lightening@0.1.0"
+description: "Structural weight optimization modifications"
+tier: 10
+category: "structure"
+kind: ["model_overlay"]
+
+patches:
+  model: "patch.model.yaml"
+
+dependencies: []
+
+validation:
+  schema_check: true
+  compatibility_check: true

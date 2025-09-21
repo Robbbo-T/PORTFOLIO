@@ -1,0 +1,16 @@
+id: "QS-IIS-MLOps"
+version: "1.0.0"
+layer: "QS"
+group: "STATES"
+description: "Quantum State layer for IIS MLOps evidence and provenance"
+canonical_path: "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/programs/asi-t-core/conf_base/0001/gata/ata-31-instruments/cax-bridges/mlops/STATES/QS"
+utcs_fields:
+  bridge: "QS→UTCS"
+  determinism: true
+  evidence_required: true
+required_files:
+  - "meta.yaml"
+  - "qs-proof.json"
+  - "validate_qs_proof.py"
+maintainer: "ASI-T IIS Team"
+created: "2025-01-27T10:00:00Z"

@@ -1,0 +1,8 @@
+segment_id,phase,altitude,speed,distance,fuel_flow,duration_min
+SEG001,takeoff,1000,150,5,120,2
+SEG002,climb,15000,250,50,150,12
+SEG003,cruise,35000,450,800,80,107
+SEG004,cruise,35000,450,600,80,80
+SEG005,descent,15000,300,100,100,20
+SEG006,approach,3000,180,25,110,8
+SEG007,landing,0,120,3,140,1

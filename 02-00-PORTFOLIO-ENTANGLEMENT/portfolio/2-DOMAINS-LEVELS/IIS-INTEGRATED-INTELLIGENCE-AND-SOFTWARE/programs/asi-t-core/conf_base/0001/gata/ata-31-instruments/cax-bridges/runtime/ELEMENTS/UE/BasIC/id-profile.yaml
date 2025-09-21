@@ -1,0 +1,54 @@
+profile_id: "BasIC-ID-Profile-v1.0.0"
+component: "BasIC"
+description: "Identity profile configuration for Basic Identity Component"
+
+identity_provider:
+  type: "self_sovereign"
+  key_derivation: "ed25519_from_seed"
+  identity_format: "did:asi-t"
+  namespace: "asi-t.dev"
+
+key_management:
+  storage_backend: "secure_memory"
+  key_rotation_policy:
+    enabled: true
+    interval_hours: 168  # 7 days
+    retention_count: 3
+  entropy_source: "system_random"
+  key_escrow: false
+
+attestation_policy:
+  self_attestation: true
+  third_party_attestation: false
+  attestation_validity_hours: 24
+  revocation_supported: true
+  ocsp_checking: false
+
+signing_policy:
+  default_algorithm: "ed25519"
+  supported_algorithms: ["ed25519", "secp256k1"]
+  signature_format: "compact"
+  timestamp_required: true
+  
+anomaly_detection:
+  enabled: true
+  sensitivity: "medium"
+  baseline_learning_period_hours: 72
+  alert_threshold: 0.8
+  metrics_tracked:
+    - "signing_frequency"
+    - "identity_requests"
+    - "key_usage_patterns"
+    - "temporal_patterns"
+
+mal_eem_integration:
+  ethics_checkpoint: true
+  empathy_scoring: true
+  safety_override: true
+  operator_confirm_required: true
+
+qs_integration:
+  evidence_generation: true
+  provenance_required: true
+  utcs_anchoring: true
+  audit_trail: "full"

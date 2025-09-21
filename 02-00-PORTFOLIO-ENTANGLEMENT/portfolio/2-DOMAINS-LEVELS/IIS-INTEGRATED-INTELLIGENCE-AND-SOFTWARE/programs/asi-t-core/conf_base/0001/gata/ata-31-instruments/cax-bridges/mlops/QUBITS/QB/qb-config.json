@@ -1,0 +1,37 @@
+{
+  "qb_id": "asi-t-core-0001-IIS-QB-ata31",
+  "description": "Quantum bits configuration for IIS MLOps optimization",
+  "version": "1.0.0",
+  "quantum_backend": {
+    "primary": "simulator",
+    "fallback": "classical",
+    "providers": ["qiskit_aer", "cirq", "pennylane"],
+    "shot_count": 1024
+  },
+  "optimization_problems": {
+    "supported": ["QUBO", "MaxCut", "TSP", "VQE"],
+    "encoding": "ising",
+    "max_qubits": 20
+  },
+  "performance_targets": {
+    "queue_time_ms": 100,
+    "execution_time_ms": 5000,
+    "success_rate": 0.95,
+    "fidelity": 0.99
+  },
+  "fallback_policy": {
+    "timeout_ms": 10000,
+    "cb_fallback": true,
+    "deterministic_seed": 42
+  },
+  "integration": {
+    "cb_bridge": true,
+    "ue_forwarding": true,
+    "qs_provenance": true
+  },
+  "security": {
+    "no_vendor_secrets": true,
+    "adapter_only": true,
+    "export_controlled": false
+  }
+}

@@ -1,0 +1,51 @@
+fwd_id: "asi-t-core-0001-IIS-FWD-ata31"
+version: "1.0.0"
+description: "Forward wave dynamics model for IIS MLOps propagation"
+model_type: "wave_propagation"
+
+wave_configuration:
+  propagation_method: "fourier_transform"
+  boundary_conditions: "absorbing"
+  grid_resolution: 64
+  time_step: 0.001
+  
+dynamics:
+  wave_equation: "hyperbolic_pde"
+  damping_factor: 0.01
+  nonlinearity: false
+  coupling_strength: 0.1
+
+input_interfaces:
+  cb_results: 
+    format: "json"
+    schema: "cb_optimization_result"
+  qb_results:
+    format: "json" 
+    schema: "qb_optimization_result"
+  ue_contracts:
+    format: "json"
+    schema: "ue_contract"
+
+output_interfaces:
+  propagated_state:
+    format: "json"
+    includes: ["wave_field", "energy_density", "phase_velocity"]
+  metrics:
+    format: "json"
+    includes: ["propagation_time", "energy_conservation", "stability"]
+
+performance_requirements:
+  max_propagation_time_ms: 1000
+  memory_limit_mb: 256
+  stability_threshold: 0.95
+  energy_conservation_error: 0.01
+
+integration:
+  qs_evidence: true
+  utcs_anchoring: true
+  deterministic: true
+
+validation:
+  unit_tests: true
+  integration_tests: true
+  performance_tests: true

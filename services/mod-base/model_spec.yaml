@@ -1,0 +1,40 @@
+model_id: "mod-base-v1.0.0"
+version: "1.0.0"
+description: "Baseline aerospace model for ASI-T systems"
+type: "baseline"
+
+# Ethics and safety configuration
+actuation_capable: false
+operator_confirmed: true
+mal_eem_required: true
+
+# Model parameters (deterministic)
+parameters:
+  fuel_efficiency_factor: 0.85
+  altitude_penalty: 0.02
+  speed_optimization: true
+  safety_margin_required: 0.15
+
+# Processing configuration
+processing:
+  deterministic_seed: 42
+  parallel_processing: false
+  precision: "double"
+  
+# Output configuration
+outputs:
+  metrics_required: true
+  evidence_required: true
+  qs_anchoring: true
+
+# Compliance settings
+compliance:
+  fcr_enabled: true
+  utcs_compatible: true
+  schema_validation: true
+
+# Bridge configuration
+tfa_bridge:
+  layers: ["CB", "QB", "UE", "FE", "FWD", "QS"]
+  deterministic: true
+  evidence_chain: true

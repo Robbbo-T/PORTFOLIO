@@ -1,0 +1,28 @@
+{
+  "stack_id": "STACK-AERO-LITE@2025-01-27",
+  "baseline": {
+    "model_spec": "services/mod-base/model_spec.yaml",
+    "data": "services/mod-base/data/sample_flight_plan.csv"
+  },
+  "applied_modifications": [
+    {
+      "pack": "10-structure-lightening",
+      "type": "model_patch",
+      "status": "applied"
+    },
+    {
+      "pack": "20-aero-cruise-opt",
+      "type": "model_patch",
+      "status": "applied"
+    }
+  ],
+  "final_spec_hash": "aaec2c43b13d270dce5923b1645d8fcdf3b3922e797fa31812f169d3cc93ecb2",
+  "stack_hash": "237bf4e61cbc253432a1c33f197d5bafacb8a036c4946b1c5a9ab1f226bfd8a2",
+  "timestamp": "2025-09-21T11:35:41Z",
+  "deterministic": true,
+  "compliance": {
+    "fcr_compliant": true,
+    "schema_valid": true,
+    "ethics_checked": true
+  }
+}

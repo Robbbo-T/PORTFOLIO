@@ -1,0 +1,32 @@
+{
+  "cb_id": "asi-t-core-0001-IIS-CB-ata31",
+  "description": "Classical bits configuration for IIS MLOps processes",
+  "version": "1.0.0",
+  "algorithms": {
+    "optimization": ["milp", "heuristic", "genetic"],
+    "fallback": "heuristic",
+    "deterministic": true
+  },
+  "performance_targets": {
+    "latency_p50_ms": 120,
+    "latency_p99_ms": 300,
+    "throughput_ops_sec": 1000,
+    "availability": 0.999
+  },
+  "resource_limits": {
+    "memory_mb": 512,
+    "cpu_cores": 2,
+    "timeout_sec": 30
+  },
+  "integration": {
+    "qb_fallback": true,
+    "ue_bridge": true,
+    "qs_evidence": true
+  },
+  "mal_requirements": {
+    "wcet_budget_ms": 300,
+    "rbac_class": "standard",
+    "safety_fence": "latency_ms <= 300",
+    "deterministic_seed": true
+  }
+}
