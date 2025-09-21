@@ -110,7 +110,7 @@ domain_requirements:
       statement: "Archive executed micro-routes with QS=φ and DET records."
       acceptance: "Digital thread artifact present."
 
-  # AAP - AIRPORT-ADAPTABLE-PLATFORMS
+  # AAP - AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS
   AAP:
     AAP-SE-0201:
       layer: SE
@@ -377,7 +377,7 @@ domain_requirements:
       statement: "Audit trail export with QS states."
       acceptance: "Audit trails complete."
 
-  # MMM - MECHANICAL-AND-MATERIAL-MODULES
+  # MMM - MECHANICS-MATERIALS-AND-MANUFACTURING
   MMM:
     MMM-SE-1301:
       layer: SE
