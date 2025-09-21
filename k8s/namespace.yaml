@@ -146,3 +146,16 @@ metadata:
 spec:
   podSelector: {}
   policyTypes: ["Ingress","Egress"]
+  # Allow egress to kube-dns for DNS resolution (UDP port 53)
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+  # NOTE: This policy only allows DNS egress. Additional NetworkPolicies may be required for metrics, health checks, or other system traffic.
