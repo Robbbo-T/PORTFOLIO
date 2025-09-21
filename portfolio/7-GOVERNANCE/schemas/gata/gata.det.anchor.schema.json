@@ -1,0 +1,395 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://asi-t.org/schemas/gata/det-anchor/v1",
+  "title": "gATA DET Anchor Schema",
+  "description": "JSON Schema for validating gATA DET (Deterministic Evidence Trail) anchors for sustainability provenance",
+  "type": "object",
+  "required": [
+    "anchor_id",
+    "timestamp",
+    "anchor_type",
+    "sustainability_evidence",
+    "domain",
+    "gata_chapter",
+    "llc_path",
+    "provenance_chain"
+  ],
+  "properties": {
+    "anchor_id": {
+      "type": "string",
+      "pattern": "^gata-det-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$",
+      "description": "Unique identifier for the gATA DET anchor"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when the anchor was created"
+    },
+    "anchor_type": {
+      "type": "string",
+      "enum": [
+        "sustainability_milestone",
+        "environmental_compliance",
+        "carbon_reduction_evidence",
+        "green_certification",
+        "lifecycle_assessment",
+        "circularity_verification",
+        "emission_measurement",
+        "energy_efficiency_proof"
+      ],
+      "description": "Type of sustainability evidence being anchored"
+    },
+    "sustainability_evidence": {
+      "type": "object",
+      "required": ["evidence_type", "measurement_data", "validation_method"],
+      "properties": {
+        "evidence_type": {
+          "type": "string",
+          "enum": [
+            "carbon_footprint_reduction",
+            "energy_efficiency_improvement",
+            "waste_reduction_achievement",
+            "material_recyclability_proof",
+            "emission_compliance_verification",
+            "alternative_fuel_adoption",
+            "circular_economy_implementation",
+            "renewable_energy_integration"
+          ],
+          "description": "Specific type of sustainability evidence"
+        },
+        "measurement_data": {
+          "type": "object",
+          "required": ["value", "unit", "measurement_method"],
+          "properties": {
+            "value": {
+              "type": "number",
+              "description": "Quantified measurement value"
+            },
+            "unit": {
+              "type": "string",
+              "description": "Unit of measurement (e.g., 'kg CO2-eq', 'MJ/km', '%')"
+            },
+            "measurement_method": {
+              "type": "string",
+              "description": "Method used to obtain the measurement"
+            },
+            "baseline_value": {
+              "type": "number",
+              "description": "Baseline value for comparison"
+            },
+            "improvement_percentage": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 1000,
+              "description": "Percentage improvement over baseline"
+            },
+            "confidence_interval": {
+              "type": "object",
+              "properties": {
+                "lower": {"type": "number"},
+                "upper": {"type": "number"},
+                "confidence_level": {"type": "number", "minimum": 0, "maximum": 1}
+              }
+            }
+          }
+        },
+        "validation_method": {
+          "type": "string",
+          "enum": [
+            "third_party_verification",
+            "internal_audit",
+            "automated_measurement",
+            "peer_review",
+            "regulatory_inspection",
+            "certification_body_validation",
+            "blockchain_consensus",
+            "multi_stakeholder_validation"
+          ],
+          "description": "Method used to validate the evidence"
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "type", "credentials"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the validator"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["individual", "organization", "certification_body", "regulatory_authority"],
+                "description": "Type of validator"
+              },
+              "credentials": {
+                "type": "string",
+                "description": "Validator credentials or certification"
+              },
+              "digital_signature": {
+                "type": "string",
+                "description": "Digital signature of the validator"
+              }
+            }
+          },
+          "minItems": 1,
+          "description": "List of validators who verified this evidence"
+        }
+      }
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES",
+        "AAP-AIRPORT-ADAPTABLE-PLATFORMS",
+        "CCC-COCKPIT-CABIN-AND-CARGO",
+        "CQH-CRYOGENICS-QUANTUM-AND-H2",
+        "DDD-DIGITAL-AND-DATA-DEFENSE",
+        "EDI-ELECTRONICS-DIGITAL-INSTRUMENTS",
+        "EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION",
+        "EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION",
+        "IIF-INDUSTRIAL-INFRASTRUCTURE-FACILITIES",
+        "IIS-INTEGRATED-INTELLIGENCE-SOFTWARE",
+        "LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS",
+        "LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN",
+        "MMM-MECHANICAL-AND-MATERIAL-MODULES",
+        "OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES",
+        "PPP-PROPULSION-AND-FUEL-SYSTEMS"
+      ],
+      "description": "ASI-T domain this anchor belongs to"
+    },
+    "gata_chapter": {
+      "type": "string",
+      "description": "gATA chapter this evidence relates to (e.g., 'ata-72-engine-hybrid-electric')"
+    },
+    "llc_path": {
+      "type": "string",
+      "pattern": "^(TFA|CAX-BRIDGES)/.*/(QS|CB|QB|UE|FE|FWD|DI|SI|CV|CE|CC|CI|CP)(/DET-ANCHORS)?$",
+      "description": "Logical Layer Component path where this anchor is stored"
+    },
+    "provenance_chain": {
+      "type": "object",
+      "required": ["previous_anchor", "chain_integrity"],
+      "properties": {
+        "previous_anchor": {
+          "type": ["string", "null"],
+          "pattern": "^(gata-det-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}|null)$",
+          "description": "ID of the previous anchor in the provenance chain, null if this is the first"
+        },
+        "chain_integrity": {
+          "type": "object",
+          "required": ["hash_algorithm", "chain_hash"],
+          "properties": {
+            "hash_algorithm": {
+              "type": "string",
+              "enum": ["SHA-256", "SHA-3-256", "BLAKE2b"],
+              "description": "Hash algorithm used for chain integrity"
+            },
+            "chain_hash": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "description": "Hash of the previous anchor plus current data"
+            },
+            "merkle_root": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$",
+              "description": "Merkle root of all evidence in this anchor"
+            }
+          }
+        },
+        "related_anchors": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^gata-det-[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$"
+          },
+          "description": "IDs of related anchors that provide additional context"
+        }
+      }
+    },
+    "blockchain_anchoring": {
+      "type": "object",
+      "properties": {
+        "network": {
+          "type": "string",
+          "enum": ["UTCS-mainnet", "UTCS-testnet", "UTCS-sustainability"],
+          "description": "Blockchain network where this anchor is recorded"
+        },
+        "transaction_hash": {
+          "type": "string",
+          "pattern": "^0x[a-f0-9]{64}$",
+          "description": "Blockchain transaction hash"
+        },
+        "block_number": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Block number where the anchor was recorded"
+        },
+        "confirmations": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of confirmations for the blockchain transaction"
+        },
+        "gas_used": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Gas used for the blockchain transaction"
+        }
+      }
+    },
+    "compliance_attestations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["standard", "compliance_level", "attestation_date"],
+        "properties": {
+          "standard": {
+            "type": "string",
+            "enum": [
+              "ICAO_Annex16_Vol1",
+              "ICAO_Annex16_Vol2", 
+              "ICAO_Annex16_Vol3",
+              "EASA_Environmental",
+              "FAA_Environmental",
+              "ISO_14001",
+              "ISO_50001",
+              "GHG_Protocol",
+              "SBTi_Standards",
+              "EU_Taxonomy"
+            ],
+            "description": "Compliance standard or framework"
+          },
+          "compliance_level": {
+            "type": "string",
+            "enum": ["full_compliance", "partial_compliance", "non_compliance", "exceeds_requirements"],
+            "description": "Level of compliance achieved"
+          },
+          "attestation_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date when compliance was attested"
+          },
+          "attesting_authority": {
+            "type": "string",
+            "description": "Authority that provided the compliance attestation"
+          },
+          "certificate_reference": {
+            "type": "string",
+            "description": "Reference to compliance certificate or documentation"
+          }
+        }
+      },
+      "description": "Compliance attestations related to this sustainability evidence"
+    },
+    "environmental_impact": {
+      "type": "object",
+      "properties": {
+        "carbon_impact": {
+          "type": "object",
+          "properties": {
+            "co2_equivalent_reduction": {
+              "type": "number",
+              "description": "CO2 equivalent reduction in tons"
+            },
+            "scope1_emissions": {"type": "number"},
+            "scope2_emissions": {"type": "number"},
+            "scope3_emissions": {"type": "number"}
+          }
+        },
+        "resource_impact": {
+          "type": "object",
+          "properties": {
+            "energy_saved": {
+              "type": "number",
+              "description": "Energy saved in MJ"
+            },
+            "water_saved": {
+              "type": "number",
+              "description": "Water saved in liters"
+            },
+            "waste_reduced": {
+              "type": "number",
+              "description": "Waste reduced in kg"
+            },
+            "materials_recycled": {
+              "type": "number",
+              "description": "Materials recycled in kg"
+            }
+          }
+        },
+        "lifecycle_stage": {
+          "type": "string",
+          "enum": ["design", "manufacturing", "operation", "maintenance", "end_of_life"],
+          "description": "Lifecycle stage where the impact occurs"
+        }
+      }
+    },
+    "stakeholder_endorsements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["stakeholder", "endorsement_type", "endorsement_date"],
+        "properties": {
+          "stakeholder": {
+            "type": "string",
+            "description": "Name of the endorsing stakeholder"
+          },
+          "stakeholder_type": {
+            "type": "string",
+            "enum": ["customer", "supplier", "regulator", "ngo", "community", "investor"],
+            "description": "Type of stakeholder"
+          },
+          "endorsement_type": {
+            "type": "string",
+            "enum": ["approval", "recognition", "certification", "award", "accreditation"],
+            "description": "Type of endorsement"
+          },
+          "endorsement_date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Date of endorsement"
+          },
+          "endorsement_details": {
+            "type": "string",
+            "description": "Details about the endorsement"
+          }
+        }
+      },
+      "description": "Stakeholder endorsements for this sustainability achievement"
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "created_by": {
+          "type": "string",
+          "description": "Entity that created this anchor"
+        },
+        "system_version": {
+          "type": "string",
+          "description": "Version of the gATA system used to create this anchor"
+        },
+        "data_quality_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Quality score of the anchored data (0-1)"
+        },
+        "retention_period": {
+          "type": "string",
+          "description": "How long this anchor should be retained"
+        },
+        "access_level": {
+          "type": "string",
+          "enum": ["public", "restricted", "confidential"],
+          "description": "Access level for this anchor"
+        },
+        "tags": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Tags for categorization and search"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
