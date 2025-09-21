@@ -9,16 +9,16 @@ version: "1.0.0"
 release_date: 2025-09-21
 maintainer: "ASI-T Architecture Team"
 provenance:
-  policy_hash: "sha256:POLICY"
-  model_sha: "sha256:MODEL"
-  data_manifest_hash: "sha256:DATA"
-  operator_id: "UTCS:OP:ID"
-  canonical_hash: "sha256:CANONICAL-BLOB"
+  policy_hash: "sha256:34be4097e575e17bb85d4995d9811d838d24967cc8039ed7cd2564793b455e9a"
+  model_sha: "sha256:719aaab18fefbee82464f781d201feacffec0f3e900083af18b14125090f7fb1"
+  data_manifest_hash: "sha256:e0769724f37eda7649dfb2068b64a3750c16de07173d1be2d7eee7078b446fcc"
+  operator_id: "UTCS:OP:robbo-t"
+  canonical_hash: "sha256:505620779e3d30fe168bcbaf58e8cad003dfda837688f86bcd0cca9ebd0d7b7e"
 licenses:
   code: "Apache-2.0"
   docs: "CC-BY-4.0"
 bridge: "CB→QB→UE→FE→FWD→QS"
-ethics_guard: "MAL-EEM"EV0-
+ethics_guard: "MAL-EEM-EV0-"
 ---
 
 
