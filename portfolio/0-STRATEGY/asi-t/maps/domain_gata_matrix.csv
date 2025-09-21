@@ -1,0 +1,55 @@
+Domain,gATA_Chapter,Green_Focus,Sustainability_Impact,Implementation_Priority
+AAA,ata-51-structures-green,Recyclable materials and lightweight design,High,High
+AAA,ata-53-fuselage-green,Integrated environmental systems,Medium,Medium
+AAA,ata-57-wings-green,Morphing wings and drag reduction,High,Medium
+AAA,low-drag-architectures,Ultra-efficient airframe configurations,High,Low
+AAP,h2-refueling-stations,Hydrogen ground infrastructure,High,High
+AAP,electrified-ground-support,Electric ground support equipment,Medium,High
+AAP,ata-12-servicing-eco-procedures,Green servicing procedures,Medium,Medium
+CCC,ata-25-equipment-furnishings,Circular economy cabin systems,Medium,Medium
+CCC,ata-38-water-waste,Water recycling and waste reduction,High,High
+CCC,ata-35-oxygen-efficient,Energy-efficient life support,Low,Low
+CQH,ata-28-h2-cryogenic-fuel,Hydrogen fuel systems,High,High
+CQH,h2-boiloff-management,Hydrogen loss prevention,High,High
+CQH,ata-47-inert-gas-cryogenic,Cryogenic gas management,Medium,Medium
+DDD,ata-46-information-systems,Green data governance,Medium,Medium
+DDD,carbon-ledger-integrity,Blockchain carbon tracking,High,Medium
+DDD,ata-42-ima-secure-green,Secure green avionics,Low,Low
+EDI,ata-31-indicating-recording,Environmental monitoring systems,High,High
+EDI,ata-34-navigation-green-profiles,Eco-optimized navigation,High,Medium
+EDI,ata-42-ima-green-integration,Green avionics integration,Medium,Medium
+EEE,ata-24-electrical-power-green,Renewable electrical systems,High,High
+EEE,ata-27-emu-flight-controls,Electric flight controls,High,Medium
+EEE,ata-33-lights-led-efficient,Energy-efficient lighting,Low,High
+EER,annex16-vol1-noise,Noise reduction technologies,High,High
+EER,annex16-vol2-engine-emissions,Engine emission control,High,High
+EER,annex16-vol3-co2,CO2 monitoring and reduction,High,High
+EER,contrails-mitigation,Contrail reduction systems,Medium,Medium
+IIF,energy-positive-factory,Net-positive manufacturing,High,Low
+IIF,circularity-material-recovery,End-of-life material recovery,High,Medium
+IIF,ata-07-lifting-green,Sustainable manufacturing support,Low,Low
+IIS,ata-45-central-maintenance,Predictive green maintenance,Medium,High
+IIS,eco-route-optimizer,AI-driven environmental optimization,High,Medium
+IIS,ata-46-green-software,Sustainable software systems,Medium,Low
+LCC,ata-22-autoflight-eco-modes,Fuel-efficient flight control,High,High
+LCC,ata-23-communications-green-atm,Green air traffic management,Medium,Medium
+LCC,ata-27-flight-controls-electric,Electric flight control systems,High,Medium
+LIB,ata-12-servicing-eco-procedures,Green supply chain procedures,Medium,Medium
+LIB,saf-blending-ledger,SAF supply chain tracking,High,Medium
+LIB,ata-45-inventory-sustainable,Sustainable inventory management,Medium,Low
+MMM,ata-29-hydraulic-efficiency,High-efficiency hydraulics,Medium,Medium
+MMM,ata-32-landing-gear-eco-brakes,Regenerative braking systems,High,High
+MMM,ata-26-fire-protection-green,Eco-friendly fire suppression,Low,Medium
+OOO,green-ontology-tfa-core,Sustainability semantic framework,Medium,Medium
+OOO,s1000d-brex-green-rules,Green documentation standards,Low,High
+OOO,ata-04-airworthiness-green,Green regulatory compliance,Medium,Medium
+PPP,ata-70-powerplant-green,Alternative fuel powerplants,High,High
+PPP,ata-71-propulsion-sys-integration,Integrated green propulsion,High,High
+PPP,ata-72-engine-hybrid-electric,Hybrid-electric engines,High,High
+PPP,ata-73-engine-fuel-control-saf,SAF fuel control systems,High,High
+PPP,ata-74-ignition-low-emissions,Low-emission ignition,Medium,Medium
+PPP,ata-75-bleedless-engine-air,Bleedless air systems,Medium,Medium
+PPP,ata-76-engine-controls-eco-modes,Eco-mode engine controls,High,Medium
+PPP,ata-77-engine-indicating-sustain-metrics,Sustainability monitoring,Medium,High
+PPP,ata-78-exhaust-low-soot,Low-particulate exhaust,Medium,Medium
+PPP,ata-79-oil-low-toxicity,Biodegradable lubricants,Low,Medium
