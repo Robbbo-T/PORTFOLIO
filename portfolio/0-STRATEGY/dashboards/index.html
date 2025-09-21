@@ -130,31 +130,34 @@
             try {
                 // Simple YAML parsing fallback if jsyaml is blocked
                 const parseSimpleYaml = (text) => {
+                    // Fallback: extract top-level keys and lists from YAML text
+                    const result = {};
                     const lines = text.split('\n');
-                    const result = { phases: [], programs: [], okrs: [], risks: [] };
-                    
-                    // Simple parsing for demo - would need full YAML parser for production
-                    result.phases = [
-                        { code: 'v2.2', name: 'UTCS Smart Contracts & CaC Baseline', start: '2025-10', end: '2025-12', deliverables: [] },
-                        { code: 'v2.5', name: 'AGI Module Integration', start: '2026-04', end: '2026-09', deliverables: [] },
-                        { code: 'v3.0', name: 'OPTIMO-DT Digital Twin Sync', start: '2027-01', end: '2027-12', deliverables: [] },
-                        { code: 'v4.0', name: 'Full Quantum Extension', start: '2028-01', end: '2030-12', deliverables: [] }
-                    ];
-                    
-                    result.programs = [
-                        { name: 'AMPEL360 BWB-Q100', milestones: [{ target: '2026-01-31' }, { target: '2026-07-31' }, { target: '2027-09-30' }] },
-                        { name: 'GAIA Quantum Constellation', milestones: [{ target: '2026-12-31' }] },
-                        { name: 'ARES-X UAS Swarm', milestones: [{ target: '2028-06-30' }] },
-                        { name: 'H2-CORRIDOR-X Infrastructure', milestones: [{ target: '2029-12-31' }] }
-                    ];
-                    
-                    result.okrs = [{ quarter: '2025Q4', objectives: [{ key_results: [{ id: 'KR1' }, { id: 'KR2' }] }] }];
-                    
-                    result.risks = [
-                        { id: 'R-T1', description: 'Quantum hardware availability delays', probability: 'Medium', impact: 'High', owner: 'CTO', status: 'Open' },
-                        { id: 'R-R1', description: 'Certification authority resistance to CaC/CaaS', probability: 'Medium', impact: 'High', owner: 'Compliance Lead', status: 'Open' }
-                    ];
-                    
+                    let currentKey = null;
+                    let currentList = [];
+                    for (let line of lines) {
+                        // Match top-level key: value
+                        const keyMatch = line.match(/^([a-zA-Z0-9_]+):\s*$/);
+                        if (keyMatch) {
+                            if (currentKey && currentList.length > 0) {
+                                result[currentKey] = currentList;
+                            }
+                            currentKey = keyMatch[1];
+                            currentList = [];
+                        } else if (currentKey && line.match(/^\s*-\s*(.*)$/)) {
+                            // List item
+                            const item = line.replace(/^\s*-\s*/, '').trim();
+                            currentList.push(item);
+                        }
+                    }
+                    if (currentKey && currentList.length > 0) {
+                        result[currentKey] = currentList;
+                    }
+                    // Ensure keys exist
+                    result.phases = result.phases || [];
+                    result.programs = result.programs || [];
+                    result.okrs = result.okrs || [];
+                    result.risks = result.risks || [];
                     return result;
                 };
 
