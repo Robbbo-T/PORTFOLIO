@@ -157,7 +157,7 @@ def main():
             # Busca todos los directorios que coincidan con esta capa LLC
             for llc_path in domains_root.glob(f"*/TFA/{group_name}/{llc_code}"):
                 if llc_path.is_dir():
-                    # Calcula la profundidad para el enlace relativo
+                    # Calculates the depth for the relative link
                     depth = len(llc_path.relative_to(domains_root).parts)
                     relative_path = "/".join([".."] * depth)
                     
