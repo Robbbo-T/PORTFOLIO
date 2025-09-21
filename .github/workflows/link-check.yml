@@ -29,7 +29,7 @@ jobs:
       - name: Validate TFA structure (quick check)
         run: |
           # Quick validation of TFA structure exists (check current structure)
-          if [ ! -d "portfolio/2-DOMAINS-LEVELS" ]; then
+          if [ ! -d "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS" ]; then
             echo "❌ Missing TFA domains structure"
             exit 1
           fi
