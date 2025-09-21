@@ -138,6 +138,38 @@ The platform integrates 15 core aerospace domains, each with a standardized and 
 | OOO  | `OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/`      |
 | PPP  | `PPP-PROPULSION-AND-FUEL-SYSTEMS/`              |
 
+# gATA · Integration Map across ASI-T Domains
+
+## Domains → Sustainability Focus
+
+| Code    | Domain Focus (gATA)                                        |
+| :------ | :--------------------------------------------------------- |
+| **AAA** | Lightweight, recyclable airframe materials                 |
+| **AAP** | Green ground support and hydrogen refueling infrastructure |
+| **CCC** | Eco-friendly cabin systems and waste management            |
+| **CQH** | Hydrogen fuel systems and quantum optimization             |
+| **DDD** | Sustainable data governance and integrity                  |
+| **EDI** | Energy-efficient avionics and sensors                      |
+| **EEE** | All-electric aircraft systems                              |
+| **EER** | Environmental compliance and emissions reduction           |
+| **IIF** | Sustainable manufacturing and facilities                   |
+| **IIS** | AI-optimized eco-operations                                |
+| **LCC** | Green flight operations and communications                 |
+| **LIB** | Sustainable supply chain management                        |
+| **MMM** | Efficient mechanical systems                               |
+| **OOO** | Green governance and semantic frameworks                   |
+| **PPP** | Clean propulsion technologies                              |
+
+---
+
+## ATA Chapter Extensions (gATA Alignment)
+
+* **ATA 70–79 (Propulsion)** → Hybrid-electric, hydrogen, and SAF integrations.
+* **ATA 50–59 (Structures)** → Lightweight materials, circularity, and recyclability.
+* **ATA 20–49 (Systems)** → Energy efficiency, environmental monitoring, and eco-modes.
+* **ICAO Annex 16 (Environmental Protection)** → Full compliance on noise, emissions, and CO₂ standards.
+
+
 ---
 
 ## 4. 🌐 AQUA-OS Applications
