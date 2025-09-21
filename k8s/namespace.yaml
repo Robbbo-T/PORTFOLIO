@@ -40,7 +40,7 @@ metadata:
     asit.qs/canonical_hash: "sha256:CANONICAL-BLOB"
     git.repo: "github.com/Robbbo-T/robbbo-t-asi-t-transition"
     git.ref: "refs/heads/main"
-    git.sha: "<commit-sha>"
+    git.sha: "${GIT_COMMIT_SHA}"
 ---
 # UTCS-MI v5.0 HEADER
 # id: ASIT-GENESIS-INFRA-0000-00-00-00-000-RQ
