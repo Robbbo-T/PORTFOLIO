@@ -10,7 +10,7 @@ import sys
 import yaml
 
 REPO = Path(__file__).resolve().parents[1]
-DOMAINS_DIR = REPO / "2-DOMAINS-LEVELS"
+DOMAINS_DIR = REPO / "portfolio" / "2-DOMAINS-LEVELS"
 
 # Load LLC mapping from canonical source
 LLC_MAP_FILE = REPO / "8-RESOURCES" / "llc-map.yaml"
