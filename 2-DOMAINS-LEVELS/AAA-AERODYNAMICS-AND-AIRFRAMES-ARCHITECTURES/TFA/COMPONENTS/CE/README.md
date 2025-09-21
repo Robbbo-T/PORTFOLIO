@@ -1,0 +1,7 @@
+# CE · COMPONENT EQUIPMENT (AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES)
+
+**Layer:** COMPONENTS
+**LLC Code:** CE
+**Canonical Meaning:** COMPONENT EQUIPMENT
+
+This directory contains artifacts and implementations for the COMPONENT EQUIPMENT within the AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES domain.
