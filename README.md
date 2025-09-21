@@ -223,7 +223,7 @@ Browse all domains under [`portfolio/2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-L
 * [`1-CAX-METHODOLOGY/`](./portfolio/1-CAX-METHODOLOGY/) — CAx lifecycle (CAB…CAV)
 * [`2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-LEVELS/) — 15 engineering domains with strict `TFA/` trees; **MAP** (TFA→ATA/SNS/reg annex) and **MAL** bridges (CAx→LLC + gICD)
 * [`3-PROJECTS-USE-CASES/`](./3-PROJECTS-USE-CASES/) — Program implementations and demos
-* [`4-RESEARCH-DEVELOPMENT/`](./4-RESEARCH-DEVELOPMENT/) — R\&D and experiments
+* [`4-RESEARCH-DEVELOPMENT/`](./4-RESEARCH-DEVELOPMENT/) — R&D and experiments
 * [`5-ARTIFACTS-IMPLEMENTATION/`](./5-ARTIFACTS-IMPLEMENTATION/) — Language-specific code buckets
 * [`6-UTCS-BLOCKCHAIN/`](./6-UTCS-BLOCKCHAIN/) — UTCS integration, contracts, services
 * [`7-GOVERNANCE/`](./portfolio/7-GOVERNANCE/) — Governance policies and community processes
