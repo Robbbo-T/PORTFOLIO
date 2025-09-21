@@ -6,7 +6,7 @@
     "decision_record": "53a16c10738659dd136581280b360e7cb3d7bdfd98a64e5523b53606f59d1f85",
     "xai_blob_hash": "80f4cae2600216f8eefcf6830947b355f12e8008b3019f0fe5a161a737a4828a",
     "operator_id": "runner",
-    "timestamp": "2025-09-21T11:35:41Z"
+    "timestamp": "2025-09-21T11:36:47Z"
   },
   "provenance": {
     "execution_time_ms": 0.02,
@@ -18,7 +18,7 @@
     "spec_sha256": "81d32a0463643b2a0a4442181008cec3ef7bb83b0f733f50f1477a3f12d72d78",
     "data_sha256": "26a6d94a4c035480cd1430bbd33ff99ebcf2819b8d6df8d2ed5d72eb7b7eed67",
     "metrics_sha256": "53a16c10738659dd136581280b360e7cb3d7bdfd98a64e5523b53606f59d1f85",
-    "evidence_sha256": "1f23ca7e07b72c171b915461e46cf8269eb7aac0e24ca56bb4364874b4e6051c"
+    "evidence_sha256": "e372c439cf1ccd49f703aa025ff01aaa0fadc7bbaf0f6873bd7ac9a44424755b"
   },
   "compliance": {
     "mal_eem_passed": true,
