@@ -78,31 +78,7 @@ def validate_canonical_structure(repo_root: Path) -> List[str]:
     
     return violations
 
-def validate_tfa_paths(repo_root: Path) -> List[str]:
-    """Validate TFA domain paths follow section 13.2 grammar."""
-    violations = []
-    
-    domains_path = repo_root / "02-00-PORTFOLIO-ENTANGLEMENT" / "portfolio" / "2-DOMAINS-LEVELS"
-    if not domains_path.exists():
-        return violations
-        
-    for domain_dir in domains_path.iterdir():
-        if not domain_dir.is_dir():
-            continue
-            
-        # Check for any TFA structure
-        tfa_paths = list(domain_dir.rglob("**/TFA/**"))
-        for tfa_path in tfa_paths:
-            if tfa_path.is_dir():
-                rel_path = str(tfa_path.relative_to(repo_root))
-                # Check if it matches expected TFA grammar (relaxed for existing structure)
-                if "/TFA/" in rel_path and not any(layer in rel_path for layer in 
-                    ["SYSTEMS", "STATIONS", "COMPONENTS", "BITS", "QUBITS", "ELEMENTS", "WAVES", "STATES"]):
-                    # This is acceptable - TFA can have intermediate directories
-                    continue
-    
-    return violations
-
+# (Function validate_tfa_paths removed as it was unused and incomplete)
 def check_file_links(file_path: Path, repo_root: Path) -> List[Dict]:
     """Check all internal links in a markdown file."""
     violations = []
