@@ -1,0 +1,48 @@
+# CQEA Run Manifest - Avionics Partition Scheduling
+# DO-178C DAL-A partition scheduling with timing bounds and jitter control
+
+id: "LCC:AVIONICS:PARTITION-SCHEDULE:2025-09-21"
+bridge: "CB→QB→UE→FE→FWD→QS"
+
+model:
+  kind: "SCHEDULING"
+  source: "models/avionics_partitions.yaml"
+  assumptions:
+    - hypervisor=ARINC653
+    - dal_a_isolation=enforced
+    - temporal_determinism=required
+    - spatial_isolation=memory_protected
+
+solver:
+  name: "heuristic"     # Fast solver for real-time constraints
+  seed: 42
+  algorithm: "genetic_algorithm"
+
+resilience:
+  adversarial_mode: true
+  tests:
+    - "timing_attack_simulation"
+    - "resource_exhaustion_test"
+    - "priority_inversion_check"
+    - "interrupt_storm_resilience"
+
+assurance:
+  outputs:
+    - "reports/avionics_timing_analysis.md"
+    - "evidence/utcs_anchor_avionics.json"
+  certifiable: true
+  do178c_level: "DAL-A"
+  verification_method: "formal_analysis"
+
+# Critical timing requirements
+timing:
+  max_jitter_ms: 2.0
+  deadline_ms: 10.0
+  frame_period_ms: 20.0
+  hypervisor_overhead_max: 5.0  # %
+
+# Safety requirements
+safety:
+  failure_rate: "1e-9"  # DAL-A requirement
+  independence: "spatial_temporal"
+  monitoring: "continuous"
