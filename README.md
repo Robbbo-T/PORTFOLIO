@@ -366,5 +366,3 @@ make master-progress
 ```
 
 ---
-
-If you want this as a ready-to-commit patch (`git apply`), I can emit a minimal diff next.
