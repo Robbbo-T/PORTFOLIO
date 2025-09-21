@@ -18,12 +18,12 @@ licenses:
   code: "Apache-2.0"
   docs: "CC-BY-4.0"
 bridge: "CB→QB→UE→FE→FWD→QS"
-ethics_guard: "MAL-EEM"
+ethics_guard: "MAL-EEM"EV0-
 ---
 
 
 
-# ASI‑T Genesis — Foundational Components
+# ASI‑T Genesis — Foundational Components0
 
 The **Genesis** layer crystallizes the universal rules of the ASI‑T ecosystem: canonical path grammar, ethics & empathy guardrails, deterministic evidence (QS/UTCS), quantum‑extensible hooks, and CI/CD enforcement. Everything downstream must inherit or reference these contracts.
 
