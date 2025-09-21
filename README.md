@@ -3,13 +3,124 @@
 **Repository Slug:** `robbbo-t-asi-t-transition`
 **Vision:** Aerospace Super-Intelligence Transformers enabling a Sustainable Industry Transition (ASI-T).
 
-This repository contains the full-stack platform and engineering portfolio for the ASI-T initiative, organized under a strict TFA architecture with a quantum-classical bridge.
+This repository is a **full-stack platform** and **engineering portfolio** for the ASI-T initiative, organized under a strict **Top Final Algorithm (TFA)** architecture with a **quantum–classical bridge**—now arranged in a deterministic **00-01-02 cascade** so humans and automation agents stay perfectly in sync.
+
+---
+
+## Contents
+
+* [0. Defense Principle](#0-defense-principle)
+* [Audience baselines](#audience-baselines)
+* [Quickstart](#quickstart)
+* [1. What This Is](#1--what-this-is)
+* [2. Architecture at a Glance](#2--architecture-at-a-glance)
+
+  * [2.1 TFA Layers](#21-tfa-layers)
+  * [2.2 Quantum–Classical Bridge](#22-quantumclassical-bridge)
+  * [2.3 MAP/MAL](#23-mapmal-master-application-program--main-application-layer)
+* [3. Domains (15) & Structure](#3--domains-15--structure)
+
+  * [Domains → TFA (Safe)](#domains--tfa-safe-fix-titles-keep-current-paths)
+  * [Canonical Names](#canonical-names)
+* [gATA Integration Map](#gata-integration-map-across-asi-t-domains)
+
+  * [ATA Chapter Extensions](#ata-chapter-extensions-gata-alignment)
+* [4. AQUA-OS Applications](#4--aqua-os-applications)
+* [5. Program-Scale Use Cases](#5--program-scale-use-cases)
+* [6. Why This Hosts New Programs](#6--why-this-is-a-host-platform-for-new-programs)
+* [7. Repo Structure (Cascade-Ordered)](#7--repo-structure-cascade-ordered)
+
+  * [7.1 Docs Structure](#71--docs-structure)
+* [8. Getting Started](#8--getting-started)
+* [9. CI/CD & Quality Gates](#9--cicd--quality-gates)
+* [10. Roadmap](#10--roadmap)
+* [11. Contributing & Governance](#11--contributing--governance)
+* [12. License & Quick Links](#12--license--quick-links)
+* [13. Automation Contract (Cascade Rules)](#13--automation-contract-cascade-rules)
+
+  * [13.1 Canonical Roots](#131-canonical-roots)
+  * [13.2 Path Grammar](#132-path-grammar-deterministic)
+  * [13.3 Mandatory Leaf Metadata](#133-mandatory-leaf-metadata)
+  * [13.4 Required Leaf Files](#134-required-leaf-files-by-tfa-layer)
+  * [13.5 Commit/PR Signaling](#135-commitpr-signaling-labels--titles)
+  * [13.6 CI: Guards & Cascades](#136-ci-guards--cascades)
+  * [13.7 Deterministic IDs](#137-deterministic-ids-for-agents)
+  * [13.8 Cascade Semantics](#138-cascade-semantics)
+  * [13.9 Error Messaging](#139-error-messaging-humanbot-friendly)
+* [Master’s Project Integration](#-masters-project-integration)
+
+---
+
+# 0. 🛡️ Defense Principle — International Declaration of Intent
+
+**Universal Empathy & Ethics in Flight Machines** is the primary defense application of ASI-T.
+This declaration sets binding design and operational obligations for any autonomous or semi-autonomous flight system developed, integrated, tested, or deployed under ASI-T.
+
+## Intent
+
+We commit to systems that **prioritize human dignity, non-harm, transparency, and accountability**. Autonomy is permitted only where these conditions are **technically enforced, continuously verified, and auditable**.
+
+## Scope
+
+Applies to: all DEFENSE programs, subsystems, software, models, datasets, and operations across AIR / SPACE / GROUND / CROSS segments, including upgrades and derivatives.
+
+## Technical Obligations (MUST)
+
+* **Human-on-the-loop:** A qualified human operator SHALL retain real-time veto authority over any actuation capable of affecting life, safety, or critical infrastructure.
+* **Non-harm constraints:** Pre-action constraints SHALL forbid targeting of persons and enforce de-escalation unless a formally authorized, auditable exception is invoked.
+* **Transparency:** Every decision affecting safety SHALL be accompanied by an explanation artifact generated **before** or **at** actuation time.
+* **Data minimization & privacy:** Collection and processing SHALL be strictly purpose-bound and proportional to the safety objective.
+
+## Mandatory Software Component
+
+* **Empathy & Ethics Module (EEM):** All autonomy loops SHALL include an EEM checkpoint:
+  `perception → planning → EEM.check + EEM.explain → operator confirm → actuation`
+
+  * If **EEM.check** fails, the system SHALL execute an approved **de-escalation plan** (e.g., safe-hover/loiter-handoff/abort-RTB).
+  * Actuation SHALL NOT proceed without operator confirmation where required by policy.
+
+## Verification & Evidence (QS/UTCS)
+
+All safety-relevant actions SHALL produce immutable provenance anchored via **QS/UTCS**, including at minimum:
+
+* `policy_hash`, `policy_profile`
+* `model_sha`, `data_manifest`
+* `decision_record`, `xai_blob_hash`
+* `operator_id`, `approval_token`, `timestamp`
+
+Absence or corruption of required evidence SHALL block deployment and trigger incident handling.
+
+## Interoperability & Law
+
+Policies and constraints SHALL be expressed as **policies-as-code** mappable to international humanitarian law, rules of engagement, civil aviation safety norms, and applicable export controls. Cross-agency audits are **authorized and expected**.
+
+## Governance & Accountability
+
+* **Profile binding:** All DEFENSE programs MUST bind to **ASI-T Universal Empathy v1** (or successor), referenced in each system’s `meta.yaml`.
+* **Change control:** Any change to models, policies, or EEM code requires dual approval (engineering + ethics authority) and regenerates the QS/UTCS evidence chain.
+* **Continuous red-teaming:** Adversarial, bias, and escalation tests SHALL run on a defined cadence; findings MUST be remediated before release.
+
+## Non-Compliance & Safe-Fail
+
+If EEM is missing, degraded, or policy binding is invalid, the system SHALL:
+
+1. Inhibit actuation,
+2. Enter a pre-approved safe state, and
+3. Emit a QS/UTCS incident record for investigation.
+
+---
+
+**Implementation note:** All DEFENSE programs **must** call **MAL-EEM** hooks before actuation and **anchor evidence via QS/UTCS**. This declaration is actionable by CI/CD gates, runtime guards, and independent audit.
+
+---
 
 ## Audience baselines
 
-* Developers & SRE → `portfolio/platform/`
-* Domain Experts → `portfolio/2-DOMAINS-LEVELS/` and `portfolio/1-CAX-METHODOLOGY/`
-* Governance/Auditors → `portfolio/0-STRATEGY/` and `portfolio/7-GOVERNANCE/`
+* Developers & SRE → `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/platform/`
+* Domain Experts → `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/` and `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/1-CAX-METHODOLOGY/`
+* Governance/Auditors → `00-00-ASI-T-GENESIS/00-STRATEGY/` and `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/7-GOVERNANCE/`
+
+---
 
 ## Quickstart
 
@@ -22,17 +133,17 @@ make validate
 
 ## 1. 🚀 What This Is
 
-This repository is the canonical map of **Amedeo Pelliccia's** professional portfolio. It is not just a collection of projects; it is a fully integrated **host platform** for developing, certifying, and operating complex aerospace programs. It unifies **15 engineering domains** under a strict **Top Final Algorithm (TFA)** architecture, features a production-ready **quantum–classical bridge**, and delivers **templates, validators, services, and CI/CD pipelines** that ensure deterministic, auditable, and drift-free development.
+This repository is the canonical map of **Amedeo Pelliccia’s** professional portfolio. It is a **host platform** to develop, certify, and operate complex aerospace programs. It unifies **15 engineering domains** under a strict **TFA** architecture, features a production-ready **quantum–classical bridge**, and delivers **templates, validators, services, and CI/CD pipelines** for deterministic, auditable, drift-free development.
 
 ---
 
 ## 2. 🏗️ Architecture at a Glance
 
-A modular, service-oriented architecture designed for safety, traceability, and scalability.
+A modular, service-oriented architecture for safety, traceability, and scalability.
 
 ### 2.1 TFA Layers
 
-Every domain follows deterministic traceability. See [**\_LLC-HIERARCHY.md**](./portfolio/2-DOMAINS-LEVELS/_LLC-HIERARCHY.md).
+Every domain follows deterministic traceability. See **`_LLC-HIERARCHY.md`** inside each domain capsule.
 
 | Code                       | Meaning                   | Group      | Core Function                                   |
 | -------------------------- | ------------------------- | ---------- | ----------------------------------------------- |
@@ -42,108 +153,57 @@ Every domain follows deterministic traceability. See [**\_LLC-HIERARCHY.md**](./
 | **CB**                     | Classical Bit             | BITS       | Deterministic classical computation & solvers   |
 | **QB**                     | Qubit                     | QUBITS     | Quantum algorithms (QUBO/Ising) & strategies    |
 | **UE**                     | Unit Element              | ELEMENTS   | Reusable atomic functions (drivers, utilities)  |
-| **FE**                     | Federation Entanglement   | ELEMENTS   | Governed multi-agent/multi-domain coordination  |
+| **FE**                     | Federation Entanglement   | ELEMENTS   | Multi-agent/multi-domain coordination           |
 | **FWD**                    | Forward/Waves Dynamics    | WAVES      | Predictive modeling, simulation, nowcasting     |
-| **QS**                     | Quantum State             | STATES     | Immutable, signed evidence and state provenance |
+| **QS**                     | Quantum State             | STATES     | Immutable, signed evidence & provenance         |
 
 ### 2.2 Quantum–Classical Bridge
 
 Structured hybrid flow: **CB → QB → UE/FE → FWD → QS**.
-See the [**Quantum–Classical Bridge documentation**](./docs/architecture/quantum-classical-bridge.md).
+See: `02-00-PORTFOLIO-ENTANGLEMENT/docs/architecture/quantum-classical-bridge.md`.
 
 ### 2.3 MAP/MAL (Master Application Program / Main Application Layer)
 
-This pattern separates domain-specific business logic from reusable, cross-cutting services.
+* **MAP (Vertical):** per-domain master program with stable API (e.g., `MAP-AAA` for aerodynamics).
+  **MAP process:** TFA domain → **ATA/SNS** chapters → **regulatory annexes** (Annex 16/S1000D, etc.).
+* **MAL (Horizontal):** reusable services (e.g., `MAL-CB`, `MAL-QB`, `MAL-QS`, **`MAL-EEM`**).
+  **CAx → LLC bridge** and **gICD triad** = **ICN** (interfaces), **PBS** (product tree), **IBS** (illustrated breakdown).
 
-* **MAP (Vertical)**: Each domain's **master program** with a stable API (e.g., `MAP-AAA` for aero analysis).
+**EEM attachment (DEFENSE):**
+All MAPs that can actuate must expose:
 
-  * **MAP process:** Crosswalk from **TFA domain** → **ATA/SNS chapters** → **regulatory annexes** (e.g., ICAO Annex 16). Outputs resolvable references (ReqIF/S1000D/ARINC) with CI-checked acceptance criteria.
-* **MAL (Horizontal)**: Reusable **bridge services** (e.g., `MAL-CB` classical solver, `MAL-QS` provenance).
-
-  * **CAx → LLC bridge:** Lifecycle artifacts (CAB…CAV) anchored to TFA layer codes (SI/DI, SE, CV…QS).
-  * **gICD triad (ICN / PBS / IBS)**: The **General ICD** package.
-
-    * **ICN** — Interface Control Network (logical/physical interfaces, constraints)
-    * **PBS** — Product Breakdown Structure (configuration/product tree)
-    * **IBS** — **Illustrated Breakdown** (exploded/illustrated views, callouts/tables for tech pubs & MRO)
-
-```mermaid
-graph TD
-    subgraph Programs [Program-Scale Use Cases]
-        P1["AMPEL360 BWB"]
-        P2["GAIA Quantum SAT"]
-    end
-
-    subgraph MAPs [Vertical Domain Logic]
-        MAP_AAA["MAP-AAA<br/>(Aerodynamics)"]
-        MAP_PPP["MAP-PPP<br/>(Propulsion)"]
-        MAP_LCC["MAP-LCC<br/>(Comms)"]
-    end
-
-    subgraph MALs [Horizontal Reusable Services]
-        MAL_CB["MAL-CB<br/>Classical Solver"]
-        MAL_QB["MAL-QB<br/>Quantum Solver"]
-        MAL_FE["MAL-FE<br/>Federation"]
-        MAL_QS["MAL-QS<br/>Provenance"]
-    end
-
-    P1 -- consumes --> MAP_AAA
-    P1 -- consumes --> MAP_PPP
-    P2 -- consumes --> MAP_LCC
-
-    MAP_AAA --> MAL_CB
-    MAP_PPP --> MAL_CB
-    MAP_PPP --> MAL_QB
-    MAP_LCC --> MAL_FE
-    MAP_AAA & MAP_PPP & MAP_LCC --> MAL_QS
-```
-
-## 3. 🎛️ Domains (15) & Structure
-
-Browse all domains under [`portfolio/2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-LEVELS/).
-
-### Domains → TFA (Safe: fix titles, keep current paths)
-
-| Code | Domain Name & Link to TFA Structure                                                                                                       |
-| :--- | :---------------------------------------------------------------------------------------------------------------------------------------- |
-| AAA  | [AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES](./portfolio/2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/)               |
-| AAP  | [AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS](./portfolio/2-DOMAINS-LEVELS/AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS/TFA/)               |
-| CCC  | [COCKPIT-CABIN-AND-CARGO](./portfolio/2-DOMAINS-LEVELS/CCC-COCKPIT-CABIN-AND-CARGO/TFA/)                                                 |
-| CQH  | [CRYOGENICS-QUANTUM-AND-H2](./portfolio/2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/)                                             |
-| DDD  | [DIGITAL-AND-DATA-DEFENSE](./portfolio/2-DOMAINS-LEVELS/DDD-DIGITAL-AND-DATA-DEFENSE/TFA/)                                               |
-| EDI  | [ELECTRONICS-AND-DIGITAL-INSTRUMENTS](./portfolio/2-DOMAINS-LEVELS/EDI-ELECTRONICS-DIGITAL-INSTRUMENTS/TFA/)                             |
-| EEE  | [ECOLOGY-EFFICIENCY-AND-ELECTRIFICATION](./portfolio/2-DOMAINS-LEVELS/EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION/TFA/)                     |
-| EER  | [ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION](./portfolio/2-DOMAINS-LEVELS/EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION/TFA/)                 |
-| IIF  | [INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES](./portfolio/2-DOMAINS-LEVELS/IIF-INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES/TFA/)               |
-| IIS  | [INTEGRATED-INTELLIGENCE-AND-SOFTWARE](./portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/TFA/)                       |
-| LCC  | [LINKAGES-CONTROL-AND-COMMUNICATIONS](./portfolio/2-DOMAINS-LEVELS/LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS/TFA/)                         |
-| LIB  | [LOGISTICS-INVENTORY-AND-BLOCKCHAIN](./portfolio/2-DOMAINS-LEVELS/LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN/TFA/)                           |
-| MMM  | [MECHANICS-MATERIALS-AND-MANUFACTURING](./portfolio/2-DOMAINS-LEVELS/MMM-MECHANICS-MATERIALS-AND-MANUFACTURING/TFA/)                     |
-| OOO  | [OS-ONTOLOGIES-AND-OFFICE-INTERFACES](./portfolio/2-DOMAINS-LEVELS/OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/TFA/)                         |
-| PPP  | [PROPULSION-AND-FUEL-SYSTEMS](./portfolio/2-DOMAINS-LEVELS/PPP-PROPULSION-AND-FUEL-SYSTEMS/TFA/)                                         |
-
+* `pre_actuation(context, intended_action)` → calls `MAL-EEM.check + explain`; block/de-escalate on violation.
+* `post_explain(xai_blob)` → persist XAI; QS anchor `{policy_hash, model_sha, xai_blob_hash, operator_id, timestamp}`.
 
 ---
 
-### B) Canonical (unify titles and paths)
+## 3. 🎛️ Domains (15) & Structure
 
-| Code | Canonical Name & Path                           |
-| :--- | :---------------------------------------------- |
-| AAA  | `AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/` |
-| AAP  | `AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS/` |
-| CCC  | `CCC-COCKPIT-CABIN-AND-CARGO/`                  |
-| CQH  | `CQH-CRYOGENICS-QUANTUM-AND-H2/`                |
-| DDD  | `DDD-DIGITAL-AND-DATA-DEFENSE/`                 |
-| EDI  | `EDI-ELECTRONICS-AND-DIGITAL-INSTRUMENTS/`      |
-| EEE  | `EEE-ECOLOGY-EFFICIENCY-AND-ELECTRIFICATION/`   |
-| EER  | `EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION/`  |
-| IIF  | `IIF-INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES/` |
-| IIS  | `IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/`     |
-| LCC  | `LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS/`      |
-| LIB  | `LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN/`       |
-| MMM  | `MMM-MECHANICS-MATERIALS-AND-MANUFACTURING/`    |
-| OOO  | `OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/`      |
-| PPP  | `PPP-PROPULSION-AND-FUEL-SYSTEMS/`              |
+Browse under: `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/`.
+
+### Domains → TFA (Safe: fix titles, keep current paths)
+
+| Code | Domain Name & Link to TFA Structure                 |
+| :--- | :-------------------------------------------------- |
+| AAA  | `AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/` |
+| AAP  | `AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS/TFA/` |
+| CCC  | `CCC-COCKPIT-CABIN-AND-CARGO/TFA/`                  |
+| CQH  | `CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/`                |
+| DDD  | `DDD-DIGITAL-AND-DATA-DEFENSE/TFA/`                 |
+| EDI  | `EDI-ELECTRONICS-AND-DIGITAL-INSTRUMENTS/TFA/`      |
+| EEE  | `EEE-ECOLOGY-EFFICIENCY-AND-ELECTRIFICATION/TFA/`   |
+| EER  | `EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION/TFA/`  |
+| IIF  | `IIF-INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES/TFA/` |
+| IIS  | `IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/TFA/`     |
+| LCC  | `LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS/TFA/`      |
+| LIB  | `LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN/TFA/`       |
+| MMM  | `MMM-MECHANICS-MATERIALS-AND-MANUFACTURING/TFA/`    |
+| OOO  | `OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/TFA/`      |
+| PPP  | `PPP-PROPULSION-AND-FUEL-SYSTEMS/TFA/`              |
+
+### Canonical Names
+
+`AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/`, `AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS/`, …, `PPP-PROPULSION-AND-FUEL-SYSTEMS/`.
 
 ---
 
@@ -151,414 +211,160 @@ Browse all domains under [`portfolio/2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-L
 
 ## Domains → Sustainability Focus
 
-| Code | Domain Focus (gATA)                                        |
-| :--- | :--------------------------------------------------------- |
-| AAA  | Lightweight, recyclable airframe materials                 |
-| AAP  | Green ground support and hydrogen refueling infrastructure |
-| CCC  | Eco-friendly cabin systems and waste management            |
-| CQH  | Hydrogen fuel systems and quantum optimization             |
-| DDD  | Sustainable data governance and integrity                  |
-| EDI  | Energy-efficient avionics and sensors                      |
-| EEE  | All-electric aircraft systems                              |
-| EER  | Environmental compliance and emissions reduction           |
-| IIF  | Sustainable manufacturing and facilities                   |
-| IIS  | AI-optimized eco-operations                                |
-| LCC  | Green flight operations and communications                 |
-| LIB  | Sustainable supply chain management                        |
-| MMM  | Efficient mechanical systems                               |
-| OOO  | Green governance and semantic frameworks                   |
-| PPP  | Clean propulsion technologies                              |
+| Code | Focus                                          |
+| :--- | :--------------------------------------------- |
+| AAA  | Lightweight, recyclable airframe materials     |
+| AAP  | Green ground support & hydrogen refueling      |
+| CCC  | Eco-friendly cabins & waste management         |
+| CQH  | Hydrogen systems & quantum optimization        |
+| DDD  | Sustainable data governance & integrity        |
+| EDI  | Energy-efficient avionics & sensors            |
+| EEE  | All-electric aircraft systems                  |
+| EER  | Environmental compliance & emissions reduction |
+| IIF  | Sustainable manufacturing & facilities         |
+| IIS  | AI-optimized eco-operations                    |
+| LCC  | Green flight ops & communications              |
+| LIB  | Sustainable supply chain management            |
+| MMM  | Efficient mechanical systems                   |
+| OOO  | Green governance & semantic frameworks         |
+| PPP  | Clean propulsion technologies                  |
 
 ### ATA Chapter Extensions (gATA Alignment)
 
-* **ATA 70–79 (Propulsion)** → Hybrid-electric, hydrogen, and SAF integrations
-* **ATA 50–59 (Structures)** → Lightweight materials, circularity, recyclability
-* **ATA 20–49 (Systems)** → Energy efficiency, environmental monitoring, eco-modes
-* **ICAO Annex 16 (Environmental Protection)** → Full compliance on noise, emissions, CO₂
+* **ATA 70–79 (Propulsion):** hybrid-electric, hydrogen, SAF
+* **ATA 50–59 (Structures):** lightweight materials, circularity, recyclability
+* **ATA 20–49 (Systems):** energy efficiency, environmental monitoring, eco-modes
+* **ICAO Annex 16:** noise, emissions, CO₂ compliance
 
 ---
 
 ## 4. 🌐 AQUA-OS Applications
 
 * **Predictive Route Optimizer (PRO)** — *Implemented*
-  **Function:** Optimizes flight paths in a 10-minute loop using live meteorology, aircraft performance, and hybrid QB/CB solvers.
-  **Links:** [`Service Root`](./services/aqua-os-pro/) · [`API Schema`](./services/aqua-os-pro/schemas/route_optimization.json) · [`Orchestrator`](./services/aqua-os-pro/core/aqua_pro_orchestrator.py) · [`Validator`](./services/aqua-os-pro/validation/aqua_pro_validator.py)
+  Ten-minute loop optimization using live wx, performance, and hybrid QB/CB solvers.
+  See: `services/aqua-os-pro/`, `schemas/route_optimization.json`, `core/aqua_pro_orchestrator.py`, `validation/aqua_pro_validator.py`.
 
 * **UTCS Anchor Service** — *Implemented*
-  **Function:** Manages the "CI-prepares / multisig-approves" workflow for anchoring DET evidence to a blockchain.
-  **Links:** [`Smart Contracts`](./contracts/) · [`Framework Doc`](./6-UTCS-BLOCKCHAIN/utcs-blockchain-framework.md) · [`CI Workflow`](./.github/workflows/anchor_utcs.yml)
+  CI-prepares / multisig-approves; anchors DET evidence.
+  See: `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/6-UTCS-BLOCKCHAIN/`.
 
-* **CaaS (Certification as a Service) Engine** — *Planned*
-  **Function:** Assembles auditable evidence packages (e.g., DO-178C) by tracing UTCS links from requirements to telemetry.
-  **Links:** [`Methodology`](portfolio/1-CAX-METHODOLOGY/CAC-COMPLIANCE-SAFETY-CODE/safety-automation.md)
+* **CaaS (Certification as a Service)** — *Planned*
+  Evidence assembly (e.g., DO-178C) by tracing UTCS links from requirements to telemetry.
+  See: `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/1-CAX-METHODOLOGY/CAC-COMPLIANCE-SAFETY-CODE/safety-automation.md`.
 
 ---
 
 ## 5. 🚀 Program-Scale Use Cases
 
-* **AMPEL360 BWB-Q100** — Advanced Blended Wing Body (AIR) · [`OPTIMO-DT`](./3-PROJECTS-USE-CASES/OPTIMO-DT/)
+* **AMPEL360 BWB-Q100** — Advanced Blended Wing Body (AIR)
 * **GAIA Quantum SAT** — Space constellation with quantum links (SPACE)
 * **Diagnostics & MRO Robbbo-t** — Robotic maintenance (GROUND)
-* **ARES-X UAS SWARM** — Defense segment (DEFENSE)
+* **EEM-Defense Core** — Universal Empathy & Ethics in Flight Machines (DEFENSE)
+  Mission: enforce non-harm, dignity, transparency, human-on-the-loop, QS/UTCS provenance.
+  Artifacts: `eem-contract.json`, `eem-policy.yaml`, validators, QS proofs.
 * **H2-CORRIDOR-X** — Cross-sector hydrogen corridor (CROSS)
 
 ---
 
 ## 6. 🧠 Why This Is a Host Platform for New Programs
 
-* **Deterministic Structure:** Uniform [`TFA/` trees](./portfolio/2-DOMAINS-LEVELS/) across 15 domains
-* **Hybrid Compute Built-in:** CB/QB for optimization; FE for coordination; FWD for nowcasts; QS for audit-grade states
-* **Digital Thread:** [OPTIMO-DT](./3-PROJECTS-USE-CASES/OPTIMO-DT/) across AIR / SPACE / GROUND / DEFENSE / CROSS
-* **Compliance-as-Code:** CI enforcement of structure and lexicon
-* **Immutable Provenance:** Optional **UTCS** anchoring
+* **Deterministic Structure:** uniform `TFA/` trees across 15 domains
+* **Hybrid Compute Built-in:** CB/QB (optimization), FE (coordination), FWD (nowcasts), QS (audit-grade states)
+* **Digital Thread:** OPTIMO-DT coherence across AIR / SPACE / GROUND / DEFENSE / CROSS
+* **Compliance-as-Code:** CI enforcement of structure & lexicon
+* **Immutable Provenance:** optional UTCS anchoring
 * **Rapid Composition:** MAP/MAL pattern for program assembly
-* **Ecosystem Scalability:** Shared contracts in [`schemas/`](./schemas/)
+* **Ecosystem Scalability:** shared contracts in `schemas/`
 
 ---
 
-## 7. 📂 Repo Structure
+## 7. 📂 Repo Structure (Cascade-Ordered)
 
-* [`0-STRATEGY/`](./portfolio/0-STRATEGY/) — Strategy, governance, mission & vision
-* [`1-CAX-METHODOLOGY/`](./portfolio/1-CAX-METHODOLOGY/) — CAx lifecycle (CAB…CAV)
-* [`2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-LEVELS/) — 15 engineering domains with strict `TFA/` trees; **MAP** (TFA→ATA/SNS/reg annex) and **MAL** bridges (CAx→LLC + gICD)
-* [`3-PROJECTS-USE-CASES/`](./3-PROJECTS-USE-CASES/) — Program implementations and demos
-* [`4-RESEARCH-DEVELOPMENT/`](./4-RESEARCH-DEVELOPMENT/) — R&D and experiments
-* [`5-ARTIFACTS-IMPLEMENTATION/`](./5-ARTIFACTS-IMPLEMENTATION/) — Language-specific code buckets
-* [`6-UTCS-BLOCKCHAIN/`](./6-UTCS-BLOCKCHAIN/) — UTCS integration, contracts, services
-* [`7-GOVERNANCE/`](./portfolio/7-GOVERNANCE/) — Governance policies and community processes
-* [`8-RESOURCES/`](./8-RESOURCES/) — Templates, assets, references
-* [`services/`](./services/) — Deployed AQUA-OS microservices
-* [`docs/`](./docs/) — High-level architecture and methodology documentation
+* **`00-00-ASI-T-GENESIS/`** — *Strategy & Foundations*
+
+  * `00-STRATEGY/` — vision, governance, roadmaps, dashboards
+  * `01-FRAMEWORKS/` — AQUA, TFA, MAP/MAL, gICD (ICN/PBS/IBS)
+  * `02-COMPLIANCE/` — Annex 16, ATA/SNS crosswalks, S1000D, DO-330
+  * `03-DOCS/` — high-level docs index (links into working docs)
+
+* **`01-00-USE-CASES-ENABLED/`** — *Programs by segment*
+
+  * `AIR/`, `SPACE/`, `GROUND/`, `DEFENSE/`, `CROSS/`
+  * `DEFENSE/EEM-Defense-Core/` — main defense program (EEM)
+  * `programs-index.md`
+
+* **`02-00-PORTFOLIO-ENTANGLEMENT/`** — *Engineering Host Platform*
+
+  * `portfolio/` — platform, CAx, 15 TFA domains, governance, UTCS, resources
+  * `docs/` — architecture, bridges (MAP/MAL), gICD specs, schemas
+  * `services/` — AQUA-OS microservices
 
 ### 7.1 📚 Docs Structure
 
-> Canonical layout of [`docs/`](./docs/) for architecture, bridges, and standards crosswalks. All files are Markdown unless noted.
-
-```text
-docs/
-├── index.md                          # Landing page (overview + pointers)
-├── architecture/
-│   ├── tfa-overview.md               # TFA layers, roles, invariants
-│   ├── quantum-classical-bridge.md   # CB→QB→UE/FE→FWD→QS (detail & patterns)
-│   ├── map-mal-pattern.md            # MAP (vertical) / MAL (horizontal) pattern
-│   └── reference-models.md           # Reference stacks, deployment topologies
-├── domains/
-│   ├── domains-index.md              # 15-domain index with short blurbs
-Here’s the **conflict-free, path-consistent** README block. I normalized everything to the `portfolio/` namespace (as per your Audience baselines), fixed the AAP/MMM links, and removed the merge markers.
-
----
-
-# Robbbo-T — ASI-T (Aerospace Super-Intelligence Transformers)
-
-**Repository Slug:** `robbbo-t-asi-t-transition`
-**Vision:** Aerospace Super-Intelligence Transformers enabling a Sustainable Industry Transition (ASI-T).
-
-This repository contains the full-stack platform and engineering portfolio for the ASI-T initiative, organized under a strict TFA architecture with a quantum-classical bridge.
-
-## Audience baselines
-
-* Developers & SRE → `portfolio/platform/`
-* Domain Experts → `portfolio/2-DOMAINS-LEVELS/` and `portfolio/1-CAX-METHODOLOGY/`
-* Governance/Auditors → `portfolio/0-STRATEGY/` and `portfolio/7-GOVERNANCE/`
-
-## Quickstart
-
-```bash
-make print-vars
-make validate
 ```
-
----
-
-## 1. 🚀 What This Is
-
-This repository is the canonical map of **Amedeo Pelliccia's** professional portfolio. It is not just a collection of projects; it is a fully integrated **host platform** for developing, certifying, and operating complex aerospace programs. It unifies **15 engineering domains** under a strict **Top Final Algorithm (TFA)** architecture, features a production-ready **quantum–classical bridge**, and delivers **templates, validators, services, and CI/CD pipelines** that ensure deterministic, auditable, and drift-free development.
-
----
-
-## 2. 🏗️ Architecture at a Glance
-
-A modular, service-oriented architecture designed for safety, traceability, and scalability.
-
-### 2.1 TFA Layers
-
-Every domain follows deterministic traceability. See [**\_LLC-HIERARCHY.md**](./portfolio/2-DOMAINS-LEVELS/_LLC-HIERARCHY.md).
-
-| Code                       | Meaning                   | Group      | Core Function                                   |
-| -------------------------- | ------------------------- | ---------- | ----------------------------------------------- |
-| **SI / DI**                | System / Domain Interface | SYSTEMS    | Orchestration, API contracts, domain boundaries |
-| **SE**                     | Station Envelope          | STATIONS   | Safe operating limits for environments          |
-| **CV / CE / CC / CI / CP** | Component Hierarchy       | COMPONENTS | Digital thread for HW/SW configuration          |
-| **CB**                     | Classical Bit             | BITS       | Deterministic classical computation & solvers   |
-| **QB**                     | Qubit                     | QUBITS     | Quantum algorithms (QUBO/Ising) & strategies    |
-| **UE**                     | Unit Element              | ELEMENTS   | Reusable atomic functions (drivers, utilities)  |
-| **FE**                     | Federation Entanglement   | ELEMENTS   | Governed multi-agent/multi-domain coordination  |
-| **FWD**                    | Forward/Waves Dynamics    | WAVES      | Predictive modeling, simulation, nowcasting     |
-| **QS**                     | Quantum State             | STATES     | Immutable, signed evidence and state provenance |
-
-### 2.2 Quantum–Classical Bridge
-
-Structured hybrid flow: **CB → QB → UE/FE → FWD → QS**.
-See the [**Quantum–Classical Bridge documentation**](./docs/architecture/quantum-classical-bridge.md).
-
-### 2.3 MAP/MAL (Master Application Program / Main Application Layer)
-
-This pattern separates domain-specific business logic from reusable, cross-cutting services.
-
-* **MAP (Vertical)**: Each domain's **master program** with a stable API (e.g., `MAP-AAA` for aero analysis).
-
-  * **MAP process:** Crosswalk from **TFA domain** → **ATA/SNS chapters** → **regulatory annexes** (e.g., ICAO Annex 16). Outputs resolvable references (ReqIF/S1000D/ARINC) with CI-checked acceptance criteria.
-* **MAL (Horizontal)**: Reusable **bridge services** (e.g., `MAL-CB` classical solver, `MAL-QS` provenance).
-
-  * **CAx → LLC bridge:** Lifecycle artifacts (CAB…CAV) anchored to TFA layer codes (SI/DI, SE, CV…QS).
-  * **gICD triad (ICN / PBS / IBS)**: The **General ICD** package.
-
-    * **ICN** — Interface Control Network (logical/physical interfaces, constraints)
-    * **PBS** — Product Breakdown Structure (configuration/product tree)
-    * **IBS** — **Illustrated Breakdown** (exploded/illustrated views, callouts/tables for tech pubs & MRO)
-
-```mermaid
-graph TD
-    subgraph Programs [Program-Scale Use Cases]
-        P1["AMPEL360 BWB"]
-        P2["GAIA Quantum SAT"]
-    end
-
-    subgraph MAPs [Vertical Domain Logic]
-        MAP_AAA["MAP-AAA<br/>(Aerodynamics)"]
-        MAP_PPP["MAP-PPP<br/>(Propulsion)"]
-        MAP_LCC["MAP-LCC<br/>(Comms)"]
-    end
-
-    subgraph MALs [Horizontal Reusable Services]
-        MAL_CB["MAL-CB<br/>Classical Solver"]
-        MAL_QB["MAL-QB<br/>Quantum Solver"]
-        MAL_FE["MAL-FE<br/>Federation"]
-        MAL_QS["MAL-QS<br/>Provenance"]
-    end
-
-    P1 -- consumes --> MAP_AAA
-    P1 -- consumes --> MAP_PPP
-    P2 -- consumes --> MAP_LCC
-
-    MAP_AAA --> MAL_CB
-    MAP_PPP --> MAL_CB
-    MAP_PPP --> MAL_QB
-    MAP_LCC --> MAL_FE
-    MAP_AAA & MAP_PPP & MAP_LCC --> MAL_QS
-```
-
----
-
-## 3. 🎛️ Domains (15) & Structure
-
-Browse all domains under [`portfolio/2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-LEVELS/).
-
-### Domains → TFA (Safe: fix titles, keep current paths)
-
-| Code | Domain Name & Link to TFA Structure                                                                                        |
-| :--- | :------------------------------------------------------------------------------------------------------------------------- |
-| AAA  | [AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES](./portfolio/2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/TFA/) |
-| AAP  | [AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS](./portfolio/2-DOMAINS-LEVELS/AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS/TFA/) |
-| CCC  | [COCKPIT-CABIN-AND-CARGO](./portfolio/2-DOMAINS-LEVELS/CCC-COCKPIT-CABIN-AND-CARGO/TFA/)                                   |
-| CQH  | [CRYOGENICS-QUANTUM-AND-H2](./portfolio/2-DOMAINS-LEVELS/CQH-CRYOGENICS-QUANTUM-AND-H2/TFA/)                               |
-| DDD  | [DIGITAL-AND-DATA-DEFENSE](./portfolio/2-DOMAINS-LEVELS/DDD-DIGITAL-AND-DATA-DEFENSE/TFA/)                                 |
-| EDI  | [ELECTRONICS-AND-DIGITAL-INSTRUMENTS](./portfolio/2-DOMAINS-LEVELS/EDI-ELECTRONICS-DIGITAL-INSTRUMENTS/TFA/)               |
-| EEE  | [ECOLOGY-EFFICIENCY-AND-ELECTRIFICATION](./portfolio/2-DOMAINS-LEVELS/EEE-ECOLOGICAL-EFFICIENT-ELECTRIFICATION/TFA/)       |
-| EER  | [ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION](./portfolio/2-DOMAINS-LEVELS/EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION/TFA/)   |
-| IIF  | [INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES](./portfolio/2-DOMAINS-LEVELS/IIF-INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES/TFA/) |
-| IIS  | [INTEGRATED-INTELLIGENCE-AND-SOFTWARE](./portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/TFA/)         |
-| LCC  | [LINKAGES-CONTROL-AND-COMMUNICATIONS](./portfolio/2-DOMAINS-LEVELS/LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS/TFA/)           |
-| LIB  | [LOGISTICS-INVENTORY-AND-BLOCKCHAIN](./portfolio/2-DOMAINS-LEVELS/LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN/TFA/)             |
-| MMM  | [MECHANICS-MATERIALS-AND-MANUFACTURING](./portfolio/2-DOMAINS-LEVELS/MMM-MECHANICS-MATERIALS-AND-MANUFACTURING/TFA/)       |
-| OOO  | [OS-ONTOLOGIES-AND-OFFICE-INTERFACES](./portfolio/2-DOMAINS-LEVELS/OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/TFA/)           |
-| PPP  | [PROPULSION-AND-FUEL-SYSTEMS](./portfolio/2-DOMAINS-LEVELS/PPP-PROPULSION-AND-FUEL-SYSTEMS/TFA/)                           |
-
----
-
-### B) Canonical (unify titles and paths)
-
-| Code | Canonical Name & Path                           |
-| :--- | :---------------------------------------------- |
-| AAA  | `AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/` |
-| AAP  | `AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS/` |
-| CCC  | `CCC-COCKPIT-CABIN-AND-CARGO/`                  |
-| CQH  | `CQH-CRYOGENICS-QUANTUM-AND-H2/`                |
-| DDD  | `DDD-DIGITAL-AND-DATA-DEFENSE/`                 |
-| EDI  | `EDI-ELECTRONICS-AND-DIGITAL-INSTRUMENTS/`      |
-| EEE  | `EEE-ECOLOGY-EFFICIENCY-AND-ELECTRIFICATION/`   |
-| EER  | `EER-ENVIRONMENTAL-EMISSIONS-AND-REMEDIATION/`  |
-| IIF  | `IIF-INDUSTRIAL-INFRASTRUCTURE-AND-FACILITIES/` |
-| IIS  | `IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/`     |
-| LCC  | `LCC-LINKAGES-CONTROL-AND-COMMUNICATIONS/`      |
-| LIB  | `LIB-LOGISTICS-INVENTORY-AND-BLOCKCHAIN/`       |
-| MMM  | `MMM-MECHANICS-MATERIALS-AND-MANUFACTURING/`    |
-| OOO  | `OOO-OS-ONTOLOGIES-AND-OFFICE-INTERFACES/`      |
-| PPP  | `PPP-PROPULSION-AND-FUEL-SYSTEMS/`              |
-
----
-
-# gATA · Integration Map across ASI-T Domains
-
-## Domains → Sustainability Focus
-
-| Code | Domain Focus (gATA)                                        |
-| :--- | :--------------------------------------------------------- |
-| AAA  | Lightweight, recyclable airframe materials                 |
-| AAP  | Green ground support and hydrogen refueling infrastructure |
-| CCC  | Eco-friendly cabin systems and waste management            |
-| CQH  | Hydrogen fuel systems and quantum optimization             |
-| DDD  | Sustainable data governance and integrity                  |
-| EDI  | Energy-efficient avionics and sensors                      |
-| EEE  | All-electric aircraft systems                              |
-| EER  | Environmental compliance and emissions reduction           |
-| IIF  | Sustainable manufacturing and facilities                   |
-| IIS  | AI-optimized eco-operations                                |
-| LCC  | Green flight operations and communications                 |
-| LIB  | Sustainable supply chain management                        |
-| MMM  | Efficient mechanical systems                               |
-| OOO  | Green governance and semantic frameworks                   |
-| PPP  | Clean propulsion technologies                              |
-
-### ATA Chapter Extensions (gATA Alignment)
-
-* **ATA 70–79 (Propulsion)** → Hybrid-electric, hydrogen, and SAF integrations
-* **ATA 50–59 (Structures)** → Lightweight materials, circularity, recyclability
-* **ATA 20–49 (Systems)** → Energy efficiency, environmental monitoring, eco-modes
-* **ICAO Annex 16 (Environmental Protection)** → Full compliance on noise, emissions, CO₂
-
----
-
-## 4. 🌐 AQUA-OS Applications
-
-* **Predictive Route Optimizer (PRO)** — *Implemented*
-  **Function:** Optimizes flight paths in a 10-minute loop using live meteorology, aircraft performance, and hybrid QB/CB solvers.
-  **Links:** [`Service Root`](./services/aqua-os-pro/) · [`API Schema`](./services/aqua-os-pro/schemas/route_optimization.json) · [`Orchestrator`](./services/aqua-os-pro/core/aqua_pro_orchestrator.py) · [`Validator`](./services/aqua-os-pro/validation/aqua_pro_validator.py)
-
-* **UTCS Anchor Service** — *Implemented*
-  **Function:** Manages the "CI-prepares / multisig-approves" workflow for anchoring DET evidence to a blockchain.
-  **Links:** [`Smart Contracts`](./contracts/) · [`Framework Doc`](./portfolio/6-UTCS-BLOCKCHAIN/utcs-blockchain-framework.md) · [`CI Workflow`](./.github/workflows/anchor_utcs.yml)
-
-* **CaaS (Certification as a Service) Engine** — *Planned*
-  **Function:** Assembles auditable evidence packages (e.g., DO-178C) by tracing UTCS links from requirements to telemetry.
-  **Links:** [`Methodology`](./portfolio/1-CAX-METHODOLOGY/CAC-COMPLIANCE-SAFETY-CODE/safety-automation.md)
-
----
-
-## 5. 🚀 Program-Scale Use Cases
-
-* **AMPEL360 BWB-Q100** — Advanced Blended Wing Body (AIR) · [`OPTIMO-DT`](./portfolio/3-PROJECTS-USE-CASES/OPTIMO-DT/)
-* **GAIA Quantum SAT** — Space constellation with quantum links (SPACE)
-* **Diagnostics & MRO Robbbo-t** — Robotic maintenance (GROUND)
-* **ARES-X UAS SWARM** — Defense segment (DEFENSE)
-* **H2-CORRIDOR-X** — Cross-sector hydrogen corridor (CROSS)
-
----
-
-## 6. 🧠 Why This Is a Host Platform for New Programs
-
-* **Deterministic Structure:** Uniform [`TFA/` trees](./portfolio/2-DOMAINS-LEVELS/) across 15 domains
-* **Hybrid Compute Built-in:** CB/QB for optimization; FE for coordination; FWD for nowcasts; QS for audit-grade states
-* **Digital Thread:** [OPTIMO-DT](./portfolio/3-PROJECTS-USE-CASES/OPTIMO-DT/) across AIR / SPACE / GROUND / DEFENSE / CROSS
-* **Compliance-as-Code:** CI enforcement of structure and lexicon
-* **Immutable Provenance:** Optional **UTCS** anchoring
-* **Rapid Composition:** MAP/MAL pattern for program assembly
-* **Ecosystem Scalability:** Shared contracts in [`schemas/`](./schemas/)
-
----
-
-## 7. 📂 Repo Structure
-
-* [`portfolio/platform/`](./portfolio/platform/) — Runtime, infra, SRE tooling
-* [`portfolio/0-STRATEGY/`](./portfolio/0-STRATEGY/) — Strategy, governance, mission & vision
-* [`portfolio/1-CAX-METHODOLOGY/`](./portfolio/1-CAX-METHODOLOGY/) — CAx lifecycle (CAB…CAV)
-* [`portfolio/2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-LEVELS/) — 15 engineering domains with strict `TFA/` trees; **MAP** (TFA→ATA/SNS/reg annex) and **MAL** bridges (CAx→LLC + gICD)
-* [`portfolio/3-PROJECTS-USE-CASES/`](./portfolio/3-PROJECTS-USE-CASES/) — Program implementations and demos
-* [`portfolio/4-RESEARCH-DEVELOPMENT/`](./portfolio/4-RESEARCH-DEVELOPMENT/) — R\&D and experiments
-* [`portfolio/5-ARTIFACTS-IMPLEMENTATION/`](./portfolio/5-ARTIFACTS-IMPLEMENTATION/) — Language-specific code buckets
-* [`portfolio/6-UTCS-BLOCKCHAIN/`](./portfolio/6-UTCS-BLOCKCHAIN/) — UTCS integration, contracts, services
-* [`portfolio/7-GOVERNANCE/`](./portfolio/7-GOVERNANCE/) — Governance policies and community processes
-* [`portfolio/8-RESOURCES/`](./portfolio/8-RESOURCES/) — Templates, assets, references
-* [`services/`](./services/) — Deployed AQUA-OS microservices
-* [`docs/`](./docs/) — High-level architecture and methodology documentation
-
-### 7.1 📚 Docs Structure
-
-> Canonical layout of [`docs/`](./docs/) for architecture, bridges, and standards crosswalks. All files are Markdown unless noted.
-
-```text
-docs/
-├── index.md                          # Landing page (overview + pointers)
-├── architecture/
-│   ├── tfa-overview.md               # TFA layers, roles, invariants
-│   ├── quantum-classical-bridge.md   # CB→QB→UE/FE→FWD→QS (detail & patterns)
-│   ├── map-mal-pattern.md            # MAP (vertical) / MAL (horizontal) pattern
-│   └── reference-models.md           # Reference stacks, deployment topologies
-├── domains/
-│   ├── domains-index.md              # 15-domain index with short blurbs
-│   ├── AAA-aerodynamics.md
-│   ├── AAP-airports.md
-│   ├── … (one file per domain) …
-│   └── PPP-propulsion.md
-├── bridges/
-│   ├── map-process.md                # TFA domain ↔ ATA/SNS ↔ regulation annex (MAP)
-│   ├── mal-bridge.md                 # CAx → LLC alignment + gICD triad
-│   ├── gICD/
-│   │   ├── icn-spec.md               # ICN (Interface Control Network)
-│   │   ├── pbs-spec.md               # PBS (Product Breakdown Structure)
-│   │   └── ibs-spec.md               # IBS (Illustrated Breakdown)
-│   └── schemas/                      # JSON Schema/XSD for bridge contracts
-│       ├── icn.schema.json
-│       ├── pbs.schema.json
-│       └── ibs.schema.json
-├── compliance/
-│   ├── icao-annex-16.md              # Noise, emissions, CO₂ alignment
-│   ├── ata-sns-crosswalk.md          # ATA/SNS crosswalk tables to MAP
-│   ├── s1000d-guidance.md            # DM structure, CSDB, applicability rules
-│   └── do330-tool-qualification.md   # Tool qualification playbook (TQL)
-├── programs/
-│   ├── programs-index.md             # Five programs overview + status
-│   ├── ampel360-bwb-q100.md
-│   ├── gaia-quantum-sat.md
-│   ├── diagnostics-mro-robbbo-t.md
-│   ├── ares-x-uas-swarm.md
-│   └── h2-corridor-x.md
-├── guides/
-│   ├── authoring-guide.md            # Conventions, link hygiene, glossary use
-│   ├── contribution-guide.md         # How to PR docs & run link checks
-│   └── style.md                      # Style, naming, abbreviations (TFA/LLC/CB/QB…)
-└── glossary.md                       # Central glossary (gICD=ICN+PBS+IBS; TFA; LLC; CAx…)
+02-00-PORTFOLIO-ENTANGLEMENT/docs/
+├─ index.md
+├─ architecture/
+│  ├─ tfa-overview.md
+│  ├─ quantum-classical-bridge.md
+│  ├─ map-mal-pattern.md
+│  └─ reference-models.md
+├─ domains/
+│  ├─ domains-index.md
+│  ├─ AAA-aerodynamics.md
+│  └─ … one per domain …
+├─ bridges/
+│  ├─ map-process.md              # TFA ↔ ATA/SNS ↔ regulation annex
+│  ├─ mal-bridge.md               # CAx → LLC + gICD triad
+│  ├─ gICD/
+│  │  ├─ icn-spec.md
+│  │  ├─ pbs-spec.md
+│  │  └─ ibs-spec.md
+│  └─ schemas/
+│     ├─ icn.schema.json
+│     ├─ pbs.schema.json
+│     ├─ ibs.schema.json
+│     └─ meta.schema.json         # leaf meta schema (see §13.3)
+├─ compliance/
+│  ├─ icao-annex-16.md
+│  ├─ ata-sns-crosswalk.md
+│  ├─ s1000d-guidance.md
+│  └─ do330-tool-qualification.md
+├─ programs/
+│  ├─ programs-index.md
+│  ├─ ampel360-bwb-q100.md
+│  └─ eem-defense-core.md
+└─ glossary.md
 ```
 
 **Key pointers**
 
-* **MAP process:** [`bridges/map-process.md`](./docs/bridges/map-process.md) — domain → ATA/SNS → regulation annex.
-* **MAL bridge:** [`bridges/mal-bridge.md`](./docs/bridges/mal-bridge.md) — **CAx → LLC** + **gICD** triad (**ICN/PBS/IBS**).
-* **Quantum–Classical Bridge:** [`architecture/quantum-classical-bridge.md`](./docs/architecture/quantum-classical-bridge.md).
-* **Compliance crosswalks:** [`compliance/ata-sns-crosswalk.md`](./docs/compliance/ata-sns-crosswalk.md), [`compliance/icao-annex-16.md`](./docs/compliance/icao-annex-16.md).
-* **Domains index:** [`domains/domains-index.md`](./docs/domains/domains-index.md).
-* **Programs index:** [`programs/programs-index.md`](./docs/programs/programs-index.md).
-* **Glossary:** [`glossary.md`](./docs/glossary.md) (includes **IBS = Illustrated Breakdown** and **gICD** = ICN+PBS+IBS).
+* MAP process: `docs/bridges/map-process.md`
+* MAL bridge: `docs/bridges/mal-bridge.md` (gICD triad: ICN/PBS/IBS)
+* Quantum–Classical Bridge: `docs/architecture/quantum-classical-bridge.md`
+* Compliance crosswalks: `docs/compliance/ata-sns-crosswalk.md`, `docs/compliance/icao-annex-16.md`
+* Domains & Programs indices: `docs/domains/domains-index.md`, `docs/programs/programs-index.md`
+* Glossary: `docs/glossary.md`
 
 ---
 
 ## 8. 💻 Getting Started
 
 ```bash
-# 1) Create any missing TFA trees and bridge buckets (idempotent)
+# 1) Scaffold missing TFA trees and bridge buckets (idempotent)
 make scaffold
 
-# 2) Validate the full TFA structure, quantum layers, and terminology
+# 2) Validate structure, quantum layers, and lexicon
 make check
 ```
 
-**Run the PRO orchestrator (demo):**
+Run the PRO orchestrator (demo):
 
 ```bash
 python3 services/aqua-os-pro/core/aqua_pro_orchestrator.py
 ```
 
-**Validate system coverage:**
+Validate system coverage:
 
 ```bash
 python3 services/aqua-os-pro/validation/aqua_pro_validator.py
@@ -568,10 +374,11 @@ python3 services/aqua-os-pro/validation/aqua_pro_validator.py
 
 ## 9. 🔍 CI/CD & Quality Gates
 
-* **TFA Structure Validator:** `./.github/workflows/tfa_structure_validator.yml`
-* **Quantum Layers Check:** `./.github/workflows/quantum-layers-check.yml`
-* **Lexicon Guard:** `./.github/workflows/lexicon-guard.yml`
-* **UTCS Anchor:** `./.github/workflows/anchor_utcs.yml`
+* **TFA Structure Validator:** `.github/workflows/tfa_structure_validator.yml`
+* **Quantum Layers Check:** `.github/workflows/quantum-layers-check.yml`
+* **Lexicon Guard:** `.github/workflows/lexicon-guard.yml`
+* **UTCS Anchor:** `.github/workflows/anchor_utcs.yml`
+* **Path/Meta/Ethics Guards:** see §13.6 for `path-guard.yml`, `meta-validate.yml`, `ethics-guard.yml`, `provenance-guard.yml`.
 
 **Automation Contract Enforcement (Section 13):**
 * **Path Guard:** `./.github/workflows/path-guard.yml` — Enforces TFA path grammar and case rules
@@ -589,344 +396,403 @@ python3 services/aqua-os-pro/validation/aqua_pro_validator.py
 | v3.0  | OPTIMO-DT ↔ Digital Twin Sync   | Early 2027 |
 | v4.0  | Quantum Extension (QS Full)     | 2028       |
 
-See the detailed [**Roadmap**](./portfolio/0-STRATEGY/ROADMAP.md) and [**Live Dashboard**](./portfolio/0-STRATEGY/dashboards/index.html).
+See: `00-00-ASI-T-GENESIS/00-STRATEGY/ROADMAP.md` and dashboards therein.
 
 ---
 
 ## 11. 🤝 Contributing & Governance
 
-* Start with [`CONTRIBUTING.md`](./CONTRIBUTING.md)
-* **STRICT TFA-ONLY:** Never create flat LLC folders under `portfolio/2-DOMAINS-LEVELS/<DOMAIN>/`
-* Governance in [`portfolio/0-STRATEGY/GOVERNANCE.md`](./portfolio/0-STRATEGY/GOVERNANCE.md) and [`portfolio/7-GOVERNANCE/COMMUNITY/`](./portfolio/7-GOVERNANCE/COMMUNITY/)
+* Start with `CONTRIBUTING.md`
+* **STRICT TFA-ONLY:** never create flat LLC folders under `portfolio/2-DOMAINS-LEVELS/<DOMAIN>/`
+* Governance: `00-00-ASI-T-GENESIS/00-STRATEGY/GOVERNANCE.md` and `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/7-GOVERNANCE/COMMUNITY/`
 
 ---
 
 ## 12. 📄 License & Quick Links
 
-Licensed under **MIT** — see [`LICENSE`](./LICENSE).
+Licensed under **MIT** — see `LICENSE`.
 
-* [**Strategy & Vision**](./portfolio/0-STRATEGY/VISION.md)
-* [**Master's Project Framework**](./portfolio/0-STRATEGY/MASTER-PROJECT-FRAMEWORK.md)
-* [**CAx Methodology**](./portfolio/1-CAX-METHODOLOGY/)
-* [**AQUA-OS PRO Application**](./services/aqua-os-pro/)
-* [**Blockchain (UTCS)**](./portfolio/6-UTCS-BLOCKCHAIN/utcs-blockchain-framework.md)
-* [**High-Level Docs**](./docs/)
-
-### 🎓 Master's Project Integration
-
-This portfolio is the practical backbone for the **Máster en Dirección y Gestión de Proyectos**.
-
-```bash
-make master-progress
-# latest report: ./portfolio/0-STRATEGY/MASTER-PROJECT-FRAMEWORK/PROGRESS-REPORT.md
-```
+* **Strategy & Vision:** `00-00-ASI-T-GENESIS/00-STRATEGY/VISION.md`
+* **Frameworks (AQUA/TFA/MAP-MAL/gICD):** `00-00-ASI-T-GENESIS/01-FRAMEWORKS/`
+* **CAx Methodology:** `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/1-CAX-METHODOLOGY/`
+* **AQUA-OS PRO:** `02-00-PORTFOLIO-ENTANGLEMENT/services/aqua-os-pro/`
+* **Blockchain (UTCS):** `02-00-PORTFOLIO-ENTANGLEMENT/portfolio/6-UTCS-BLOCKCHAIN/`
+* **High-Level Docs:** `02-00-PORTFOLIO-ENTANGLEMENT/docs/`
 
 ---
 
 ## 13. 🤖 Automation Contract (Cascade Rules)
 
-This section is the **machine-readable contract** for all automation agents. It defines canonical paths, naming, metadata, schemas, and trigger rules so CI can infer intent without guesswork.
+Machine-readable contract for automation agents (linters, generators, CI).
 
 ### 13.1 Canonical Roots
 
-* **Portfolio roots**
+Allowed top-level directories:
 
-  * `portfolio/platform/` — runtime/infra/SRE ("platform")
-  * `portfolio/0-STRATEGY/ … 8-RESOURCES/` — governance, methods, domains, programs, research, etc.
-* **Docs root:** `docs/`
-* **Services root:** `services/`
+* `00-00-ASI-T-GENESIS/`
+* `01-00-USE-CASES-ENABLED/`
+* `02-00-PORTFOLIO-ENTANGLEMENT/`
+* `.github/`, `LICENSE`, `README.md`
 
-Automation MUST treat these as **authoritative namespaces**. Any content outside is non-canonical.
-
----
+Anything else is **non-canonical** and must be rejected by CI.
 
 ### 13.2 Path Grammar (deterministic)
 
-#### 13.2.1 Domain Capsule
+**Domain capsule (canonical leaf):**
 
 ```
-portfolio/2-DOMAINS-LEVELS/<DOMAIN-SLUG>/
-  programs/<program-key>/conf_base/<baseline-id>/<track>/<map-chapter>/<bridge>/<process>/<LAYER>/<CODE>/
+02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/<DOMAIN-SLUG>/
+  programs/<program-key>/conf_base/<baseline-id>/<track>/ata-<NN>-<slug>/cax-bridges/<process>/<LAYER>/<CODE>/
 ```
 
-* `<DOMAIN-SLUG>` — e.g., `AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES`
-* `<program-key>` — kebab/compact key, e.g., `ampel360bwbq`
-* `<baseline-id>` — zero-padded int, e.g., `0001`
-* `<track>` — `gata` (sustainability) or other explicit tracks
-* `<map-chapter>` — `ata-<NN>-<slug>` (e.g., `ata-51-structures`)
-* `<bridge>` — `cax-bridges`
-* `<process>` — CAx process bucket (e.g., `cad-design`, `fea`, `cfd`)
-* `<LAYER>` — **ALL CAPS** TFA group: `SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES`
-* `<CODE>`  — TFA code inside group: e.g., `SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS`
+* `<LAYER>` ∈ `SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES` (ALL CAPS)
+* `<CODE>`  ∈ `SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS`
 
 **Regex (POSIX ERE):**
 
 ```
-^portfolio/2-DOMAINS-LEVELS/[A-Z0-9-]+/programs/[a-z0-9-]+/conf_base/[0-9]{4}/[a-z0-9-]+/ata-[0-9]{2}-[a-z0-9-]+/cax-bridges/[a-z0-9-]+/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/(SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS)/
+^02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/[A-Z0-9-]+/programs/[a-z0-9-]+/conf_base/[0-9]{4}/[a-z0-9-]+/ata-[0-9]{2}-[a-z0-9-]+/cax-bridges/[a-z0-9-]+/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/(SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS)/
 ```
 
-Examples:
+**Example (AAA / ATA-51 / CB leaf):**
 
 ```
-.../AAA-.../programs/ampel360bwbq/conf_base/0001/gata/ata-51-structures/cax-bridges/cad-design/BITS/CB/
-.../PPP-.../programs/ampel360bwbq/conf_base/0001/gata/ata-72-engine/cax-bridges/fea/QUBITS/QB/
+02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES/
+  programs/ampel360bwbq/conf_base/0001/gata/ata-51-structures/cax-bridges/cad-design/BITS/CB/
 ```
-
-#### 13.2.2 gICD Location (ICN/PBS/IBS)
-
-* Default: `docs/bridges/gICD/` (**reference specs & schemas**)
-* Domain-specific instances: `.../cax-bridges/gicd/` (generated artifacts tied to the leaf)
-
----
 
 ### 13.3 Mandatory Leaf Metadata
 
-Each TFA leaf directory (`<LAYER>/<CODE>/`) MUST contain a `meta.yaml`.
-
-**`meta.yaml` (example):**
+Each leaf `<LAYER>/<CODE>/` MUST contain `meta.yaml`:
 
 ```yaml
-tfa:
-  domain: "AAA"        # 3-letter domain code
-  layer: "CB"          # one of SI, DI, SE, CV, CE, CC, CI, CP, CB, QB, UE, FE, FWD, QS
-map:
-  scheme: "ATA"
-  chapter: "51"
-  label: "Standard Practices—Structures"
-gata:
-  focus: "lightweight-recyclable-structures"
-program:
-  key: "ampel360bwbq"
-  baseline: "0001"
-mal:
-  bridge: "cax-llc"
-  process: "cad-design"
+tfa: { domain: "AAA", layer: "CB" }   # domain code & layer code
+map: { scheme: "ATA", chapter: "51", label: "Standard Practices—Structures" }
+program: { key: "ampel360bwbq", baseline: "0001" }
+mal: { bridge: "cax-llc", process: "cad-design" }
 gicd:
-  icn_ref: "../../gicd/icn.v1.json"     # relative path allowed
+  icn_ref: "../../gicd/icn.v1.json"
   pbs_ref: "../../gicd/pbs.v1.json"
   ibs_ref: "../../gicd/ibs.v1.json"
-provenance:
-  qs_required: true
-  utcs_anchor: "optional"
+provenance: { qs_required: true, utcs_anchor: "optional" }
+ethics:
+  profile_ref: "00-00-ASI-T-GENESIS/02-COMPLIANCE/ethics/empathy-ethics-profile.yaml"
+  eem_required: true
+  human_on_the_loop: true
+  lethal_actions: forbidden
+  xai: ["saliency","counterfactuals","rationales"]
+  utcs_anchor: required
 ```
 
-**JSON Schema for `meta.yaml` (YAML-encoded for readability):**
-
-```yaml
-$schema: "https://json-schema.org/draft/2020-12/schema"
-type: object
-required: [tfa, map, program, mal, provenance]
-properties:
-  tfa:
-    type: object
-    required: [domain, layer]
-    properties:
-      domain: { type: string, pattern: "^[A-Z]{3}$" }
-      layer:
-        type: string
-        enum: [SI,DI,SE,CV,CE,CC,CI,CP,CB,QB,UE,FE,FWD,QS]
-  map:
-    type: object
-    required: [scheme, chapter]
-    properties:
-      scheme: { type: string, enum: [ATA, SNS] }
-      chapter: { type: string, pattern: "^[0-9]{2}$" }
-      label: { type: string }
-  program:
-    type: object
-    required: [key, baseline]
-    properties:
-      key:   { type: string, pattern: "^[a-z0-9-]+$" }
-      baseline: { type: string, pattern: "^[0-9]{4}$" }
-  mal:
-    type: object
-    required: [bridge, process]
-    properties:
-      bridge: { type: string, enum: [cax-llc] }
-      process:{ type: string, pattern: "^[a-z0-9-]+$" }
-  gicd:
-    type: object
-    properties:
-      icn_ref: { type: string }
-      pbs_ref: { type: string }
-      ibs_ref: { type: string }
-  provenance:
-    type: object
-    required: [qs_required, utcs_anchor]
-    properties:
-      qs_required: { type: boolean }
-      utcs_anchor: { type: string, enum: ["required","optional","forbidden"] }
-additionalProperties: false
-```
-
-Place the schema at: `docs/bridges/schemas/meta.schema.json` (same structure).
-
----
+Schema: `02-00-PORTFOLIO-ENTANGLEMENT/docs/bridges/schemas/meta.schema.json`.
 
 ### 13.4 Required Leaf Files (by TFA layer)
 
-* **BITS/CB**: `cb-config.json`, `validate_cb_leaf.py`
-* **QUBITS/QB**: `qb-config.json`, `validate_qb_leaf.py`
-* **ELEMENTS/UE**: `ue-contract.json`, `validate_ue_contract.py`
-* **ELEMENTS/FE**: `fe-policy.yaml`, `validate_fe_policy.py`
-* **WAVES/FWD**: `fwd-model.yaml`, `validate_fwd_model.py`
-* **STATES/QS**: `qs-proof.json`, `validate_qs_proof.py`
-
-Automation MUST fail if the required files for a leaf are missing.
-
----
+* `BITS/CB/` → `cb-config.json`, `validate_cb_leaf.py`
+* `QUBITS/QB/` → `qb-config.json`, `validate_qb_leaf.py`
+* `ELEMENTS/UE/` → `ue-contract.json`, `validate_ue_contract.py`
+* `ELEMENTS/FE/` → `fe-policy.yaml`, `validate_fe_policy.py`
+* `WAVES/FWD/` → `fwd-model.yaml`, `validate_fwd_model.py`
+* `STATES/QS/` → `qs-proof.json`, `validate_qs_proof.py`
 
 ### 13.5 Commit/PR Signaling (labels & titles)
 
-* **PR title prefixes**:
-
-  * `feat(domain):` changes under `portfolio/2-DOMAINS-LEVELS/`
-  * `feat(platform):` changes under `portfolio/platform/` or `services/`
-  * `docs:` changes under `docs/`
-  * `ci:` changes under `.github/`
-* **PR labels** (CI triggers):
-
-  * `domain-change` — any diff matching the Path Grammar regex
-  * `map-change` — diffs touching `ata-<NN>-<slug>/`
-  * `schema-change` — diffs under `docs/bridges/schemas/`
-  * `provenance` — diffs touching `QS` leaves or UTCS workflows
-
----
+* Title prefixes: `feat(domain):`, `feat(platform):`, `docs:`, `ci:`
+* Labels: `domain-change`, `map-change`, `schema-change`, `provenance`, `defense`
 
 ### 13.6 CI: Guards & Cascades
 
-**A) Path Guard (case & grammar)** — `.github/workflows/path-guard.yml`
+* **Top-level guard:** only `00-00/01-00/02-00` roots allowed.
+* **Path guard:** enforce Path Grammar & **ALL CAPS** layers (`BITS/`, not `bits/`).
+* **Meta validate:** `meta.yaml` must conform to `meta.schema.json`.
+* **Leaf files:** required files per layer must exist.
+* **Ethics guard:** if `eem_required: true`, ensure ethics profile binding and QS/UTCS evidence.
+
+### 13.7 Deterministic IDs (for agents)
+
+* Program key: `^[a-z0-9-]+$`
+* Baseline id: `^[0-9]{4}$` (monotonic)
+* Compose artifact IDs as: `{program}-{baseline}-{domain}-{layer}-{code}-{mapChapter}`
+  Example: `ampel360bwbq-0001-AAA-CB-ata51`
+
+### 13.8 Cascade Semantics
+
+* Changes under `docs/bridges/schemas/` → re-validate **all** `meta.yaml` and leaf files.
+* Changes under `.../ata-*/` → rebuild MAP crosswalks (`docs/compliance/ata-sns-crosswalk.md`).
+* Changes under `STATES/QS/` or `anchor_utcs.yml` → run provenance jobs.
+
+### 13.9 Error Messaging (human+bot friendly)
+
+Use GitHub Annotations:
+
+```
+::error file=PATH:LINE::violates §13.2 Path Grammar
+::warning file=PATH::missing optional gICD refs
+```
+
+---
+
+### 🎓 Master’s Project Integration
+
+This portfolio is the practical backbone for the **Máster en Dirección y Gestión de Proyectos**.
+
+```bash
+make master-progress
+# latest: 00-00-ASI-T-GENESIS/00-STRATEGY/MASTER-PROJECT-FRAMEWORK/PROGRESS-REPORT.md
+```
+
+---
+Killer starter! I see two quick wins to make it bullet-proof with your §13 contract:
+
+1. **Validate `meta.yaml` against the JSON Schema** (not just presence).
+2. **Add the missing UE + FWD required-file checks** (per §13.4).
+
+I also tightened the merge-marker grep (binary-safe), added `workflow_dispatch`, minimal perms, `concurrency`, and a tiny header-anchor check for Markdown.
+
+Drop-in replacement:
 
 ```yaml
-name: path-guard
-on: [pull_request]
+# .github/workflows/link-check-and-path-validation.yml
+name: Link Check & Path Validation
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    types: [opened, synchronize, reopened]
+  schedule:
+    - cron: '0 0 * * 0'          # Weekly on Sunday
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  guard:
+  merge-artifacts:
+    name: Detect Merge Artifacts
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Enforce TFA path & case rules
+      - name: Check for merge conflict markers
+        shell: bash
         run: |
           set -euo pipefail
-          CHANGES="$(git diff --name-only origin/${{ github.base_ref }}...)"
-          # 1) forbid lowercase 'bits/' under domains
-          if echo "$CHANGES" | grep -E '/2-DOMAINS-LEVELS/.*/bits/CB' ; then
-            echo "::error::Use 'BITS/CB' (uppercase) for TFA layer folders."
+          echo "🔍 Checking for merge conflict markers..."
+          if git grep -nI -E '^(<<<<<<<|=======|>>>>>>>)' -- . ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.pdf' ':!*.zip' ':!.git/' || false; then
+            git grep -nI -E '^(<<<<<<<|=======|>>>>>>>)' -- . ':!*.png' ':!*.jpg' ':!*.jpeg' ':!*.gif' ':!*.pdf' ':!*.zip' ':!.git/' \
+            | while IFS=: read -r file line _; do
+                echo "::error file=$file,line=$line::Merge conflict marker detected"
+              done
             exit 1
           fi
-          # 2) require ATA chapter naming when 'ata-' present
-          if echo "$CHANGES" | grep -E '/ata-[0-9]{2}-[a-z0-9-]+/' -q ; then
-            echo "ATA naming OK"
-          fi
-          # 3) grammar check for canonical leaf
-          echo "$CHANGES" | awk '1' | while read -r p; do
-            case "$p" in
-              portfolio/2-DOMAINS-LEVELS/*/programs/*/conf_base/[0-9][0-9][0-9][0-9]/*/ata-[0-9][0-9]-*/cax-bridges/*/*/*) true ;;
-              portfolio/2-DOMAINS-LEVELS/*) true ;; # allow non-leaf edits
-              *) continue ;;
+          echo "✅ No merge conflict markers found"
+
+  path-validation:
+    name: Validate ASI-T Path Structure
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate canonical roots (§13.1)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Validating canonical root directories..."
+          for dir in */ ; do
+            case "$dir" in
+              00-00-ASI-T-GENESIS/|01-00-USE-CASES-ENABLED/|02-00-PORTFOLIO-ENTANGLEMENT/|.github/|docs/|services/)
+                echo "✅ Valid: $dir" ;;
+              *)
+                [ -d "$dir" ] || continue
+                echo "::error file=$dir::Non-canonical top-level directory (violates §13.1)"
+                exit 1 ;;
             esac
           done
-```
 
-**B) Metadata & Schema Check** — `.github/workflows/meta-validate.yml`
+      - name: Validate TFA path grammar (§13.2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Validating TFA path structure..."
+          find . -type d -path "*/2-DOMAINS-LEVELS/*/programs/*/conf_base/*/ata-*/cax-bridges/*/*/*" \
+          | while read -r path; do
+              if [[ "$path" =~ /([A-Z0-9-]+)/programs/([a-z0-9-]+)/conf_base/([0-9]{4})/([a-z0-9-]+)/ata-([0-9]{2})-([a-z0-9-]+)/cax-bridges/([a-z0-9-]+)/([A-Z]+)/([A-Z]+)$ ]]; then
+                layer="${BASH_REMATCH[8]}"; code="${BASH_REMATCH[9]}"
+                case "$layer" in SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES) : ;; *)
+                  echo "::error file=$path::Invalid TFA layer '$layer' (must be ALL CAPS)"; exit 1 ;; esac
+                case "$code" in SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS) : ;; *)
+                  echo "::error file=$path::Invalid TFA code '$code'"; exit 1 ;; esac
+              else
+                echo "::warning file=$path::Path doesn't fully match expected TFA structure"
+              fi
+            done
 
-```yaml
-name: meta-validate
-on: [pull_request]
-jobs:
-  meta:
+      - name: Check for lowercase TFA layers (§13.2)
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "🔍 Checking for incorrect lowercase TFA layers..."
+          LOWERCASE=$(find . -type d \( -name systems -o -name stations -o -name components -o -name bits -o -name qubits -o -name elements -o -name waves -o -name states \) -path "*/2-DOMAINS-LEVELS/*" | head -20)
+          if [ -n "$LOWERCASE" ]; then
+            echo "$LOWERCASE" | while read -r p; do
+              echo "::error file=$p::TFA layer must be ALL CAPS (violates §13.2)"
+            done
+            exit 1
+          fi
+          echo "✅ No lowercase TFA layers found"
+
+  link-check:
+    name: Check Documentation Links (local paths + anchors)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate markdown links & anchors
+        shell: python
+        run: |
+          import os, re, sys, pathlib
+          md_link = re.compile(r'\[([^\]]+)\]\(([^)]+)\)')
+          header = re.compile(r'^(#{1,6})\s*(.+)$', re.M)
+          def slug(s):  # GitHub-style basic slug
+              import re
+              s = s.strip().lower()
+              s = re.sub(r'[^\w\s-]', '', s)
+              s = re.sub(r'\s+', '-', s)
+              return s
+          def exists_with_anchor(base, target):
+              if target.startswith('http') or target.startswith('mailto:'): return True
+              if target.startswith('#'):
+                  with open(base, 'r', encoding='utf-8', errors='ignore') as f:
+                      heads = [slug(m.group(2)) for m in header.finditer(f.read())]
+                  return slug(target[1:]) in heads
+              path, _, anchor = target.partition('#')
+              p = (pathlib.Path(base).parent / path).resolve() if path and not path.startswith('/') else pathlib.Path(path[1:] if path.startswith('/') else base).resolve()
+              if p.is_dir(): p = p / 'index.md'
+              cand = [p, p.with_suffix('.md')]
+              for c in cand:
+                  if c.exists():
+                      if anchor:
+                          with open(c, 'r', encoding='utf-8', errors='ignore') as f:
+                              heads = [slug(m.group(2)) for m in header.finditer(f.read())]
+                          return slug(anchor) in heads or anchor == ''
+                      return True
+              return False
+          errors, warns = [], []
+          for root, _, files in os.walk('.'):
+              if '/.' in root: continue
+              for fn in files:
+                  if not fn.endswith('.md'): continue
+                  fp = os.path.join(root, fn)
+                  txt = open(fp, 'r', encoding='utf-8', errors='ignore').read()
+                  for m in md_link.finditer(txt):
+                      tgt = m.group(2).strip()
+                      if not exists_with_anchor(fp, tgt):
+                          line = txt[:m.start()].count('\n')+1
+                          errors.append((fp, line, f"Broken link or anchor: {tgt}"))
+          for f,l,msg in errors:
+              print(f"::error file={f},line={l}::{msg}")
+          if errors:
+              print(f"❌ {len(errors)} broken links/anchors"); sys.exit(1)
+          print("✅ All markdown links/anchors valid")
+
+  meta-yaml-check:
+    name: Validate meta.yaml (presence + schema)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: '3.11' }
-      - run: pip install jsonschema pyyaml
-      - name: Validate meta.yaml against meta.schema.json
+      - run: pip install pyyaml jsonschema
+      - name: Check presence + validate against schema (§13.3)
+        shell: python
         run: |
-          set -euo pipefail
-          SCHEMA="docs/bridges/schemas/meta.schema.json"
-          if [ ! -f "$SCHEMA" ]; then
-            echo "::error::$SCHEMA not found"; exit 1
-          fi
-          python - <<'PY'
-import os, yaml, json, sys
-from jsonschema import validate, Draft202012Validator
-SCHEMA_PATH="docs/bridges/schemas/meta.schema.json"
-schema=json.load(open(SCHEMA_PATH))
-errors=0
-for root,_,files in os.walk("portfolio/2-DOMAINS-LEVELS"):
-  if "meta.yaml" in files and any(seg in {"BITS","QUBITS","ELEMENTS","WAVES","STATES"} for seg in root.split(os.sep)):
-    data=yaml.safe_load(open(os.path.join(root,"meta.yaml")))
-    v=Draft202012Validator(schema)
-    for e in v.iter_errors(data):
-      print(f"::error file={os.path.join(root,'meta.yaml')}::{e.message}")
-      errors+=1
-if errors: sys.exit(1)
-PY
-```
+          import os, re, sys, yaml, json
+          from jsonschema import Draft202012Validator
+          schema_path = "02-00-PORTFOLIO-ENTANGLEMENT/docs/bridges/schemas/meta.schema.json"
+          if not os.path.exists(schema_path):
+              print(f"::error file={schema_path}::Schema not found"); sys.exit(1)
+          schema = json.load(open(schema_path))
+          validator = Draft202012Validator(schema)
+          leaf_re = re.compile(r'.*/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/(SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS)$')
+          errors = 0
+          for root, dirs, files in os.walk("02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS"):
+              if leaf_re.match(root):
+                  meta = os.path.join(root, "meta.yaml")
+                  if not os.path.isfile(meta):
+                      print(f"::error file={meta}::Missing required meta.yaml (violates §13.3)")
+                      errors += 1
+                  else:
+                      data = yaml.safe_load(open(meta))
+                      for e in validator.iter_errors(data):
+                          print(f"::error file={meta}::{e.message}")
+                          errors += 1
+          if errors: sys.exit(1)
+          print("✅ All meta.yaml present & schema-valid")
 
-**C) Leaf Required Files** — `.github/workflows/leaf-files.yml`
-
-```yaml
-name: leaf-files
-on: [pull_request]
-jobs:
-  leaf:
+  required-files:
+    name: Check Required Leaf Files (§13.4)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Enforce required leaf files
+      - name: Validate required files by layer
+        shell: bash
         run: |
           set -euo pipefail
-          missing=0
-          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/BITS/CB$' -print0 | while IFS= read -r -d '' d; do
-            for f in meta.yaml cb-config.json validate_cb_leaf.py; do
-              [ -f "$d/$f" ] || { echo "::error file=$d/$f::missing"; missing=1; }
-            done
+          echo "🔍 Checking required files per TFA layer..."
+          errors=0
+          # CB
+          find . -type d -path "*/BITS/CB" | while read -r d; do
+            for f in cb-config.json validate_cb_leaf.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for CB (§13.4)"; errors=$((errors+1)); }; done
           done
-          # add analogous loops for other layers if needed
-          exit $missing
+          # QB
+          find . -type d -path "*/QUBITS/QB" | while read -r d; do
+            for f in qb-config.json validate_qb_leaf.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for QB (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # UE  (added)
+          find . -type d -path "*/ELEMENTS/UE" | while read -r d; do
+            for f in ue-contract.json validate_ue_contract.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for UE (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # FE
+          find . -type d -path "*/ELEMENTS/FE" | while read -r d; do
+            for f in fe-policy.yaml validate_fe_policy.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for FE (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # FWD (added)
+          find . -type d -path "*/WAVES/FWD" | while read -r d; do
+            for f in fwd-model.yaml validate_fwd_model.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for FWD (§13.4)"; errors=$((errors+1)); }; done
+          done
+          # QS
+          find . -type d -path "*/STATES/QS" | while read -r d; do
+            for f in qs-proof.json validate_qs_proof.py; do [ -f "$d/$f" ] || { echo "::error file=$d/$f::Missing required file for QS (§13.4)"; errors=$((errors+1)); }; done
+          done
+          [ $errors -eq 0 ] || { echo "❌ Found $errors missing required files"; exit 1; }
+          echo "✅ All required layer files present"
+
+  summary:
+    name: Validation Summary
+    needs: [merge-artifacts, path-validation, link-check, meta-yaml-check, required-files]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: Summary
+        run: |
+          {
+            echo "## 📊 ASI-T Structure Validation Summary"
+            for j in merge-artifacts path-validation link-check meta-yaml-check required-files; do
+              r="${{ needs[j].result }}"
+              icon="✅"; [ "$r" = "success" ] || icon="❌"
+              name="$j"
+              echo "- $icon **${name//-/ }**: $r"
+            done
+          } >> "$GITHUB_STEP_SUMMARY"
 ```
 
----
+Two housekeeping notes:
 
-### 13.7 Deterministic IDs (for agents)
+* The README still shows a conflict hunk (`<<<<<<< … ======= … >>>>>>>`). Nuke that chunk and keep the **latest** §13 copy (the one matching this Action’s rules).
+* If you later permit extra top-level dirs (e.g., `tools/`), add them to the **canonical roots** case list or the guard will reject them—by design.
 
-* **Program key**: `^[a-z0-9-]+$`
-* **Baseline id**: `^[0-9]{4}$` (monotonic)
-* **Artifact IDs** inside leaf files SHOULD include: `{program}-{baseline}-{domain}-{layer}-{code}-{mapChapter}`
+Want me to add a tiny fixer script (`scripts/fix-anchors-and-paths.py`) that auto-rewrites stale README links to the new 00-01-02 cascade?
 
-Example: `ampel360bwbq-0001-AAA-CB-ata51`
-
----
-
-### 13.8 Cascade Semantics
-
-When a PR touches:
-
-* `docs/bridges/schemas/` → **re-validate all meta.yaml** + **all leaf required files**
-* `portfolio/2-DOMAINS-LEVELS/**/ata-**/` → **rebuild MAP crosswalk tables** in `docs/compliance/ata-sns-crosswalk.md`
-* `**/STATES/QS/` or `.github/workflows/anchor_utcs.yml` → run **provenance/UTCS** jobs
-
-Automation MUST **short-circuit** unrelated pipelines.
-
----
-
-### 13.9 Error Messaging (human+bot friendly)
-
-All CI steps MUST emit **GitHub Annotation format** with precise file paths:
-
-```
-::error file=PATH:LINE::Message
-::warning file=PATH::Message
-```
-
-Messages MUST reference this section's rule number (e.g., "violates 13.2.1 Path Grammar").
-
----
-
-This contract ensures agents can **parse, validate, and act** on changes deterministically—no heuristics, no ambiguity.
-
----
-
-next: generate a small **link-check GitHub Action** to prevent path drift and catch future merge artifacts automatically.
