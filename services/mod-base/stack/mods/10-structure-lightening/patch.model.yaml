@@ -1,0 +1,9 @@
+parameters:
+  fuel_efficiency_factor: 0.88  # Improved efficiency from weight reduction
+  structural_weight_factor: 0.92  # 8% weight reduction
+  
+processing:
+  structure_optimization: true
+  
+outputs:
+  include_weight_analysis: true

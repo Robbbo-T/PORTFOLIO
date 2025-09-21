@@ -1,0 +1,23 @@
+artifacts:
+  data_path: services/mod-base/data/sample_flight_plan.csv
+  evidence_path: services/mod-base/qs/evidence.json
+  metrics_path: services/mod-base/eval/metrics.json
+  spec_path: services/mod-base/model_spec.yaml
+cn_id: CN-20250921-4478
+component: MOD-BASE
+hashes:
+  data_sha256: fffd03ab2818a0c0592f2565cf743ce20d0f05299411662d952fdacbbee4db4f
+  evidence_sha256: f6bc94c43a599ff680e6129f8678fcde7aa21e942edf245b85789a3913b6fe03
+  metrics_sha256: 6f8f282c73efe02886978b1201c535cf262b5d5ad65525dba59324835cfc42e9
+  spec_sha256: 720828771d4d478ca07504c6cf9e6ee26767fc215d516fee14e83fa77683aef9
+reason: FCR-1 automatic update
+scope:
+  cb: true
+  fe: false
+  fwd: true
+  qb: true
+  qs: true
+  ue: false
+signoff:
+  operator_id: fcr-automation
+  timestamp: '2025-09-21T11:34:38Z'

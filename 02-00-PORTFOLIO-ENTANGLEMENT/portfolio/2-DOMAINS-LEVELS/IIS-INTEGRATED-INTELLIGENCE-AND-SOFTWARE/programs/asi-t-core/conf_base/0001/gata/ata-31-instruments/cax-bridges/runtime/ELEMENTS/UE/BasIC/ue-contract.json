@@ -1,0 +1,79 @@
+{
+  "contract_id": "UE-BasIC-v1.0.0",
+  "element_type": "UE",
+  "description": "Basic Identity Component for ASI-T systems",
+  "capabilities": {
+    "identity": {
+      "methods": ["generate_identity", "validate_identity", "sign_identity"],
+      "key_types": ["ed25519", "secp256k1"],
+      "attestation": true
+    },
+    "signing": {
+      "algorithms": ["ed25519", "ECDSA"],
+      "formats": ["raw", "jwt", "eip712"]
+    },
+    "anomaly_detection": {
+      "scoring_method": "lightweight_statistical",
+      "threshold_adaptive": true,
+      "real_time": true
+    }
+  },
+  "interfaces": {
+    "input": {
+      "identity_request": {
+        "type": "object",
+        "required": ["context", "purpose"]
+      },
+      "sign_request": {
+        "type": "object", 
+        "required": ["payload", "key_id"]
+      },
+      "anomaly_data": {
+        "type": "object",
+        "required": ["metrics", "timestamp"]
+      }
+    },
+    "output": {
+      "identity_response": {
+        "type": "object",
+        "properties": {
+          "identity_id": {"type": "string"},
+          "public_key": {"type": "string"},
+          "attestation": {"type": "object"}
+        }
+      },
+      "signature": {
+        "type": "object",
+        "properties": {
+          "signature": {"type": "string"},
+          "algorithm": {"type": "string"},
+          "timestamp": {"type": "string"}
+        }
+      },
+      "anomaly_score": {
+        "type": "object",
+        "properties": {
+          "score": {"type": "number", "minimum": 0, "maximum": 1},
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "explanation": {"type": "string"}
+        }
+      }
+    }
+  },
+  "qos_requirements": {
+    "identity_latency_ms": 50,
+    "signing_latency_ms": 10,
+    "anomaly_latency_ms": 5,
+    "availability": 0.9999
+  },
+  "security": {
+    "key_storage": "secure_enclave_preferred",
+    "entropy_source": "hardware_rng_preferred",
+    "side_channel_resistance": true
+  },
+  "qs_integration": {
+    "evidence_required": true,
+    "provenance_anchoring": true,
+    "utcs_compatible": true
+  }
+}

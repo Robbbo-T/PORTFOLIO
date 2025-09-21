@@ -1,0 +1,20 @@
+stack_id: "STACK-AERO-LITE@2025-01-27"
+description: "Example aerospace optimization stack with baseline modifications"
+version: "1.0.0"
+
+baseline:
+  model_spec: "services/mod-base/model_spec.yaml"
+  data: "services/mod-base/data/sample_flight_plan.csv"
+
+order:
+  - "10-structure-lightening"
+  - "20-aero-cruise-opt"
+
+outputs:
+  metrics: "services/mod-base/eval/metrics.stack.json"
+  evidence: "services/mod-base/stack/evidence/stack_evidence.json"
+
+configuration:
+  deterministic: true
+  parallel_processing: false
+  validation_required: true

@@ -1,0 +1,48 @@
+{
+  "qs_id": "asi-t-core-0001-IIS-QS-ata31",
+  "version": "1.0.0",
+  "description": "Quantum state proof for IIS MLOps evidence chain",
+  "proof_type": "evidence_chain",
+  "timestamp": "2025-09-21T11:34:38Z",
+  "utcs_fields": {
+    "policy_hash": "81d32a0463643b2a",
+    "model_sha": "81d32a0463643b2a0a4442181008cec3ef7bb83b0f733f50f1477a3f12d72d78",
+    "data_manifest": "26a6d94a4c035480cd1430bbd33ff99ebcf2819b8d6df8d2ed5d72eb7b7eed67",
+    "decision_record": "6f8f282c73efe02886978b1201c535cf262b5d5ad65525dba59324835cfc42e9",
+    "xai_blob_hash": "80f4cae2600216f8eefcf6830947b355f12e8008b3019f0fe5a161a737a4828a",
+    "operator_id": "system",
+    "approval_token": "pending"
+  },
+  "provenance": {
+    "cb_hash": "pending",
+    "qb_hash": "pending",
+    "ue_hash": "pending",
+    "fe_hash": "pending",
+    "fwd_hash": "pending",
+    "bridge_path": "CB\u2192QB\u2192UE\u2192FE\u2192FWD\u2192QS"
+  },
+  "evidence_chain": {
+    "mod_base_metrics": "6f8f282c73efe02886978b1201c535cf262b5d5ad65525dba59324835cfc42e9",
+    "stack_evidence": "pending",
+    "change_notice": "pending",
+    "validation_results": "pending"
+  },
+  "integrity": {
+    "canonical_hash": "pending",
+    "signature": "pending",
+    "witness_nodes": [],
+    "consensus_achieved": false
+  },
+  "compliance": {
+    "fcr_validated": true,
+    "ethics_checked": true,
+    "mal_eem_passed": true,
+    "schema_valid": true
+  },
+  "anchoring": {
+    "utcs_tx_hash": "pending",
+    "block_number": 0,
+    "confirmation_count": 0,
+    "immutable": false
+  }
+}

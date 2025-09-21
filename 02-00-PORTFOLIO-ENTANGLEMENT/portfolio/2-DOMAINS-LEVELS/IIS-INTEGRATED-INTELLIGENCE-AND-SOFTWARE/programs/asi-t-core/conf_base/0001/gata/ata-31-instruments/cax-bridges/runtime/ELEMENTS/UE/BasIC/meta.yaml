@@ -1,0 +1,17 @@
+id: "BasIC"
+version: "1.0.0"
+layer: "UE"
+group: "ELEMENTS"
+description: "Basic Identity Component - baseline identity, attestation, signing, and anomaly scoring"
+canonical_path: "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/programs/asi-t-core/conf_base/0001/gata/ata-31-instruments/cax-bridges/runtime/ELEMENTS/UE/BasIC"
+utcs_fields:
+  bridge: "UE→QS"
+  determinism: true
+  ethics_required: true
+required_files:
+  - "meta.yaml"
+  - "ue-contract.json"
+  - "validate_ue_contract.py"
+  - "id-profile.yaml"
+maintainer: "ASI-T Core Team"
+created: "2025-01-27T10:00:00Z"

@@ -1,0 +1,14 @@
+id: "20-aero-cruise-opt@0.1.0"
+description: "Aerodynamic cruise optimization modifications"
+tier: 20
+category: "aero"
+kind: ["model_overlay"]
+
+patches:
+  model: "patch.model.yaml"
+
+dependencies: ["10-structure-lightening"]
+
+validation:
+  schema_check: true
+  compatibility_check: true

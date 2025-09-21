@@ -1,0 +1,40 @@
+actuation_capable: false
+compliance:
+  fcr_enabled: true
+  schema_validation: true
+  utcs_compatible: true
+description: Baseline aerospace model for ASI-T systems
+mal_eem_required: true
+model_id: mod-base-v1.0.0
+operator_confirmed: true
+outputs:
+  evidence_required: true
+  include_aero_analysis: true
+  include_weight_analysis: true
+  metrics_required: true
+  qs_anchoring: true
+parameters:
+  altitude_penalty: 0.015
+  cruise_optimization: true
+  fuel_efficiency_factor: 0.9
+  safety_margin_required: 0.15
+  speed_optimization: true
+  structural_weight_factor: 0.92
+processing:
+  aero_optimization: true
+  deterministic_seed: 42
+  parallel_processing: false
+  precision: double
+  structure_optimization: true
+tfa_bridge:
+  deterministic: true
+  evidence_chain: true
+  layers:
+  - CB
+  - QB
+  - UE
+  - FE
+  - FWD
+  - QS
+type: baseline
+version: 1.0.0

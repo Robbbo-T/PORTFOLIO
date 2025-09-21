@@ -1,0 +1,15 @@
+id: "QB-IIS-MLOps"
+version: "1.0.0"
+layer: "QB"
+group: "QUBITS"
+description: "Quantum Bits layer for IIS MLOps optimization processes"
+canonical_path: "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/programs/asi-t-core/conf_base/0001/gata/ata-31-instruments/cax-bridges/mlops/QUBITS/QB"
+utcs_fields:
+  bridge: "QB→UE"
+  determinism: true
+required_files:
+  - "meta.yaml"
+  - "qb-config.json"
+  - "validate_qb_leaf.py"
+maintainer: "ASI-T IIS Team"
+created: "2025-01-27T10:00:00Z"

@@ -1,0 +1,15 @@
+id: "CB-IIS-MLOps"
+version: "1.0.0"
+layer: "CB"
+group: "BITS"
+description: "Classical Bits layer for IIS MLOps processes"
+canonical_path: "02-00-PORTFOLIO-ENTANGLEMENT/portfolio/2-DOMAINS-LEVELS/IIS-INTEGRATED-INTELLIGENCE-AND-SOFTWARE/programs/asi-t-core/conf_base/0001/gata/ata-31-instruments/cax-bridges/mlops/BITS/CB"
+utcs_fields:
+  bridge: "CB→QB"
+  determinism: true
+required_files:
+  - "meta.yaml"
+  - "cb-config.json"
+  - "validate_cb_leaf.py"
+maintainer: "ASI-T IIS Team"
+created: "2025-01-27T10:00:00Z"

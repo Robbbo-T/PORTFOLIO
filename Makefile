@@ -15,7 +15,7 @@ IMAGE ?= ghcr.io/$(GITHUB_OWNER)/$(IMAGE_NAME):$(IMAGE_TAG)
 
 .PHONY: help print-vars scaffold check validate domains quantum-bridge master-progress clean \
 bootstrap pre-commit-install lint test canonical-plan canonical-apply canonical-verify ci \
-docker-build docker-push scaffold-llc-readmes
+docker-build docker-push scaffold-llc-readmes mod-base mod-stack
 
 PY := python
 
@@ -39,6 +39,8 @@ help:
 	@echo "  validate         - Run TFA structure validator"
 	@echo "  domains          - Show domain status"
 	@echo "  quantum-bridge   - Create quantum-classical bridge code buckets"
+	@echo "  mod-base         - Run MOD-BASE baseline model"
+	@echo "  mod-stack        - Run MOD-STACK composition and execution"
 	@echo "  docker-build     - Build Docker image with canonical naming"
 	@echo "  docker-push      - Push Docker image to registry"
 	@echo "  master-progress  - Generate Master's Project progress report"
@@ -195,3 +197,19 @@ scaffold-llc-readmes:
 	@echo "🏛️ Scaffolding canonical LLC READMEs across all domains and CAx tracks..."
 	@python tools/generate_llc_readmes.py
 	@echo "✅ Canonical READMEs are up to date."
+
+# MOD-BASE: Run baseline model
+mod-base:
+	@echo "🚀 Running MOD-BASE baseline model..."
+	@$(PY) services/mod-base/run_mod_base.py \
+		--spec services/mod-base/model_spec.yaml \
+		--data services/mod-base/data/sample_flight_plan.csv \
+		--out services/mod-base/eval/metrics.json
+	@echo "✅ MOD-BASE execution completed"
+
+# MOD-STACK: Apply stack and run composed model
+mod-stack: mod-base
+	@echo "🔄 Applying MOD-STACK composition..."
+	@mkdir -p services/mod-base/stack/evidence
+	@$(PY) services/mod-base/stack/apply_stack.py --stack services/mod-base/stack/stack.yaml
+	@echo "✅ MOD-STACK composition completed"
