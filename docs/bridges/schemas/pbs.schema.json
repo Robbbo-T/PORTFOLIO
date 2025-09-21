@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PBS (Product Breakdown Structure) Schema",
+  "description": "Schema for Product Breakdown Structure specifications in gICD triad",
+  "type": "object",
+  "required": ["pbs_version", "products"],
+  "properties": {
+    "pbs_version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+$"
+    },
+    "products": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "level"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^PBS-[A-Z0-9-]+$"
+          },
+          "name": {
+            "type": "string"
+          },
+          "level": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "parent_id": {
+            "type": "string",
+            "pattern": "^PBS-[A-Z0-9-]+$"
+          },
+          "description": {
+            "type": "string"
+          },
+          "ata_chapter": {
+            "type": "string",
+            "pattern": "^[0-9]{2}$"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

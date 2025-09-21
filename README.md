@@ -618,4 +618,310 @@ make master-progress
 
 ---
 
+## 13. 🤖 Automation Contract (Cascade Rules)
+
+This section is the **machine-readable contract** for all automation agents. It defines canonical paths, naming, metadata, schemas, and trigger rules so CI can infer intent without guesswork.
+
+### 13.1 Canonical Roots
+
+* **Portfolio roots**
+
+  * `portfolio/platform/` — runtime/infra/SRE ("platform")
+  * `portfolio/0-STRATEGY/ … 8-RESOURCES/` — governance, methods, domains, programs, research, etc.
+* **Docs root:** `docs/`
+* **Services root:** `services/`
+
+Automation MUST treat these as **authoritative namespaces**. Any content outside is non-canonical.
+
+---
+
+### 13.2 Path Grammar (deterministic)
+
+#### 13.2.1 Domain Capsule
+
+```
+portfolio/2-DOMAINS-LEVELS/<DOMAIN-SLUG>/
+  programs/<program-key>/conf_base/<baseline-id>/<track>/<map-chapter>/<bridge>/<process>/<LAYER>/<CODE>/
+```
+
+* `<DOMAIN-SLUG>` — e.g., `AAA-AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES`
+* `<program-key>` — kebab/compact key, e.g., `ampel360bwbq`
+* `<baseline-id>` — zero-padded int, e.g., `0001`
+* `<track>` — `gata` (sustainability) or other explicit tracks
+* `<map-chapter>` — `ata-<NN>-<slug>` (e.g., `ata-51-structures`)
+* `<bridge>` — `cax-bridges`
+* `<process>` — CAx process bucket (e.g., `cad-design`, `fea`, `cfd`)
+* `<LAYER>` — **ALL CAPS** TFA group: `SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES`
+* `<CODE>`  — TFA code inside group: e.g., `SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS`
+
+**Regex (POSIX ERE):**
+
+```
+^portfolio/2-DOMAINS-LEVELS/[A-Z0-9-]+/programs/[a-z0-9-]+/conf_base/[0-9]{4}/[a-z0-9-]+/ata-[0-9]{2}-[a-z0-9-]+/cax-bridges/[a-z0-9-]+/(SYSTEMS|STATIONS|COMPONENTS|BITS|QUBITS|ELEMENTS|WAVES|STATES)/(SI|DI|SE|CV|CE|CC|CI|CP|CB|QB|UE|FE|FWD|QS)/
+```
+
+Examples:
+
+```
+.../AAA-.../programs/ampel360bwbq/conf_base/0001/gata/ata-51-structures/cax-bridges/cad-design/BITS/CB/
+.../PPP-.../programs/ampel360bwbq/conf_base/0001/gata/ata-72-engine/cax-bridges/fea/QUBITS/QB/
+```
+
+#### 13.2.2 gICD Location (ICN/PBS/IBS)
+
+* Default: `docs/bridges/gICD/` (**reference specs & schemas**)
+* Domain-specific instances: `.../cax-bridges/gicd/` (generated artifacts tied to the leaf)
+
+---
+
+### 13.3 Mandatory Leaf Metadata
+
+Each TFA leaf directory (`<LAYER>/<CODE>/`) MUST contain a `meta.yaml`.
+
+**`meta.yaml` (example):**
+
+```yaml
+tfa:
+  domain: "AAA"        # 3-letter domain code
+  layer: "CB"          # one of SI, DI, SE, CV, CE, CC, CI, CP, CB, QB, UE, FE, FWD, QS
+map:
+  scheme: "ATA"
+  chapter: "51"
+  label: "Standard Practices—Structures"
+gata:
+  focus: "lightweight-recyclable-structures"
+program:
+  key: "ampel360bwbq"
+  baseline: "0001"
+mal:
+  bridge: "cax-llc"
+  process: "cad-design"
+gicd:
+  icn_ref: "../../gicd/icn.v1.json"     # relative path allowed
+  pbs_ref: "../../gicd/pbs.v1.json"
+  ibs_ref: "../../gicd/ibs.v1.json"
+provenance:
+  qs_required: true
+  utcs_anchor: "optional"
+```
+
+**JSON Schema for `meta.yaml` (YAML-encoded for readability):**
+
+```yaml
+$schema: "https://json-schema.org/draft/2020-12/schema"
+type: object
+required: [tfa, map, program, mal, provenance]
+properties:
+  tfa:
+    type: object
+    required: [domain, layer]
+    properties:
+      domain: { type: string, pattern: "^[A-Z]{3}$" }
+      layer:
+        type: string
+        enum: [SI,DI,SE,CV,CE,CC,CI,CP,CB,QB,UE,FE,FWD,QS]
+  map:
+    type: object
+    required: [scheme, chapter]
+    properties:
+      scheme: { type: string, enum: [ATA, SNS] }
+      chapter: { type: string, pattern: "^[0-9]{2}$" }
+      label: { type: string }
+  program:
+    type: object
+    required: [key, baseline]
+    properties:
+      key:   { type: string, pattern: "^[a-z0-9-]+$" }
+      baseline: { type: string, pattern: "^[0-9]{4}$" }
+  mal:
+    type: object
+    required: [bridge, process]
+    properties:
+      bridge: { type: string, enum: [cax-llc] }
+      process:{ type: string, pattern: "^[a-z0-9-]+$" }
+  gicd:
+    type: object
+    properties:
+      icn_ref: { type: string }
+      pbs_ref: { type: string }
+      ibs_ref: { type: string }
+  provenance:
+    type: object
+    required: [qs_required, utcs_anchor]
+    properties:
+      qs_required: { type: boolean }
+      utcs_anchor: { type: string, enum: ["required","optional","forbidden"] }
+additionalProperties: false
+```
+
+Place the schema at: `docs/bridges/schemas/meta.schema.json` (same structure).
+
+---
+
+### 13.4 Required Leaf Files (by TFA layer)
+
+* **BITS/CB**: `cb-config.json`, `validate_cb_leaf.py`
+* **QUBITS/QB**: `qb-config.json`, `validate_qb_leaf.py`
+* **ELEMENTS/UE**: `ue-contract.json`, `validate_ue_contract.py`
+* **ELEMENTS/FE**: `fe-policy.yaml`, `validate_fe_policy.py`
+* **WAVES/FWD**: `fwd-model.yaml`, `validate_fwd_model.py`
+* **STATES/QS**: `qs-proof.json`, `validate_qs_proof.py`
+
+Automation MUST fail if the required files for a leaf are missing.
+
+---
+
+### 13.5 Commit/PR Signaling (labels & titles)
+
+* **PR title prefixes**:
+
+  * `feat(domain):` changes under `portfolio/2-DOMAINS-LEVELS/`
+  * `feat(platform):` changes under `portfolio/platform/` or `services/`
+  * `docs:` changes under `docs/`
+  * `ci:` changes under `.github/`
+* **PR labels** (CI triggers):
+
+  * `domain-change` — any diff matching the Path Grammar regex
+  * `map-change` — diffs touching `ata-<NN>-<slug>/`
+  * `schema-change` — diffs under `docs/bridges/schemas/`
+  * `provenance` — diffs touching `QS` leaves or UTCS workflows
+
+---
+
+### 13.6 CI: Guards & Cascades
+
+**A) Path Guard (case & grammar)** — `.github/workflows/path-guard.yml`
+
+```yaml
+name: path-guard
+on: [pull_request]
+jobs:
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce TFA path & case rules
+        run: |
+          set -euo pipefail
+          CHANGES="$(git diff --name-only origin/${{ github.base_ref }}...)"
+          # 1) forbid lowercase 'bits/' under domains
+          if echo "$CHANGES" | grep -E '/2-DOMAINS-LEVELS/.*/bits/CB' ; then
+            echo "::error::Use 'BITS/CB' (uppercase) for TFA layer folders."
+            exit 1
+          fi
+          # 2) require ATA chapter naming when 'ata-' present
+          if echo "$CHANGES" | grep -E '/ata-[0-9]{2}-[a-z0-9-]+/' -q ; then
+            echo "ATA naming OK"
+          fi
+          # 3) grammar check for canonical leaf
+          echo "$CHANGES" | awk '1' | while read -r p; do
+            case "$p" in
+              portfolio/2-DOMAINS-LEVELS/*/programs/*/conf_base/[0-9][0-9][0-9][0-9]/*/ata-[0-9][0-9]-*/cax-bridges/*/*/*) true ;;
+              portfolio/2-DOMAINS-LEVELS/*) true ;; # allow non-leaf edits
+              *) continue ;;
+            esac
+          done
+```
+
+**B) Metadata & Schema Check** — `.github/workflows/meta-validate.yml`
+
+```yaml
+name: meta-validate
+on: [pull_request]
+jobs:
+  meta:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - run: pip install jsonschema pyyaml
+      - name: Validate meta.yaml against meta.schema.json
+        run: |
+          set -euo pipefail
+          SCHEMA="docs/bridges/schemas/meta.schema.json"
+          if [ ! -f "$SCHEMA" ]; then
+            echo "::error::$SCHEMA not found"; exit 1
+          fi
+          python - <<'PY'
+import os, yaml, json, sys
+from jsonschema import validate, Draft202012Validator
+SCHEMA_PATH="docs/bridges/schemas/meta.schema.json"
+schema=json.load(open(SCHEMA_PATH))
+errors=0
+for root,_,files in os.walk("portfolio/2-DOMAINS-LEVELS"):
+  if "meta.yaml" in files and any(seg in {"BITS","QUBITS","ELEMENTS","WAVES","STATES"} for seg in root.split(os.sep)):
+    data=yaml.safe_load(open(os.path.join(root,"meta.yaml")))
+    v=Draft202012Validator(schema)
+    for e in v.iter_errors(data):
+      print(f"::error file={os.path.join(root,'meta.yaml')}::{e.message}")
+      errors+=1
+if errors: sys.exit(1)
+PY
+```
+
+**C) Leaf Required Files** — `.github/workflows/leaf-files.yml`
+
+```yaml
+name: leaf-files
+on: [pull_request]
+jobs:
+  leaf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce required leaf files
+        run: |
+          set -euo pipefail
+          missing=0
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/BITS/CB$' -print0 | while IFS= read -r -d '' d; do
+            for f in meta.yaml cb-config.json validate_cb_leaf.py; do
+              [ -f "$d/$f" ] || { echo "::error file=$d/$f::missing"; missing=1; }
+            done
+          done
+          # add analogous loops for other layers if needed
+          exit $missing
+```
+
+---
+
+### 13.7 Deterministic IDs (for agents)
+
+* **Program key**: `^[a-z0-9-]+$`
+* **Baseline id**: `^[0-9]{4}$` (monotonic)
+* **Artifact IDs** inside leaf files SHOULD include: `{program}-{baseline}-{domain}-{layer}-{code}-{mapChapter}`
+
+Example: `ampel360bwbq-0001-AAA-CB-ata51`
+
+---
+
+### 13.8 Cascade Semantics
+
+When a PR touches:
+
+* `docs/bridges/schemas/` → **re-validate all meta.yaml** + **all leaf required files**
+* `portfolio/2-DOMAINS-LEVELS/**/ata-**/` → **rebuild MAP crosswalk tables** in `docs/compliance/ata-sns-crosswalk.md`
+* `**/STATES/QS/` or `.github/workflows/anchor_utcs.yml` → run **provenance/UTCS** jobs
+
+Automation MUST **short-circuit** unrelated pipelines.
+
+---
+
+### 13.9 Error Messaging (human+bot friendly)
+
+All CI steps MUST emit **GitHub Annotation format** with precise file paths:
+
+```
+::error file=PATH:LINE::Message
+::warning file=PATH::Message
+```
+
+Messages MUST reference this section's rule number (e.g., "violates 13.2.1 Path Grammar").
+
+---
+
+This contract ensures agents can **parse, validate, and act** on changes deterministically—no heuristics, no ambiguity.
+
+---
+
 next: generate a small **link-check GitHub Action** to prevent path drift and catch future merge artifacts automatically.

@@ -1,0 +1,96 @@
+name: leaf-files
+on: [pull_request]
+jobs:
+  leaf:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce required leaf files
+        run: |
+          set -euo pipefail
+          missing=0
+          
+          # BITS/CB required files
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/BITS/CB$' -print0 | while IFS= read -r -d '' d; do
+            echo "Checking BITS/CB directory: $d"
+            for f in meta.yaml cb-config.json validate_cb_leaf.py; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::missing required file for BITS/CB (violates 13.4 Required Leaf Files)"
+                missing=1
+              else
+                echo "✓ Found required file: $d/$f"
+              fi
+            done
+          done
+          
+          # QUBITS/QB required files
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/QUBITS/QB$' -print0 | while IFS= read -r -d '' d; do
+            echo "Checking QUBITS/QB directory: $d"
+            for f in meta.yaml qb-config.json validate_qb_leaf.py; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::missing required file for QUBITS/QB (violates 13.4 Required Leaf Files)"
+                missing=1
+              else
+                echo "✓ Found required file: $d/$f"
+              fi
+            done
+          done
+          
+          # ELEMENTS/UE required files
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/ELEMENTS/UE$' -print0 | while IFS= read -r -d '' d; do
+            echo "Checking ELEMENTS/UE directory: $d"
+            for f in meta.yaml ue-contract.json validate_ue_contract.py; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::missing required file for ELEMENTS/UE (violates 13.4 Required Leaf Files)"
+                missing=1
+              else
+                echo "✓ Found required file: $d/$f"
+              fi
+            done
+          done
+          
+          # ELEMENTS/FE required files
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/ELEMENTS/FE$' -print0 | while IFS= read -r -d '' d; do
+            echo "Checking ELEMENTS/FE directory: $d"
+            for f in meta.yaml fe-policy.yaml validate_fe_policy.py; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::missing required file for ELEMENTS/FE (violates 13.4 Required Leaf Files)"
+                missing=1
+              else
+                echo "✓ Found required file: $d/$f"
+              fi
+            done
+          done
+          
+          # WAVES/FWD required files
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/WAVES/FWD$' -print0 | while IFS= read -r -d '' d; do
+            echo "Checking WAVES/FWD directory: $d"
+            for f in meta.yaml fwd-model.yaml validate_fwd_model.py; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::missing required file for WAVES/FWD (violates 13.4 Required Leaf Files)"
+                missing=1
+              else
+                echo "✓ Found required file: $d/$f"
+              fi
+            done
+          done
+          
+          # STATES/QS required files
+          find portfolio/2-DOMAINS-LEVELS -type d -regex '.*/STATES/QS$' -print0 | while IFS= read -r -d '' d; do
+            echo "Checking STATES/QS directory: $d"
+            for f in meta.yaml qs-proof.json validate_qs_proof.py; do
+              if [ ! -f "$d/$f" ]; then
+                echo "::error file=$d/$f::missing required file for STATES/QS (violates 13.4 Required Leaf Files)"
+                missing=1
+              else
+                echo "✓ Found required file: $d/$f"
+              fi
+            done
+          done
+          
+          if [ $missing -eq 1 ]; then
+            echo "Some required leaf files are missing"
+            exit 1
+          else
+            echo "All required leaf files are present"
+          fi

@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "IBS (Illustrated Breakdown Structure) Schema",
+  "description": "Schema for Illustrated Breakdown Structure specifications in gICD triad",
+  "type": "object",
+  "required": ["ibs_version", "illustrations"],
+  "properties": {
+    "ibs_version": {
+      "type": "string",
+      "pattern": "^v[0-9]+\\.[0-9]+$"
+    },
+    "illustrations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "type"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^IBS-[A-Z0-9-]+$"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["diagram", "schematic", "drawing", "photo", "model"]
+          },
+          "file_path": {
+            "type": "string"
+          },
+          "associated_pbs": {
+            "type": "string",
+            "pattern": "^PBS-[A-Z0-9-]+$"
+          },
+          "associated_icn": {
+            "type": "string",
+            "pattern": "^ICN-[A-Z0-9-]+$"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
