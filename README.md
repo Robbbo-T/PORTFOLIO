@@ -191,7 +191,7 @@ Browse all domains under [`portfolio/2-DOMAINS-LEVELS/`](./portfolio/2-DOMAINS-L
 
 * **CaaS (Certification as a Service) Engine** — *Planned*
   **Function:** Assembles auditable evidence packages (e.g., DO-178C) by tracing UTCS links from requirements to telemetry.
-  **Links:** [`Methodology`](./portfolio/1-CAX-METHODOLOGY/CAC-COMPLIANCE-SAFETY-CODE/safety-automation.md)
+  **Links:** [`Methodology`](portfolio/1-CAX-METHODOLOGY/CAC-COMPLIANCE-SAFETY-CODE/safety-automation.md)
 
 ---
 
