@@ -222,7 +222,7 @@ The result is a **coherent, intelligent, and multisectoral** ecosystem for the c
 
 *   [`0-STRATEGY/`](./0-STRATEGY/) — Strategy, governance, mission & vision.
 *   [`1-CAX-METHODOLOGY/`](./1-CAX-METHODOLOGY/) — The proprietary CAx lifecycle (CAB…CAV).
-*   [`2-DOMAINS-LEVELS/`](./2-DOMAINS-LEVELS/) — The 15 engineering domains with strict `TFA/` trees. ATA to TFA Domains (MAP) and CAx to LLC bridges (MAL)
+*   [`2-DOMAINS-LEVELS/`](./2-DOMAINS-LEVELS/) — The 15 engineering domains with strict `TFA/` trees. TFA Domains to ATA (MAP) and to LLC/PLM to CAx Methodology (bridges and MAL)
 *   [`3-PROJECTS-USE-CASES/`](./3-PROJECTS-USE-CASES/) — Program implementations and demos.
 *   [`4-RESEARCH-DEVELOPMENT/`](./4-RESEARCH-DEVELOPMENT/) — R&D and experimental work.
 *   [`5-ARTIFACTS-IMPLEMENTATION/`](./5-ARTIFACTS-IMPLEMENTATION/) — Language-specific code buckets.
