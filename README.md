@@ -573,6 +573,11 @@ python3 services/aqua-os-pro/validation/aqua_pro_validator.py
 * **Lexicon Guard:** `./.github/workflows/lexicon-guard.yml`
 * **UTCS Anchor:** `./.github/workflows/anchor_utcs.yml`
 
+**Automation Contract Enforcement (Section 13):**
+* **Path Guard:** `./.github/workflows/path-guard.yml` — Enforces TFA path grammar and case rules
+* **Meta Validate:** `./.github/workflows/meta-validate.yml` — Validates meta.yaml against JSON schema
+* **Leaf Files:** `./.github/workflows/leaf-files.yml` — Ensures required files per TFA layer
+
 ---
 
 ## 10. 📈 Roadmap
