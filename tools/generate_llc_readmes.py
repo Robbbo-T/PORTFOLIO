@@ -113,7 +113,7 @@ LLC_DEFINITIONS = {
 }
 
 def generate_readme_content(group_name: str, llc_code: str, definition: Dict, relative_path_to_root: str) -> str:
-    """Genera el contenido Markdown para un README de LLC."""
+    """Generates the Markdown content for an LLC README."""
     name = definition["name"]
     meaning = definition["meaning"]
     artifacts_list = "\n- ".join(f"`{a}`" for a in definition["artifacts"])
