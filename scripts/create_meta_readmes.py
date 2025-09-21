@@ -51,7 +51,7 @@ This META page captures domain-level decisions, authorship, and references for A
 - Created: [YYYY-MM-DD] by [author]
 - Last updated: [YYYY-MM-DD] — brief note
 """,
-        "AAP-AIRPORT-ADAPTABLE-PLATFORMS": """# AAP — AIRPORT-ADAPTABLE-PLATFORMS
+        "AAP-AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS": """# AAP — AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS
 
 ## Purpose & Scope
 Scope: airport adaptability, ground operations interface, scalable platform integration for AMPEL360 and city systems.
@@ -362,7 +362,7 @@ Scope: supply chain, inventory management, UTCS (tokenization), logistics optimi
 ## Local Decisions / Links / Change log
 - ...
 """,
-        "MMM-MECHANICAL-AND-MATERIAL-MODULES": """# MMM — MECHANICAL-AND-MATERIAL-MODULES
+        "MMM-MECHANICS-MATERIALS-AND-MANUFACTURING": """# MMM — MECHANICS-MATERIALS-AND-MANUFACTURING
 
 ## Purpose & Scope
 Scope: mechanical systems, materials, structural subsystems, fatigue and maintenance considerations.

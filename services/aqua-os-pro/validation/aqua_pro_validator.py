@@ -620,7 +620,7 @@ class AquaProValidator:
         """Get full domain name from code"""
         domain_mapping = {
             'AAA': 'AERODYNAMICS-AND-AIRFRAMES-ARCHITECTURES',
-            'AAP': 'AIRPORT-ADAPTABLE-PLATFORMS',
+            'AAP': 'AIRPORTS-PLATFORMS-AND-HYDROGEN-ENABLERS',
             'CCC': 'COCKPIT-CABIN-AND-CARGO',
             'CQH': 'CRYOGENICS-QUANTUM-AND-H2',
             'DDD': 'DIGITAL-AND-DATA-DEFENSE',
@@ -631,7 +631,7 @@ class AquaProValidator:
             'IIS': 'INTEGRATED-INTELLIGENCE-SOFTWARE',
             'LCC': 'LINKAGES-CONTROL-AND-COMMUNICATIONS',
             'LIB': 'LOGISTICS-INVENTORY-AND-BLOCKCHAIN',
-            'MMM': 'MECHANICAL-AND-MATERIAL-MODULES',
+            'MMM': 'MECHANICS-MATERIALS-AND-MANUFACTURING',
             'OOO': 'OS-ONTOLOGIES-AND-OFFICE-INTERFACES',
             'PPP': 'PROPULSION-AND-FUEL-SYSTEMS'
         }
