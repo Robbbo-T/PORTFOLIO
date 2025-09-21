@@ -1,0 +1,59 @@
+Domain,ATA_Chapter,Chapter_Name,Relevance,Primary_Focus
+AAA,51,Standard Practices - General,Primary,Airframe structures and materials
+AAA,53,Fuselage,Primary,Fuselage design and integration
+AAA,57,Wings,Primary,Wing structures and aerodynamics
+AAA,55,Stabilizers,Secondary,Tail surfaces and control surfaces
+AAP,12,Servicing,Primary,Ground support equipment and procedures
+AAP,10,Parking/Mooring/Storage/Return to Service,Primary,Airport infrastructure integration
+AAP,05,Time Limits/Maintenance Checks,Secondary,Ground maintenance scheduling
+CCC,25,Equipment/Furnishings,Primary,Cabin equipment and passenger systems
+CCC,38,Water/Waste,Primary,Water and waste management systems
+CCC,35,Oxygen,Secondary,Life support systems
+CCC,16,Structural General,Secondary,Cabin structural elements
+CQH,28,Fuel,Primary,Fuel systems (adapted for hydrogen)
+CQH,47,Inert Gas,Secondary,Cryogenic gas management
+CQH,49,Airborne Auxiliary Power,Secondary,Auxiliary power systems
+DDD,46,Information Systems,Primary,Data management and cybersecurity
+DDD,42,Integrated Modular Avionics,Secondary,Avionics security
+DDD,31,Indicating/Recording Systems,Secondary,Data recording systems
+EDI,31,Indicating/Recording Systems,Primary,Flight instruments and displays
+EDI,34,Navigation,Primary,Navigation systems and sensors
+EDI,42,Integrated Modular Avionics,Primary,Avionics integration
+EDI,23,Communications,Secondary,Communication systems
+EEE,24,Electrical Power,Primary,Electrical power generation and distribution
+EEE,33,Lights,Secondary,Aircraft lighting systems
+EEE,44,Cabin Systems,Secondary,Cabin electrical systems
+EER,71,Power Plant,Primary,Engine environmental performance
+EER,77,Engine Indicating,Secondary,Engine environmental monitoring
+EER,36,Pneumatic,Secondary,Air quality systems
+IIF,07,Lifting/Shoring,Secondary,Manufacturing support equipment
+IIF,08,Weighing/Balancing,Secondary,Manufacturing quality control
+IIF,09,Towing/Taxiing,Secondary,Ground handling equipment
+IIS,45,Central Maintenance System,Primary,Maintenance management software
+IIS,31,Indicating/Recording Systems,Secondary,Data analytics systems
+IIS,46,Information Systems,Secondary,AI and software integration
+LCC,22,Auto Flight,Primary,Flight control systems
+LCC,23,Communications,Primary,Communication systems
+LCC,27,Flight Controls,Primary,Flight control mechanics
+LCC,42,Integrated Modular Avionics,Secondary,Avionics integration
+LIB,06,Dimensions/Areas,Secondary,Cargo and logistics specifications
+LIB,12,Servicing,Secondary,Supply chain management
+LIB,45,Central Maintenance System,Secondary,Parts inventory management
+MMM,29,Hydraulic Power,Primary,Hydraulic systems
+MMM,32,Landing Gear,Primary,Landing gear systems
+MMM,26,Fire Protection,Secondary,Fire suppression systems
+MMM,30,Ice/Rain Protection,Secondary,Environmental protection systems
+OOO,04,Airworthiness Limitations,Primary,Regulatory compliance management
+OOO,05,Time Limits/Maintenance Checks,Primary,Maintenance planning systems
+OOO,46,Information Systems,Primary,Operating system interfaces
+PPP,70,Standard Practices - Powerplant,Primary,Engine general practices
+PPP,71,Power Plant,Primary,Engine systems
+PPP,72,Engine,Primary,Engine core components
+PPP,73,Engine Fuel and Control,Primary,Fuel control systems
+PPP,74,Ignition,Primary,Engine ignition systems
+PPP,75,Air,Primary,Engine air systems
+PPP,76,Engine Controls,Primary,Engine control systems
+PPP,77,Engine Indicating,Primary,Engine monitoring systems
+PPP,78,Exhaust,Primary,Engine exhaust systems
+PPP,79,Oil,Primary,Engine lubrication systems
+PPP,80,Starting,Secondary,Engine starting systems
