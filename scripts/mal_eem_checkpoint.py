@@ -196,7 +196,7 @@ def main():
     passed = eem.check(context)
     explanation = eem.explain(context)
     
-    print(f"🛡️ MAL-EEM Checkpoint")
+    print("🛡️ MAL-EEM Checkpoint")
     print(f"📋 Context: {json.dumps(context, indent=2)}")
     print(f"✅ Result: {'PASSED' if passed else 'FAILED'}")
     print(f"💬 Explanation: {explanation}")
