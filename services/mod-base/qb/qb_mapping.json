@@ -1,0 +1,79 @@
+{
+  "qb_mapping_id": "mod-base-qubo-stub-v1.0.0",
+  "description": "QUBO stub mapping for MOD-BASE baseline model",
+  "version": "1.0.0",
+  "type": "stub",
+  "status": "placeholder",
+  
+  "classical_to_quantum": {
+    "fuel_efficiency_factor": {
+      "qubit_range": [0, 7],
+      "encoding": "binary_fraction",
+      "precision": 8,
+      "domain": [0.0, 1.0]
+    },
+    "altitude_penalty": {
+      "qubit_range": [8, 15],
+      "encoding": "binary_fraction", 
+      "precision": 8,
+      "domain": [0.0, 0.1]
+    },
+    "speed_optimization": {
+      "qubit_range": [16, 16],
+      "encoding": "boolean",
+      "precision": 1,
+      "domain": [0, 1]
+    },
+    "safety_margin_required": {
+      "qubit_range": [17, 24],
+      "encoding": "binary_fraction",
+      "precision": 8,
+      "domain": [0.0, 1.0]
+    }
+  },
+  
+  "qubo_formulation": {
+    "objective": "minimize_fuel_consumption_maximize_safety",
+    "constraints": [
+      {
+        "type": "safety_margin",
+        "description": "Ensure minimum safety margin",
+        "weight": 1000.0
+      },
+      {
+        "type": "efficiency_bounds", 
+        "description": "Fuel efficiency within operational bounds",
+        "weight": 100.0
+      }
+    ],
+    "coupling_terms": [
+      {
+        "variables": ["fuel_efficiency_factor", "altitude_penalty"],
+        "coefficient": -50.0,
+        "description": "Fuel efficiency and altitude penalty interaction"
+      }
+    ]
+  },
+  
+  "quantum_backend": {
+    "preferred": "classical_simulation",
+    "fallback": "classical_exact",
+    "annealing_params": {
+      "num_reads": 1000,
+      "annealing_time": 20,
+      "chain_strength": 1.0
+    }
+  },
+  
+  "evidence_integration": {
+    "qs_anchoring": true,
+    "provenance_required": true,
+    "execution_trace": true
+  },
+  
+  "compliance": {
+    "mal_eem_checked": true,
+    "operator_approved": true,
+    "deterministic": true
+  }
+}
