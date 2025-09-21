@@ -466,7 +466,7 @@ MON 0 <= render_time_ms <= 10 ELSE ANNUNCIATE PFD_LATENCY WITHIN 20ms
     "name": "AQUA-FE",
     "version": "1",
     "chainId": 777,
-    "verifyingContract": "REPLACE_WITH_CONTRACT_ADDRESS"
+    "verifyingContract": "0x..."
   },
   "message": {
     "anchor_id": "REPLACE_WITH_ANCHOR_ID",
