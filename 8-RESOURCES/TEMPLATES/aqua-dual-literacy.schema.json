@@ -1,0 +1,453 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AQUA Dual-Literacy Standard (PR+QM)",
+  "description": "Schema for validating Prompt-Readiness and Quantum-Mappability of decision artifacts",
+  "type": "object",
+  "required": ["artifact_id", "prompt_readiness", "quantum_mappability", "metadata"],
+  "properties": {
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9-]+/[A-Z0-9-]+/[A-Z0-9-]+$",
+      "description": "UTCS-format artifact identifier"
+    },
+    "prompt_readiness": {
+      "type": "object",
+      "required": ["spec_sheet", "golden_set", "adversarial_suite", "utcs_anchor"],
+      "properties": {
+        "spec_sheet": {
+          "type": "object",
+          "required": ["goal", "constraints", "tool_access", "safety_rails"],
+          "properties": {
+            "goal": {
+              "type": "string",
+              "minLength": 10,
+              "pattern": "^[A-Z].*\\.$",
+              "description": "Clear, measurable objective statement"
+            },
+            "constraints": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["type", "description", "enforcement"],
+                "properties": {
+                  "type": {
+                    "enum": ["safety", "operational", "compliance", "resource"]
+                  },
+                  "description": {
+                    "type": "string",
+                    "minLength": 5
+                  },
+                  "enforcement": {
+                    "enum": ["hard_limit", "soft_limit", "advisory"]
+                  }
+                }
+              }
+            },
+            "tool_access": {
+              "type": "object",
+              "required": ["available_tools", "permissions", "rate_limits"],
+              "properties": {
+                "available_tools": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "permissions": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "rate_limits": {
+                  "type": "object",
+                  "patternProperties": {
+                    "^.*$": {"type": "string"}
+                  }
+                }
+              }
+            },
+            "safety_rails": {
+              "type": "object",
+              "required": ["primary_failsafe", "secondary_failsafe", "escalation_path"],
+              "properties": {
+                "primary_failsafe": {"type": "string"},
+                "secondary_failsafe": {"type": "string"},
+                "escalation_path": {"type": "string"}
+              }
+            }
+          }
+        },
+        "golden_set": {
+          "type": "object",
+          "required": ["inputs", "expected_outputs", "test_cases", "eval_metrics"],
+          "properties": {
+            "inputs": {
+              "type": "array",
+              "minItems": 1
+            },
+            "expected_outputs": {
+              "type": "array",
+              "minItems": 1
+            },
+            "test_cases": {
+              "type": "array",
+              "minItems": 5,
+              "items": {
+                "type": "object",
+                "required": ["input", "expected_output", "test_id"],
+                "properties": {
+                  "input": {},
+                  "expected_output": {},
+                  "test_id": {"type": "string"}
+                }
+              }
+            },
+            "eval_metrics": {
+              "type": "object",
+              "required": ["fidelity", "harmlessness", "determinism"],
+              "properties": {
+                "fidelity": {
+                  "type": "object",
+                  "required": ["accuracy_threshold", "consistency_threshold"],
+                  "properties": {
+                    "accuracy_threshold": {
+                      "type": "number",
+                      "minimum": 0.8,
+                      "maximum": 1.0
+                    },
+                    "consistency_threshold": {
+                      "type": "number",
+                      "minimum": 0.9,
+                      "maximum": 1.0
+                    }
+                  }
+                },
+                "harmlessness": {
+                  "type": "object",
+                  "required": ["safety_score_min", "ethics_compliance"],
+                  "properties": {
+                    "safety_score_min": {
+                      "type": "number",
+                      "minimum": 0.95
+                    },
+                    "ethics_compliance": {"type": "boolean"}
+                  }
+                },
+                "determinism": {
+                  "type": "object",
+                  "required": ["variance_threshold", "reproducibility_tests"],
+                  "properties": {
+                    "variance_threshold": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 0.1
+                    },
+                    "reproducibility_tests": {
+                      "type": "integer",
+                      "minimum": 3
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "adversarial_suite": {
+          "type": "object",
+          "required": ["instruction_inversion", "role_hijack", "tool_abuse", "prompt_injection", "pass_criteria"],
+          "properties": {
+            "instruction_inversion": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": ["test_prompt", "expected_behavior", "actual_result"],
+                "properties": {
+                  "test_prompt": {"type": "string"},
+                  "expected_behavior": {"type": "string"},
+                  "actual_result": {"enum": ["pass", "fail", "partial"]}
+                }
+              }
+            },
+            "role_hijack": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": ["test_prompt", "expected_behavior", "actual_result"],
+                "properties": {
+                  "test_prompt": {"type": "string"},
+                  "expected_behavior": {"type": "string"},
+                  "actual_result": {"enum": ["pass", "fail", "partial"]}
+                }
+              }
+            },
+            "tool_abuse": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": ["test_prompt", "expected_behavior", "actual_result"],
+                "properties": {
+                  "test_prompt": {"type": "string"},
+                  "expected_behavior": {"type": "string"},
+                  "actual_result": {"enum": ["pass", "fail", "partial"]}
+                }
+              }
+            },
+            "prompt_injection": {
+              "type": "array",
+              "minItems": 3,
+              "items": {
+                "type": "object",
+                "required": ["test_prompt", "expected_behavior", "actual_result"],
+                "properties": {
+                  "test_prompt": {"type": "string"},
+                  "expected_behavior": {"type": "string"},
+                  "actual_result": {"enum": ["pass", "fail", "partial"]}
+                }
+              }
+            },
+            "pass_criteria": {
+              "type": "object",
+              "required": ["max_failure_rate", "escalation_required"],
+              "properties": {
+                "max_failure_rate": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 0.05
+                },
+                "escalation_required": {"type": "boolean"}
+              }
+            }
+          }
+        },
+        "utcs_anchor": {
+          "type": "object",
+          "required": ["prompt_hash", "data_snapshot_hash", "eval_results_hash"],
+          "properties": {
+            "prompt_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "data_snapshot_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "eval_results_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "utcs_anchor_id": {
+              "type": "string",
+              "pattern": "^utcs://anchor/[a-f0-9]+$"
+            }
+          }
+        }
+      }
+    },
+    "quantum_mappability": {
+      "type": "object",
+      "required": ["canonical_form", "encoding", "performance_budget", "utcs_anchor"],
+      "properties": {
+        "canonical_form": {
+          "type": "object",
+          "required": ["problem_type", "derivation_notes", "variable_mapping"],
+          "properties": {
+            "problem_type": {
+              "enum": ["LP", "MILP", "QUBO", "ISING", "MAXCUT", "TSP", "CUSTOM"]
+            },
+            "derivation_notes": {
+              "type": "string",
+              "minLength": 50,
+              "description": "Mathematical transformation documentation"
+            },
+            "variable_mapping": {
+              "type": "object",
+              "required": ["classical_vars", "quantum_vars", "mapping_function"],
+              "properties": {
+                "classical_vars": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "quantum_vars": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                },
+                "mapping_function": {
+                  "type": "string",
+                  "description": "Function mapping classical to quantum variables"
+                }
+              }
+            },
+            "constraint_translation": {
+              "type": "object",
+              "description": "How constraints map to quantum penalties"
+            }
+          }
+        },
+        "encoding": {
+          "type": "object",
+          "required": ["rationale", "penalty_weights", "unit_conversion", "scaling_justification"],
+          "properties": {
+            "rationale": {
+              "type": "string",
+              "minLength": 20,
+              "description": "Why this encoding was chosen"
+            },
+            "penalty_weights": {
+              "type": "object",
+              "patternProperties": {
+                "^.*$": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "description": "Relative importance of constraints"
+            },
+            "unit_conversion": {
+              "type": "object",
+              "required": ["method", "validation_tests"],
+              "properties": {
+                "method": {
+                  "type": "string",
+                  "description": "Dimensionless transformation approach"
+                },
+                "validation_tests": {
+                  "type": "array",
+                  "items": {"type": "string"}
+                }
+              }
+            },
+            "scaling_justification": {
+              "type": "string",
+              "minLength": 20,
+              "description": "Mathematical basis for penalty scaling"
+            }
+          }
+        },
+        "performance_budget": {
+          "type": "object",
+          "required": ["noise_tolerance", "latency_budget", "baseline_gap", "fallback_criteria"],
+          "properties": {
+            "noise_tolerance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.1,
+              "description": "Acceptable error rates from quantum noise"
+            },
+            "latency_budget": {
+              "type": "number",
+              "minimum": 1,
+              "description": "Maximum acceptable execution time in milliseconds"
+            },
+            "baseline_gap": {
+              "type": "number",
+              "minimum": -0.5,
+              "maximum": 2.0,
+              "description": "Acceptable performance gap vs classical (-0.5 = 50% worse, 2.0 = 200% better)"
+            },
+            "fallback_criteria": {
+              "type": "string",
+              "description": "When to revert to classical solution"
+            }
+          }
+        },
+        "utcs_anchor": {
+          "type": "object",
+          "required": ["encoding_hash", "seed_documentation", "schedule_documentation", "results_hash"],
+          "properties": {
+            "encoding_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "seed_documentation": {
+              "type": "object",
+              "description": "Random seeds used for reproducibility"
+            },
+            "schedule_documentation": {
+              "type": "object",
+              "description": "Quantum annealing/gate schedules"
+            },
+            "results_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "utcs_anchor_id": {
+              "type": "string",
+              "pattern": "^utcs://anchor/[a-f0-9]+$"
+            }
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "required": ["timestamp", "validation_version", "cb_qb_metadata"],
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "validation_version": {
+          "type": "string",
+          "pattern": "^\\d+\\.\\d+\\.\\d+$"
+        },
+        "cb_qb_metadata": {
+          "type": "object",
+          "required": ["classical_solution_hash", "bridge_flow_version"],
+          "properties": {
+            "classical_solution_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "quantum_enhancement_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "bridge_flow_version": {
+              "type": "string",
+              "pattern": "^\\d+\\.\\d+\\.\\d+$"
+            }
+          }
+        },
+        "llc_mapping": {
+          "type": "string",
+          "description": "Lifecycle Category mapping"
+        },
+        "qs_effectivity": {
+          "type": "string",
+          "format": "date",
+          "description": "Quantum State effectivity date"
+        },
+        "engineering_authority": {
+          "type": "object",
+          "required": ["approved_by", "approval_date"],
+          "properties": {
+            "approved_by": {"type": "string"},
+            "approval_date": {"type": "string", "format": "date"},
+            "safety_authority": {"type": "string"}
+          }
+        }
+      }
+    },
+    "status": {
+      "type": "object",
+      "required": ["pr_status", "qm_status", "gate_status"],
+      "properties": {
+        "pr_status": {
+          "enum": ["PASS", "FAIL", "PENDING"]
+        },
+        "qm_status": {
+          "enum": ["DECLARED", "IMPLEMENTED", "NOT_APPLICABLE", "FAIL"]
+        },
+        "gate_status": {
+          "enum": ["GATE_PASS", "GATE_FAIL", "GATE_PENDING"]
+        },
+        "evidence_bundle_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

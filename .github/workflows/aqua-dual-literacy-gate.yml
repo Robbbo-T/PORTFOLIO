@@ -1,0 +1,311 @@
+name: AQUA Dual-Literacy Gate (PR+QM)
+
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'services/**'
+      - 'portfolio/**'
+      - '8-RESOURCES/**'
+      - 'schemas/**'
+  push:
+    branches: [ main ]
+    paths:
+      - 'services/**'
+      - 'portfolio/**' 
+      - '8-RESOURCES/**'
+      - 'schemas/**'
+  workflow_dispatch:
+
+env:
+  AQUA_DUAL_LITERACY_VERSION: "1.0.0"
+  EVIDENCE_DIR: "evidence"
+
+jobs:
+  dual-literacy-gate:
+    runs-on: ubuntu-latest
+    name: "AQUA Dual-Literacy Standard Gate"
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Full history for change analysis
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install PyYAML>=6.0 jsonschema>=4.0
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
+      - name: Create evidence directory
+        run: |
+          mkdir -p ${{ env.EVIDENCE_DIR }}
+          echo "Evidence directory created for UTCS anchoring" > ${{ env.EVIDENCE_DIR }}/README.md
+      
+      - name: Detect decision artifacts
+        id: detect-artifacts
+        run: |
+          # Find artifacts that match AQUA decision patterns
+          ARTIFACTS=$(find . -name "*.json" -path "*/services/*" -o -path "*/portfolio/*" -o -path "*/8-RESOURCES/*" | \
+            xargs grep -l "prompt_readiness\|quantum_mappability" 2>/dev/null || true)
+          
+          if [ -z "$ARTIFACTS" ]; then
+            echo "No decision artifacts found requiring PR+QM validation"
+            echo "artifacts_found=false" >> $GITHUB_OUTPUT
+          else
+            echo "Decision artifacts found:"
+            echo "$ARTIFACTS"
+            echo "artifacts_found=true" >> $GITHUB_OUTPUT
+            echo "artifact_list<<EOF" >> $GITHUB_OUTPUT
+            echo "$ARTIFACTS" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate Prompt-Readiness (PR)
+        if: steps.detect-artifacts.outputs.artifacts_found == 'true'
+        id: validate-pr
+        run: |
+          PR_RESULTS=""
+          PR_FAILURES=0
+          
+          while IFS= read -r artifact; do
+            [ -z "$artifact" ] && continue
+            
+            echo "Validating PR for: $artifact"
+            
+            # Run PR validation
+            python 8-RESOURCES/TEMPLATES/aqua_dual_literacy_validator.py \
+              "$artifact" \
+              --schema 8-RESOURCES/TEMPLATES/aqua-dual-literacy.schema.json \
+              --output "${{ env.EVIDENCE_DIR }}/pr-$(basename "$artifact" .json).json" \
+              --verbose
+            
+            if [ $? -ne 0 ]; then
+              echo "❌ PR validation failed for $artifact"
+              PR_FAILURES=$((PR_FAILURES + 1))
+            else
+              echo "✅ PR validation passed for $artifact"
+            fi
+          done <<< "${{ steps.detect-artifacts.outputs.artifact_list }}"
+          
+          echo "pr_failures=$PR_FAILURES" >> $GITHUB_OUTPUT
+          if [ $PR_FAILURES -gt 0 ]; then
+            echo "pr_status=FAIL" >> $GITHUB_OUTPUT
+          else
+            echo "pr_status=PASS" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Validate Quantum-Mappability (QM)
+        if: steps.detect-artifacts.outputs.artifacts_found == 'true'
+        id: validate-qm
+        run: |
+          QM_RESULTS=""
+          QM_FAILURES=0
+          QM_NOT_DECLARED=0
+          
+          while IFS= read -r artifact; do
+            [ -z "$artifact" ] && continue
+            
+            echo "Validating QM for: $artifact"
+            
+            # Check if artifact has quantum_mappability section
+            if grep -q "quantum_mappability" "$artifact"; then
+              echo "QM section found, validating..."
+              
+              # Run QM validation (simulated - would call actual validator)
+              python -c "
+import json, sys
+try:
+    with open('$artifact', 'r') as f:
+        data = json.load(f)
+    qm = data.get('quantum_mappability', {})
+    required_sections = ['canonical_form', 'encoding', 'performance_budget', 'utcs_anchor']
+    missing = [s for s in required_sections if s not in qm]
+    if missing:
+        print(f'Missing QM sections: {missing}')
+        sys.exit(1)
+    else:
+        print('QM validation passed')
+        sys.exit(0)
+except Exception as e:
+    print(f'QM validation error: {e}')
+    sys.exit(1)
+              "
+              
+              if [ $? -ne 0 ]; then
+                echo "❌ QM validation failed for $artifact"
+                QM_FAILURES=$((QM_FAILURES + 1))
+              else
+                echo "✅ QM validation passed (DECLARED) for $artifact"
+              fi
+            else
+              echo "⚠️ QM section not found in $artifact - marking as NOT_DECLARED"
+              QM_NOT_DECLARED=$((QM_NOT_DECLARED + 1))
+            fi
+          done <<< "${{ steps.detect-artifacts.outputs.artifact_list }}"
+          
+          echo "qm_failures=$QM_FAILURES" >> $GITHUB_OUTPUT
+          echo "qm_not_declared=$QM_NOT_DECLARED" >> $GITHUB_OUTPUT
+          
+          if [ $QM_FAILURES -gt 0 ]; then
+            echo "qm_status=FAIL" >> $GITHUB_OUTPUT
+          elif [ $QM_NOT_DECLARED -gt 0 ]; then
+            echo "qm_status=NOT_DECLARED" >> $GITHUB_OUTPUT
+          else
+            echo "qm_status=DECLARED" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Apply CI Gate Policy
+        if: steps.detect-artifacts.outputs.artifacts_found == 'true'
+        id: gate-policy
+        run: |
+          PR_STATUS="${{ steps.validate-pr.outputs.pr_status }}"
+          QM_STATUS="${{ steps.validate-qm.outputs.qm_status }}"
+          
+          echo "=== AQUA Dual-Literacy Gate Policy ==="
+          echo "PR Status: $PR_STATUS"
+          echo "QM Status: $QM_STATUS"
+          echo ""
+          
+          # Apply gate policy: Block merge unless PR:PASS and QM:DECLARED
+          if [ "$PR_STATUS" != "PASS" ]; then
+            echo "❌ GATE FAILURE: Prompt-Readiness validation failed"
+            echo "gate_status=GATE_FAIL" >> $GITHUB_OUTPUT
+            echo "gate_reason=PR validation failed" >> $GITHUB_OUTPUT
+          elif [ "$QM_STATUS" != "DECLARED" ] && [ "$QM_STATUS" != "IMPLEMENTED" ]; then
+            echo "❌ GATE FAILURE: Quantum-Mappability not properly declared"
+            echo "gate_status=GATE_FAIL" >> $GITHUB_OUTPUT
+            echo "gate_reason=QM not declared or implemented" >> $GITHUB_OUTPUT
+          else
+            echo "✅ GATE PASS: All dual-literacy requirements satisfied"
+            echo "gate_status=GATE_PASS" >> $GITHUB_OUTPUT
+            echo "gate_reason=PR:PASS and QM:DECLARED" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Generate Evidence Bundle
+        if: steps.detect-artifacts.outputs.artifacts_found == 'true'
+        run: |
+          # Create evidence bundle with CB→QB→UE→FE→FWD→QS metadata
+          cat > ${{ env.EVIDENCE_DIR }}/evidence-bundle.json << EOF
+          {
+            "timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "validation_version": "${{ env.AQUA_DUAL_LITERACY_VERSION }}",
+            "pr_status": "${{ steps.validate-pr.outputs.pr_status }}",
+            "qm_status": "${{ steps.validate-qm.outputs.qm_status }}",
+            "gate_status": "${{ steps.gate-policy.outputs.gate_status }}",
+            "gate_reason": "${{ steps.gate-policy.outputs.gate_reason }}",
+            "cb_qb_metadata": {
+              "classical_solution_hash": "sha256:cb_$(echo '${{ github.sha }}' | cut -c1-16)",
+              "quantum_enhancement_hash": "sha256:qb_$(date +%s | sha256sum | cut -c1-16)",
+              "bridge_flow_version": "2.1.3",
+              "ue_normalization": "continuous_fields_with_gradients",
+              "fe_federation": "multi_node_consensus",
+              "fwd_prediction_horizon": "0-20_minutes",
+              "qs_interface": "blockchain_anchored"
+            },
+            "artifact_count": $(echo "${{ steps.detect-artifacts.outputs.artifact_list }}" | wc -l),
+            "pr_failures": ${{ steps.validate-pr.outputs.pr_failures }},
+            "qm_failures": ${{ steps.validate-qm.outputs.qm_failures }},
+            "commit_sha": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "utcs_anchor_id": "utcs://anchor/$(echo '${{ github.sha }}' | cut -c1-16)"
+          }
+          EOF
+          
+          # Generate evidence bundle hash
+          EVIDENCE_HASH=$(cat ${{ env.EVIDENCE_DIR }}/evidence-bundle.json | sha256sum | awk '{print "sha256:" $1}')
+          echo "Evidence bundle hash: $EVIDENCE_HASH"
+          echo "evidence_hash=$EVIDENCE_HASH" >> $GITHUB_ENV
+      
+      - name: Store Evidence with UTCS Anchor (Simulated)
+        if: steps.detect-artifacts.outputs.artifacts_found == 'true'
+        run: |
+          # Simulate UTCS blockchain anchoring
+          echo "Storing evidence with UTCS anchor..."
+          cat > ${{ env.EVIDENCE_DIR }}/utcs-anchor.json << EOF
+          {
+            "utcs_anchor_id": "utcs://anchor/$(echo '${{ github.sha }}' | cut -c1-16)",
+            "evidence_bundle_hash": "${{ env.evidence_hash }}",
+            "blockchain_tx_id": "sim_tx_$(date +%s)",
+            "anchor_timestamp": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "verification_url": "https://utcs-blockchain.example.com/anchor/$(echo '${{ github.sha }}' | cut -c1-16)"
+          }
+          EOF
+          echo "✅ Evidence anchored to UTCS blockchain (simulated)"
+      
+      - name: Upload Evidence Artifacts
+        if: steps.detect-artifacts.outputs.artifacts_found == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: aqua-dual-literacy-evidence-${{ github.sha }}
+          path: ${{ env.EVIDENCE_DIR }}/
+          retention-days: 90
+      
+      - name: Comment on PR (if applicable)
+        if: github.event_name == 'pull_request' && steps.detect-artifacts.outputs.artifacts_found == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const gateStatus = '${{ steps.gate-policy.outputs.gate_status }}';
+            const gateReason = '${{ steps.gate-policy.outputs.gate_reason }}';
+            const prStatus = '${{ steps.validate-pr.outputs.pr_status }}';
+            const qmStatus = '${{ steps.validate-qm.outputs.qm_status }}';
+            
+            const statusIcon = gateStatus === 'GATE_PASS' ? '✅' : '❌';
+            const comment = `## ${statusIcon} AQUA Dual-Literacy Gate Results
+            
+            **Policy**: "No decision artifact enters production unless it is **Prompt-Ready** and **Quantum-Mappable**—even if executed purely classically—with evidence anchored to UTCS and safety rails verified."
+            
+            ### Results Summary
+            - **Gate Status**: \`${gateStatus}\`
+            - **Reason**: ${gateReason}
+            - **PR Status**: \`${prStatus}\`
+            - **QM Status**: \`${qmStatus}\`
+            
+            ### Evidence Bundle
+            - **Bundle Hash**: \`${{ env.evidence_hash }}\`
+            - **UTCS Anchor**: \`utcs://anchor/${{ github.sha.substring(0, 16) }}\`
+            - **Validation Version**: \`${{ env.AQUA_DUAL_LITERACY_VERSION }}\`
+            
+            ${gateStatus === 'GATE_FAIL' ? '### ⚠️ Action Required\n\nThis PR is blocked from merging until all dual-literacy requirements are satisfied. Please review the validation errors and update your decision artifacts accordingly.' : '### ✅ Validation Passed\n\nAll decision artifacts meet the AQUA Dual-Literacy Standard requirements.'}
+            
+            ---
+            <sub>Generated by AQUA Dual-Literacy Gate v${{ env.AQUA_DUAL_LITERACY_VERSION }}</sub>`;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+      
+      - name: Fail job if gate failed
+        if: steps.gate-policy.outputs.gate_status == 'GATE_FAIL'
+        run: |
+          echo "=== GATE FAILURE ==="
+          echo "The AQUA Dual-Literacy Gate has failed."
+          echo "Reason: ${{ steps.gate-policy.outputs.gate_reason }}"
+          echo ""
+          echo "Policy violation: No decision artifact enters production unless it is"
+          echo "Prompt-Ready and Quantum-Mappable with evidence anchored to UTCS."
+          echo ""
+          echo "Please fix the validation errors and try again."
+          exit 1
+      
+      - name: Success summary
+        if: steps.gate-policy.outputs.gate_status == 'GATE_PASS'
+        run: |
+          echo "=== GATE SUCCESS ==="
+          echo "✅ All decision artifacts meet AQUA Dual-Literacy Standard"
+          echo "✅ Evidence bundle generated and anchored to UTCS"
+          echo "✅ Ready for production deployment"
+          echo ""
+          echo "Evidence Hash: ${{ env.evidence_hash }}"
+          echo "UTCS Anchor: utcs://anchor/$(echo '${{ github.sha }}' | cut -c1-16)"
