@@ -103,12 +103,21 @@ def apply_stack(stack_path: Path) -> Dict[str, Any]:
             
         except Exception as e:
             print(f"✗ Failed to apply mod-pack {pack_name}: {e}")
-            applied_mods.append({
-                "pack": pack_name,
-                "type": "model_patch", 
-                "status": "failed",
-                "error": str(e)
-            })
+            # Try to determine patch type(s) from mod_pack if available
+            patch_types = []
+            if 'mod_pack' in locals() and isinstance(mod_pack, dict):
+                for key in mod_pack.keys():
+                    if key.endswith('_patch') and mod_pack[key]:
+                        patch_types.append(key)
+            if not patch_types:
+                patch_types = ["unknown"]
+            for patch_type in patch_types:
+                applied_mods.append({
+                    "pack": pack_name,
+                    "type": patch_type,
+                    "status": "failed",
+                    "error": str(e)
+                })
     
     # Generate stack evidence
     stack_evidence = {
