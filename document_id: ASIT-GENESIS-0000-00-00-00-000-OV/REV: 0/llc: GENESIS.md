@@ -1,25 +1,26 @@
 ---
 id: ASIT-GENESIS-0000-00-00-00-000-OV
-REV: 0
+rev: 0
 llc: GENESIS
 title: "ASI-T · Genesis — Foundational Components"
 status: BASELINE
 classification: "INTERNAL / EVIDENCE-REQUIRED"
 version: "1.0.0"
-release\_date: 2025-09-21
+release_date: 2025-09-21
 maintainer: "ASI-T Architecture Team"
-provenance: QS
----
-policy\_hash: "sha256\:POLICY"
-model\_sha: "sha256\:MODEL"
-data\_manifest\_hash: "sha256\:DATA"
-operator\_id: "UTCS\:OP\:ID"
-canonical\_hash: "sha256\:CANONICAL-BLOB"
+provenance:
+  policy_hash: "sha256:POLICY"
+  model_sha: "sha256:MODEL"
+  data_manifest_hash: "sha256:DATA"
+  operator_id: "UTCS:OP:ID"
+  canonical_hash: "sha256:CANONICAL-BLOB"
 licenses:
-code: "Apache-2.0"
-docs: "CC-BY-4.0"
+  code: "Apache-2.0"
+  docs: "CC-BY-4.0"
 bridge: "CB→QB→UE→FE→FWD→QS"
-ethics\_guard: "MAL-EEM"
+ethics_guard: "MAL-EEM"
+---
+
 
 
 # ASI‑T Genesis — Foundational Components
