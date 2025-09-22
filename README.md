@@ -79,7 +79,7 @@ If EEM is missing, degraded, or policy binding is invalid, the system SHALL:
 ```bash
 make print-vars
 make validate
-
+```
 
 ⸻
 
