@@ -1,8 +1,161 @@
+# UTCS-MI v5.0 HEADER
+# id: ASIT-GENESIS-INFRA-0000-00-00-00-000-NS
+# llc: GENESIS
+# REV: 0
+# title: "ASI-T Transition Kubernetes Namespace"
+# status: BASELINE
+# classification: INTERNAL
+# version: 1.0.0
+# release_date: 2025-09-22
+# maintainer: "Robbbo-T"
+# provenance:
+#   policy_hash: "sha256:POLICY"
+#   model_sha: "sha256:MODEL"
+#   data_manifest_hash: "sha256:DATA"
+#   operator_id: "UTCS:OP:robbo-t"
+#   canonical_hash: "sha256:CANONICAL-BLOB"
+# licenses:
+#   code: Apache-2.0
+#   docs: CC-BY-4.0
+# ethics_guard: MAL-EEM
+# ----------------------
+
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: robbbot-asi-t-tr
+  name: robbbo-t-asi-t-tr
   labels:
     app.kubernetes.io/name: robbbo-t-asi-t-transition
+    app.kubernetes.io/instance: baseline
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/component: genesis
     app.kubernetes.io/part-of: sim
+    app.kubernetes.io/managed-by: gitops
     project-slug: robbbo-t-asi-t-transition
+  annotations:
+    asit.utcs/operator_id: "UTCS:OP:robbo-t"
+    asit.qs/policy_hash: "sha256:POLICY"
+    asit.qs/model_sha: "sha256:MODEL"
+    asit.qs/data_manifest_hash: "sha256:DATA"
+    asit.qs/canonical_hash: "sha256:CANONICAL-BLOB"
+    git.repo: "github.com/Robbbo-T/robbbo-t-asi-t-transition"
+    git.ref: "refs/heads/main"
+    git.sha: "${GIT_COMMIT_SHA}"
+---
+# UTCS-MI v5.0 HEADER
+# id: ASIT-GENESIS-INFRA-0000-00-00-00-000-RQ
+# llc: GENESIS
+# REV: 0
+# title: "ASI-T Transition Resource Quota"
+# status: BASELINE
+# classification: INTERNAL
+# version: 1.0.0
+# release_date: 2025-09-22
+# maintainer: "Robbbo-T"
+# provenance:
+#   policy_hash: "sha256:POLICY"
+#   model_sha: "sha256:MODEL"
+#   data_manifest_hash: "sha256:DATA"
+#   operator_id: "UTCS:OP:robbo-t"
+#   canonical_hash: "sha256:CANONICAL-BLOB"
+# licenses:
+#   code: Apache-2.0
+#   docs: CC-BY-4.0
+# ethics_guard: MAL-EEM
+# ----------------------
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: rq-default
+  namespace: robbbo-t-asi-t-tr
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "50"
+    services: "10"
+    persistentvolumeclaims: "5"
+---
+# UTCS-MI v5.0 HEADER
+# id: ASIT-GENESIS-INFRA-0000-00-00-00-000-LR
+# llc: GENESIS
+# REV: 0
+# title: "ASI-T Transition Limit Range"
+# status: BASELINE
+# classification: INTERNAL
+# version: 1.0.0
+# release_date: 2025-09-22
+# maintainer: "Robbbo-T"
+# provenance:
+#   policy_hash: "sha256:POLICY"
+#   model_sha: "sha256:MODEL"
+#   data_manifest_hash: "sha256:DATA"
+#   operator_id: "UTCS:OP:robbo-t"
+#   canonical_hash: "sha256:CANONICAL-BLOB"
+# licenses:
+#   code: Apache-2.0
+#   docs: CC-BY-4.0
+# ethics_guard: MAL-EEM
+# ----------------------
+
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: lr-default
+  namespace: robbbo-t-asi-t-tr
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: "500m"
+        memory: 512Mi
+      defaultRequest:
+        cpu: "200m"
+        memory: 256Mi
+---
+# UTCS-MI v5.0 HEADER
+# id: ASIT-GENESIS-INFRA-0000-00-00-00-000-NP
+# llc: GENESIS
+# REV: 0
+# title: "ASI-T Transition Network Policy"
+# status: BASELINE
+# classification: INTERNAL
+# version: 1.0.0
+# release_date: 2025-09-22
+# maintainer: "Robbbo-T"
+# provenance:
+#   policy_hash: "sha256:POLICY"
+#   model_sha: "sha256:MODEL"
+#   data_manifest_hash: "sha256:DATA"
+#   operator_id: "UTCS:OP:robbo-t"
+#   canonical_hash: "sha256:CANONICAL-BLOB"
+# licenses:
+#   code: Apache-2.0
+#   docs: CC-BY-4.0
+# ethics_guard: MAL-EEM
+# ----------------------
+
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny-all
+  namespace: robbbo-t-asi-t-tr
+spec:
+  podSelector: {}
+  policyTypes: ["Ingress","Egress"]
+  # Allow egress to kube-dns for DNS resolution (UDP port 53)
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+  # NOTE: This policy only allows DNS egress. Additional NetworkPolicies may be required for metrics, health checks, or other system traffic.

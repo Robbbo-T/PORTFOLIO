@@ -4,7 +4,7 @@
 # Canonical Project Slug
 PROJECT_SLUG ?= robbbo-t-asi-t-transition
 PYTHON_PKG = robbbot_asi_t_transition
-K8S_NAMESPACE = robbbot-asi-t-tr
+K8S_NAMESPACE = robbbo-t-asi-t-tr
 
 # Docker Configuration
 GITHUB_OWNER ?= Robbbo-T
