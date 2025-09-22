@@ -104,7 +104,7 @@ La lista canónica de fases se mantiene en `ASI-T/GENESIS/cax_phases.list`. Debe
 
 ## 7. Commit / PR Template
 ```text
-feat(docs): Finaliza Styleguide con validación CAx y glosario completo
+feat(docs): Complete Styleguide with CAx validation and complete glossary
 
 FCR-1: <link>
 FCR-2: <link>
