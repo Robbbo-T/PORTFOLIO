@@ -1,0 +1,8 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "config.schema.json",
+  "title": "ASI-T Configuration Schema",
+  "description": "Schema for configuration files",
+  "type": "object",
+  "additionalProperties": true
+}

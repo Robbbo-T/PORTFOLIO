@@ -1,0 +1,22 @@
+{
+  "artifact_id": "AS-IT-GENESIS-0000-00-00-00-000-OV",
+  "timestamp": "2025-01-09T22:00:00Z",
+  "validation_version": "1.0.0",
+  "status": "PASS",
+  "evidence_hash": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "provenance": {
+    "policy_hash": "sha256:c3ab8ff13720e8ad9047dd39466b3c8974e592c2fa383d4a3960714caef0c4f2",
+    "model_sha": "sha256:5d41402abc4b2a76b9719d911017c592ac36e8e3f1a978e9e8ac3b5b8e6c7f23",
+    "data_manifest_hash": "sha256:8e6b8b9f0e7f4c5d3b2a1c0e9f8e7d6c5b4a3c2d1e0f9e8d7c6b5a4c3d2e1f00",
+    "operator_id": "UTCS:OP:robbo-t",
+    "canonical_hash": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b"
+  },
+  "errors": [],
+  "warnings": [],
+  "metadata": {
+    "genesis_version": "1.0.0",
+    "validation_timestamp": "2025-01-09T22:00:00Z",
+    "ci_run_id": "sample-run-001",
+    "validator": "ASI-T Genesis CI Pipeline"
+  }
+}
