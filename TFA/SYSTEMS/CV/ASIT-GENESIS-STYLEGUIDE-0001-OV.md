@@ -9,11 +9,11 @@ version: "1.0.0"
 release_date: 2025-09-22
 maintainer: "ASI-T Architecture Team"
 provenance:
-  policy_hash: "sha256:deadbeef..."
-  model_sha: "sha256:deadbeef..."
-  data_manifest_hash: "sha256:deadbeef..."
+  policy_hash: "sha256:3a7bd3e2360a3d4b8b8e9e7e2c3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e1f"
+  model_sha: "sha256:5e884898da28047151d0e56f8dc6292773603d0d6aabbddc8a3f6a7b8c9d0e1f"
+  data_manifest_hash: "sha256:2c1743a391305fbf367df8e4f069f9f9b828b9d2b1e6a7b8c9d0e1f2a3b4c5d6"
   operator_id: "UTCS:OP:core"
-  canonical_hash: "sha256:deadbeef..."
+  canonical_hash: "sha256:6b1b36cbb04b41490bfc0ab2bfa26f86e3b3a7b8c9d0e1f2a3b4c5d6e7f8g9h0"
 licenses:
   code: "Apache-2.0"
   docs: "CC-BY-4.0"
