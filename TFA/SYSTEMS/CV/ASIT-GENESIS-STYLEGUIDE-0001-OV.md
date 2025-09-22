@@ -24,7 +24,7 @@ ethics_guard: "MAL-EEM"
 # 📑 ASI-T · Copilot Agent Styleguide (CAx + LLC Bridges)
 
 ## 1. Golden Rules
-- **UIX.v1 obligatorio** en cada agente antes de actuar.  
+- **UIX.v1 required** in each agent before acting.  
 - **TFA-Only path grammar**: `TFA/<LAYER>/<LLC>/...`.  
 - **MAL-EEM**: ética + empatía, fail-closed.  
 - **QS/UTCS evidencia determinista** en cada PR.  
