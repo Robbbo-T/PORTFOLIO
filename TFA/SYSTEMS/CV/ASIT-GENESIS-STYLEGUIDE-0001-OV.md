@@ -27,7 +27,7 @@ ethics_guard: "MAL-EEM"
 - **UIX.v1 required** in each agent before acting.  
 - **TFA-Only path grammar**: `TFA/<LAYER>/<LLC>/...`.  
 - **MAL-EEM**: ética + empatía, fail-closed.  
-- **QS/UTCS evidencia determinista** en cada PR.  
+- **QS/UTCS deterministic evidence** in every PR.  
 - **FCR-1 + FCR-2** para todo merge.  
 - **Revisiones**:
   - `rev: 0` = baseline → filename estable sin letra.  
